@@ -14,9 +14,10 @@ public class PlayerMove : MonoBehaviour {
     public void SetDash() { isAvailableDash = true; }
     public void ResetDash() { isAvailableDash = false; }
 
-    // TODO : 대시 게이지 구현. 0707
+    // TODO : 대시 게이지 UI 구현. 0707
     private float TotalDashGage, CurrentDashGage, DecDashGage, IncDashGage;
     private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
+
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
     }
@@ -42,7 +43,6 @@ public class PlayerMove : MonoBehaviour {
             Dash(false);
             Move(playerMoveSpeed);
         }
-        Debug.Log(CurrentDashGage);
     }
 
     private void LookatMouse() {
@@ -62,8 +62,8 @@ public class PlayerMove : MonoBehaviour {
         else CurrentDashGage += IncDashGage * Time.deltaTime;
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
-        if (CurrentDashGage == 0) isAvailableDash = false;
-        else if (CurrentDashGage > TotalDashGage * 0.2f) isAvailableDash = true;
+        if (CurrentDashGage == 0) ResetDash();
+        else if (CurrentDashGage > TotalDashGage * 0.2f) SetDash();
     }
 
     private void Move(float speed) {

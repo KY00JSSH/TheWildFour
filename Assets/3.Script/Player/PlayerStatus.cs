@@ -74,19 +74,6 @@ public class PlayerStatus : MonoBehaviour {
 
         TakeWarmDamage();
         TakeHungerDamage();
-        
-        // ****************** FOR DEBUGGING ******************
-        if (Input.GetKey(KeyCode.LeftArrow)) {
-            PlayerHp--;
-            PlayerHunger--;
-            PlayerWarm--;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow)) {
-            PlayerHp++;
-            PlayerHunger++;
-            PlayerWarm++;
-        }
-        // ****************** FOR DEBUGGING ******************
     }
 
 }
