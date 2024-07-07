@@ -44,16 +44,15 @@ public class Inven_Bottom_Box : MonoBehaviour
     }
 
 
-    /*
+
     private void Update()
     {
         if (isItemIn)
         {
-            Inven_Box.onClick.AddListener(ItemUse_Button);
             ItemUse();
         }
     }
-    */
+
 
     //  아이템이 추가될 경우 아이템 저장
     public void ItemIn(GameObject item)
@@ -79,22 +78,24 @@ public class Inven_Bottom_Box : MonoBehaviour
     // 아이템 사용
     private void ItemUse()
     {
-        if (Input.GetKey(KeyCode.F)&& isItemIn)
+        if (Input.GetKeyDown(KeyCode.F)&& isItemIn)
         {
             isItemUse = true;
-
+            Item_count--;
+            Inven_Text.text = Item_count.ToString();
             //TODO: 아이템 사용해야합니다
             if (Item_count<=0)
             {
                 // 초기화
                 Init_InvenBox();
             }
+            isItemUse = false;
         }
-        isItemUse = false;
     }
 
-    private void ItemUse_Button()
+    public void ItemUse_Button()
     {
+        //TODO: button을 나가서 다른 구역을 누르고 들어와도 카운트가 올라가는 문제 잡아야함
         Click_count++;
         if (Click_count >= 2 && isItemIn)
         {
@@ -102,13 +103,14 @@ public class Inven_Bottom_Box : MonoBehaviour
             isItemUse = true;
             //TODO: 아이템 사용해야합니다
             Item_count--;
+            Inven_Text.text = Item_count.ToString();
             if (Item_count <= 0)
             {
                 // 초기화
                 Init_InvenBox();
             }
+            isItemUse = false;
         }
-        isItemUse = false;
     }
 
     private void ItemCountCheck()
