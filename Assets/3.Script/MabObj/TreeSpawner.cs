@@ -12,7 +12,7 @@ public class Position
 }
 
 [System.Serializable]
-public class ObjectData
+public class BigTreeData
 {
     public int objectNumber;
     public Position position;
@@ -22,42 +22,84 @@ public class ObjectData
 }
 
 [System.Serializable]
-public class ObjectDataList
+public class SmallTreeData
 {
-    public List<ObjectData> treeObjs;
+    public int objectNumber;
+    public Position position;
+    public bool enable;
+    public int berrCount;
+    public int type;
 }
 
+[System.Serializable]
+public class BigTreeDataList
+{
+    public List<BigTreeData> bigTreeObjs;
+}
+[System.Serializable]
+public class SmallTreeDataList
+{
+    public List<SmallTreeData> smallTreeObjs;
+}
 public class TreeSpawner : MonoBehaviour
 {
     public GameObject[] objectPrefabs;
-    private string jsonFileName = "MapObj/treeCoord";
-    private ObjectDataList objectDataList;
+    private string bigTreeJsonFileName = "MapObj/bigTreeData";
+    private string smallTreeJsonFileName = "MapObj/smallTreeData";
+    private BigTreeDataList bigObjectList;
+    private SmallTreeDataList smallObjectList;
 
     private void Start()
     {
-        TextAsset jsonTextAsset = Resources.Load<TextAsset>(jsonFileName);
-        if (jsonTextAsset != null)
+        TextAsset bigJsonText = Resources.Load<TextAsset>(bigTreeJsonFileName);
+        if (bigJsonText != null)
         {
-            string dataAsJson = jsonTextAsset.text;
-            objectDataList = JsonUtility.FromJson<ObjectDataList>(dataAsJson);
-            SpawnObjects(objectDataList.treeObjs);
+            string bigDataAsJson = bigJsonText.text;
+            bigObjectList = JsonUtility.FromJson<BigTreeDataList>(bigDataAsJson);
+            SpawnBigTrees(bigObjectList.bigTreeObjs);
         }
         else
         {
-            Debug.LogError("파일을 못찾았어요!");
+            Debug.LogError("BIG Tree Json Not Exist");
+        }
+
+        TextAsset smallJsonText = Resources.Load<TextAsset>(smallTreeJsonFileName);
+        if (smallJsonText != null)
+        {
+            string smallDataAsJson = smallJsonText.text;
+            smallObjectList = JsonUtility.FromJson<SmallTreeDataList>(smallDataAsJson);
+            SpawnSmallTrees(smallObjectList.smallTreeObjs);
+        }
+        else
+        {
+            Debug.LogError("SMALL Tree Json Not Exist");
         }
     }
 
-    private void SpawnObjects(List<ObjectData> objects)
+    private void SpawnBigTrees(List<BigTreeData> objects)
     {
-        foreach (ObjectData objData in objects)
+        foreach (BigTreeData objData in objects)
         {
             Vector3 position = new Vector3(objData.position.x, objData.position.y, objData.position.z);
             GameObject newObj = Instantiate(objectPrefabs[objData.type - 1], position, Quaternion.identity);
             newObj.transform.SetParent(gameObject.transform);
 
-            TreeController tree = newObj.GetComponent<TreeController>();
-            tree.InitializeObjData(objData);
+            TreeBigController treeB = newObj.GetComponent<TreeBigController>();
+            treeB.InitializeObjData(objData);
+        }
+    }
+
+    private void SpawnSmallTrees(List<SmallTreeData> objects)
+    {
+        foreach (SmallTreeData objData in objects)
+        {
+            Vector3 position = new Vector3(objData.position.x, objData.position.y, objData.position.z);
+            Debug.Log("222" + objData.type);
+            GameObject newObj = Instantiate(objectPrefabs[objData.type==5 ? 4 : 5], position, Quaternion.identity);
+            newObj.transform.SetParent(gameObject.transform);
+
+            TreeSmallController treeS = newObj.GetComponent<TreeSmallController>();
+            treeS.InitializeObjData(objData);
         }
     }
 
@@ -65,13 +107,13 @@ public class TreeSpawner : MonoBehaviour
     {
         //TODO: 저장시점이 현재는 데미지 받을때마다 여서 추후 저장타이밍 수정하기
 
-        var tree = objectDataList.treeObjs.FirstOrDefault(t => t.objectNumber == objectNumber);
+        var tree = bigObjectList.bigTreeObjs.FirstOrDefault(t => t.objectNumber == objectNumber);
         if (tree != null)
         {
             tree.enable = enable;
             tree.health = health;
-            string updatedJson = JsonUtility.ToJson(objectDataList, true);
-            File.WriteAllText(Path.Combine(Application.dataPath, "Resources", jsonFileName + ".json"), updatedJson);
+            string updatedJson = JsonUtility.ToJson(bigObjectList, true);
+            File.WriteAllText(Path.Combine(Application.dataPath, "Resources", bigTreeJsonFileName + ".json"), updatedJson);
         }
     }
 }

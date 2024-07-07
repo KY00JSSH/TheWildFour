@@ -2,8 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeBigController : TreeController
+public class TreeBigController : MonoBehaviour
 {
+    private int objectNumber;
+    private Vector3 position;
+    private bool enable = true;
+    private float health;
+    private int type;
+
+    public void InitializeObjData(BigTreeData data)
+    {
+        objectNumber = data.objectNumber;
+        position = new Vector3(data.position.x, data.position.y, data.position.z);
+        enable = data.enable;
+        health = data.health;
+        type = data.type;
+
+        transform.position = position;
+        gameObject.SetActive(enable);
+    }
+
     [SerializeField]
     private bool testBroke = false;
 
@@ -14,7 +32,6 @@ public class TreeBigController : TreeController
     {
         treeSpawner = FindObjectOfType<TreeSpawner>();
     }
-
 
     public void getDamage(float damage)
     {
