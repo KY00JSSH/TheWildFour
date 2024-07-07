@@ -15,23 +15,34 @@ public class PlayerMove : MonoBehaviour {
     public void ResetDash() { isAvailableDash = false; }
 
     // TODO : 대시 게이지 구현. 0707
-    private float TotalDashGage, DecDashGage, IncDashGage;
-
+    private float TotalDashGage, CurrentDashGage, DecDashGage, IncDashGage;
+    private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
     }
 
     private void Start() {
         isMove = false;
+
+        // TODO : JSON 구현 되면 default를 Save된 값으로 바꿀 것
+        TotalDashGage = defaultDashGage;
+        CurrentDashGage = TotalDashGage;
+        DecDashGage = defaultDecDashGage;
+        IncDashGage = defaultIncDashGage;
     }
 
     private void FixedUpdate() {
         LookatMouse();
 
-        if (isAvailableDash && Input.GetKey(KeyCode.LeftShift))
+        if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
+            Dash(true);
             Move(playerDashSpeed);
-        else
+        }
+        else {
+            Dash(false);
             Move(playerMoveSpeed);
+        }
+        Debug.Log(CurrentDashGage);
     }
 
     private void LookatMouse() {
@@ -46,6 +57,14 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
+    private void Dash(bool isDash) {
+        if (isDash) CurrentDashGage -= DecDashGage * Time.deltaTime;
+        else CurrentDashGage += IncDashGage * Time.deltaTime;
+        CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
+
+        if (CurrentDashGage == 0) isAvailableDash = false;
+        else if (CurrentDashGage > TotalDashGage * 0.2f) isAvailableDash = true;
+    }
 
     private void Move(float speed) {
         InputX = Input.GetAxisRaw("Horizontal");
