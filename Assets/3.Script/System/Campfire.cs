@@ -9,8 +9,8 @@ public class Campfire : MonoBehaviour {
     private float HeatRange = 5f;
     private bool isBurn = false;
 
-    // isPlayerNaer : ÇÃ·¹ÀÌ¾î°¡ ±ÙÃ³¿¡ ÀÖÀ» ¶§ true.
-    // TODO : ÃßÈÄ ¸ð´ÚºÒÀÌ Lock µÇ¾úÀ» ¶§·Î º¯°æ ÇÊ¿ä. 0708
+    // isPlayerNaer : ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ true.
+    // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Úºï¿½ï¿½ï¿½ Lock ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½. 0708
     private bool isPlayerNear = false;
 
     private void Awake() {
@@ -19,8 +19,8 @@ public class Campfire : MonoBehaviour {
     }
 
     private void Start() {
-        // ÃÑ Áö¼Ó½Ã°£ 100 . 1ÃÊ ´ç °¨¼Ò½Ã°£ 5
-        // ±âº» 20ÃÊ Áö¼Ó
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½ 100 . 1ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½Ã°ï¿½ 5
+        // ï¿½âº» 20ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         totalTime = 100f;
         currentTime = 0f;
         tickTime = 5f;
@@ -28,7 +28,7 @@ public class Campfire : MonoBehaviour {
 
     public void AddWood() {
         IncreaseTime(10f);
-        // TODO : ºûÀ» ¹àÈ÷´Â ·ÎÁ÷ ÇÊ¿ä. 0708
+        // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½. 0708
 
         if (currentTime > 0 && !isBurn) {
             StartCoroutine(Burn());
