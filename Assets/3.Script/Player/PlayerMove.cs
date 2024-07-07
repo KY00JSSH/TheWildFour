@@ -8,17 +8,21 @@ public class PlayerMove : MonoBehaviour {
     private const float constMoveSpeed = 0.02f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
-    private bool isAvailableDash = true;    // 대쉬 게이지에 따라서 설정되는 Flag
-    public void SetDash() {
-        isAvailableDash = true;
-    }
-    public void ResetDash() {
-        isAvailableDash = false;
-    }
-    
+    public static bool isMove { get; private set; }     // 외부 스크립트에서 현재 이동 상태를 알 수 있는 Flag
+
+    private bool isAvailableDash = true;                // 대쉬 게이지에 따라서 설정되는 Flag
+    public void SetDash() { isAvailableDash = true; }
+    public void ResetDash() { isAvailableDash = false; }
+
+    // TODO : 대시 게이지 구현. 0707
+    private float TotalDashGage, DecDashGage, IncDashGage;
 
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
+    }
+
+    private void Start() {
+        isMove = false;
     }
 
     private void FixedUpdate() {
@@ -46,6 +50,9 @@ public class PlayerMove : MonoBehaviour {
     private void Move(float speed) {
         InputX = Input.GetAxisRaw("Horizontal");
         InputZ = Input.GetAxisRaw("Vertical");
+
+        if (InputX != 0 || InputZ != 0) isMove = true;
+        else isMove = false;
 
         targetPosition = new Vector3(
             playerRigid.position.x + InputX * Time.deltaTime * constMoveSpeed * speed,
