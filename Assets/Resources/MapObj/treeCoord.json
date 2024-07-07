@@ -1,32 +1,70 @@
-[
-    {
-        "objectNumber": 1,
-        "position": {
-            "x": 0.0,
-            "y": 0,
-            "z": 2.0
+{
+    "treeObjs": [
+        {
+            "objectNumber": 1,
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 2.0
+            },
+            "enable": true,
+            "health": 10.0,
+            "type": 1
         },
-        "enable": true,
-        "health": 10.0
-    },
-    {
-        "objectNumber": 2,
-        "position": {
-            "x": 3.0,
-            "y": 0,
-            "z": 5.0
+        {
+            "objectNumber": 2,
+            "position": {
+                "x": 3.0,
+                "y": 0.0,
+                "z": 5.0
+            },
+            "enable": true,
+            "health": 10.0,
+            "type": 2
         },
-        "enable": true,
-        "health": 10.0
-    },
-    {
-        "objectNumber": 3,
-        "position": {
-            "x": 7.0,
-            "y": 0,
-            "z": 1.0
+        {
+            "objectNumber": 3,
+            "position": {
+                "x": 7.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "enable": true,
+            "health": 10.0,
+            "type": 3
         },
-        "enable": true,
-        "health": 10.0
-    }
-]
+        {
+            "objectNumber": 4,
+            "position": {
+                "x": 10.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "enable": false,
+            "health": 0.0,
+            "type": 4
+        },
+        {
+            "objectNumber": 5,
+            "position": {
+                "x": 6.0,
+                "y": 0.6000000238418579,
+                "z": 3.0
+            },
+            "enable": true,
+            "health": 10.0,
+            "type": 5
+        },
+        {
+            "objectNumber": 6,
+            "position": {
+                "x": 2.0,
+                "y": 0.6000000238418579,
+                "z": 3.0
+            },
+            "enable": true,
+            "health": 10.0,
+            "type": 6
+        }
+    ]
+}

@@ -424,8 +424,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77cfb129d1ec6f49a4c780b03a16008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 919132149155446097, guid: 645798ef0ab7c2449bec8a864f875334, type: 3}
-  jsonFileName: MapObj/treeCoord.json
+  objectPrefabs:
+  - {fileID: 8953302800316465039, guid: 344f64db4b59f3d4fa7972734a8f8f10, type: 3}
+  - {fileID: 8450664367426285181, guid: cfcca888140b3324fbd1ab8fdb4b0292, type: 3}
+  - {fileID: 7387808793908571948, guid: 16ba8c291d79cf042878c2a597501a9c, type: 3}
+  - {fileID: 4092250302300815680, guid: 63a4128be27a93048995f0de9efc0069, type: 3}
+  - {fileID: 2858622628047122850, guid: 9a490998c40707042810af5563795229, type: 3}
+  - {fileID: 7668029998092303662, guid: 2ae6b93bfa66ad3448d6514a3f943b0d, type: 3}
 --- !u!4 &1721556243
 Transform:
   m_ObjectHideFlags: 0
