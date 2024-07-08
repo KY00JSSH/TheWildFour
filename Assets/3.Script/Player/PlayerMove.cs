@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
-        player_ani = GetComponentInChildren<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
+        player_ani = GetComponentInParent<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
     }
 
     private void FixedUpdate() {
