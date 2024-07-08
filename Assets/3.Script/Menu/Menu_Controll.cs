@@ -10,6 +10,7 @@ public class Menu_Controll : MonoBehaviour {
      */
     [SerializeField] private Button[] buttons;
     private Vector3[] buttonsPosition;
+    private bool isGetKey = false;
 
     private int buttonIndex = -1;
 
@@ -24,10 +25,18 @@ public class Menu_Controll : MonoBehaviour {
     }
 
     private void Update() {
-        ButtonPress();
+        if (Input.anyKey) {
+            InitButtonEvent();
+            isGetKey = true;
+        }
+        if (isGetKey) {
+            ButtonPress();
+        }
     }
 
     private void ButtonPress() {
+
+        isGetKey = false;
         bool isButtonEscape = false;
 
         if (Input.GetKeyDown(KeyCode.B)) {
@@ -62,6 +71,7 @@ public class Menu_Controll : MonoBehaviour {
             buttons[buttons.Length - 1].gameObject.SetActive(true);
         }
 
+        Debug.Log("================================================");
         if ((0 <= buttonIndex && buttonIndex <= 4) || buttonIndex == 99) ButtonAction(isButtonEscape, buttonIndex);
 
     }
@@ -97,6 +107,7 @@ public class Menu_Controll : MonoBehaviour {
                 }
 
                 // buttonIndex 번호의 버튼 메소드 들고와야함
+                GetButtonScript(buttonIndex);
             }
             else if (buttonIndex == (buttons.Length - 1)) {
                 // 무기 버튼 활성화 시켜야함
@@ -105,5 +116,28 @@ public class Menu_Controll : MonoBehaviour {
         }
     }
 
+
+    private void GetButtonScript(int buttonIndex) {
+
+        IMenuButton buttonAction = buttons[buttonIndex].GetComponent<IMenuButton>();
+        if (buttonAction != null) {
+            Debug.Log(" 들어 오냐??? ");
+            buttons[buttonIndex].onClick.Invoke();
+            if (buttons[buttonIndex].interactable == false) {
+                Debug.LogWarning("Button at index " + buttonIndex + " is not interactable.");
+            }
+        }
+        else {
+            Debug.LogWarning($"스크립트 혹은 인터페이스 없음");
+        }
+
+    }
+
+    private void InitButtonEvent() {
+        for (int i = 0; i < buttons.Length; i++) {
+            buttons[i].interactable = false;
+            buttons[i].interactable = true;
+        }
+    }
 
 }
