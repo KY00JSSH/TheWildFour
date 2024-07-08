@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class Inven_DragDrop : MonoBehaviour
-{
+public class Inven_DragDrop : MonoBehaviour {
 
     private GraphicRaycaster _gr;
     private PointerEventData _ped;
@@ -21,13 +20,11 @@ public class Inven_DragDrop : MonoBehaviour
 
     private Inven_Bottom_Controll InvenCtrl;
 
-    private void Awake()
-    {
+    private void Awake() {
         Debug.Log("Awake 메서드 시작");
 
         _gr = GetComponent<GraphicRaycaster>();
-        if (_gr == null)
-        {
+        if (_gr == null) {
             Debug.LogError("GraphicRaycaster가 없음");
             return;
         }
@@ -39,8 +36,7 @@ public class Inven_DragDrop : MonoBehaviour
         Debug.Log("RaycastResult 리스트 생성됨: " + _rrList);
 
         InvenCtrl = FindObjectOfType<Inven_Bottom_Controll>();
-        if (InvenCtrl == null)
-        {
+        if (InvenCtrl == null) {
             Debug.LogError("Inven_Bottom_Controll 인스턴스를 찾을 수 없음");
         }
 
@@ -48,10 +44,8 @@ public class Inven_DragDrop : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (_ped == null || _gr == null)
-        {
+    private void Update() {
+        if (_ped == null || _gr == null) {
             // Debug.Log("?????");
             return;
         }
@@ -62,8 +56,7 @@ public class Inven_DragDrop : MonoBehaviour
         OnPointerUp();
     }
 
-    private T RaycastAndGetFirstComponent<T>() where T : Component
-    {
+    private T RaycastAndGetFirstComponent<T>() where T : Component {
         _rrList.Clear();
         _gr.Raycast(_ped, _rrList);
         Debug.Log("raycast component 확인 : " + _rrList[0]);
@@ -71,21 +64,17 @@ public class Inven_DragDrop : MonoBehaviour
         return _rrList[0].gameObject.GetComponent<T>();
     }
 
-    private void OnPointerDown()
-    {
+    private void OnPointerDown() {
 
-        if (_ped == null || _gr == null || _rrList == null)
-        {
+        if (_ped == null || _gr == null || _rrList == null) {
             Debug.Log("dlrj dkslsrjtrkxdk");
             return;
         }
         // 좌클릭 시작
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonDown(0)) {
             // 아이템을 갖고 있는 슬롯만 해당
             _beginDragSlot = RaycastAndGetFirstComponent<Inven_Bottom_Box>();
-            if (_beginDragSlot != null && _beginDragSlot.isItemIn)
-            {
+            if (_beginDragSlot != null && _beginDragSlot.isItemIn) {
                 // 위치 기억, 참조 등록
                 _beginDragIconTransform = _beginDragSlot.Inven_Item.transform;
                 _startDragIcon = _beginDragIconTransform.position;
@@ -101,30 +90,24 @@ public class Inven_DragDrop : MonoBehaviour
 
 
         }
-        else
-        {
+        else {
             _beginDragSlot = null;
         }
     }
 
-    private void OnPointerDrag()
-    {
+    private void OnPointerDrag() {
         if (_beginDragSlot == null) return;
 
-        if (Input.GetMouseButton(0))
-        {
+        if (Input.GetMouseButton(0)) {
             // 위치 이동
             _beginDragIconTransform.position =
                 _startDragIcon + (Input.mousePosition - _startDragCursor);
         }
     }
-    private void OnPointerUp()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
+    private void OnPointerUp() {
+        if (Input.GetMouseButtonUp(0)) {
             // End Drag
-            if (_beginDragSlot != null)
-            {
+            if (_beginDragSlot != null) {
                 // 위치 복원
                 _beginDragIconTransform.position = _startDragIcon;
 
