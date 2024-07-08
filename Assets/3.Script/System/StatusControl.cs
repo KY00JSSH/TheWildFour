@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *      [ READ ]
+ *      상태 부여하는 오브젝트 스크립트에서 플레이어에게 상태 부여
+ *      StatusControl.Instance.GiveStatus(Status status, PlayerStatus player)
+ *      
+ *      Unity 인스펙터에서 StatusControl 스크립트에 있는
+ *      각 Status의 Total Time, Tick Time (1초당 감소되는 게이지) 설정 필요
+ *      
+ */
+
 public enum Status {
     Heat,           // 열기
     Full,           // 포화 (회복)
