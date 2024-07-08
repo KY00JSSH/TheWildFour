@@ -91,6 +91,7 @@ public class Inven_Bottom_Box : MonoBehaviour
     // 아이템 사용
     private void ItemUse()
     {
+        if (Item_count == 0) return;
         isItemUse = true;
         Item_count--;
         Inven_Text.text = Item_count.ToString();

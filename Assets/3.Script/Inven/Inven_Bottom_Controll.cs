@@ -147,7 +147,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
                             return itemBoxNum;
                         }
                     }
-                    if ((box.isInvenBoxAvailable && Item.name != box.Inven_Item.name)
+                    else if ((box.isInvenBoxAvailable && Item.name != box.Inven_Item.name)
                         || (Item.name == box.Inven_Item.name && !box.isInvenBoxAvailable))
                     {
                         invenUseCount++;
@@ -175,8 +175,10 @@ public class Inven_Bottom_Controll : MonoBehaviour
         {
             for (int i = 0; i < inven_count; i++)
             {
+                Debug.Log("³»°¡ ¹» °Çµå·È´õ¶ó?"+i);
                 if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box))
                 {
+                    Debug.Log("³»°¡ ¹» °Çµå·È´õ¶ó ¹¹Áö ÁøÂ¥ ¿Ö Áö" + !box.isItemIn);
                     if (!box.isItemIn)
                     {
                         box.ItemIn(Item);
