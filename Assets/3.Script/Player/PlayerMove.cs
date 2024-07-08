@@ -5,8 +5,10 @@ public class PlayerMove : MonoBehaviour {
     private Vector3 targetPosition;
 
     private float InputX, InputZ;
-    private const float constMoveSpeed = 0.02f;
+    private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
+
+    private Animator player_ani; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
 
     private bool isAvailableDash = true;    // 대쉬 게이지에 따라서 설정되는 Flag
     public void SetDash() {
@@ -19,6 +21,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
+        player_ani = GetComponentInChildren<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
     }
 
     private void FixedUpdate() {
@@ -27,7 +30,7 @@ public class PlayerMove : MonoBehaviour {
         if (isAvailableDash && Input.GetKey(KeyCode.LeftShift))
             Move(playerDashSpeed);
         else
-            Move(playerMoveSpeed);
+            Move(playerMoveSpeed);        
     }
 
     private void LookatMouse() {
@@ -41,7 +44,7 @@ public class PlayerMove : MonoBehaviour {
                 new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
         }
     }
-
+    
 
     private void Move(float speed) {
         InputX = Input.GetAxisRaw("Horizontal");
@@ -53,5 +56,12 @@ public class PlayerMove : MonoBehaviour {
             playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * speed);
         playerRigid.MovePosition(targetPosition);
         //transform.position = playerRigid.position;
+
+
+        //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
+        float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
+        player_ani.SetFloat("Speed", currentSpeed);
+
+        Debug.Log($"속도 : {currentSpeed}");
     }
 }
