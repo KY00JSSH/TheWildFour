@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeSmallController : MonoBehaviour
-{
+public class TreeSmallController : MonoBehaviour {
     private int objectNumber;
     private Vector3 position;
     private bool enable;
@@ -12,8 +11,7 @@ public class TreeSmallController : MonoBehaviour
 
     public FoodIItemData berrieItem;
 
-    public void InitializeObjData(SmallTreeData data)
-    {
+    public void InitializeObjData(SmallTreeData data) {
         objectNumber = data.objectNumber;
         position = new Vector3(data.position.x, data.position.y, data.position.z);
         enable = data.enable;
@@ -24,27 +22,21 @@ public class TreeSmallController : MonoBehaviour
         gameObject.SetActive(enable);
     }
 
-    private void Start()
-    {
-        if (berrCount > 0)
-        {
+    private void Start() {
+        if (berrCount > 0) {
             InstantBerries(berrCount);
         }
     }
 
-    private void InstantBerries(int _berriesCnt)
-    {
-        for (int i = 0; i < _berriesCnt; i++)
-        {
-            if (i == 0)
-            {
+    private void InstantBerries(int _berriesCnt) {
+        for (int i = 0; i < _berriesCnt; i++) {
+            if (i == 0) {
                 GameObject dropItem = Instantiate(berrieItem.DropItemPrefab,
                     new Vector3(transform.position.x - 0.2f, transform.position.y, transform.position.z - 0.2f)
                     , Quaternion.identity);
                 dropItem.transform.SetParent(gameObject.transform);
             }
-            else
-            {
+            else {
                 GameObject dropItem = Instantiate(berrieItem.DropItemPrefab,
                    new Vector3(transform.position.x + 0.2f, transform.position.y, transform.position.z + 0.2f)
                    , Quaternion.identity);

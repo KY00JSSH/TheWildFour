@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemData", menuName = "ScriptableObjects/ItemData", order = 1)]
-public class ItemData : ScriptableObject
-{
+public class ItemData : ScriptableObject {
     [SerializeField] private int key;                        //아이템 id key
     [SerializeField] private string itemName;                    //아이템 이름
     [SerializeField] private string tooltip;                 //아이템 설명(마우스 오버시 표시설명)
