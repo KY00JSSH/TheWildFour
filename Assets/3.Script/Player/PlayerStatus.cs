@@ -1,15 +1,6 @@
 using System;
 using UnityEngine;
 
-public enum Status {
-    Heat,           // 열기
-    Full,           // 포화 (회복)
-    Satiety,        // 포만 (이동속도저하)
-    Poison,         // 중독
-    Bleeding,       // 출혈
-    Blizzard,       // 눈보라
-    Indigestion     // 소화불량
-}
 
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
@@ -74,6 +65,8 @@ public class PlayerStatus : MonoBehaviour {
 
         TakeWarmDamage();
         TakeHungerDamage();
+
+        Debug.Log(GetPlayerStatus( Status.Heat));
     }
 
 }

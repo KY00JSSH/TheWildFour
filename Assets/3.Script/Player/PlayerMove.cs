@@ -5,7 +5,7 @@ public class PlayerMove : MonoBehaviour {
     private Vector3 targetPosition;
 
     private float InputX, InputZ;
-    private const float constMoveSpeed = 0.02f;
+    private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
     public static bool isMove { get; private set; }     // 외부 스크립트에서 현재 이동 상태를 알 수 있는 Flag
