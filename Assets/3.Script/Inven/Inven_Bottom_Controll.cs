@@ -19,6 +19,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
 
     private GameObject Item;
     public GameObject Player;
+    private bool isInvenFull;
 
     private void Awake()
     {
@@ -48,8 +49,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
         {
             Vector3 invenPosition = new Vector3(InvenBoxPrefab.transform.position.x + i * 75, InvenBoxPrefab.transform.position.y, InvenBoxPrefab.transform.position.z);
             GameObject invenBoxPrefabs = Instantiate(InvenBoxPrefab, invenPosition, Quaternion.identity);
-
-            invenBoxPrefabs.transform.parent = transform;
+            invenBoxPrefabs.transform.SetParent(transform);
             invenBoxPrefabs.name = InvenBoxPrefab.name;
             invenBoxPrefabs.SetActive(false);
 
@@ -62,6 +62,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
     public void InvenCountUpgrade()
     {
         inven_count++;
+        isInvenFull = false;
         if (inven_count<= inven_Maxcount)
         {
             InvenTotal[inven_count].SetActive(true);
@@ -90,6 +91,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
                     if (cols[i].tag == "Item_Weapon" || cols[i].tag == "Item_Food" || cols[i].tag == "Item_Ingre" || cols[i].tag == "Item_Etc")
                     {
                         Debug.Log("아이템 찾음" + cols[i].name);
+                        Debug.Log("아이템 찾음" + cols[i].tag);
                         Item = cols[i].gameObject;
                         return true;
                     }
@@ -103,9 +105,6 @@ public class Inven_Bottom_Controll : MonoBehaviour
         }
         return false;
     }
-
-
-
 
     //TODO: 마우스로 클릭시 들어가야함
     public void ItemAdd()
@@ -129,20 +128,43 @@ public class Inven_Bottom_Controll : MonoBehaviour
     private int ItemBoxAvailableCheck()
     {
         int itemBoxNum;
+        int invenUseCount = 0;
+
         for (int i = 0; i < inven_count; i++)
         {
             if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box))
             {
-                if (box.isInvenBoxAvailable && box.isItemIn)
+
+                if(box.isItemIn)
                 {
-                    // 인벤에 80개로 꽉차지 않았다면 아이템 이름 검사
-                    if (Item.name == box.Inven_Item.name)
+                    if (box.isInvenBoxAvailable)
                     {
-                        itemBoxNum = i;
-                        return itemBoxNum;
+                        // 인벤에 80개로 꽉차지 않았다면 아이템 이름 검사
+                        if (Item.name == box.Inven_Item.name)
+                        {
+                            isInvenFull = false;
+                            itemBoxNum = i;
+                            return itemBoxNum;
+                        }
                     }
-                }                
+                    if ((box.isInvenBoxAvailable && Item.name != box.Inven_Item.name)
+                        || (Item.name == box.Inven_Item.name && !box.isInvenBoxAvailable))
+                    {
+                        invenUseCount++;
+                    }
+                }
+
             }
+        }
+
+        if (invenUseCount >= inven_count)
+        {
+            Debug.Log("인벤토리 사용 불가");
+            isInvenFull = true;
+        }
+        else
+        {
+            isInvenFull = false;
         }
         return 99;
     }
@@ -155,7 +177,6 @@ public class Inven_Bottom_Controll : MonoBehaviour
             {
                 if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box))
                 {
-                    Debug.Log(box.isItemIn);
                     if (!box.isItemIn)
                     {
                         box.ItemIn(Item);
@@ -178,5 +199,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
             }
         }
     }
+
+
 
 }

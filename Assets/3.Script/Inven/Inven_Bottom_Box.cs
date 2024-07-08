@@ -17,10 +17,10 @@ public class Inven_Bottom_Box : MonoBehaviour
     [SerializeField] private Text Inven_Text;
     [SerializeField] private Image Inven_Sprite;
 
-
     private int Item_count = 0;
 
     private int Click_count = 0;
+    private bool isMouseClick = false;
 
     // 아이템을 사용하는지 확인
     public bool isItemUse = false;
@@ -31,6 +31,7 @@ public class Inven_Bottom_Box : MonoBehaviour
 
     // 인벤 내부 아이템 
     public GameObject Inven_Item {get; private set; }
+
 
     private void Awake()
     {
@@ -43,13 +44,26 @@ public class Inven_Bottom_Box : MonoBehaviour
         Inven_Sprite.enabled = false;
     }
 
-
-
     private void Update()
     {
-        if (isItemIn)
+
+        if (Input.GetMouseButtonDown(0))
         {
-            ItemUse();
+            isMouseClick = true;
+            if (!IsCusorOutButton(Inven_Box))
+            {
+                Click_count = 0; 
+                isMouseClick = false;
+            }
+ 
+        }
+        if (isMouseClick)
+        {
+            Debug.Log("들어가니" + isItemIn);
+            if (isItemIn && Input.GetKeyDown(KeyCode.E))
+            {
+                ItemUse();
+            }
         }
     }
 
@@ -78,38 +92,25 @@ public class Inven_Bottom_Box : MonoBehaviour
     // 아이템 사용
     private void ItemUse()
     {
-        if (Input.GetKeyDown(KeyCode.F)&& isItemIn)
+        isItemUse = true;
+        Item_count--;
+        Inven_Text.text = Item_count.ToString();
+        //TODO: 아이템 사용해야합니다
+        if (Item_count <= 0)
         {
-            isItemUse = true;
-            Item_count--;
-            Inven_Text.text = Item_count.ToString();
-            //TODO: 아이템 사용해야합니다
-            if (Item_count<=0)
-            {
-                // 초기화
-                Init_InvenBox();
-            }
-            isItemUse = false;
+            // 초기화
+            Init_InvenBox();
         }
+        isItemUse = false;
     }
 
     public void ItemUse_Button()
     {
-        //TODO: button을 나가서 다른 구역을 누르고 들어와도 카운트가 올라가는 문제 잡아야함
         Click_count++;
+        Debug.Log("마우스 클릭 " + Click_count);
         if (Click_count >= 2 && isItemIn)
         {
-            Click_count = 0;
-            isItemUse = true;
-            //TODO: 아이템 사용해야합니다
-            Item_count--;
-            Inven_Text.text = Item_count.ToString();
-            if (Item_count <= 0)
-            {
-                // 초기화
-                Init_InvenBox();
-            }
-            isItemUse = false;
+            ItemUse();
         }
     }
 
@@ -141,8 +142,15 @@ public class Inven_Bottom_Box : MonoBehaviour
         isItemUse = false;
         isItemIn = false;
         isInvenBoxAvailable = true;
+        Inven_Item = null;
         //itemImgOj = transform.GetComponent<Image>().sprite;
         Inven_Sprite.enabled = false;
+    }
+
+    private bool IsCusorOutButton(Button button)
+    {
+        Vector2 CursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
+        return button.GetComponent<RectTransform>().rect.Contains(CursorPosition);
     }
 
 }
