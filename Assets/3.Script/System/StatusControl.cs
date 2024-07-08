@@ -43,7 +43,7 @@ public class StatusControl : MonoBehaviour {
     public static StatusControl Instance = null;
 
     private void Awake() {
-        if(Instance == null) {
+        if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -52,15 +52,24 @@ public class StatusControl : MonoBehaviour {
         }
     }
 
-    [SerializeField] private StatusData[] statusList = 
+    [SerializeField]
+    private StatusData[] statusList =
         new StatusData[Enum.GetValues(typeof(Status)).Length];
+
+    // UI 제공용 return 메서드
+    public float GetTotalTime(Status status) {
+        return statusList[(int)status].totalTime;
+    }
+    public float GetRemainTime(Status status) {
+        return statusList[(int)status].remainTime;
+    }
 
     public void GiveStatus(Status status, PlayerStatus player) {
         StatusData currentStatus = statusList[(int)status];
 
         if (currentStatus.isTicked)
             currentStatus.SetRemainTime(currentStatus.totalTime);
-        else 
+        else
             StartCoroutine(Tick(currentStatus, player));
     }
 
@@ -75,10 +84,5 @@ public class StatusControl : MonoBehaviour {
         }
         status.SetRemainTime(0f);
         player.ResetPlayerStatus(status.type);
-    }
-
-    private void Update() {
-
-        Debug.Log(statusList[(int)Status.Heat].remainTime);
     }
 }
