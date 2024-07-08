@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7319945971848932121}
-  - component: {fileID: 6501222683945056274}
   - component: {fileID: 5382819134107973500}
   m_Layer: 0
-  m_Name: TreeS01
+  m_Name: TreeSPrf01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6501222683945056274
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2858622628047122850}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.3, y: 1, z: 1.3}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5382819134107973500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24665ad154f61194db6a80be0b024709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  berrieItem: {fileID: 11400000, guid: 7a6ee3e6c5a6e9643b7617b0cb3d1ba5, type: 2}
 --- !u!1001 &2595837237867701180
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -36,11 +36,13 @@ public class BigTreeDataList
 {
     public List<BigTreeData> bigTreeObjs;
 }
+
 [System.Serializable]
 public class SmallTreeDataList
 {
     public List<SmallTreeData> smallTreeObjs;
 }
+
 public class TreeSpawner : MonoBehaviour
 {
     public GameObject[] objectPrefabs;
@@ -51,7 +53,7 @@ public class TreeSpawner : MonoBehaviour
 
     private void Start()
     {
-        TextAsset bigJsonText = Resources.Load<TextAsset>(bigTreeJsonFileName);
+        TextAsset bigJsonText = Resources.Load<TextAsset>(bigTreeJsonFileName);         //큰 나무 json Data Load
         if (bigJsonText != null)
         {
             string bigDataAsJson = bigJsonText.text;
@@ -63,7 +65,7 @@ public class TreeSpawner : MonoBehaviour
             Debug.LogError("BIG Tree Json Not Exist");
         }
 
-        TextAsset smallJsonText = Resources.Load<TextAsset>(smallTreeJsonFileName);
+        TextAsset smallJsonText = Resources.Load<TextAsset>(smallTreeJsonFileName);     //작은 나무 json Data Load
         if (smallJsonText != null)
         {
             string smallDataAsJson = smallJsonText.text;
@@ -94,7 +96,6 @@ public class TreeSpawner : MonoBehaviour
         foreach (SmallTreeData objData in objects)
         {
             Vector3 position = new Vector3(objData.position.x, objData.position.y, objData.position.z);
-            Debug.Log("222" + objData.type);
             GameObject newObj = Instantiate(objectPrefabs[objData.type==5 ? 4 : 5], position, Quaternion.identity);
             newObj.transform.SetParent(gameObject.transform);
 
