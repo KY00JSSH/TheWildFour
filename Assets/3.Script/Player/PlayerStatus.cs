@@ -65,8 +65,6 @@ public class PlayerStatus : MonoBehaviour {
 
         TakeWarmDamage();
         TakeHungerDamage();
-
-        Debug.Log(GetPlayerStatus(Status.Heat));
     }
 
 }
