@@ -47,7 +47,7 @@ public class Inven_Bottom_Controll : MonoBehaviour
         List<GameObject> InvenBox = new List<GameObject>();
         for (int i = 0; i < inven_Maxcount; i++)
         {
-            Vector3 invenPosition = new Vector3(InvenBoxPrefab.transform.position.x + i * 75, InvenBoxPrefab.transform.position.y, InvenBoxPrefab.transform.position.z);
+            Vector3 invenPosition = new Vector3(transform.position.x + i * 75, transform.position.y, InvenBoxPrefab.transform.position.z);
             GameObject invenBoxPrefabs = Instantiate(InvenBoxPrefab, invenPosition, Quaternion.identity);
             invenBoxPrefabs.transform.SetParent(transform);
             invenBoxPrefabs.name = InvenBoxPrefab.name;

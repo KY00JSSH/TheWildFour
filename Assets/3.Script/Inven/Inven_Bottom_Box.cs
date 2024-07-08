@@ -59,7 +59,6 @@ public class Inven_Bottom_Box : MonoBehaviour
         }
         if (isMouseClick)
         {
-            Debug.Log("들어가니" + isItemIn);
             if (isItemIn && Input.GetKeyDown(KeyCode.E))
             {
                 ItemUse();
@@ -107,7 +106,6 @@ public class Inven_Bottom_Box : MonoBehaviour
     public void ItemUse_Button()
     {
         Click_count++;
-        Debug.Log("마우스 클릭 " + Click_count);
         if (Click_count >= 2 && isItemIn)
         {
             ItemUse();
