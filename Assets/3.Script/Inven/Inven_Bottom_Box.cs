@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class Inven_Bottom_Box : MonoBehaviour {
 
     /*
-     Inven_Bottom_Controll 에서 받은 아이템 저장
-     
+     Inven_Bottom_Controll 에서 받은 아이템 저장    
      
      */
 

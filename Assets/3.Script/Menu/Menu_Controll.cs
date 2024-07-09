@@ -11,6 +11,7 @@ public class Menu_Controll : MonoBehaviour {
     [SerializeField] private Button[] buttons;
     private Vector3[] buttonsPosition;
     private bool isGetKey = false;
+    public bool isEscapeMain = true;
 
     private int buttonIndex = -1;
 
@@ -31,7 +32,10 @@ public class Menu_Controll : MonoBehaviour {
         }
         if (isGetKey) {
             int btIndex = ButtonPress();
+
             if ((0 <= btIndex && btIndex <= 4) || btIndex == 99) {
+
+                Debug.Log("Menu_Controll 스크립트 isEscapeMain가 변경될 위치" + isEscapeMain);
                 if (ButtonAction(btIndex)) GetButtonScript(btIndex);
             }
         }
@@ -66,9 +70,14 @@ public class Menu_Controll : MonoBehaviour {
             buttonIndex = 4;
         }
         else if (Input.GetKeyDown(KeyCode.Escape)) {
-            // 전체 원위치 
-            buttonIndex = 99;
-            buttons[buttons.Length - 1].gameObject.SetActive(true);
+            // 전체 원위치 => 하위 오브젝트가 열려있을 경우 닫기 버튼은 누리지 않게 해야함
+            // 예시 : 건설의 툴바가 열려있을 경우 툴바가 닫히고 원위치 시켜야함
+            if (isEscapeMain) {
+                Debug.Log("Menu_Controll 스크립트 isEscapeMain가 해당하는 위치" + isEscapeMain);
+
+                buttonIndex = 99;
+                buttons[buttons.Length - 1].gameObject.SetActive(true);
+            }
         }
         return buttonIndex;
     }
@@ -81,22 +90,19 @@ public class Menu_Controll : MonoBehaviour {
             case 1:
             case 2:
             case 3:
-                if (buttonIndex <= (buttons.Length - 1)) {
-                    for (int i = 0; i < buttons.Length; i++) {
-
-                        if (i == (buttons.Length - 1)) {
-                            buttons[i].gameObject.SetActive(false);
+                for (int i = 0; i < buttons.Length; i++) {
+                    if (i == (buttons.Length - 1)) {
+                        buttons[i].gameObject.SetActive(false);
+                    }
+                    else {
+                        RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
+                        if (i <= buttonIndex) {
+                            // 버튼이 위로 올라가야함
+                            buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
                         }
                         else {
-                            RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
-                            if (i <= buttonIndex) {
-                                // 버튼이 위로 올라가야함
-                                buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
-                            }
-                            else {
-                                // 버튼이 아래로 내려가야함
-                                buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - 150, buttonsPosition[i].z);
-                            }
+                            // 버튼이 아래로 내려가야함
+                            buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - 150, buttonsPosition[i].z);
                         }
                     }
                 }
@@ -122,7 +128,7 @@ public class Menu_Controll : MonoBehaviour {
 
         IMenuButton buttonAction = buttons[buttonIndex].GetComponent<IMenuButton>();
         if (buttonAction != null) {
-            buttonAction.ButtonOnClick();
+            buttonAction.I_ButtonOnClick();
             if (buttons[buttonIndex].interactable == false) {
                 Debug.LogWarning("Button at index " + buttonIndex + " is not interactable.");
             }
@@ -139,7 +145,7 @@ public class Menu_Controll : MonoBehaviour {
 
             IMenuButton buttonAction = buttons[i].GetComponent<IMenuButton>();
             if (buttonAction != null) {
-                buttonAction.ButtonOffClick();
+                buttonAction.I_ButtonOffClick();
                 if (buttons[i].interactable == false) {
                     Debug.LogWarning("Button at index " + i + " is not interactable.");
                 }

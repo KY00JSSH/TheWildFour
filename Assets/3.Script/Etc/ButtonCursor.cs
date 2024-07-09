@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonCursor : MonoBehaviour
-{
+public class ButtonCursor : MonoBehaviour {
     private static ButtonCursor instance;
     public static ButtonCursor Instance {
         get {
@@ -16,13 +15,17 @@ public class ButtonCursor : MonoBehaviour
     }
     private void Awake() {
         if (instance == null) {
-            Destroy(gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        // else{DonDestroyOnLoad(gameObject);}
+        else {
+            Destroy(gameObject);
+            // return => 하단에 초기화가 있을경우
+        }
     }
-
-    public static bool IsCusorOnButton(Button button) {
+    public bool IsCusorOnButton(Button button) {
         Vector2 CursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
         return button.GetComponent<RectTransform>().rect.Contains(CursorPosition);
     }
+
 }
