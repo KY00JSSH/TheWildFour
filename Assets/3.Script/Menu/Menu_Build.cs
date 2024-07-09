@@ -9,6 +9,7 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
      * 2. 마우스를 버튼에 올리면 하이라이트 + 툴팁
      */
 
+
     public Button[] buttons;
 
     public void ButtonOffClick() {
@@ -31,4 +32,11 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
             buttons[i].gameObject.SetActive(false);
         }
     }
+
+    private void ButtonTooltip() {
+
+    }
+    
+
+
 }
