@@ -26,11 +26,16 @@ public class Menu_Controll : MonoBehaviour {
     }
 
     private void Update() {
+        /*
         if (Input.anyKey) {
             InitButtonEvent();
             isGetKey = true;
         }
-        if (isGetKey) {
+        */
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.N) 
+            || Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape)) {
+
+            InitButtonEvent();
             int btIndex = ButtonPress();
 
             if ((0 <= btIndex && btIndex <= 4) || btIndex == 99) {
