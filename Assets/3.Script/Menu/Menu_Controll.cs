@@ -30,15 +30,16 @@ public class Menu_Controll : MonoBehaviour {
             isGetKey = true;
         }
         if (isGetKey) {
-            ButtonPress();
+            int btIndex = ButtonPress();
+            if ((0 <= btIndex && btIndex <= 4) || btIndex == 99) {
+                if (ButtonAction(btIndex)) GetButtonScript(btIndex);
+            }
         }
     }
 
-    private void ButtonPress() {
-
+    // 키값 확인
+    private int ButtonPress() {
         isGetKey = false;
-        bool isButtonEscape = false;
-
         if (Input.GetKeyDown(KeyCode.B)) {
             // 건설 열리기
             Debug.Log("건설 열려야함");
@@ -66,53 +67,53 @@ public class Menu_Controll : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.Escape)) {
             // 전체 원위치 
-            isButtonEscape = true;
             buttonIndex = 99;
             buttons[buttons.Length - 1].gameObject.SetActive(true);
         }
-
-        Debug.Log("================================================");
-        if ((0 <= buttonIndex && buttonIndex <= 4) || buttonIndex == 99) ButtonAction(isButtonEscape, buttonIndex);
-
+        return buttonIndex;
     }
 
 
+    // 인덱스로 위치 변경
+    public bool ButtonAction(int buttonIndex) {
+        switch (buttonIndex) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                if (buttonIndex <= (buttons.Length - 1)) {
+                    for (int i = 0; i < buttons.Length; i++) {
 
-    private void ButtonAction(bool isButtonEscape, int buttonIndex) {
-        if (isButtonEscape) {
-            // 버튼 나가기
-            for (int i = 0; i < buttons.Length; i++) {
-                RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
-                buttonRectTransform.anchoredPosition = buttonsPosition[i];
-            }
-        }
-        else {
-            if (buttonIndex <= (buttons.Length - 1)) {
-                for (int i = 0; i < buttons.Length; i++) {
-
-                    if (i == (buttons.Length - 1)) {
-                        buttons[i].gameObject.SetActive(false);
-                    }
-                    else {
-                        RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
-                        if (i <= buttonIndex) {
-                            // 버튼이 위로 올라가야함
-                            buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
+                        if (i == (buttons.Length - 1)) {
+                            buttons[i].gameObject.SetActive(false);
                         }
                         else {
-                            // 버튼이 아래로 내려가야함
-                            buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - 150, buttonsPosition[i].z);
+                            RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
+                            if (i <= buttonIndex) {
+                                // 버튼이 위로 올라가야함
+                                buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
+                            }
+                            else {
+                                // 버튼이 아래로 내려가야함
+                                buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - 150, buttonsPosition[i].z);
+                            }
                         }
                     }
                 }
-
-                // buttonIndex 번호의 버튼 메소드 들고와야함
-                GetButtonScript(buttonIndex);
-            }
-            else if (buttonIndex == (buttons.Length - 1)) {
+                return true;
+            case 4:
                 // 무기 버튼 활성화 시켜야함
                 Debug.Log("무기 버튼 선택됨 => 메소드 넣을 것");
-            }
+                return true;
+            case 99:
+                // 버튼 나가기
+                for (int i = 0; i < buttons.Length; i++) {
+                    RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
+                    buttonRectTransform.anchoredPosition = buttonsPosition[i];
+                }
+                return false;
+            default:
+                return false;
         }
     }
 
@@ -121,8 +122,7 @@ public class Menu_Controll : MonoBehaviour {
 
         IMenuButton buttonAction = buttons[buttonIndex].GetComponent<IMenuButton>();
         if (buttonAction != null) {
-            Debug.Log(" 들어 오냐??? ");
-            buttons[buttonIndex].onClick.Invoke();
+            buttonAction.ButtonOnClick();
             if (buttons[buttonIndex].interactable == false) {
                 Debug.LogWarning("Button at index " + buttonIndex + " is not interactable.");
             }
@@ -133,10 +133,20 @@ public class Menu_Controll : MonoBehaviour {
 
     }
 
+    // 버튼 이벤트 초기화
     private void InitButtonEvent() {
         for (int i = 0; i < buttons.Length; i++) {
-            buttons[i].interactable = false;
-            buttons[i].interactable = true;
+
+            IMenuButton buttonAction = buttons[i].GetComponent<IMenuButton>();
+            if (buttonAction != null) {
+                buttonAction.ButtonOffClick();
+                if (buttons[i].interactable == false) {
+                    Debug.LogWarning("Button at index " + i + " is not interactable.");
+                }
+            }
+            else {
+                Debug.LogWarning($"스크립트 혹은 인터페이스 없음");
+            }
         }
     }
 
