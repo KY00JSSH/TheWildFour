@@ -9,7 +9,7 @@ public class CameraControl2 : MonoBehaviour
 
     private void Update()
     {
-        // 좌우 회전
+        // 카메라 좌우 회전
         if (Input.GetKey(KeyCode.Q))
         {
             cinemachineFreeLook.m_XAxis.Value -= rotationSpeed * Time.deltaTime;
@@ -20,17 +20,18 @@ public class CameraControl2 : MonoBehaviour
         }
 
 
-
-
-
-
-        // 줌 -> 포기??
+        // 카메라 줌
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (scrollInput != 0)
         {
             float currentFOV = cinemachineFreeLook.m_Lens.FieldOfView;
-            float deltaFOV = scrollInput * 10f;
+            float deltaFOV = scrollInput * 10f * -1; // -1 안곱하면 마우스 스크롤이 반대가 됨. 직관성을 위해 이렇게 합니다.
             float newFOV = currentFOV + deltaFOV;
+
+            float minFOV = 70f;
+            float maxFOV = 100f;
+            newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);
+
             cinemachineFreeLook.m_Lens.FieldOfView = newFOV;
         }
     }
