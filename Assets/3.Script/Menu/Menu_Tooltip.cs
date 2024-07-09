@@ -24,7 +24,7 @@ public class Menu_Tooltip : MonoBehaviour {
     }
 
     private void Update() {
-        if (ButtonCursor.Instance.IsCusorOnButton(button)) {
+        if (Cursor.Instance.IsCusorOnButton(button)) {
             // 툴팁 표시
             if (itemData != null) {
                 // 메뉴용 
@@ -34,7 +34,7 @@ public class Menu_Tooltip : MonoBehaviour {
             }
             else {
                 // 인벤토리용
-                if (ButtonCursor.Instance.IsCusorOnButton(button)) {
+                if (Cursor.Instance.IsCusorOnButton(button)) {
                     InventoryItem();
                 }
             }
