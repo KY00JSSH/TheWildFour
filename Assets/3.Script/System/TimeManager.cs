@@ -26,6 +26,19 @@ public class TimeManager : MonoBehaviour {
 
     public float GetTimeScale() { return timeScale; }
     public float GetWorldTime() { return WorldTime; }
+    public int GetSurviveDay() { return SurviveDay; }
+    public int GetTotalDay() { return TotalDay; }
+
+    public float GetWorldHour() {
+        WorldHour = WorldTime / (360f / 24f);
+        if (WorldHour >= 24f) {
+            WorldHour -= 24f;
+            SurviveDay++;
+            TotalDay = (int)(WorldTime % (360f / 24f));
+        }
+
+        return WorldHour;
+    }
 
     private void Start() {
         //TODO: Save 구현 시 세이브 된 WorldTime으로 가져오기
@@ -37,16 +50,5 @@ public class TimeManager : MonoBehaviour {
     private void Update() {
         WorldTime += Time.deltaTime * timeScale;
         Debug.Log(TotalDay);
-    }
-
-    public float GetWorldHour() {
-        WorldHour = WorldTime / (360f / 24f);
-        if (WorldHour >= 24f) {
-            WorldHour -= 24f;
-            SurviveDay++;
-            TotalDay = (int)(WorldTime % (360f / 24f));
-        }
-
-        return WorldHour;
     }
 }
