@@ -15,7 +15,7 @@ public class Inven_DragDrop : MonoBehaviour {
     private Transform _beginDragIconTransform; // 해당 슬롯의 아이콘 트랜스폼
 
     private Vector3 _startDragIcon;// 드래그 시작 시 슬롯의 위치
-    private Vector3 _startDragCursor;// 드래그 시작 시 커서의 위치
+    private Vector3 _startDragMCursor;// 드래그 시작 시 커서의 위치
     private int _DragSlotIndex;
 
     private Inven_Bottom_Controll InvenCtrl;
@@ -78,7 +78,7 @@ public class Inven_DragDrop : MonoBehaviour {
                 // 위치 기억, 참조 등록
                 _beginDragIconTransform = _beginDragSlot.Inven_Item.transform;
                 _startDragIcon = _beginDragIconTransform.position;
-                _startDragCursor = Input.mousePosition;
+                _startDragMCursor = Input.mousePosition;
 
                 // 맨 위에 보이기
                 _DragSlotIndex = _beginDragSlot.transform.GetSiblingIndex();
@@ -101,7 +101,7 @@ public class Inven_DragDrop : MonoBehaviour {
         if (Input.GetMouseButton(0)) {
             // 위치 이동
             _beginDragIconTransform.position =
-                _startDragIcon + (Input.mousePosition - _startDragCursor);
+                _startDragIcon + (Input.mousePosition - _startDragMCursor);
         }
     }
     private void OnPointerUp() {

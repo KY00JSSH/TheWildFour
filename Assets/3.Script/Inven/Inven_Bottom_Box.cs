@@ -126,8 +126,8 @@ public class Inven_Bottom_Box : MonoBehaviour {
     }
 
     private bool IsCusorOutButton(Button button) {
-        Vector2 CursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
-        return button.GetComponent<RectTransform>().rect.Contains(CursorPosition);
+        Vector2 MCursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
+        return button.GetComponent<RectTransform>().rect.Contains(MCursorPosition);
     }
 
 }
