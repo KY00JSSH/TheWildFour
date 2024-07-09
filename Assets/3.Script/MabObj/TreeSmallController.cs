@@ -9,7 +9,7 @@ public class TreeSmallController : MonoBehaviour {
     private int berrCount;
     private int type;
 
-    public FoodIItemData berrieItem;
+    public FoodItemData berrieItem;
 
     public void InitializeObjData(SmallTreeData data) {
         objectNumber = data.objectNumber;
