@@ -10,6 +10,9 @@ public class Campfire : MonoBehaviour, IFireLight {
     private float HeatRange = 5f;
     private bool isBurn = false;
 
+    public float GetTotalTime() { return totalTime; }
+    public float GetCurrentTime() { return currentTime; }
+
     // isPlayerNaer : 플레이어가 근처에 있을 때 true.
     // TODO : 추후 모닥불이 Lock 되었을 때로 변경 필요. 0708
     private bool isPlayerNear = false;
@@ -27,7 +30,7 @@ public class Campfire : MonoBehaviour, IFireLight {
         // 기본 20초 지속
         totalTime = 100f;
         currentTime = 0f;
-        tickTime = 5f;
+        tickTime = 2f;
     }
 
     public void AddWood() {
@@ -65,8 +68,6 @@ public class Campfire : MonoBehaviour, IFireLight {
                 }
             }
         }
-
-        
 
         if (Input.GetKeyDown(KeyCode.Space) && isPlayerNear) {
             AddWood();

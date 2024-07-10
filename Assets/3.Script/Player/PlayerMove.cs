@@ -8,6 +8,8 @@ public class PlayerMove : MonoBehaviour {
     private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
+    private Animator player_ani; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
+
     public static bool isMove { get; private set; }     // 외부 스크립트에서 현재 이동 상태를 알 수 있는 Flag
 
     private bool isAvailableDash = true;                // 대쉬 게이지에 따라서 설정되는 Flag
@@ -20,6 +22,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
+        player_ani = GetComponentInParent<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
     }
 
     private void Start() {
@@ -63,7 +66,7 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
-        else if (CurrentDashGage > TotalDashGage * 0.2f) SetDash();
+        else if (CurrentDashGage == TotalDashGage) SetDash();
     }
 
     private void Move(float speed) {
@@ -79,5 +82,12 @@ public class PlayerMove : MonoBehaviour {
             playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * speed);
         playerRigid.MovePosition(targetPosition);
         //transform.position = playerRigid.position;
+
+
+        //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
+        float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
+        player_ani.SetFloat("Speed", currentSpeed);
+
+        // Debug.Log($"속도 : {currentSpeed}");
     }
 }
