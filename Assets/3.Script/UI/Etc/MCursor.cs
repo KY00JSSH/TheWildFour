@@ -28,9 +28,10 @@ public class MCursor : MonoBehaviour {
             Destroy(gameObject);
             // return => 하단에 초기화가 있을경우
         }
-
+        /*
         Cursor.visible = false;
         transform_cursor.pivot = Vector2.up;
+        */
 
     }
 

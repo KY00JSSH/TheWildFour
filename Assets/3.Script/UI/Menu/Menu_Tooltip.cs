@@ -12,6 +12,8 @@ public class Menu_Tooltip : MonoBehaviour {
      2. 아이템 툴팁
         - 아이템이 들어오고 나서 찾아야함      
      */
+    [SerializeField]private Menu_Controll menuControll;
+
     private Button button;
     [SerializeField] private ItemData itemData;
 
@@ -21,6 +23,8 @@ public class Menu_Tooltip : MonoBehaviour {
 
     private void Awake() {
         button = GetComponent<Button>();
+        menuControll = FindObjectOfType<Menu_Controll>();
+
     }
 
     private void Update() {
@@ -28,20 +32,26 @@ public class Menu_Tooltip : MonoBehaviour {
             // 툴팁 표시
             if (itemData != null) {
                 // 메뉴용 
-                tooltipbox.gameObject.SetActive(true);
-                _titleText.text = itemData.ItemName;
-                _contentText.text = itemData.Description;
+                MenuTooltip();
             }
             else {
                 // 인벤토리용
                 if (MCursor.Instance.IsCusorOnButton(button)) {
-                    InventoryItem();
+                    InvenItemTooltip();
                 }
             }
         }
     }
 
-    private void InventoryItem() {
+    private void MenuTooltip() {
+        menuControll.ButtonMove(400, false);
+        tooltipbox.gameObject.SetActive(true);
+        _titleText.text = itemData.ItemName;
+        _contentText.text = itemData.Description;
+    }
+
+
+    private void InvenItemTooltip() {
         Transform _inventoryItem = transform.GetChild(1);
         GameObject inventoryItem = _inventoryItem.gameObject;
         if (inventoryItem != null && inventoryItem.GetComponent<Image>().enabled) {

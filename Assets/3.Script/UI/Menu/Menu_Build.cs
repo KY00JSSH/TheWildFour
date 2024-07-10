@@ -10,13 +10,11 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
      * 
      */
 
-    [SerializeField] private Menu_Controll menuControll;
-    public Button[] buttons;
+    public Button[] Lowbuttons;
+    private Menu_Controll menuControll;
     private void Awake() {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
-
-
 
     // 상위 버튼에서 사용함
     public void I_ButtonOnClick() {
@@ -28,38 +26,36 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
         ButtonPositionOff();
     }
 
-    // 해당 버튼을 마우스 클릭할때 사용함
+    // 하위 버튼이 클릭될때 자동 불러가야함
     public void ButtonOffClick() {
         TooltipOff();
-        menuControll.ButtonAction(99);
+        menuControll.Escape();
         ButtonPositionOff();
     }
 
+    // 마우스 클릭 실행
     public void ButtonOnClick() {
-        // 위치 변경하고 상위 스크립트의 
-        menuControll.ButtonAction(0);
+        // 위치 변경 -> 상위 스크립트의 위치를 더 내려야할것같음
+        menuControll.ButtonMove(150, false);
         ButtonPosition();
     }
 
     // 버튼의 위치 잡기
     public void ButtonPosition() {
-        for (int i = 0; i < buttons.Length; i++) {
-            buttons[i].gameObject.SetActive(true);
+        for (int i = 0; i < Lowbuttons.Length; i++) {
+            Lowbuttons[i].gameObject.SetActive(true);
         }
-        menuControll.isEscapeMain = false;
-        Debug.Log("Menu_Build스크립트 ButtonPosition()가 불러오는 위치");
     }
 
     public void ButtonPositionOff() {
-        for (int i = 0; i < buttons.Length; i++) {
-            buttons[i].gameObject.SetActive(false);
+        for (int i = 0; i < Lowbuttons.Length; i++) {
+            Lowbuttons[i].gameObject.SetActive(false);
         }
-        menuControll.isEscapeMain = true;
     }
 
     public void TooltipOff() {
-        for (int i = 0; i < buttons.Length; i++) {
-            Menu_Tooltip tootip = buttons[i].gameObject.GetComponent<Menu_Tooltip>();
+        for (int i = 0; i < Lowbuttons.Length; i++) {
+            Menu_Tooltip tootip = Lowbuttons[i].gameObject.GetComponent<Menu_Tooltip>();
             tootip.tooltipbox.SetActive(false);
         }
     }
