@@ -30,7 +30,7 @@ public class Menu_Tooltip : MonoBehaviour {
                 // 메뉴용 
                 tooltipbox.gameObject.SetActive(true);
                 _titleText.text = itemData.ItemName;
-                _contentText.text = itemData.ToolTip;
+                _contentText.text = itemData.Description;
             }
             else {
                 // 인벤토리용
@@ -48,7 +48,7 @@ public class Menu_Tooltip : MonoBehaviour {
             Debug.Log("Item_Input 아이템이 있음" + inventoryItem.name);
             tooltipbox.gameObject.SetActive(true);
             _titleText.text = itemData.ItemName;
-            _contentText.text = itemData.ToolTip;
+            _contentText.text = itemData.Description;
         }
         else {
             Debug.Log("Item_Input 아이템이 없음");

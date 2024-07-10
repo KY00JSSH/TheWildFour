@@ -20,7 +20,6 @@ public class TimeUI : MonoBehaviour {
     private void Update() {
         worldHour = (int)timeManager.GetWorldHour();
         surviveDay = timeManager.GetSurviveDay();
-        silderValue = timeManager.GetWorldHour() - 6;
         if (worldHour > 12) { // ¹ã
             worldHour -= 12;
             time[0].text = string.Format("{0} PM", worldHour);
@@ -32,12 +31,19 @@ public class TimeUI : MonoBehaviour {
         }
         time[1].text = string.Format("ÀÏ : {0}", surviveDay);
 
-        if (worldHour >=6) { // ³·
+        if (timeManager.isDay()) { // ³·
+
+            silderValue = timeManager.GetWorldHour() - 6;
             timeIcon.sprite = timeIcons[0];
             timeSlider.value = silderValue / 12;
         }
         else {
-
+            if (timeManager.GetWorldHour() <= 6) {
+                silderValue = timeManager.GetWorldHour() + 6;
+            }
+            else {
+                silderValue = timeManager.GetWorldHour() - 18;
+            }
             timeIcon.sprite = timeIcons[1];
             timeSlider.value = silderValue / 12;
         }
