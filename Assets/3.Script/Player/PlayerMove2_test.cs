@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class PlayerMove2_test : MonoBehaviour
 {
-    private CapsuleCollider collider;
+    [SerializeField] private Animator player_ani; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
     private Rigidbody playerRigid;
+    [SerializeField] private LayerMask layerMask;/**/
     private Vector3 targetPosition;
+    
 
     private float InputX, InputZ;
     private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
-    private Animator player_ani; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
 
     private bool isAvailableDash = true;    // 대쉬 게이지에 따라서 설정되는 Flag
     public void SetDash()
@@ -25,19 +26,21 @@ public class PlayerMove2_test : MonoBehaviour
 
     private void Awake()
     {
-        collider = GetComponent<CapsuleCollider>();
+       
         playerRigid = GetComponent<Rigidbody>();
-        player_ani = GetComponentInParent<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
+        player_ani = GetComponentInChildren<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
     }
 
     private void FixedUpdate()
     {
         LookatMouse();
 
-        if (isAvailableDash && Input.GetKey(KeyCode.LeftShift))
-            Move(playerDashSpeed);
-        else
-            Move(playerMoveSpeed);
+        //if (isAvailableDash && Input.GetKey(KeyCode.LeftShift))
+        //    Move(playerDashSpeed);
+        //else
+        //    Move(playerMoveSpeed);
+
+        Move();
     }
 
     private void LookatMouse()
@@ -49,29 +52,42 @@ public class PlayerMove2_test : MonoBehaviour
         if (GroupPlane.Raycast(cameraRay, out rayLength))
         {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            playerRigid.transform.LookAt(
-                new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
+            //playerRigid.transform.LookAt(
+            //    new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
+            Vector3 direction = (pointTolook - transform.position).normalized;                            /**/
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));  /**/
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);/**/
         }
     }
 
 
-    private void Move(float speed)
+    private void Move(/*float speed*/)
     {
         InputX = Input.GetAxisRaw("Horizontal");
         InputZ = Input.GetAxisRaw("Vertical");
 
-        targetPosition = new Vector3(
-            playerRigid.position.x + InputX * Time.deltaTime * constMoveSpeed * speed,
-            playerRigid.position.y,
-            playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * speed);
-        playerRigid.MovePosition(targetPosition);
-        //transform.position = playerRigid.position;
+        //targetPosition = new Vector3(
+        //    playerRigid.position.x + InputX * Time.deltaTime * constMoveSpeed * speed,
+        //    playerRigid.position.y,
+        //    playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * speed);
+        //playerRigid.MovePosition(targetPosition);
+
+        float speed = (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) ? playerDashSpeed : playerMoveSpeed;/**/
+
+        Vector3 moveDirection = new Vector3(InputX, 0, InputZ).normalized;                            /**/
+        targetPosition = transform.position + moveDirection * constMoveSpeed * speed * Time.deltaTime;/**/
+        playerRigid.MovePosition(targetPosition);                                                     /**/
+
 
 
         //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
-        float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
-        player_ani.SetFloat("Speed", currentSpeed);
+        //float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
+        //player_ani.SetFloat("Speed", currentSpeed);
 
-        Debug.Log($"속도 : {currentSpeed}");
+        player_ani.SetFloat("Horizontal", InputX);/**/
+        player_ani.SetFloat("Vertical", InputZ);  /**/
+        player_ani.SetFloat("Speed", moveDirection.magnitude * speed);  /**/
+
+        Debug.Log($"이동 속도: {new Vector3(InputX, 0, InputZ).magnitude * speed}");
     }
 }
