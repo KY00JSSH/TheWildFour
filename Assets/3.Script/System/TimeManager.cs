@@ -15,7 +15,7 @@ public class TimeManager : MonoBehaviour {
         else
             Destroy(gameObject);
 
-        timeScale = 1f;
+        timeScale = 50f;
     }
 
     [SerializeField] private float timeScale;
@@ -32,10 +32,29 @@ public class TimeManager : MonoBehaviour {
     public int GetSurviveDay() { return SurviveDay; }
     public int GetTotalDay() { return TotalDay; }
 
+    public bool isDay() {
+        if (WorldHour >= 6f && WorldHour <= 18f) return true;
+        else return false;
+    }
+
+    /*
+    public float GetSliderValue() {
+        // 아침 6시 ~ 저녁 6시 : 한바퀴
+        // 저녁 6시 ~ 아침 6시 : 한바퀴
+        /// 한 바퀴 = 24시간
+
+        if (WorldHour >= 6f && WorldHour <= 18f)
+            return Mathf.InverseLerp(6f, 18f, WorldHour);
+        else if (WorldHour > 18f)
+            return Mathf.InverseLerp(18f, 24f, WorldHour);
+        else if (WorldHour < 6f)
+            return Mathf.InverseLerp(-6f, 6f, WorldHour);
+    }
+    */
 
     private void Start() {
         //TODO: Save 구현 시 세이브 된 WorldTime으로 가져오기
-        WorldTime = 80f;
+        WorldTime = 90f;
         WorldHour = WorldTime / (360f / 24f) % 24;
         SurviveDay = 1;
         TotalDay = (int)((WorldTime - 90f) / 360f) + 1;
