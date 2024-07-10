@@ -7,6 +7,11 @@ public class CameraControl2 : MonoBehaviour
     public float rotationSpeed = 100f;
     public float zoomSpeed = 2f;
 
+    private void Awake() {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        cinemachineFreeLook.Follow = player.transform;
+        cinemachineFreeLook.LookAt = player.transform;
+    }
     private void Update()
     {
         // 카메라 좌우 회전

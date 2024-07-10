@@ -66,7 +66,7 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
-        else if (CurrentDashGage > TotalDashGage * 0.2f) SetDash();
+        else if (CurrentDashGage == TotalDashGage) SetDash();
     }
 
     private void Move(float speed) {
@@ -88,6 +88,6 @@ public class PlayerMove : MonoBehaviour {
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
         player_ani.SetFloat("Speed", currentSpeed);
 
-        Debug.Log($"속도 : {currentSpeed}");
+        // Debug.Log($"속도 : {currentSpeed}");
     }
 }
