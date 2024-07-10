@@ -20,6 +20,8 @@ public class FireUI : MonoBehaviour {
         }
 
         SettingFireSliderPosition();
+
+        SettingFireSliderSize(); ;
     }
 
     private int FireObjectNumCheck() {
@@ -49,11 +51,34 @@ public class FireUI : MonoBehaviour {
 
             RectTransform fireSliderPosition = fireSliders[i].GetComponent<RectTransform>();
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(fireObjects[i].transform.position);
-            screenPosition.y += 50f;
+
+            // 화면상의 멀리있는 물체와 가까이 있는 물체의 슬라이더의 y좌표 보정값
+            float depthFactor = Mathf.Clamp(15f / screenPosition.z, 0.7f, 5f);
+            screenPosition.y += 50f * depthFactor;
+
             fireSliderPosition.position = screenPosition;
+
+
             fireSliders[i].GetComponent<Slider>().value = SliderValueCal(i);
         }
     }
+
+    private void SettingFireSliderSize() {
+        for (int i = 0; i < fireSliders.Count; i++) {
+            RectTransform fireSliderPosition = fireSliders[i].GetComponent<RectTransform>();
+            Renderer fireObjectRenderer = fireObjects[i].transform.GetChild(0).GetComponent<Renderer>();
+            if (fireObjectRenderer != null) {
+                Bounds bounds = fireObjectRenderer.bounds;
+                Vector3 screenMin = Camera.main.WorldToScreenPoint(bounds.min);
+                Vector3 screenMax = Camera.main.WorldToScreenPoint(bounds.max);
+                float width = Mathf.Abs(screenMax.x - screenMin.x);
+                float height = Mathf.Abs(screenMax.y - screenMin.y);
+
+                fireSliderPosition.sizeDelta = new Vector2(width, height / 5);
+            }
+        }
+    }
+
 
     private float SliderValueCal(int i) {
         float sliderValue = fireObjects[i].GetComponent<FireObject>().GetCurrentTime() / fireObjects[i].GetComponent<FireObject>().GetTotalTime();
