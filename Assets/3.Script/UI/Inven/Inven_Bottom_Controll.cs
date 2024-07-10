@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inven_Bottom_Controll : MonoBehaviour
-{
+public class Inven_Bottom_Controll : MonoBehaviour {
 
     /*
      1. inven_count만큼 인벤 프리펩 생성
@@ -19,37 +18,31 @@ public class Inven_Bottom_Controll : MonoBehaviour
 
     private GameObject Item;
     public GameObject Player;
+    private bool isInvenFull;
 
-    private void Awake()
-    {
+    private void Awake() {
         inven_count = 8;
         InvenTotal = InitInven();
         Debug.Log("전체 인벤" + InvenTotal.Count);
-        for (int i = 0; i < inven_count; i++)
-        {
+        for (int i = 0; i < inven_count; i++) {
             InvenTotal[i].SetActive(true);
         }
     }
 
-    private void Update()
-    {
-        if (ItemGetCheck())
-        {
+    private void Update() {
+        if (ItemGetCheck()) {
             ItemAdd();
             return;
         }
     }
 
     // 미리 inven_Maxcount만큼 pooling 해놓음
-    private List<GameObject> InitInven()
-    {
+    private List<GameObject> InitInven() {
         List<GameObject> InvenBox = new List<GameObject>();
-        for (int i = 0; i < inven_Maxcount; i++)
-        {
-            Vector3 invenPosition = new Vector3(InvenBoxPrefab.transform.position.x + i * 75, InvenBoxPrefab.transform.position.y, InvenBoxPrefab.transform.position.z);
+        for (int i = 0; i < inven_Maxcount; i++) {
+            Vector3 invenPosition = new Vector3(transform.position.x + i * 75, transform.position.y, InvenBoxPrefab.transform.position.z);
             GameObject invenBoxPrefabs = Instantiate(InvenBoxPrefab, invenPosition, Quaternion.identity);
-
-            invenBoxPrefabs.transform.parent = transform;
+            invenBoxPrefabs.transform.SetParent(transform);
             invenBoxPrefabs.name = InvenBoxPrefab.name;
             invenBoxPrefabs.SetActive(false);
 
@@ -59,15 +52,13 @@ public class Inven_Bottom_Controll : MonoBehaviour
     }
 
     // inven upgrade 시 함수 호출하면 인벤토리 추가 활성화
-    public void InvenCountUpgrade()
-    {
+    public void InvenCountUpgrade() {
         inven_count++;
-        if (inven_count<= inven_Maxcount)
-        {
+        isInvenFull = false;
+        if (inven_count <= inven_Maxcount) {
             InvenTotal[inven_count].SetActive(true);
         }
-        else
-        {
+        else {
             return;
         }
     }
@@ -75,28 +66,23 @@ public class Inven_Bottom_Controll : MonoBehaviour
 
 
     // 사용자가 space를 눌렀을 경우
-    private bool ItemGetCheck()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+    private bool ItemGetCheck() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             // 거리 5안쪽의 콜라이더 전체 검출
             //TODO: 플레이어 앞쪽으로만 콜라이더 검출하게 해야함
             Collider[] cols = Physics.OverlapSphere(Player.transform.position, 5.0f);
-            if (cols.Length > 0)
-            {
+            if (cols.Length > 0) {
 
-                for (int i = 0; i < cols.Length; i++)
-                {
-                    if (cols[i].tag == "Item_Weapon" || cols[i].tag == "Item_Food" || cols[i].tag == "Item_Ingre" || cols[i].tag == "Item_Etc")
-                    {
+                for (int i = 0; i < cols.Length; i++) {
+                    if (cols[i].tag == "Item_Weapon" || cols[i].tag == "Item_Food" || cols[i].tag == "Item_Ingre" || cols[i].tag == "Item_Etc") {
                         Debug.Log("아이템 찾음" + cols[i].name);
+                        Debug.Log("아이템 찾음" + cols[i].tag);
                         Item = cols[i].gameObject;
                         return true;
                     }
                 }
             }
-            else
-            {
+            else {
                 Debug.Log("플레이어 주변 아이템 없음");
                 Item = null;
             }
@@ -104,21 +90,15 @@ public class Inven_Bottom_Controll : MonoBehaviour
         return false;
     }
 
-
-
-
     //TODO: 마우스로 클릭시 들어가야함
-    public void ItemAdd()
-    {   
+    public void ItemAdd() {
         int invenindex = ItemBoxAvailableCheck();
         // invencount 만큼 인벤을 돌면서 찾은 아이템이 있는 지 확인
-        if (invenindex != 99)
-        {
+        if (invenindex != 99) {
             // 기존 인벤에 있던 아이템일 경우 아이템 count 증가
             ItemAddInven(invenindex);
         }
-        else
-        {
+        else {
             // 없다면 신규 추가
             NewItemAddInven();
         }
@@ -126,38 +106,46 @@ public class Inven_Bottom_Controll : MonoBehaviour
     }
 
     // 인벤토리가 열려있는 개수 만큼 돌려서 같은 아이템 검사
-    private int ItemBoxAvailableCheck()
-    {
+    private int ItemBoxAvailableCheck() {
         int itemBoxNum;
-        for (int i = 0; i < inven_count; i++)
-        {
-            if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box))
-            {
-                if (box.isInvenBoxAvailable && box.isItemIn)
-                {
-                    // 인벤에 80개로 꽉차지 않았다면 아이템 이름 검사
-                    if (Item.name == box.Inven_Item.name)
-                    {
-                        itemBoxNum = i;
-                        return itemBoxNum;
+        int invenUseCount = 0;
+
+        for (int i = 0; i < inven_count; i++) {
+            if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box)) {
+
+                if (box.isItemIn) {
+                    if (box.isInvenBoxAvailable) {
+                        // 인벤에 80개로 꽉차지 않았다면 아이템 이름 검사
+                        if (Item.name == box.Inven_Item.name) {
+                            isInvenFull = false;
+                            itemBoxNum = i;
+                            return itemBoxNum;
+                        }
                     }
-                }                
+                    else if ((box.isInvenBoxAvailable && Item.name != box.Inven_Item.name)
+                        || (Item.name == box.Inven_Item.name && !box.isInvenBoxAvailable)) {
+                        invenUseCount++;
+                    }
+                }
+
             }
+        }
+
+        if (invenUseCount >= inven_count) {
+            Debug.Log("인벤토리 사용 불가");
+            isInvenFull = true;
+        }
+        else {
+            isInvenFull = false;
         }
         return 99;
     }
 
-    private void NewItemAddInven()
-    {
-        if (Item != null)
-        {
-            for (int i = 0; i < inven_count; i++)
-            {
-                if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box))
-                {
-                    Debug.Log(box.isItemIn);
-                    if (!box.isItemIn)
-                    {
+    private void NewItemAddInven() {
+        if (Item != null) {
+            for (int i = 0; i < inven_count; i++) {
+                if (InvenTotal[i].TryGetComponent(out Inven_Bottom_Box box)) {
+                    if (!box.isItemIn) {
                         box.ItemIn(Item);
                         Debug.Log("아이템 확인 " + Item.name);
                         break;
@@ -168,15 +156,14 @@ public class Inven_Bottom_Controll : MonoBehaviour
 
     }
 
-    private void ItemAddInven(int index)
-    {
-        if (Item != null)
-        {
-            if (InvenTotal[index].TryGetComponent(out Inven_Bottom_Box box))
-            {
+    private void ItemAddInven(int index) {
+        if (Item != null) {
+            if (InvenTotal[index].TryGetComponent(out Inven_Bottom_Box box)) {
                 box.ItemIn(Item);
             }
         }
     }
+
+
 
 }

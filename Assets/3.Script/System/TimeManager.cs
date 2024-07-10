@@ -21,6 +21,7 @@ public class TimeManager : MonoBehaviour {
     [SerializeField] private float timeScale;
     private float WorldTime;
     private float WorldHour;
+
     private int SurviveDay;
     private int TotalDay;
 
@@ -54,7 +55,7 @@ public class TimeManager : MonoBehaviour {
 
     private void Start() {
         //TODO: Save 구현 시 세이브 된 WorldTime으로 가져오기
-        WorldTime = 90f;
+        WorldTime =110f;
         WorldHour = WorldTime / (360f / 24f) % 24;
         SurviveDay = 1;
         TotalDay = (int)((WorldTime - 90f) / 360f) + 1;
