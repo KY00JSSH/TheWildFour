@@ -21,6 +21,7 @@ public class TimeManager : MonoBehaviour {
     [SerializeField] private float timeScale;
     private float WorldTime;
     private float WorldHour;
+
     private int SurviveDay;
     private int TotalDay;
 
