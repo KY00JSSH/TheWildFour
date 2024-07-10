@@ -5,34 +5,61 @@ using UnityEngine.UI;
 
 public class FireUI : MonoBehaviour {
     public GameObject player;
-    public Slider fireSlider;
-    private List<Slider> activeSlider;
-    private List<Slider> offSlider;
-    private Dictionary<FireObject, Slider> sliders = new Dictionary<FireObject, Slider>();
+    [SerializeField] private GameObject fireSliderPrefab;
+    [SerializeField] private List<GameObject> fireObjects;
+    [SerializeField] private List<GameObject> fireSliders;
+    private int fireObjsNum = 0;
+    private int fireSlidersNum = 0;
 
-    private void Update() {
-        SliderInit();
+    private void FixedUpdate() {
+        fireObjsNum = FireObjectNumCheck();
+        fireSlidersNum = fireSliders.Count;
+
+        if (fireObjsNum != fireSlidersNum) {
+            FireObjectInit(fireObjsNum);
+        }
+
+        SettingFireSliderPosition();
     }
 
-    private void SliderInit() {
+    private int FireObjectNumCheck() {
         FireObject[] fireObjs = FindObjectsOfType<FireObject>();
-        foreach (FireObject eachitem in fireObjs) {
-            if (!sliders.ContainsKey(eachitem)) { // Dictionary에 저장해서 슬라이더가 있는지 확인
-                Slider fireSliders = Instantiate(fireSlider);
-                fireSliders.transform.SetParent(eachitem.transform, true);
-                fireSliders.value = eachitem.GetCurrentTime() / eachitem.GetTotalTime();
-                fireSliders.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(eachitem.transform.position);
-                if (IsFireNearPlayer(eachitem)) {
-                    activeSlider.Add(fireSliders);
-                }
-                else {
-                    offSlider.Add(fireSliders);
-                }
-                sliders[eachitem] = fireSliders;
-                fireSliders.gameObject.SetActive(true);
+        fireObjects.Clear();
+        foreach (FireObject fireObj in fireObjs) {
+            fireObjects.Add(fireObj.gameObject);
+        }
+        return fireObjs.Length;
+    }
+
+    private void FireObjectInit(int fireObjsNum) {
+        if (fireObjsNum > fireSliders.Count) {
+            for (int i = fireSliders.Count; i < fireObjsNum; i++) {
+                GameObject newFireSlider = Instantiate(fireSliderPrefab, transform);
+                newFireSlider.name = fireSliderPrefab.name;
+                fireSliders.Add(newFireSlider);
             }
         }
     }
+
+
+    private void SettingFireSliderPosition() {
+        for (int i = 0; i < fireSliders.Count; i++) {
+            Debug.Log("fireSliders[i] 위치" + fireSliders[i].transform.position);
+            Debug.Log("fireObjects[i] 위치" + fireObjects[i].transform.position);
+
+            RectTransform fireSliderPosition = fireSliders[i].GetComponent<RectTransform>();
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(fireObjects[i].transform.position);
+            screenPosition.y += 50f;
+            fireSliderPosition.position = screenPosition;
+            fireSliders[i].GetComponent<Slider>().value = SliderValueCal(i);
+        }
+    }
+
+    private float SliderValueCal(int i) {
+        float sliderValue = fireObjects[i].GetComponent<FireObject>().GetCurrentTime() / fireObjects[i].GetComponent<FireObject>().GetTotalTime();
+        return sliderValue;
+    }
+
 
 
     private bool IsFireNearPlayer(FireObject eachitem) {
@@ -40,12 +67,6 @@ public class FireUI : MonoBehaviour {
             return true;
         }
         else return false;
-    }
-
-    private void IsActiveSliderShow() {
-        for (int i = 0; i < activeSlider.Count; i++) {
-            activeSlider[i].gameObject.SetActive(true);
-        }
     }
 
 
