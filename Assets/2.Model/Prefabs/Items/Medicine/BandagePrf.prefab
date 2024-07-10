@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4450179513778078733}
   - component: {fileID: 1044343459541460211}
   - component: {fileID: 6449772272404811299}
+  - component: {fileID: 5386714465864624902}
   m_Layer: 0
   m_Name: BandagePrf
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &5386714465864624902
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982709177913435256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.13
+  m_Height: 0.35
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.05, z: 0}
