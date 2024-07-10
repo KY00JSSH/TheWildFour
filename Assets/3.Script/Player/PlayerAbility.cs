@@ -13,27 +13,27 @@ public class PlayerAbility : MonoBehavior {
     }
     //TODO: 굳이 싱글톤을 써야할 지 고민해보기
     
-    private float playerAttack;
-    private float playerDefense;
-    private float playerGather;
-    private float playerSpeed;
-    private float playerInvenCount;
-    private float playerAddInvenCount;
+    private float playerAttack { get; private set; }
+    private float playerDefense { get; private set; }
+    private float playerGather { get; private set; }
+    private float playerSpeed { get; private set; }
+    private float playerInvenCount { get; private set; }
+    private float playerAddInvenCount { get; private set; }
 
-    public float GetPlayerAttack() {
-        return playerAttack;
+    public float SetPlayerAttack(float attack) {
+        playerAttack += attack;
     }
-    public float GetPlayerDefense() {
-        return playerDefense;
+    public float SetPlayerDefense(float defense) {
+        playerDefense += defense;
     }
-    public float GetPlayerGather() {
-        return playerGather;
+    public float GetPlayerGather(float gather) {
+        playerGather += gather;
     }
-    public float GetPlayerSpeed() { 
-        return playerSpeed;
+    public float GetPlayerSpeed(float speed) { 
+        playerSpeed += speed;
     }
-    public float GetPlayerInvenCount() {
-        return playerInvenCount;
+    public float AddPlayerInven() {
+        playerInvenCount++;
     }
 
     
