@@ -16,7 +16,13 @@ public class Inven_Bottom_Controll : MonoBehaviour {
     public GameObject InvenBoxPrefab;
     private List<GameObject> InvenTotal = new List<GameObject>();
 
+    // collision에 부딪힌 아이템 정보
     private GameObject Item;
+    // 아이템 데이터들 중 이름이 같은거 들고올 예정 => 별도 스크립트 생성되면 삭제
+    public ItemData[] itemDatas;
+    private ItemData itemData;
+
+
     public GameObject Player;
     private bool isInvenFull;
 
@@ -64,8 +70,7 @@ public class Inven_Bottom_Controll : MonoBehaviour {
     }
 
 
-
-    // 사용자가 space를 눌렀을 경우
+    // 사용자가 space를 눌렀을 경우 => 플레이어에서 아이템 넘겨받아야함
     private bool ItemGetCheck() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             // 거리 5안쪽의 콜라이더 전체 검출
@@ -89,6 +94,27 @@ public class Inven_Bottom_Controll : MonoBehaviour {
         }
         return false;
     }
+
+    /*
+    //TODO: 플레이어에서 컨포넌트 받아와서 변경해야함
+    private bool ItemGetCheck() {
+        if (Player.TryGetComponent(out PlayerMove playerGetItem)) {
+            //Item=playerGetItem.  
+            ItemDataCheck(Item);
+            return true;
+        }
+        return false;
+    }
+    private void ItemDataCheck(GameObject Item) {
+        for (int i = 0; i < itemDatas.Length; i++) {
+            if (Item.name == itemDatas[i].ItemName) {
+                itemData = itemDatas[i];
+            }
+        }
+    }
+
+    */
+
 
     //TODO: 마우스로 클릭시 들어가야함
     public void ItemAdd() {

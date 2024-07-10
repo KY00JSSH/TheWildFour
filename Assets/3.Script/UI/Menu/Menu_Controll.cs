@@ -5,15 +5,20 @@ using UnityEngine.UI;
 using System.Reflection;
 
 public class Menu_Controll : MonoBehaviour {
+
     /*
-     menu에 붙어서 키보드를 입력받는다면 해당 버튼이 클릭되도록 할 예정     
+     * 스크립트 위치 : Menu
+     * 역할 : 키보드 입력 -> 버튼 클릭
+     *        버튼의 하위 버튼이 열려있을 경우 esc키는 하위 버튼에 붙어야함 
      */
+
     [SerializeField] private Button[] buttons;
     private Vector3[] buttonsPosition;
     private bool isGetKey = false;
-    public bool isEscapeMain = true;
 
     private int buttonIndex = -1;
+    private int Activebutton_InLow_1 = -1;
+    private GameObject activeButtonLow;
 
     private void Awake() {
         buttonsPosition = new Vector3[buttons.Length];
@@ -32,7 +37,7 @@ public class Menu_Controll : MonoBehaviour {
             isGetKey = true;
         }
         */
-        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.N) 
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.N)
             || Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape)) {
 
             InitButtonEvent();
@@ -40,7 +45,6 @@ public class Menu_Controll : MonoBehaviour {
 
             if ((0 <= btIndex && btIndex <= 4) || btIndex == 99) {
 
-                Debug.Log("Menu_Controll 스크립트 isEscapeMain가 변경될 위치" + isEscapeMain);
                 if (ButtonAction(btIndex)) GetButtonScript(btIndex);
             }
         }
@@ -77,14 +81,69 @@ public class Menu_Controll : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Escape)) {
             // 전체 원위치 => 하위 오브젝트가 열려있을 경우 닫기 버튼은 누리지 않게 해야함
             // 예시 : 건설의 툴바가 열려있을 경우 툴바가 닫히고 원위치 시켜야함
-            if (isEscapeMain) {
-                Debug.Log("Menu_Controll 스크립트 isEscapeMain가 해당하는 위치" + isEscapeMain);
 
-                buttonIndex = 99;
-                buttons[buttons.Length - 1].gameObject.SetActive(true);
-            }
+            buttonIndex = 99;
+            Escape();
         }
         return buttonIndex;
+    }
+
+    private void Escape() {
+        if (FindLowerButtonActive()) {
+            // 하위 버튼 활성화 되어있으면 그 밑에 있는 버튼 재확인
+            activeButtonLow = FindLowerButtonActive_2(Activebutton_InLow_1);
+            if (activeButtonLow != null) {
+                activeButtonLow.SetActive(false);
+            }
+            else {
+                // 첫번째 하위 버튼 닫기
+                Transform buttonObj = buttons[Activebutton_InLow_1].gameObject.transform;
+                for (int i = 0; i < buttonObj.childCount; i++) {
+                    GameObject child = buttonObj.GetChild(i).gameObject;
+                    child.SetActive(false);
+                }
+            }
+        }
+        else {
+            // 하위 버튼이 활성화가 안되어있음 => 삭제
+
+            buttons[buttons.Length - 1].gameObject.SetActive(true);
+        }
+    }
+
+    // 버튼들의 하위 버튼이 활성화되어있는지 확인
+    private bool FindLowerButtonActive() {
+        for (int i = 0; i < buttons.Length; i++) {
+            if (buttons[i].gameObject.activeSelf) {
+                Transform buttonObj = buttons[i].gameObject.transform;
+                if (buttonObj.childCount == 0) continue;
+                for (int j = 0; j < buttonObj.childCount; j++) {
+                    GameObject child = buttonObj.GetChild(j).gameObject;
+                    if (child != null) {
+                        if (child.activeSelf) {
+                            Debug.Log("Active child: " + child.name);
+                            Activebutton_InLow_1 = i;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    private GameObject FindLowerButtonActive_2(int Activebutton_InLow_1) {
+        Transform buttonObj = buttons[Activebutton_InLow_1].gameObject.transform;
+        if (buttonObj.childCount == 0) return null;
+        for (int i = 0; i < buttonObj.childCount; i++) {
+            GameObject child = buttonObj.GetChild(i).gameObject;
+            if (child != null) {
+                if (child.activeSelf) {
+                    Debug.Log("Active child: " + child.name);
+                    return child;
+                }
+            }
+        }
+        return null;
     }
 
 

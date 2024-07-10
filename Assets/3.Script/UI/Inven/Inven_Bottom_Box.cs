@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inven_Bottom_Box : MonoBehaviour {
+public class Inven_Bottom_Box : Inven_Bottom_Controll {
 
     /*
      Inven_Bottom_Controll 에서 받은 아이템 저장    
@@ -29,6 +29,7 @@ public class Inven_Bottom_Box : MonoBehaviour {
 
     // 인벤 내부 아이템 
     public GameObject Inven_Item { get; private set; }
+    public GameObject Inven_ItemData { get; private set; }
 
 
     private void Awake() {
@@ -98,6 +99,7 @@ public class Inven_Bottom_Box : MonoBehaviour {
         }
     }
 
+
     private void ItemCountCheck() {
         if (Inven_Item.tag == "Item_Food" && Item_count >= 80) {
             isInvenBoxAvailable = false;
@@ -112,7 +114,6 @@ public class Inven_Bottom_Box : MonoBehaviour {
             isInvenBoxAvailable = false;
         }
     }
-
 
     // 초기화 혹은 버리기
     private void Init_InvenBox() {

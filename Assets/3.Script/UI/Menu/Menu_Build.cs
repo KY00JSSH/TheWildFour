@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Menu_Build : MonoBehaviour, IMenuButton {
+
     /*
      * 1. 1번째 버튼 클릭 : build 버튼에 불들어옴 하단 6개 버튼이 보임
      * 
@@ -14,14 +15,6 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
     private void Awake() {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
-
-    /*
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            ButtonOffClick();
-        }
-    }
-    */
 
 
 

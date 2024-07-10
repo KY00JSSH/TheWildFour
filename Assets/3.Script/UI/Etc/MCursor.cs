@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 
 public class MCursor : MonoBehaviour {
     private static MCursor instance;
-    public static Sprite CursorSprite;
+
     public GameObject player;
-    private GameObject findCol;
+    //private GameObject findCol;
+    private bool isFindCol = false;
 
     public static MCursor Instance {
         get {
@@ -30,17 +31,18 @@ public class MCursor : MonoBehaviour {
 
         Cursor.visible = false;
         transform_cursor.pivot = Vector2.up;
+
     }
+
+
 
     public RectTransform transform_cursor;
 
     //TODO: 마우스 커서 움직임 -> 커서 스프라이트 변경 
     private void Update() {
-        UpdateCursor();
-        findCol = FindGameObject();
-        if (findCol != null) {
-            Debug.Log(findCol.name);
-        }
+        //UpdateCursor();
+        // UpdateObject(FindGameObject());
+
     }
 
 
@@ -51,19 +53,41 @@ public class MCursor : MonoBehaviour {
 
 
 
+
+#if true // 마우스 위치에 따라 콜라이더 검출해서 마우스 클릭하면 이동해야하는데? 모르겠음
+    private void UpdateObject(GameObject findcol) {
+        if (isFindCol) {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.WorldToScreenPoint(findcol.transform.position).z; // Maintain the Z position
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            findcol.transform.position = worldPos;
+            Debug.Log(FindGameObject().name);
+        }
+        else {
+            return;
+        }
+    }
     // 플레이어 주변에서 col 검출
     private RaycastHit hit;
     private GameObject FindGameObject() {
-        if (player != null) {
+        if (player != null && !isFindCol) {
             Vector3 rayOrigin = player.transform.position + Vector3.up;
             Vector3 rayDirection = player.transform.rotation * Vector3.forward;
 
             if (Physics.Raycast(rayOrigin, rayDirection, out hit, 500f)) {
-                if (hit.collider.gameObject != null) return hit.collider.gameObject;
+                if (hit.collider.gameObject != null) {
+                    isFindCol = true;
+                    Debug.Log(hit.collider.gameObject.name);
+                    return hit.collider.gameObject;
+                }
             }
         }
         return null;
     }
+
+#endif
+
+
 
     // 씬 뷰의 player보는 위치 Debug용도
     private void OnDrawGizmos() {
