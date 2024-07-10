@@ -15,16 +15,17 @@ public class TimeManager : MonoBehaviour {
         else
             Destroy(gameObject);
 
-        timeScale = 50f;
+        timeScale = 20f;
     }
 
     [SerializeField] private float timeScale;
-    private float WorldTime;
-    private float WorldHour;
+    [Header("DO NOT MODIFY")]
+    [SerializeField] private float WorldTime;
+    [SerializeField] private float WorldHour;
     private int SurviveDay;
     private int TotalDay;
 
-    private bool isOrangeSky = false;
+    public bool isOrangeSky = false;
 
     public float GetTimeScale() { return timeScale; }
     public float GetWorldTime() { return WorldTime; }
@@ -59,7 +60,7 @@ public class TimeManager : MonoBehaviour {
         SurviveDay = 1;
         TotalDay = (int)((WorldTime - 90f) / 360f) + 1;
     }
-
+    
     private void Update() {
         WorldTime += Time.deltaTime * timeScale;
         WorldHour = WorldTime / (360f / 24f) % 24;

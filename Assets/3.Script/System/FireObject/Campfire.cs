@@ -16,8 +16,6 @@ public class Campfire : FireObject {
     }
 
     private void Start() {
-        // 총 지속시간 100 . 1초 당 감소시간 5
-        // 기본 20초 지속
         totalTime = 100f;
         currentTime = 0f;
         tickTime = 2f;

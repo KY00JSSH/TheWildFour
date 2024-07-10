@@ -8,7 +8,7 @@ public class FireObject : MonoBehaviour, IFireLight {
     protected bool isBurn = false;
 
     // isPlayerNaer : 플레이어가 근처에 있을 때 true.
-    // TODO : 추후 모닥불이 Lock 되었을 때로 변경 필요. 0708
+    //TODO : 추후 모닥불이 Lock 되었을 때로 변경 필요. 0708
     protected bool isPlayerNear = false;
 
     private Light fireLight;
@@ -34,6 +34,7 @@ public class FireObject : MonoBehaviour, IFireLight {
 
     protected void IncreaseTime(float time) {
         currentTime += time;
+        if (currentTime > totalTime) currentTime = totalTime;
     }
 
 }
