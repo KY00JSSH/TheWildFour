@@ -15,7 +15,7 @@ public class TimeManager : MonoBehaviour {
         else
             Destroy(gameObject);
 
-        timeScale = 5f;
+        timeScale = 1f;
     }
 
     [SerializeField] private float timeScale;
@@ -24,31 +24,36 @@ public class TimeManager : MonoBehaviour {
     private int SurviveDay;
     private int TotalDay;
 
+    private bool isOrangeSky = false;
+
     public float GetTimeScale() { return timeScale; }
     public float GetWorldTime() { return WorldTime; }
+    public float GetWorldHour() { return WorldHour; }
     public int GetSurviveDay() { return SurviveDay; }
     public int GetTotalDay() { return TotalDay; }
 
-    public float GetWorldHour() {
-        WorldHour = WorldTime / (360f / 24f);
-        if (WorldHour >= 24f) {
-            WorldHour -= 24f;
-            SurviveDay++;
-            TotalDay = (int)(WorldTime % (360f / 24f));
-        }
-
-        return WorldHour;
-    }
 
     private void Start() {
         //TODO: Save 구현 시 세이브 된 WorldTime으로 가져오기
         WorldTime = 80f;
-        SurviveDay = 0;
-        TotalDay = (int)(WorldTime % (360f / 24f));
+        WorldHour = WorldTime / (360f / 24f) % 24;
+        SurviveDay = 1;
+        TotalDay = (int)((WorldTime - 90f) / 360f) + 1;
     }
 
     private void Update() {
         WorldTime += Time.deltaTime * timeScale;
-        Debug.Log(TotalDay);
+        WorldHour = WorldTime / (360f / 24f) % 24;
+
+        if ((int)WorldHour == 6 || (int)WorldHour == 22) {
+            if (!isOrangeSky) {
+                isOrangeSky = true;
+                if ((int)WorldHour == 6) {
+                    SurviveDay++;
+                    TotalDay++;
+                }
+            }
+        }
+        else isOrangeSky = false;
     }
 }

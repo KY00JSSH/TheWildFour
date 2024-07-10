@@ -22,5 +22,9 @@ public class SunLight : MonoBehaviour {
             float nightAngle = 180f * currentNightHour / nightHours;
             transform.rotation = Quaternion.Euler(nightAngle + 180f, nightAngle + 180f, 0);
         }
+
+        //TODO: 6~7시, 22~23시 주황 조명
+        //TODO: 23시 ~ 6시 검푸른 조명, 7시 ~ 22시 흰 조명
+
     }
 }
