@@ -86,6 +86,7 @@ public class PlayerMove : MonoBehaviour {
 
         //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
+        
         player_ani.SetFloat("Speed", currentSpeed);
 
         // Debug.Log($"속도 : {currentSpeed}");
