@@ -17,8 +17,13 @@ public class PlayerMove : MonoBehaviour {
     public void ResetDash() { isAvailableDash = false; }
 
     // TODO : 대시 게이지 UI 구현. 0707
-    private float TotalDashGage, CurrentDashGage, DecDashGage, IncDashGage;
+    private float TotalDashGage, CurrentDashGage;
+    public float DecDashGage, IncDashGage;
     private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
+
+    public bool isSkilled = false;      // 거처 스킬 업그레이드 여부
+    public void SetPlayerMoveSpeed(float speed) { playerMoveSpeed = speed; }
+
 
     public float GetTatalDashGage() { return TotalDashGage; }
     public float GetCurrentDashGage() { return CurrentDashGage; }
@@ -33,7 +38,7 @@ public class PlayerMove : MonoBehaviour {
         isMove = false;
         isDash = false;
 
-        // TODO : JSON 구현 되면 default를 Save된 값으로 바꿀 것
+        //TODO: JSON 구현 되면 default를 Save된 값으로 바꿀 것
         TotalDashGage = defaultDashGage;
         CurrentDashGage = TotalDashGage;
         DecDashGage = defaultDecDashGage;
@@ -98,7 +103,7 @@ public class PlayerMove : MonoBehaviour {
 
         //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
-        
+
         //player_ani.SetFloat("Speed", currentSpeed);
 
         // Debug.Log($"속도 : {currentSpeed}");
