@@ -18,6 +18,7 @@ public class Player_UI : MonoBehaviour {
     private PlayerMove playerMove;
     private Coroutine fadeCoroutine;
     private bool isStart = false;
+    [SerializeField] private int Slider_AddY = 150;
 
     private void Awake() {
         playerMove = GetComponent<PlayerMove>();
@@ -78,7 +79,7 @@ public class Player_UI : MonoBehaviour {
         RectTransform sliderPosition = playerSlider.GetComponent<RectTransform>();
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
 
-        screenPosition.y += 200f;
+        screenPosition.y += Slider_AddY;
 
         sliderPosition.position = screenPosition;
         
