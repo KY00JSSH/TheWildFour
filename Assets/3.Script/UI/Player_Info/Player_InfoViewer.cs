@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Player_InfoViewer : MonoBehaviour
 {
-
-
     //UI -> slider
     [SerializeField] private Slider[] player_Infos;
     //slider Text 
@@ -16,9 +14,6 @@ public class Player_InfoViewer : MonoBehaviour
 
     // player의 정보를 ui쪽에서 update 할 경우 각 정보 스크립트 필요함
     //[SerializeField] private PlayerHP player;
-    //TODO: player 체력, 허기, 추위 스크립트와 연동
-
-
 
     private void Start()
     {
@@ -48,20 +43,6 @@ public class Player_InfoViewer : MonoBehaviour
                 Debug.LogWarning($"슬라이더 없음 {child.name}");
             }
         }
-
-        /* 메소드 확인용
-        player_Infos = slidersList.ToArray();
-        slider_Texts = slidersTextList.ToArray();
-
-        if (player_Infos.Length != slider_Texts.Length)
-        {
-            Debug.LogError("player_Infos 배열과 slider_Texts 배열의 길이가 다릅니다.");
-            return;
-        }
-        SetPlayerHp(80);
-        SetPlayerHunger(55);
-        SetPlayerWarm(25);
-        */
     }
 
 
