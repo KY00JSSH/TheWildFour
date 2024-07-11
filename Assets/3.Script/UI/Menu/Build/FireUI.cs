@@ -46,9 +46,6 @@ public class FireUI : MonoBehaviour {
 
     private void SettingFireSliderPosition() {
         for (int i = 0; i < fireSliders.Count; i++) {
-            Debug.Log("fireSliders[i] 위치" + fireSliders[i].transform.position);
-            Debug.Log("fireObjects[i] 위치" + fireObjects[i].transform.position);
-
             RectTransform fireSliderPosition = fireSliders[i].GetComponent<RectTransform>();
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(fireObjects[i].transform.position);
 
@@ -57,7 +54,6 @@ public class FireUI : MonoBehaviour {
             screenPosition.y += 50f * depthFactor;
 
             fireSliderPosition.position = screenPosition;
-
 
             fireSliders[i].GetComponent<Slider>().value = SliderValueCal(i);
         }

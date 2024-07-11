@@ -12,6 +12,7 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
 
     public Button[] Lowbuttons;
     private Menu_Controll menuControll;
+    private int buttonCount = 0;
     private void Awake() {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
@@ -35,9 +36,16 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
 
     // 마우스 클릭 실행
     public void ButtonOnClick() {
-        // 위치 변경 -> 상위 스크립트의 위치를 더 내려야할것같음
-        menuControll.ButtonMove(150, false);
-        ButtonPosition();
+        buttonCount++;
+        if (buttonCount==2) {
+            buttonCount = 0;
+            menuControll.Escape();
+        }
+        else {
+            // 위치 변경 -> 상위 스크립트의 위치를 더 내려야할것같음
+            menuControll.ButtonMove(150, false);
+            ButtonPosition();
+        }
     }
 
     // 버튼의 위치 잡기
