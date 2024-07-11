@@ -29,7 +29,7 @@ public class TimeUI : MonoBehaviour {
             time[0].text = string.Format("{0} AM", worldHour);
             timeIcon.sprite = timeIcons[0];
         }
-        time[1].text = string.Format("¿œ : {0}", surviveDay);
+        time[1].text = string.Format("{0} ¿œ", surviveDay);
 
         if (timeManager.isDay()) { // ≥∑
 
