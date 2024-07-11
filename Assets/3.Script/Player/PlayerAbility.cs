@@ -1,42 +1,27 @@
 using UnityEngine;
 
-public class PlayerAbility : MonoBehavior {
-    public static PlayerAbility Instance = null;
+public class PlayerAbility : MonoBehaviour {
+     public float playerAttack { get; private set; }
+    public float playerDefense { get; private set; }
+    public float playerGather { get; private set; }
+    public float playerSpeed { get; private set; }
+    public float playerInvenCount { get; private set; }
+    public float playerAddInvenCount { get; private set; }
 
-    private void Awake() {
-        if(Instance == null) { 
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-            Destroy(gameObject);
-    }
-    //TODO: 굳이 싱글톤을 써야할 지 고민해보기
-    
-    private float playerAttack { get; private set; }
-    private float playerDefense { get; private set; }
-    private float playerGather { get; private set; }
-    private float playerSpeed { get; private set; }
-    private float playerInvenCount { get; private set; }
-    private float playerAddInvenCount { get; private set; }
-
-    public float SetPlayerAttack(float attack) {
+    public void SetPlayerAttack(float attack) {
         playerAttack += attack;
     }
-    public float SetPlayerDefense(float defense) {
+    public void SetPlayerDefense(float defense) {
         playerDefense += defense;
     }
-    public float GetPlayerGather(float gather) {
+    public void GetPlayerGather(float gather) {
         playerGather += gather;
     }
-    public float GetPlayerSpeed(float speed) { 
+    public void GetPlayerSpeed(float speed) { 
         playerSpeed += speed;
     }
-    public float AddPlayerInven() {
+    public void AddPlayerInven() {
         playerInvenCount++;
     }
-
-    
-
 
 }
