@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    public List<ItemData> items;  // List of all possible items to spawn
-    public int spawnCount = 5;    // Number of items to spawn
-    public Vector3 spawnArea = new Vector3(10, 0, 10);  // Define the area to spawn items
+    public List<ItemData> items; 
+    public int spawnCount = 1;  
+    public Vector3 spawnArea = new Vector3(10, 0, 10); 
 
     void Start()
     {
@@ -16,8 +16,7 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
-    void SpawnItem()
-    {
+    void SpawnItem() {
         ItemData itemToSpawn = items[Random.Range(0, items.Count)];
         Vector3 randomPosition = new Vector3(
             Random.Range(-spawnArea.x / 2, spawnArea.x / 2),
@@ -25,6 +24,12 @@ public class ItemSpawner : MonoBehaviour
             Random.Range(-spawnArea.z / 2, spawnArea.z / 2)
         );
 
-        GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);        itemObject.GetComponent<ItemPickup>().itemData = itemToSpawn;
+        GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);
+        Item itemComponent = itemObject.GetComponent<Item>();
+        //itemComponent.itemData = itemToSpawn;
+
+        //if (itemComponent.itemData is FoodItemData foodItemData) {
+        //    Debug.Log($"{foodItemData.ItemName} + {foodItemData.FullPoint}");
+        //}
     }
 }

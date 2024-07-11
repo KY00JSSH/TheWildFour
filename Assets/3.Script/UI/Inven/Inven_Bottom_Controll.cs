@@ -29,12 +29,12 @@ public class Inven_Bottom_Controll : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        if (ItemGetCheck()) {
-            ItemAdd();
-            return;
-        }
-    }
+    //private void Update() {
+    //    if (ItemGetCheck()) {
+    //        ItemAdd();
+    //        return;
+    //    }
+    //}
 
     // 미리 inven_Maxcount만큼 pooling 해놓음
     private List<GameObject> InitInven() {
@@ -63,32 +63,8 @@ public class Inven_Bottom_Controll : MonoBehaviour {
         }
     }
 
-
-
     // 사용자가 space를 눌렀을 경우
-    private bool ItemGetCheck() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            // 거리 5안쪽의 콜라이더 전체 검출
-            //TODO: 플레이어 앞쪽으로만 콜라이더 검출하게 해야함
-            Collider[] cols = Physics.OverlapSphere(Player.transform.position, 5.0f);
-            if (cols.Length > 0) {
-
-                for (int i = 0; i < cols.Length; i++) {
-                    if (cols[i].tag == "Item_Weapon" || cols[i].tag == "Item_Food" || cols[i].tag == "Item_Ingre" || cols[i].tag == "Item_Etc") {
-                        Debug.Log("아이템 찾음" + cols[i].name);
-                        Debug.Log("아이템 찾음" + cols[i].tag);
-                        Item = cols[i].gameObject;
-                        return true;
-                    }
-                }
-            }
-            else {
-                Debug.Log("플레이어 주변 아이템 없음");
-                Item = null;
-            }
-        }
-        return false;
-    }
+   
 
     //TODO: 마우스로 클릭시 들어가야함
     public void ItemAdd() {

@@ -88,6 +88,6 @@ public class PlayerMove : MonoBehaviour {
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
         player_ani.SetFloat("Speed", currentSpeed);
 
-        Debug.Log($"속도 : {currentSpeed}");
+        //Debug.Log($"속도 : {currentSpeed}");
     }
 }
