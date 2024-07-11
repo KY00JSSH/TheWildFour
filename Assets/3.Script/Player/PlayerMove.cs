@@ -20,6 +20,10 @@ public class PlayerMove : MonoBehaviour {
     private float TotalDashGage, CurrentDashGage, DecDashGage, IncDashGage;
     private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
 
+    public float GetTatalDashGage() { return TotalDashGage; }
+    public float GetCurrentDashGage() { return CurrentDashGage; }
+    public bool isDash { get; private set; }
+
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
         player_ani = GetComponentInParent<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
@@ -27,6 +31,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Start() {
         isMove = false;
+        isDash = false;
 
         // TODO : JSON 구현 되면 default를 Save된 값으로 바꿀 것
         TotalDashGage = defaultDashGage;
@@ -67,6 +72,7 @@ public class PlayerMove : MonoBehaviour {
     }
 
     private void Dash(bool isDash) {
+        this.isDash = isDash;
         if (isDash) CurrentDashGage -= DecDashGage * Time.deltaTime;
         else CurrentDashGage += IncDashGage * Time.deltaTime;
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
