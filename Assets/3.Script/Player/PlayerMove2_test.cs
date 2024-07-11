@@ -6,14 +6,13 @@ public class PlayerMove2_test : MonoBehaviour
     private Rigidbody playerRigid;
     [SerializeField] private LayerMask layerMask;/**/
     private Vector3 targetPosition;
-    
 
     private float InputX, InputZ;
     private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
-
     private bool isAvailableDash = true;    // 대쉬 게이지에 따라서 설정되는 Flag
+
     public void SetDash()
     {
         isAvailableDash = true;
@@ -22,7 +21,6 @@ public class PlayerMove2_test : MonoBehaviour
     {
         isAvailableDash = false;
     }
-
 
     private void Awake()
     {
@@ -40,7 +38,7 @@ public class PlayerMove2_test : MonoBehaviour
         //else
         //    Move(playerMoveSpeed);
 
-        Move();
+        Move();        
     }
 
     private void LookatMouse()
@@ -56,10 +54,9 @@ public class PlayerMove2_test : MonoBehaviour
             //    new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
             Vector3 direction = (pointTolook - transform.position).normalized;                            /**/
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));  /**/
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);/**/
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);/**/            
         }
     }
-
 
     private void Move(/*float speed*/)
     {
@@ -74,11 +71,10 @@ public class PlayerMove2_test : MonoBehaviour
 
         float speed = (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) ? playerDashSpeed : playerMoveSpeed;/**/
 
-        Vector3 moveDirection = new Vector3(InputX, 0, InputZ).normalized;                            /**/
+       
+        Vector3 moveDirection = transform.forward * InputZ + transform.right * InputX;                /**/
         targetPosition = transform.position + moveDirection * constMoveSpeed * speed * Time.deltaTime;/**/
         playerRigid.MovePosition(targetPosition);                                                     /**/
-
-
 
         //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
         //float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
