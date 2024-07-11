@@ -51,12 +51,18 @@ public class PlayerMove : MonoBehaviour {
     private void LookatMouse() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-
+        float rotationSpeed = 5f;
         float rayLength;
+
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            playerRigid.transform.LookAt(
-                new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
+            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f);
+            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerRigid.transform.position);
+
+            playerRigid.transform.rotation = Quaternion.Slerp(
+            playerRigid.transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -66,7 +72,7 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
-        else if (CurrentDashGage > TotalDashGage * 0.2f) SetDash();
+        else if (CurrentDashGage == TotalDashGage) SetDash();
     }
 
     private void Move(float speed) {
@@ -86,8 +92,9 @@ public class PlayerMove : MonoBehaviour {
 
         //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
-        player_ani.SetFloat("Speed", currentSpeed);
+        
+        //player_ani.SetFloat("Speed", currentSpeed);
 
-        Debug.Log($"속도 : {currentSpeed}");
+        // Debug.Log($"속도 : {currentSpeed}");
     }
 }

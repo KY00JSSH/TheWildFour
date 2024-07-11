@@ -2,56 +2,23 @@ using System.Collections;
 using UnityEngine;
 
 
-public class Campfire : MonoBehaviour, IFireLight {
+
+public class Campfire : FireObject {
     private ParticleSystem fireEffect;
-    private Light fireLight;
 
-    private float totalTime, currentTime, tickTime;
-    private float HeatRange = 5f;
-    private bool isBurn = false;
+    protected override void Awake() {
+        base.Awake();
 
-    public float GetTotalTime() { return totalTime; }
-    public float GetCurrentTime() { return currentTime; }
-
-    // isPlayerNaer : 플레이어가 근처에 있을 때 true.
-    // TODO : 추후 모닥불이 Lock 되었을 때로 변경 필요. 0708
-    private bool isPlayerNear = false;
-
-    private void Awake() {
         fireEffect = GetComponentInChildren<ParticleSystem>();
         fireEffect.Stop();
 
-        fireLight = GetComponentInChildren<Light>();
         LightOff();
     }
 
     private void Start() {
-        // 총 지속시간 100 . 1초 당 감소시간 5
-        // 기본 20초 지속
         totalTime = 100f;
         currentTime = 0f;
         tickTime = 2f;
-    }
-
-    public void AddWood() {
-        IncreaseTime(10f);
-        // TODO : 빛을 밝히는 로직 필요. 0708
-
-        if (currentTime > 0 && !isBurn) {
-            StartCoroutine(Burn());
-        }
-    }
-
-    public void IncreaseTime(float time) {
-        currentTime += time;
-    }
-
-    public void LightUp(float intensity) {
-        fireLight.intensity = intensity;
-    }
-
-    public void LightOff() {
-        fireLight.intensity = 0;
     }
 
     private void Update() {
@@ -73,7 +40,13 @@ public class Campfire : MonoBehaviour, IFireLight {
             AddWood();
         }
         LightUp(Mathf.InverseLerp(0, totalTime, currentTime) * 4f);
+    }
 
+    protected override void AddWood() {
+        base.AddWood();
+        if (currentTime > 0 && !isBurn) {
+            StartCoroutine(Burn());
+        }
     }
 
     private IEnumerator Burn() {
