@@ -30,7 +30,7 @@ public class CameraControl2 : MonoBehaviour
         if (scrollInput != 0)
         {
             float currentFOV = cinemachineFreeLook.m_Lens.FieldOfView;
-            float deltaFOV = scrollInput * 10f * -1; // -1 안곱하면 마우스 스크롤이 반대가 됨. 직관성을 위해 이렇게 합니다.
+            float deltaFOV = scrollInput * 15f * -1; // -1 안곱하면 마우스 스크롤이 반대가 됨. 직관성을 위해 이렇게 합니다.
             float newFOV = currentFOV + deltaFOV;
 
             float minFOV = 70f;

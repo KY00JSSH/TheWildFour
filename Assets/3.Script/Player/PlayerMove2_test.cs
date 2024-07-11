@@ -77,7 +77,7 @@ public class PlayerMove2_test : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);/**/            
         }
     }
-        private void Dash(bool isDash)
+    private void Dash(bool isDash)
     {
         if (isDash) CurrentDashGage -= DecDashGage * Time.deltaTime;
         else CurrentDashGage += IncDashGage * Time.deltaTime;

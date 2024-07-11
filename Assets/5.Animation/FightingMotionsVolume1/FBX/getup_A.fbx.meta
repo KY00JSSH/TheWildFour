@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 59c7dab75889cc747a38565aacf425cb
-timeCreated: 1479279086
+guid: 17004ac38f600ff4f90db12b9b2d5433
+timeCreated: 1480071158
 licenseType: Store
 ModelImporter:
   serializedVersion: 19
@@ -14,11 +14,11 @@ ModelImporter:
     100012: Foot_R
     100014: ForeArm_L
     100016: ForeArm_R
-    100018: Hand_L
-    100020: Hand_R
-    100022: Head
-    100024: Hip
-    100026: //RootNode
+    100018: //RootNode
+    100020: Hand_L
+    100022: Hand_R
+    100024: Head
+    100026: Hip
     100028: Neck
     100030: Root
     100032: Shin_L
@@ -38,11 +38,11 @@ ModelImporter:
     400012: Foot_R
     400014: ForeArm_L
     400016: ForeArm_R
-    400018: Hand_L
-    400020: Hand_R
-    400022: Head
-    400024: Hip
-    400026: //RootNode
+    400018: //RootNode
+    400020: Hand_L
+    400022: Hand_R
+    400024: Head
+    400026: Hip
     400028: Neck
     400030: Root
     400032: Shin_L
@@ -54,7 +54,7 @@ ModelImporter:
     400044: Toe_L
     400046: Toe_R
     4300000: BlueGuy
-    7400000: hp_upper_right_A
+    7400000: getup_A
     9500000: //RootNode
     13700000: BlueGuy
   materials:
@@ -68,7 +68,13 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: Root
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Shoulder_L' has scale animation that will be
+      discarded.\n\t'Shin_L' has scale animation that will be discarded.\n\t'Foot_L'
+      has scale animation that will be discarded.\n\t'Thigh_R' has scale animation
+      that will be discarded.\n\t'Shin_R' has scale animation that will be discarded.\n\t'Foot_R'
+      has scale animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3
@@ -79,10 +85,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: hp_upper_right_A
+      name: getup_A
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
