@@ -51,12 +51,18 @@ public class PlayerMove : MonoBehaviour {
     private void LookatMouse() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-
+        float rotationSpeed = 5f;
         float rayLength;
+
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            playerRigid.transform.LookAt(
-                new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
+            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f);
+            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerRigid.transform.position);
+
+            playerRigid.transform.rotation = Quaternion.Slerp(
+            playerRigid.transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime);
         }
     }
 
