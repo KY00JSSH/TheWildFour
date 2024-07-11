@@ -42,7 +42,6 @@ public class SunLight : MonoBehaviour {
         }
 
         if (!isChanging) {
-            Debug.Log(TimeManager.Instance.isOrangeSky);
             if (TimeManager.Instance.isOrangeSky) {
                 StartCoroutine(ChangeSkyColor(orangeColor));
             }

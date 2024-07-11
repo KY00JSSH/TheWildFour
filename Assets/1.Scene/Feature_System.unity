@@ -1032,6 +1032,150 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901158889}
   m_CullTransparentMesh: 1
+--- !u!1 &923510962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 923510964}
+  - component: {fileID: 923510963}
+  m_Layer: 0
+  m_Name: ShelterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &923510963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923510962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0323d7856c51c3498eb1f03ec9359ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillMove:
+  - skillName: "\uC804\uB825 \uC9C8\uC8FC"
+    maxSkillLevel: 1
+    nowSkillLevel: 0
+    skillValue: -1
+  - skillName: "\uBAB8\uD480\uAE30"
+    maxSkillLevel: 3
+    nowSkillLevel: 0
+    skillValue: 0.1
+  - skillName: "\uC18D\uB3C4"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0.1
+  - skillName: "\uC2E0\uBC1C \uAD00\uB9AC \uC6A9\uD488"
+    maxSkillLevel: 5
+    nowSkillLevel: 0
+    skillValue: 1
+  - skillName: "\uC2DC\uC57C \uBC18\uACBD"
+    maxSkillLevel: 1
+    nowSkillLevel: 0
+    skillValue: 20
+  - skillName: "\uC804\uB825 \uC9C8\uC8FC \uC2DC\uAC04"
+    maxSkillLevel: 6
+    nowSkillLevel: 0
+    skillValue: 0.2
+  - skillName: "\uC6B4\uB3D9"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 25
+  - skillName: "\uCCB4\uB825 \uD68C\uBCF5"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0.2
+  skillAttack:
+  - skillName: "\uADFC\uC811 \uACF5\uACA9\uB825"
+    maxSkillLevel: 6
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uACF5\uACA9 \uC18D\uB3C4"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uCE58\uBA85\uD0C0 \uACF5\uACA9\uB825"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uCE58\uBA85\uD0C0 \uACF5\uACA9 \uD655\uB960"
+    maxSkillLevel: 3
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uC6D0\uAC70\uB9AC \uACF5\uACA9\uB825"
+    maxSkillLevel: 6
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uC800\uACA9\uC218"
+    maxSkillLevel: 1
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uCD9C\uD608\uD6A8\uACFC \uCD94\uAC00"
+    maxSkillLevel: 2
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uC2A4\uD134\uD6A8\uACFC \uCD94\uAC00"
+    maxSkillLevel: 2
+    nowSkillLevel: 0
+    skillValue: 0
+  skillGather:
+  - skillName: "\uAC15\uD654 \uBC30\uB0AD"
+    maxSkillLevel: 8
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uB3C4\uB07C\uC758 \uB2EC\uC778"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uACE1\uAD2D\uC774\uC758 \uB2EC\uC778"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uB098\uBB34 \uC800\uC7A5"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uAD11\uC11D \uBCF4\uAD00"
+    maxSkillLevel: 4
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uAC00\uC8FD \uBCF4\uAD00"
+    maxSkillLevel: 2
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uCCA0 \uBCF4\uAD00"
+    maxSkillLevel: 1
+    nowSkillLevel: 0
+    skillValue: 0
+  - skillName: "\uAC15\uCCA0 \uBCF4\uAD00"
+    maxSkillLevel: 1
+    nowSkillLevel: 0
+    skillValue: 0
+--- !u!4 &923510964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923510962}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 543450651891569283}
+  - {fileID: 6336780953619146233}
+  m_Father: {fileID: 1281659702}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &989455500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,7 +1875,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 923510964}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1818,6 +1963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257874d8c23f1cb46839e180078b6299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerMaxHp: 0
 --- !u!1 &1342879371
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,13 +2801,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147615516729}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: -5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5, y: -1.5, z: -5}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 2848153913941121015}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 923510964}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &734295559622433952
 GameObject:
@@ -4177,13 +4323,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6681956567683596099}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.692, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.692, y: -1.5, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 6782537385553120492}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 923510964}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &6419932609293742897
 Transform:
@@ -28407,7 +28553,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3774456455336065180}
-  m_Mesh: {fileID: -4621204781766768512, guid: 0676c7210195b5f449b89d40d5d50fe2, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 82e477c3f4703e14b901efaa4923cd8b, type: 2}
 --- !u!1 &6957525733064964368
 GameObject:
   m_ObjectHideFlags: 0
@@ -28773,8 +28919,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7567886158741917959, guid: 0676c7210195b5f449b89d40d5d50fe2, type: 3}
-  - {fileID: 7731341678140706, guid: 0676c7210195b5f449b89d40d5d50fe2, type: 3}
+  - {fileID: 2100000, guid: bbf94353dc843aa458176059cdcfb0f6, type: 2}
+  - {fileID: 2100000, guid: d65d4df4e61f0fd459bf02711a819024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
