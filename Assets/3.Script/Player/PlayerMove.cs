@@ -20,6 +20,10 @@ public class PlayerMove : MonoBehaviour {
     private float TotalDashGage, CurrentDashGage, DecDashGage, IncDashGage;
     private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
 
+    public float GetTatalDashGage() { return TotalDashGage; }
+    public float GetCurrentDashGage() { return CurrentDashGage; }
+    public bool isDash { get; private set; }
+
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
         player_ani = GetComponentInParent<Animator>(); //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
@@ -27,6 +31,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Start() {
         isMove = false;
+        isDash = false;
 
         // TODO : JSON 구현 되면 default를 Save된 값으로 바꿀 것
         TotalDashGage = defaultDashGage;
@@ -51,16 +56,23 @@ public class PlayerMove : MonoBehaviour {
     private void LookatMouse() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-
+        float rotationSpeed = 5f;
         float rayLength;
+
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            playerRigid.transform.LookAt(
-                new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
+            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f);
+            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerRigid.transform.position);
+
+            playerRigid.transform.rotation = Quaternion.Slerp(
+            playerRigid.transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime);
         }
     }
 
     private void Dash(bool isDash) {
+        this.isDash = isDash;
         if (isDash) CurrentDashGage -= DecDashGage * Time.deltaTime;
         else CurrentDashGage += IncDashGage * Time.deltaTime;
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);

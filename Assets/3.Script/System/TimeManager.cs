@@ -15,17 +15,17 @@ public class TimeManager : MonoBehaviour {
         else
             Destroy(gameObject);
 
-        timeScale = 50f;
+        timeScale = 20f;
     }
 
     [SerializeField] private float timeScale;
-    private float WorldTime;
-    private float WorldHour;
-
+    [Header("DO NOT MODIFY")]
+    [SerializeField] private float WorldTime;
+    [SerializeField] private float WorldHour;
     private int SurviveDay;
     private int TotalDay;
 
-    private bool isOrangeSky = false;
+    public bool isOrangeSky = false;
 
     public float GetTimeScale() { return timeScale; }
     public float GetWorldTime() { return WorldTime; }
@@ -55,12 +55,12 @@ public class TimeManager : MonoBehaviour {
 
     private void Start() {
         //TODO: Save 구현 시 세이브 된 WorldTime으로 가져오기
-        WorldTime =110f;
+        WorldTime = 90f;
         WorldHour = WorldTime / (360f / 24f) % 24;
         SurviveDay = 1;
         TotalDay = (int)((WorldTime - 90f) / 360f) + 1;
     }
-
+    
     private void Update() {
         WorldTime += Time.deltaTime * timeScale;
         WorldHour = WorldTime / (360f / 24f) % 24;
