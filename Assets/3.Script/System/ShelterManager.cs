@@ -24,6 +24,16 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillGather[index].LevelUp();
     }
+
+    public Skill GetSkill(string name) {
+        foreach (Skill skill in skillMove)
+            if (skill.skillName == name) return skill;
+        foreach (Skill skill in skillAttack)
+            if (skill.skillName == name) return skill;
+        foreach (Skill skill in skillGather)
+            if (skill.skillName == name) return skill;
+        return null;
+    }
 }
 
 // ############ 임의 수정 금지 ############ //
