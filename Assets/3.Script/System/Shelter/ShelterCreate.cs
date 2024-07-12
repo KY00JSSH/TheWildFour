@@ -39,7 +39,7 @@ public class ShelterCreate : MonoBehaviour {
     }
 
     public GameObject Shelter() {
-        return shelterPrefabs[shelterManager.ShelterLevel];
+        return shelterPrefabs[shelterManager.ShelterLevel - 1];
     }
 
     public void CreateShelter() {

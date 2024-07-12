@@ -8,23 +8,75 @@ public class ShelterManager : MonoBehaviour {
 
     //TODO: 스킬 당 포인트, 포인트 당 경험치
     //TODO: 포인트 경험치는 스킬 레벨마다 요구량 증가.
-    public int skillMoveLevel, skillAttackLevel, skillGatherLevel;
-    public float skillMoveTotalExp, skillAttackTotalExp, skillGatherTotalExp;
-    public float skillMoveCurrentExp, skillAttackCurrentExp, skillGatherCurrentExp;
+
+    public int MoveLevel { get; private set; }
+    public int AttackLevel { get; private set; }
+    public int GatherLevel { get; private set; }
+
+    public int MovePoint { get; private set; }
+    public int AttackPoint { get; private set; }
+    public int GatherPoint { get; private set; }
+
+    public float MoveTotalExp { get; private set; }
+    public float AttackTotalExp { get; private set; }
+    public float GatherTotalExp { get; private set; }
+
+    public float MoveCurrentExp { get; private set; }
+    public float AttackCurrentExp { get; private set; }
+    public float GatherCurrentExp { get; private set; }
 
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         ShelterLevel = 1;
-        skillMoveLevel = 0;
-        skillAttackLevel = 0;
-        skillGatherLevel = 0;
-        skillMoveTotalExp = 0;
-        skillAttackTotalExp = 0;
-        skillGatherTotalExp = 0;
-        skillMoveCurrentExp = 0;
-        skillAttackCurrentExp = 0;
-        skillGatherCurrentExp = 0;
+
+        MoveLevel = 0;
+        AttackLevel = 0;
+        GatherLevel = 0;
+        
+        MovePoint = 0;
+        AttackPoint = 0;
+        GatherPoint = 0;
+
+        MoveTotalExp = 120f;
+        AttackTotalExp = 100f;
+        GatherTotalExp = 300f;
+
+        MoveCurrentExp = 0;
+        AttackCurrentExp = 0;
+        GatherCurrentExp = 0;
     }
+
+    public void AddMoveExp(float exp) {
+        MoveCurrentExp += exp;
+        if(MoveCurrentExp > MoveTotalExp) {
+            MoveCurrentExp -= MoveTotalExp;
+            MovePoint++;
+            MoveLevel++;
+            MoveTotalExp += MoveLevel * 4;
+        }
+    }
+
+    public void AddAttackExp(float exp) {
+        AttackCurrentExp += exp;
+        if(AttackCurrentExp > AttackTotalExp) {
+            AttackCurrentExp -= AttackTotalExp;
+            AttackPoint++;
+            AttackLevel++;
+            AttackTotalExp += AttackLevel * 4;
+        }
+    }
+
+    public void AddGatherExp(float exp) {
+        GatherCurrentExp += exp;
+        if(GatherCurrentExp > GatherTotalExp) {
+            GatherCurrentExp -= GatherTotalExp;
+            GatherPoint++;
+            GatherLevel++;
+            GatherTotalExp += GatherLevel * 4;
+        }
+    }
+
+
 
     //TODO: UI > 거처 내부 버튼 '업그레이드' 버튼 Onclicked => LevelUp();
     public void LevelUp() {     // 거처 레벨업
