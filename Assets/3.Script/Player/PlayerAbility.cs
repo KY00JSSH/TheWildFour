@@ -9,6 +9,7 @@ public class PlayerAbility : MonoBehaviour {
     // 플레이어 기본 능력치
     // 플레이어 선택 시에만 변경됨
     private float playerAttack;
+    private float playerCriticalAttack;
     private float playerDefense;
     private float playerGather;
     private float playerSpeed;
@@ -44,6 +45,8 @@ public class PlayerAbility : MonoBehaviour {
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         playerAttack = 2f;
+        playerCriticalAttack = 5f;
+
         playerDefense = 2f;
         playerGather = 2f;
         playerSpeed = 1f;
