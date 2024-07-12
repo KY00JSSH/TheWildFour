@@ -22,7 +22,6 @@ public class Menu_Weapon : MonoBehaviour, IMenuButton {
     }
 
     public void ButtonOnClick() {
-        menuControll.CloseUI(); 
         WeaponCursorSetting();
     }
 
