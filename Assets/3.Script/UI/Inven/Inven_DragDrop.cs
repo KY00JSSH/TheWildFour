@@ -18,7 +18,7 @@ public class Inven_DragDrop : MonoBehaviour {
     private Vector3 _startDragMCursor;// 드래그 시작 시 커서의 위치
     private int _DragSlotIndex;
 
-    private Inven_Bottom_Controll InvenCtrl;
+   // private Inven_Bottom_Controll InvenCtrl;
 
     private void Awake() {
         Debug.Log("Awake 메서드 시작");
@@ -35,10 +35,10 @@ public class Inven_DragDrop : MonoBehaviour {
         _rrList = new List<RaycastResult>();
         Debug.Log("RaycastResult 리스트 생성됨: " + _rrList);
 
-        InvenCtrl = FindObjectOfType<Inven_Bottom_Controll>();
-        if (InvenCtrl == null) {
-            Debug.LogError("Inven_Bottom_Controll 인스턴스를 찾을 수 없음");
-        }
+       // InvenCtrl = FindObjectOfType<Inven_Bottom_Controll>();
+        //if (InvenCtrl == null) {
+        //    Debug.LogError("Inven_Bottom_Controll 인스턴스를 찾을 수 없음");
+        //}
 
         Debug.Log("Awake 메서드 끝");
     }
@@ -76,7 +76,7 @@ public class Inven_DragDrop : MonoBehaviour {
             _beginDragSlot = RaycastAndGetFirstComponent<Inven_Bottom_Box>();
             if (_beginDragSlot != null && _beginDragSlot.isItemIn) {
                 // 위치 기억, 참조 등록
-                _beginDragIconTransform = _beginDragSlot.Inven_Item.transform;
+                //_beginDragIconTransform = _beginDragSlot.Inven_Item.transform;
                 _startDragIcon = _beginDragIconTransform.position;
                 _startDragMCursor = Input.mousePosition;
 

@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: MidMeatRoasted
   m_EditorClassIdentifier: 
   key: 8
-  itemName: "\uAD6C\uC6B4 \uC911\uAC04\uACE0\uAE30"
-  description: "\uAD6C\uC6B4 \uC911\uAC04\uACE0\uAE30"
+  itemName: "\uACE0\uAE30(\uC775\uD78C \uAC83)"
+  description: "\uAECD\uC9C8\uC774 \uBC14\uC0AD\uBC14\uC0AD\uD55C \uACE0\uAE43\uB369\uC5B4\uB9AC\uC785\uB2C8\uB2E4.
+    \uC0DD\uC874\uC790\uC758 \uBAA9\uC228\uC744 \uAD6C\uD560 \uC218\uB3C4 \uC788\uB294
+    \uC2DD\uB7C9\uC774\uC8E0!"
   icon: {fileID: 21300000, guid: c83969db0d7c40b43a182fd6f71ab2fa, type: 3}
   dropItemPrefab: {fileID: 8465492113604737998, guid: 9d8fd79ee2afebb4f944718a0cc83da6, type: 3}
-  maxCount: 10
+  type: 0
+  maxStackCount: 10
+  currStackCount: 0
   fullPoint: 30
   healPoint: 30
-  decayTime: 30
+  totalDecayTime: 30
+  currDecayTime: 30
