@@ -11,7 +11,7 @@ public class ShelterManager : MonoBehaviour {
     public int skillMoveLevel, skillAttackLevel, skillGatherLevel;
     public float skillMoveTotalExp, skillAttackTotalExp, skillGatherTotalExp;
     public float skillMoveCurrentExp, skillAttackCurrentExp, skillGatherCurrentExp;
-
+    public bool isShelterLevelUp = false; // 김수주 24 07 12 - 16 : 58
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         ShelterLevel = 1;
@@ -28,6 +28,7 @@ public class ShelterManager : MonoBehaviour {
 
     //TODO: UI > 거처 내부 버튼 '업그레이드' 버튼 Onclicked => LevelUp();
     public void LevelUp() {     // 거처 레벨업
+        isShelterLevelUp = true;
         ShelterCreate shelter = GetComponent<ShelterCreate>();
         //TODO: UI > 코루틴으로 '업그레이드' 버튼 슬라이더 채우기 로직
         shelter.Shelter().SetActive(false);

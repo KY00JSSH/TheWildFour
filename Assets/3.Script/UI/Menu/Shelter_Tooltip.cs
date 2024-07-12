@@ -24,9 +24,9 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Image tooltipImg;
     private Text tooltipTitle;
     private Text tooltipMain;
-    private int shelterLevel = 0;
+    private int shelterLevel = 0; // 그 저장 및 불러오기에서 
     [SerializeField] private GameObject shelterLevelText;
-    private ShelterManager shelterManager;    
+    private ShelterManager shelterManager;
 
 
     public TextAsset textFile;
@@ -38,11 +38,11 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         tooltipImg = ShelterTooltip.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         tooltipTitle = ShelterTooltip.transform.GetChild(1).GetComponent<Text>();
         tooltipMain = ShelterTooltip.transform.GetChild(0).GetChild(1).GetComponent<Text>();
-        shelterLevelText = transform.GetChild(3).gameObject;
+        shelterLevelText = transform.GetChild(2).gameObject;
     }
 
-    private void Update() {
-        if (shelterLevel == shelterManager.ShelterLevel) ShelterLevel_Alpha();
+    private void FixedUpdate() {
+        if (shelterManager.isShelterLevelUp || shelterLevel != shelterManager.ShelterLevel) { ShelterLevel_Alpha(); shelterManager.isShelterLevelUp = false; }
     }
 
     // 설명글  dictionary에 저장
@@ -139,7 +139,6 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     // 레벨해야하는데 레벨받아와서 Text 알파값 조정
     private void ShelterLevel_Alpha() {
-        Debug.Log("======================== 되는게 맞는건가 ");
         for (int i = 0; i < shelterLevelText.transform.childCount; i++) {
             char shelterLevelTextChar = shelterLevelText.transform.GetChild(i).name[0];
             int shelterLevelCount = 0;
@@ -148,14 +147,17 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
                 Text text = shelterLevelText.transform.GetChild(i).GetComponent<Text>();
                 Color color = text.color;
-                if (shelterLevelCount < shelterManager.ShelterLevel) {
+                if (shelterLevelCount > shelterManager.ShelterLevel) {
                     color.a = 0.5f;
                 }
                 else {
                     color.a = 1f;
                 }
+                text.color = color;
             }
         }
+
+        shelterLevel = shelterManager.ShelterLevel;
 
     }
 }
