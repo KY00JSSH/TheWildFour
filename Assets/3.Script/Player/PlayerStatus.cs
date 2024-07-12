@@ -44,7 +44,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            // TODO : 사망 이벤트 필요. 0707
+            //TODO: 사망 이벤트 필요. 0707
         }
     }
 
