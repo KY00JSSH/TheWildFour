@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2391996423053722028}
   - component: {fileID: 8475035356996292301}
   - component: {fileID: 627045593877177552}
+  - component: {fileID: 2182222731406784480}
   m_Layer: 0
   m_Name: IronOrePrf
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &2182222731406784480
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621619284462442978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.26244974
+  m_Height: 0.6731671
+  m_Direction: 1
+  m_Center: {x: 0.005514458, y: 0.12459854, z: 0.019635946}

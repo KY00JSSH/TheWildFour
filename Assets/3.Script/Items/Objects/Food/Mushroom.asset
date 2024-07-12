@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 4
   itemName: "\uBD81\uBC29 \uBC84\uC12F"
-  description: "\uBD81\uBC29 \uBC84\uC12F"
+  description: "\uC232\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC788\uB294 \uC2DD\uBB3C\uC785\uB2C8\uB2E4.
+    \uC911\uB3C5 \uD655\uB960\uC774 \uB192\uC73C\uBBC0\uB85C, \uC751\uAE09 \uC2DC\uC5D0\uB9CC
+    \uC12D\uCDE8\uD574\uC57C \uD569\uB2C8\uB2E4"
   icon: {fileID: 21300000, guid: fab0cb49fb5b6eb449abcae8082d9a83, type: 3}
   dropItemPrefab: {fileID: 2415949312005088204, guid: cb898d91163abe545a91fa8e571e4022, type: 3}
-  maxCount: 8
+  type: 0
+  maxStackCount: 8
+  currStackCount: 0
   fullPoint: 10
   healPoint: 10
-  decayTime: 20
+  totalDecayTime: 20
+  currDecayTime: 20

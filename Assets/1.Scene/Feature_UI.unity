@@ -12643,20 +12643,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2329869789411790353
-MonoBehaviour:
+--- !u!95 &2329869789411790353
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2329869789411790352}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b1da22d7b8676141a45f124c2ebe199, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSlider: {fileID: 146710601}
-  Slider_AddY: 170
+  m_Avatar: {fileID: 9000000, guid: 3d24f4764a539b543a6053dc543ea409, type: 3}
+  m_Controller: {fileID: 9100000, guid: cb6f35914bfd304439f431799147e80f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2557129320113591689
 GameObject:
   m_ObjectHideFlags: 0

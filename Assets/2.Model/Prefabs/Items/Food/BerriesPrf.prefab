@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5705358681864599119}
   - component: {fileID: 7586661813555690116}
   - component: {fileID: 2802826495792929304}
+  - component: {fileID: 7031124312767638842}
   m_Layer: 0
   m_Name: BerriesPrf
   m_TagString: Untagged
@@ -96,3 +97,16 @@ CapsuleCollider:
   m_Height: 0.38
   m_Direction: 2
   m_Center: {x: -0.01, y: -0.02, z: 0.014266744}
+--- !u!114 &7031124312767638842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801702005983861207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8841c5b7956104381d77406b721119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 7a6ee3e6c5a6e9643b7617b0cb3d1ba5, type: 2}

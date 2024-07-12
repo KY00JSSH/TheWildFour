@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: LargeMeat
   m_EditorClassIdentifier: 
   key: 9
-  itemName: "\uD070\uACE0\uAE30"
-  description: "\uD070\uACE0\uAE30"
+  itemName: "\uD070 \uACE0\uAE30 (\uB0A0\uAC83)"
+  description: "\uC2E0\uC120\uD558\uACE0 \uB9DB\uC788\uB294 \uD070 \uB0A0\uACE0\uAE30
+    \uB369\uC5B4\uB9AC\uC785\uB2C8\uB2E4"
   icon: {fileID: 21300000, guid: 6ee9df97c35b0654b889853d974c84e0, type: 3}
   dropItemPrefab: {fileID: 4355465926015893845, guid: 116bfa0f7be20054aa384ae6de677d25, type: 3}
-  maxCount: 10
+  type: 0
+  maxStackCount: 10
+  currStackCount: 0
   fullPoint: 30
   healPoint: 30
-  decayTime: 40
+  totalDecayTime: 40
+  currDecayTime: 40

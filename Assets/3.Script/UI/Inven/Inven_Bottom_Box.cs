@@ -6,44 +6,36 @@ using UnityEngine.UI;
 public class Inven_Bottom_Box : Inven_Bottom_Controll {
 
     /*
-     Inven_Bottom_Controll ¿¡¼­ ¹ŞÀº ¾ÆÀÌÅÛ ÀúÀå    
+     Inven_Bottom_Controll ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½    
      
      */
 
-    // ÀÎº¥ ¹Ú½º -> ¹öÆ°
+    // ï¿½Îºï¿½ ï¿½Ú½ï¿½ -> ï¿½ï¿½Æ°
     private Button Inven_Box;
     [SerializeField] private Text Inven_Text;
-    [SerializeField] private Image Inven_Sprite;
 
     private int Item_count = 0;
 
     private int Click_count = 0;
     private bool isMouseClick = false;
 
-    // ¾ÆÀÌÅÛÀ» »ç¿ëÇÏ´ÂÁö È®ÀÎ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
     public bool isItemUse = false;
-    // ¾ÆÀÌÅÛÀÌ µé¾î°¡ÀÖ´ÂÁö È®ÀÎ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
     public bool isItemIn = false;
-    // ¾ÆÀÌÅÛÀÌ 80°³ Ã¡´Ù¸é
-    public bool isInvenBoxAvailable = true;
 
-    // ÀÎº¥ ³»ºÎ ¾ÆÀÌÅÛ 
-    public GameObject Inven_Item { get; private set; }
-    public GameObject Inven_ItemData { get; private set; }
-
+    private InvenController invenCon;
 
     private void Awake() {
+        invenCon = GetComponent<InvenController>();
         Inven_Box = transform.GetComponent<Button>();
         Inven_Text = transform.GetChild(0).GetComponent<Text>();
         Inven_Text.text = Item_count.ToString();
-
-        //TODO: ¾ÆÀÌÅÛ ½ºÇÁ¶óÀÌÆ®°¡ ¾øÀ½ ¹Ş¾Æ¿Ã¶§ È®ÀÎ
-        Inven_Sprite = transform.GetChild(1).GetComponent<Image>();
-        Inven_Sprite.enabled = false;
     }
 
+    // item box Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ box indexï¿½ï¿½ item ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
+    // 
     private void Update() {
-
         if (Input.GetMouseButtonDown(0)) {
             isMouseClick = true;
             if (!IsCusorOutButton(Inven_Box)) {
@@ -54,81 +46,37 @@ public class Inven_Bottom_Box : Inven_Bottom_Controll {
         }
         if (isMouseClick) {
             if (isItemIn && Input.GetKeyDown(KeyCode.E)) {
-                ItemUse();
+                //invenCon.useItem();
             }
         }
     }
 
+    //TODO: ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½
+    //TODO: ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ ï¿½å·¡ï¿½ï¿½ - ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    //TODO: ï¿½×³ï¿½ f ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ 8ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½
+    //TODO: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 30 -> Ã¶ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½
 
-    //  ¾ÆÀÌÅÛÀÌ Ãß°¡µÉ °æ¿ì ¾ÆÀÌÅÛ ÀúÀå
-    public void ItemIn(GameObject item) {
-        if (Inven_Item != null) {
-            Item_count++;
-            ItemCountCheck();
-        }
-        else {
-            Inven_Item = item;
-            isItemIn = true;
-            Item_count++;
-            ItemCountCheck();
-        }
-        Debug.Log("¾ÆÀÌÅÛ ÀÌ¸§ È®ÀÎ" + item.name);
-        Debug.Log("¾ÆÀÌÅÛ count È®ÀÎ" + Item_count);
-        Inven_Text.text = Item_count.ToString();
-        Inven_Sprite.enabled = true;
-    }
+    //public void ItemUse_Button() {
+    //    Click_count++;
+    //    if (Click_count >= 2 && isItemIn) {
+    //        ItemUse();
+    //    }
+    //}
 
-    // ¾ÆÀÌÅÛ »ç¿ë
-    private void ItemUse() {
-        if (Item_count == 0) return;
-        isItemUse = true;
-        Item_count--;
-        Inven_Text.text = Item_count.ToString();
-        //TODO: ¾ÆÀÌÅÛ »ç¿ëÇØ¾ßÇÕ´Ï´Ù
-        if (Item_count <= 0) {
-            // ÃÊ±âÈ­
-            Init_InvenBox();
-        }
-        isItemUse = false;
-    }
+    //// ï¿½Ê±ï¿½È­ È¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //private void Init_InvenBox() {
+    //    Item_count = 0;
+    //    isItemUse = false;
+    //    isItemIn = false;
+    //    isInvenBoxAvailable = true;
+    //    Inven_Item = null;
+    //    //itemImgOj = transform.GetComponent<Image>().sprite;
+    //    Inven_Sprite.enabled = false;
+    //}
 
-    public void ItemUse_Button() {
-        Click_count++;
-        if (Click_count >= 2 && isItemIn) {
-            ItemUse();
-        }
-    }
-
-
-    private void ItemCountCheck() {
-        if (Inven_Item.tag == "Item_Food" && Item_count >= 80) {
-            isInvenBoxAvailable = false;
-        }
-        else if (Inven_Item.tag == "Item_Weapon" && Item_count >= 1) {
-            isInvenBoxAvailable = false;
-        }
-        else if (Inven_Item.tag == "Item_Ingre" && Item_count >= 80) {
-            isInvenBoxAvailable = false;
-        }
-        else if (Inven_Item.tag == "Item_Etc" && Item_count >= 1) {
-            isInvenBoxAvailable = false;
-        }
-    }
-
-    // ÃÊ±âÈ­ È¤Àº ¹ö¸®±â
-    private void Init_InvenBox() {
-        Item_count = 0;
-        isItemUse = false;
-        isItemIn = false;
-        isInvenBoxAvailable = true;
-        Inven_Item = null;
-        //itemImgOj = transform.GetComponent<Image>().sprite;
-        Inven_Sprite.enabled = false;
-    }
 
     private bool IsCusorOutButton(Button button) {
         Vector2 MCursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
         return button.GetComponent<RectTransform>().rect.Contains(MCursorPosition);
     }
-
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6103393980207773646}
   - component: {fileID: 3389780705440552426}
   - component: {fileID: 6941538496473972840}
+  - component: {fileID: -9074205537421920567}
   m_Layer: 0
   m_Name: MushroomPrf
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &-9074205537421920567
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2415949312005088204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2379282
+  m_Height: 0.53130877
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.0839064, z: 0}
