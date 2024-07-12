@@ -6,9 +6,6 @@ public class ShelterManager : MonoBehaviour {
     public int ShelterLevel { get; private set; }
     private Vector3 LastPlayerPosition; //TODO: 거처 입장, 퇴장시 사용할 위치값
 
-    //TODO: 스킬 당 포인트, 포인트 당 경험치
-    //TODO: 포인트 경험치는 스킬 레벨마다 요구량 증가.
-
     public int MoveLevel { get; private set; }
     public int AttackLevel { get; private set; }
     public int GatherLevel { get; private set; }
@@ -77,7 +74,6 @@ public class ShelterManager : MonoBehaviour {
     }
 
 
-
     //TODO: UI > 거처 내부 버튼 '업그레이드' 버튼 Onclicked => LevelUp();
     public void LevelUp() {     // 거처 레벨업
         ShelterCreate shelter = GetComponent<ShelterCreate>();
@@ -87,24 +83,30 @@ public class ShelterManager : MonoBehaviour {
         shelter.Shelter().SetActive(true);
     }
 
-    public Skill[] skillMove = new Skill[8];
-    public Skill[] skillAttack = new Skill[8];
-    public Skill[] skillGather = new Skill[8];
+    public Skill[] skillMove = new Skill[5];
+    public Skill[] skillAttack = new Skill[5];
+    public Skill[] skillGather = new Skill[5];
 
 
     public void OnSkillMoveButton(int index) {
+        if (MovePoint <= 0) return;
         if (index > ShelterLevel) return;
         skillMove[index].LevelUp();
+        MovePoint--;
     }
 
     public void OnSkillAttackButton(int index) {
+        if (AttackPoint <= 0) return;
         if (index > ShelterLevel) return;
         skillAttack[index].LevelUp();
+        AttackPoint--;
     }
 
     public void OnSkillGatherButton(int index) {
+        if (GatherPoint <= 0) return;
         if (index > ShelterLevel) return;
         skillGather[index].LevelUp();
+        GatherPoint--;
     }
 
     public Skill GetSkill(string name) {
