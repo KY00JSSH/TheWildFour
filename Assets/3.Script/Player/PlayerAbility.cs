@@ -6,9 +6,10 @@ public class PlayerAbility : MonoBehaviour {
     private PlayerStatus playerStatus;
     private PlayerMove playerMove;
 
-    // ÇÃ·¹ÀÌ¾î ±âº» ´É·ÂÄ¡
-    // ÇÃ·¹ÀÌ¾î ¼±ÅÃ ½Ã¿¡¸¸ º¯°æµÊ
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½âº» ï¿½É·ï¿½Ä¡
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     private float playerAttack;
+    private float playerCriticalAttack;
     private float playerDefense;
     private float playerGather;
     private float playerSpeed;
@@ -16,8 +17,8 @@ public class PlayerAbility : MonoBehaviour {
     private float playerDecDashGage;
     private float playerInvenCount;
 
-    // ÇÃ·¹ÀÌ¾î Ãß°¡ ´É·ÂÄ¡
-    // ÇÃ·¹ÀÌ¾î ½ºÅ³ ¶Ç´Â Àåºñ¿¡ µû¶ó º¯°æµÊ
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ ï¿½É·ï¿½Ä¡
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Å³ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     private float playerAddAttack;
     private float playerAddDefense;
     private float playerAddGather;
@@ -42,8 +43,10 @@ public class PlayerAbility : MonoBehaviour {
     }
 
     private void Start() {
-        //TODO: SAVE ±¸Çö ½Ã JSON¿¡¼­ ¹Þ¾Æ¿À±â
+        //TODO: SAVE ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ JSONï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
         playerAttack = 2f;
+        playerCriticalAttack = 5f;
+
         playerDefense = 2f;
         playerGather = 2f;
         playerSpeed = 1f;
@@ -62,24 +65,25 @@ public class PlayerAbility : MonoBehaviour {
 
     public void UpdateAblity() {
         playerMove.isSkilled = 
-            shelterManager.GetSkill("Àü·Â ÁúÁÖ").nowSkillLevel == 1 ? true : false;
-        playerAddSpeed = shelterManager.GetSkill("¼Óµµ").GetValue();
+            shelterManager.GetSkill("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½").nowSkillLevel == 1 ? true : false;
+        playerAddSpeed = shelterManager.GetSkill("ï¿½Óµï¿½").GetValue();
         playerMove.SetPlayerMoveSpeed(playerSpeed + playerAddSpeed);
         cameraControl.maxFOV =
-            shelterManager.GetSkill("½Ã¾ß ¹Ý°æ").nowSkillLevel == 1 ? 110f : 100f;
+            shelterManager.GetSkill("ï¿½Ã¾ï¿½ ï¿½Ý°ï¿½").nowSkillLevel == 1 ? 110f : 100f;
         playerAddDecDashGage =
-            shelterManager.GetSkill("Àü·Â ÁúÁÖ ½Ã°£").GetValue();
+            shelterManager.GetSkill("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½").GetValue();
         playerMove.DecDashGage = playerDecDashGage - playerAddDecDashGage;
         playerStatus.PlayerMaxHp =
-            playerStatus.PlayerMaxHp + shelterManager.GetSkill("¿îµ¿").GetValue();
+            playerStatus.PlayerMaxHp + shelterManager.GetSkill("ï¿½îµ¿").GetValue();
 
-        playerAddAttack =       //TODO: ÀåÂø ÀåºñÀÇ °ø°Ý·Âµµ °¡Á®¿À±â
-            shelterManager.GetSkill("±ÙÁ¢ °ø°Ý·Â").GetValue() +
-            shelterManager.GetSkill("¿ø°Å¸® °ø°Ý·Â").GetValue();
-       // playerAttackSpeed = playerAttackSpeed + shelterManager.GetSkill("°ø°Ý ¼Óµµ").GetValue();
+        playerAddAttack =       //TODO: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            shelterManager.GetSkill("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½").GetValue() +
+            shelterManager.GetSkill("ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½").GetValue();
+        //playerAttackSpeed =
+         //   playerAttackSpeed + shelterManager.GetSkill("ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½").GetValue();
+
+
         
-
-
     }
 
     public float GetTotalPlayerAttack() { return playerAttack + playerAddAttack; }
