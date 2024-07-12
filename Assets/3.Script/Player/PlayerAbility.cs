@@ -76,8 +76,8 @@ public class PlayerAbility : MonoBehaviour {
         playerAddAttack =       //TODO: 장착 장비의 공격력도 가져오기
             shelterManager.GetSkill("근접 공격력").GetValue() +
             shelterManager.GetSkill("원거리 공격력").GetValue();
-        playerAttackSpeed =
-            playerAttackSpeed + shelterManager.GetSkill("공격 속도").GetValue();
+        //playerAttackSpeed =
+        //    playerAttackSpeed + shelterManager.GetSkill("공격 속도").GetValue();
         
 
 
