@@ -21,7 +21,7 @@ public class SkillInfo {
 }
 
 
-public class Shelter_Tooltip : MonoBehaviour {
+public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     Dictionary<int, SkillInfo> shelterTooltip = new Dictionary<int, SkillInfo>();
     public int dictionaryKey;
 
@@ -56,7 +56,6 @@ public class Shelter_Tooltip : MonoBehaviour {
 
     }
 
-    /*
     // 하위 버튼 마우스 위치 확인
     public void OnPointerEnter(PointerEventData eventData) {
         Debug.Log("OnPointerEnter called");
@@ -82,7 +81,6 @@ public class Shelter_Tooltip : MonoBehaviour {
         }
 
     }
-    */
 
     // dictionary의 key 값 확인
     // 찾아진 오브젝트의 이름을 받아서 특정 포함되어있으면 값 더해서 리턴 

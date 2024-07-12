@@ -34,7 +34,7 @@ public class SkillCountImg {
             char lastChar = spriteName[spriteName.Length - 1];
 
             if (char.IsDigit(lastChar)) {
-                int number = lastChar - '0';
+                int number = lastChar - '1';
                 if (number >= 0 && number < skillCnt.Length) skillCnt[number].Add(skillSprites[i]);
             }
             else Debug.Log($"Sprite {spriteName} 마지막 글자가 숫자 아님");
@@ -42,7 +42,7 @@ public class SkillCountImg {
     }
 }
 
-public class ShelterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class ShelterUI : MonoBehaviour {
 
     private ShelterManager shelterManager;
 
@@ -103,10 +103,12 @@ public class ShelterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 if ((j - 2) > shelterManager.ShelterLevel) {
                     color.a = 0.5f;
                     gameObject.transform.GetChild(j).Find("LockImg").gameObject.SetActive(true);
+                    gameObject.transform.GetChild(j).GetComponent<Button>().interactable = false;
                 }
                 else {
                     color.a = 1f;
                     gameObject.transform.GetChild(j).Find("LockImg").gameObject.SetActive(false);
+                    gameObject.transform.GetChild(j).GetComponent<Button>().interactable = true;
                 }
 
                 buttonImg.GetComponent<Image>().color = color;
@@ -125,20 +127,18 @@ public class ShelterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void HandleButtonClick(GameObject clickedButton) {
         Debug.Log("HandleButtonClick called");
 
-        Debug.Log("Pointer Click Object: " + clickedButton.name);
         Button btn = clickedButton.GetComponent<Button>();
         if (btn != null) {
-            Debug.Log(btn.gameObject.name + " - Mouse Clikck");
-            string nowBtnSpriteName = btn.transform.GetChild(2).name;
+            string nowBtnSpriteName = btn.transform.GetChild(2).GetComponent<Image>().sprite.name;
             char lastChar = nowBtnSpriteName[nowBtnSpriteName.Length - 1];
 
             if (char.IsDigit(lastChar)) {
                 int skillCntNum = lastChar - '0'; //  스프라이트 list배열의 스킬 카운트계산
 
-                List<Sprite> skillSprites = skillCountImg.skillCnt[skillCntNum];
+                List<Sprite> skillSprites = skillCountImg.skillCnt[skillCntNum - 1];
                 int spriteIndex = skillSprites.FindIndex(sprite => sprite.name == nowBtnSpriteName);
 
-                if (spriteIndex > (skillCountImg.skillCnt[skillCntNum].Count - 1)) return;
+                if (spriteIndex >= (skillSprites.Count - 1)) return;
                 else btn.transform.GetChild(2).GetComponent<Image>().sprite = skillSprites[spriteIndex + 1];
             }
         }
@@ -147,27 +147,4 @@ public class ShelterUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) {
-        Debug.Log("OnPointerEnter called");
-        if (eventData.pointerEnter != null) {
-            Button btn = eventData.pointerEnter.GetComponent<Button>();
-            if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse enter");
-                shelter_Tooltip.ShelterTooltipShow(btn.gameObject);
-
-                Debug.Log("dictionaryKey 확인" + shelter_Tooltip.dictionaryKey); ;
-            }
-        }
-    }
-
-    public void OnPointerExit(PointerEventData eventData) {
-        Debug.Log("OnPointerExit called");
-        if (eventData.pointerCurrentRaycast.gameObject != null) {
-            Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
-            if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse exit");
-                shelter_Tooltip.dictionaryKey = 0;
-            }
-        }
-    }
 }
