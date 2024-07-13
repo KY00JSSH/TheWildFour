@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1623226516821137257}
   - component: {fileID: 3909894254361372243}
   - component: {fileID: 1702339844193426633}
+  - component: {fileID: 6523718773849126438}
   m_Layer: 0
   m_Name: SackPrf
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &6523718773849126438
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122183901949410239}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 0.59
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.02, z: 0}
