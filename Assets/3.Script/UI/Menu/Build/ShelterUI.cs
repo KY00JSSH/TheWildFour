@@ -42,6 +42,8 @@ public class SkillCountImg {
     }
 }
 
+
+//TODO: Inven => 스크립트 변경 끝나면 버튼 이벤트 추가 필요함
 public class ShelterUI : MonoBehaviour {
 
     private ShelterManager shelterManager;
@@ -152,9 +154,12 @@ public class ShelterUI : MonoBehaviour {
 
         Button btn = clickedButton.GetComponent<Button>();
 
+        // 버튼 포인트값이 없으면 return
+        /*
         if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
         else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
-        else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return;
+        else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return; 
+        */
 
         if (btn != null) {
             string nowBtnSpriteName = btn.transform.GetChild(2).GetComponent<Image>().sprite.name;

@@ -37,7 +37,7 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     ========== 
     현재 아이템 개수 
-
+    //TODO: 아이템 불러오기
 
      */
 
