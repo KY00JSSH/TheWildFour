@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InvenUIController : MonoBehaviour {
+    [SerializeField] private List<InventoryBox> inventoryBoxes;
+    private InvenController invenController;
 
     private List<GameObject> InvenTotal = new List<GameObject>();
 
@@ -11,14 +13,29 @@ public class InvenUIController : MonoBehaviour {
     private int invenMaxcount = 15;         //인벤토리 활성화 최대 개수    
 
     public GameObject InvenBoxPrefab;       //인벤토리 UI BOX Prefab
-    private InvenController invenController;
 
     private void Awake() {
         currInvenCount = 8;
         invenController = GetComponent<InvenController>();
+        invenController.InventoryChanged += UpdateUI;
         InvenTotal = InitInven();
         for (int i = 0; i < currInvenCount; i++) {
             InvenTotal[i].SetActive(true);
+        }
+    }
+
+    private void OnDestroy() {
+        invenController.InventoryChanged -= UpdateUI;
+    }
+
+    private void UpdateUI(List<ItemData> inventory) {
+        for (int i = 0; i < inventoryBoxes.Count; i++) {
+            if (i < inventory.Count) {
+                inventoryBoxes[i].UpdateBox(inventory[i]);
+            }
+            else {
+                inventoryBoxes[i].UpdateBox(null);
+            }
         }
     }
 
@@ -32,6 +49,11 @@ public class InvenUIController : MonoBehaviour {
             invenBoxPrefabs.name = InvenBoxPrefab.name;
             invenBoxPrefabs.SetActive(false);
             InvenBox.Add(invenBoxPrefabs);
+
+            InventoryBox box = invenBoxPrefabs.GetComponent<InventoryBox>();
+            if (box != null) {
+                inventoryBoxes.Add(box);
+            }
         }
         return InvenBox;
     }
@@ -41,9 +63,15 @@ public class InvenUIController : MonoBehaviour {
         if (currInvenCount <= invenMaxcount) {
             currInvenCount++;
             invenController.invenFullReset();
-            InvenTotal[currInvenCount].SetActive(true);
+            InvenTotal[currInvenCount - 1].SetActive(true); 
+
+            InventoryBox box = InvenTotal[currInvenCount - 1].GetComponent<InventoryBox>();
+            if (box != null) {
+                box.UpdateBox(null); 
+            }
         }
         else {
+            Debug.Log("Inventory is already at maximum capacity.");
             return;
         }
     }

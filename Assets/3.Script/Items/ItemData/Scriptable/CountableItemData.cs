@@ -20,6 +20,10 @@ public class CountableItemData : ItemData {
         }
     }
 
+    public void resetCurrStack() {
+        currStackCount = 0;
+    }
+
     public void useCurrStack(int num) {
         if (!(currStackCount - num < 0)) {
             currStackCount -= num;

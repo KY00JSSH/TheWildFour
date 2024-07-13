@@ -10,6 +10,12 @@ public class InvenController : MonoBehaviour {
     private InvenUIController invenUi;
     private GameObject itemObejct;
 
+    public bool itemTest = false;
+    public ItemData testItem;
+
+    public delegate void OnInventoryChanged(List<ItemData> inventory);
+    public event OnInventoryChanged InventoryChanged;
+
     private void Start() {
         inventory = new List<ItemData>();
         invenUi = FindObjectOfType<InvenUIController>();
@@ -17,6 +23,22 @@ public class InvenController : MonoBehaviour {
 
     public void invenFullReset() {
         isInvenFull = false;
+    }
+
+    private void Update() {
+        if(itemTest) {
+            if(testItem is CountableItemData countItem) {
+                //TODO: 카운팅 체크...해야해
+                countItem.resetCurrStack();
+                countItem.addCurrStack(3);
+                itemObejct = Instantiate(testItem.DropItemPrefab);
+                ItemAdd();
+            }
+
+            itemTest = false;
+            Debug.Log(inventory[0].ItemName);
+            Debug.Log(inventory[0].Key);
+        }
     }
 
     //if 해당 아이템이 inven에 있고,(해당 box item count < itemMaxStackCount)
@@ -49,15 +71,18 @@ public class InvenController : MonoBehaviour {
                 Debug.Log("전체 차있고, 기존 box에도 추가 못함");
             }
         }
+        InventoryChanged?.Invoke(inventory);
     }
 
     //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
     private int canAddThisBox(int itemKey) {
         for (int i = 0; i < invenUi.CurrInvenCount; i++) {
-            if (inventory[i].Key == itemKey) {
-                if (inventory[i] is CountableItemData countItem) {
-                    if (countItem.CurrStackCount < countItem.MaxStackCount) {
-                        return i;
+            if (i < inventory.Count && inventory[i].Key == itemKey) {
+                if (inventory[i].Key == itemKey) {
+                    if (inventory[i] is CountableItemData countItem) {
+                        if (countItem.CurrStackCount < countItem.MaxStackCount) {
+                            return i;
+                        }
                     }
                 }
             }
@@ -82,51 +107,60 @@ public class InvenController : MonoBehaviour {
     }
 
     private void removeItem(int index) {
-        inventory[index] = null;
+        if (index >= 0 && index < inventory.Count) {
+            inventory[index] = null;
+        }
+        InventoryChanged?.Invoke(inventory);
     }
 
     //아이템 1개 사용
     public void useItem(int index) {
-        if (inventory[index] is CountableItemData countItem) {
-            if (countItem.CurrStackCount == 1) {
-                removeItem(index);
+        if (index >= 0 && index < inventory.Count && inventory[index] != null) {
+            if (inventory[index] is CountableItemData countItem) {
+                if (countItem.CurrStackCount == 1) {
+                    removeItem(index);
+                }
+                else {
+                    countItem.useCurrStack(1);
+                }
             }
             else {
-                countItem.useCurrStack(1);
+                removeItem(index);
             }
         }
-        else {
-            removeItem(index);
-        }
+        InventoryChanged?.Invoke(inventory);
     }
 
 
     private void dropItem(int index) {
-        if (inventory[index].Key != 1 && inventory[index].Key != 2) {
-            //돌, 나무 아닐때
-            if (inventory[index] is CountableItemData countItem) {
-                countItem.useCurrStack(1);
-                //TODO: 아이템 드랍
-            }
-        }
-        else {
-            if (inventory[index] is CountableItemData countItem) {
-                if (countItem.CurrStackCount > 8) {
-                    countItem.useCurrStack(8);
+        if (index >= 0 && index < inventory.Count && inventory[index] != null) {
+            if (inventory[index].Key != 1 && inventory[index].Key != 2) {
+                //돌, 나무 아닐때
+                if (inventory[index] is CountableItemData countItem) {
+                    countItem.useCurrStack(1);
                     //TODO: 아이템 드랍
-                }
-                else if (countItem.CurrStackCount == 8) {
-                    countItem.useCurrStack(8);
-                    removeItem(index);
-                    //TODO: 아이템 드랍
-                }
-                else {
-                    countItem.useCurrStack(countItem.CurrStackCount);
-                    //TODO: 아이템 드랍
-                    
-                    removeItem(index);
                 }
             }
+            else {
+                if (inventory[index] is CountableItemData countItem) {
+                    if (countItem.CurrStackCount > 8) {
+                        countItem.useCurrStack(8);
+                        //TODO: 아이템 드랍
+                    }
+                    else if (countItem.CurrStackCount == 8) {
+                        countItem.useCurrStack(8);
+                        removeItem(index);
+                        //TODO: 아이템 드랍
+                    }
+                    else {
+                        countItem.useCurrStack(countItem.CurrStackCount);
+                        //TODO: 아이템 드랍
+
+                        removeItem(index);
+                    }
+                }
+            }
         }
+        InventoryChanged?.Invoke(inventory);
     }
 }
