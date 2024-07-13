@@ -8,12 +8,13 @@ public class ButtonCoolTimeUI : MonoBehaviour
     public Image img;
     public Button btn;
     [SerializeField] private float cooltime = 10f;
-    [SerializeField]private bool isClicked = false;
+    [SerializeField] private bool isClicked = false;
 
     private float leftTime = 10f;
     [SerializeField] private float speed = 5.0f;
-
     [SerializeField] private ShelterManager shelterManager;
+
+    public float ratio { get; private set; }
 
     private void Start() {
         if (shelterManager == null) shelterManager = FindObjectOfType<ShelterManager>();
@@ -31,7 +32,7 @@ public class ButtonCoolTimeUI : MonoBehaviour
                     isClicked = true;
                 }
 
-                float ratio = 1.0f - (leftTime / cooltime);
+                ratio = 1.0f - (leftTime / cooltime);
                 if (img) img.fillAmount = ratio;
             }
         }
