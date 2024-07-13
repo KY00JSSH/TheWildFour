@@ -4,12 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
-public class ButtonTest : MonoBehaviour, IPointerClickHandler {
-    public void OnPointerClick(PointerEventData eventData) {
-        Debug.Log("Button Clicked!");
-    }
-}
 
+
+[System.Serializable]
 public class SkillInfo {
     public string Title;
     public string MainText;
@@ -25,10 +22,13 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
     Dictionary<int, SkillInfo> shelterTooltip = new Dictionary<int, SkillInfo>();
     public int dictionaryKey;
 
+    [SerializeField] private ShelterManager shelterManager;
     [SerializeField] private GameObject ShelterTooltip;
     private Image tooltipImg;
     private Text tooltipTitle;
     private Text tooltipMain;
+    private Text tooltipAdditionalText;
+    private string[] additionalText = { "필요 포인트 1", "현재 필요 레벨" };
 
     public TextAsset textFile;
     [SerializeField] private List<SkillInfo> skilltexts = new List<SkillInfo>();
@@ -38,6 +38,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         tooltipImg = ShelterTooltip.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         tooltipTitle = ShelterTooltip.transform.GetChild(1).GetComponent<Text>();
         tooltipMain = ShelterTooltip.transform.GetChild(0).GetChild(1).GetComponent<Text>();
+        tooltipAdditionalText = ShelterTooltip.transform.GetChild(0).GetChild(2).GetComponent<Text>();
     }
 
 
@@ -101,6 +102,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     // dictionary의 key 값으로 tooltip에 넣기
+    //TODO: 레벨 맞춰서 하단 추가정보란 표기
     public void ShelterTooltipShow(GameObject btn) {
 
         // 이미지 변경
@@ -109,7 +111,28 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         dictionaryKey = FindDictionaryKey(btn.gameObject);
         tooltipTitle.text = shelterTooltip[dictionaryKey].Title;
         tooltipMain.text = shelterTooltip[dictionaryKey].MainText;
+        AdditionalText(dictionaryKey);
     }
 
+    /* 추가 정보란
+     * 비교 대상 : 버튼의 dictionaryKey vs 현재 쉘터 레벨
+     * 포인트 가져오는 법 : 해당 버튼의 키의 범위로 해당 포인트 들고오기 
+    1. 레벨이 작을 경우 : 최소 레벨 -> 붉은 글씨
+    2. 레벨이 맞으나 포인트가 없는 경우 : 필요 포인트 -> 붉은 글씨
+    3. 레벨 맞으며 포인트 있음 : 필요 포인트 -> 하얀 글씨
+    */
+
+    private void AdditionalText(int dictionaryKey) {
+        if ((dictionaryKey % 5 + 1) > shelterManager.ShelterLevel)
+            tooltipAdditionalText.text = string.Format("<color=red>{0} : {1}</color>", additionalText[1], dictionaryKey % 5 + 1);
+        else {
+            string textColor = "white";
+            if (0 <= dictionaryKey && dictionaryKey < 5) { textColor = shelterManager.MovePoint > 0 ? "white" : "red"; }
+            else if (5 <= dictionaryKey && dictionaryKey < 10) { textColor = shelterManager.AttackPoint > 0 ? "white" : "red"; }
+            else if (10 <= dictionaryKey && dictionaryKey < 15) { textColor = shelterManager.GatherPoint > 0 ? "white" : "red"; }
+
+            tooltipAdditionalText.text = string.Format("<color={1}>{0}</color>", additionalText[0], textColor);
+        }
+    }
 
 }

@@ -46,27 +46,49 @@ public class ShelterUI : MonoBehaviour {
 
     private ShelterManager shelterManager;
 
+    [Header("Skill Splite Change")]
     [SerializeField] private string spritesPath = "4.Sprite/UI/Shelter_Upgrade/SkillCount";
     [SerializeField] private SkillCountImg skillCountImg;
-
+    [Space((int)2)]
+    [Header("Skill Level Alpha Change")]
     [SerializeField] private GameObject shelterLevelText; // 스킬 위 레벨 표시
     [SerializeField] private Text shelterLevel;       // shelter 레벨 표시
     [SerializeField] private GameObject shelterbuttons;
+    [Space((int)2)]
+    [Header("Main Button Disapear")]
+    [SerializeField] private GameObject menuButton;
+    [Space((int)2)]
+    [Header("Skill Slider")]
+    [SerializeField] private Slider[] sliders;
+    [Space((int)1)]
+    [Header("Skill Pointer")]
+    [SerializeField] private Text[] pointers;
 
-    [SerializeField] private Shelter_Tooltip shelter_Tooltip;
+
 
     private void Awake() {
-        shelter_Tooltip = GetComponent<Shelter_Tooltip>();
         shelterManager = FindObjectOfType<ShelterManager>();
         shelterLevelText = transform.GetChild(2).gameObject;
         skillCountImg.Init(spritesPath);
+    }
+    private void Start() {
+        ShelterLevel_Alpha();
+        ShelterLevel_AlphaBtns();
     }
 
     private void OnEnable() {
         ShelterLevel_Alpha();
         ShelterLevel_AlphaBtns();
+        menuButton.SetActive(false);
+    }
+    private void OnDisable() {
+        menuButton.SetActive(true);
     }
 
+    private void FixedUpdate() {
+        SkillSliderValue();
+        SkillPointerValue();
+    }
 
     // ShelterManager 레벨받아와서 Text 알파값 조정
     public void ShelterLevel_Alpha() {
@@ -117,6 +139,7 @@ public class ShelterUI : MonoBehaviour {
     }
 
     //TODO: 해당 버튼이 눌리면 스킬 불빛 변경 할 것
+    //TODO: 버튼 포인트 값이 있으면 실행되게 할것
     /*
      1. 해당 버튼이 눌리면 버튼의 하위객체 3번의 이름 마지막 글자 확인 -> 스킬카운트 갯수
      2. 해당 글자의 숫자로 SkillCountImg클래스의 스프라이트 list배열 불러오기
@@ -128,10 +151,15 @@ public class ShelterUI : MonoBehaviour {
         Debug.Log("HandleButtonClick called");
 
         Button btn = clickedButton.GetComponent<Button>();
+
+        if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
+        else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
+        else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return;
+
         if (btn != null) {
             string nowBtnSpriteName = btn.transform.GetChild(2).GetComponent<Image>().sprite.name;
-            char lastChar = nowBtnSpriteName[nowBtnSpriteName.Length - 1];
 
+            char lastChar = nowBtnSpriteName[nowBtnSpriteName.Length - 1];
             if (char.IsDigit(lastChar)) {
                 int skillCntNum = lastChar - '0'; //  스프라이트 list배열의 스킬 카운트계산
 
@@ -145,6 +173,31 @@ public class ShelterUI : MonoBehaviour {
         else {
             Debug.Log("Not a button");
         }
+    }
+
+
+    // 슬라이더 수치 변경(update)
+    public void SkillSliderValue() {
+        for (int i = 0; i < sliders.Length; i++) {
+            if (sliders[i].name.Contains("Move")) sliders[i].value = shelterManager.MoveCurrentExp / shelterManager.MoveTotalExp;
+            else if (sliders[i].name.Contains("Attack")) sliders[i].value = shelterManager.AttackCurrentExp / shelterManager.AttackTotalExp;
+            else if (sliders[i].name.Contains("Gather")) sliders[i].value = shelterManager.GatherCurrentExp / shelterManager.GatherTotalExp;
+        }
+    }
+
+    // 포인터 글자 변경(update)
+    public void SkillPointerValue() {
+        for (int i = 0; i < pointers.Length; i++) {
+            if (pointers[i].name.Contains("Move")) pointers[i].text = string.Format("{0} Pts", shelterManager.MovePoint);
+            else if (pointers[i].name.Contains("Attack")) pointers[i].text = string.Format("{0} Pts", shelterManager.AttackPoint);
+            else if (pointers[i].name.Contains("Gather")) pointers[i].text = string.Format("{0} Pts", shelterManager.GatherPoint);
+        }
+    }
+
+    // 짐싸기
+    public void PackingOnClick() {
+        menuButton.SetActive(false);
+        transform.gameObject.SetActive(false);
     }
 
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
+
+
 
 public class Menu_Tooltip : MonoBehaviour {
 
@@ -12,6 +15,8 @@ public class Menu_Tooltip : MonoBehaviour {
      2. 아이템 툴팁
         - 아이템이 들어오고 나서 찾아야함      
      */
+
+
     [SerializeField]private Menu_Controll menuControll;
 
     private Button button;
@@ -20,6 +25,7 @@ public class Menu_Tooltip : MonoBehaviour {
     public GameObject tooltipbox;
     [SerializeField] private Text _titleText;   // 아이템 이름 텍스트
     [SerializeField] private Text _contentText; // 아이템 설명 텍스트
+
 
     private void Awake() {
         button = GetComponent<Button>();
@@ -65,5 +71,7 @@ public class Menu_Tooltip : MonoBehaviour {
             return;
         }
     }
+
+
 
 }
