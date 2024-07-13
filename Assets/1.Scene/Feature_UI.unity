@@ -7007,6 +7007,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1797005540}
+        m_TargetAssemblyTypeName: Shelter_Tooltip, Assembly-CSharp
+        m_MethodName: SleepFuncOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &493194594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7059,9 +7071,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   img: {fileID: 1426027514}
   btn: {fileID: 493194593}
-  cooltime: 10
+  cooltime: 120
   isClicked: 0
-  speed: 5
+  speed: 1
   shelterManager: {fileID: 0}
 --- !u!1 &522348877
 GameObject:
@@ -22563,6 +22575,7 @@ MonoBehaviour:
   shelterManager: {fileID: 918540478}
   ShelterTooltip: {fileID: 1890039507}
   sleepTime: {fileID: 1157102603}
+  sleepFunc: {fileID: 0}
   itemimgs: {fileID: 1537679120}
   itemtexts: {fileID: 1974929983}
   textFile_Skill: {fileID: 4900000, guid: c4c8c3b2603659c4cb227099eddc696e, type: 3}
