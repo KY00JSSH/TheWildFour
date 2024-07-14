@@ -6,7 +6,7 @@ public class InvenController : MonoBehaviour {
     private bool isInvenFull = false;               //인벤토리 전체 차있고 기존에도 추가 못함 여부
     public bool IsInvenFull { get { return isInvenFull; } }
     private List<ItemData> inventory;
-
+    public List<ItemData> Inventory { get { return inventory; } }
     private InvenUIController invenUi;
     private GameObject itemObejct;
 

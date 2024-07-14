@@ -15,7 +15,7 @@ public class InventoryBox : MonoBehaviour {
     // 아이템이 들어가있는지 확인
     public bool isItemIn = false;
 
-    private ItemData currentItem;
+    public ItemData currentItem;
 
     public void UpdateBox(ItemData item) {
         currentItem = item;
