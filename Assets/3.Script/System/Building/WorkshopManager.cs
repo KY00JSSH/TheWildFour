@@ -22,5 +22,9 @@ public class WorkshopManager : MonoBehaviour {
         shelter.Building.SetActive(true);
     }
 
+    private void Start() {
+        //TODO: SAVE 구현 시 JSON에서 받아오기
+        WorkshopLevel = 1;
+    }
 }
 //TODO: 작업장 UI 생성 이후 CoolTime 인스펙터에서 매칭시켜줘야 함

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.AssetImporters;
 using UnityEngine;
 
 public class BuildingCreate : MonoBehaviour {
@@ -20,9 +17,6 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     private void Update() {
-        // TEST KEYCODE P for Debugging
-        if (Input.GetKeyDown(KeyCode.P)) BuildMode();
-
         if (isBuild) {
             Building.SetActive(true);
             FollowMouse();
