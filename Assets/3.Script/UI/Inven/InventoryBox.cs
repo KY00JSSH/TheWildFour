@@ -15,28 +15,8 @@ public class InventoryBox : MonoBehaviour {
     // 아이템이 들어가있는지 확인
     public bool isItemIn = false;
 
-    private ItemData currentItem;
-
-    public void UpdateBox(ItemData item) {
-        currentItem = item;
-
-        if (currentItem != null) {
-            if(currentItem is CountableItemData countItem) {
-                itemText.text = ""+countItem.CurrStackCount;
-            }
-            else {
-                itemText.text = "";
-            }
-            itemIcon.sprite = currentItem.Icon;
-            itemIcon.enabled = true;
-            itemIcon.gameObject.SetActive(true);
-        }
-        else {
-            itemText.text = "";
-            itemIcon.enabled = false;
-            itemIcon.gameObject.SetActive(false);
-        }
-    }
+    private Item currentItem;
+    public Item CurrentItem { get { return currentItem; } }
 
     private void Awake() {
         Inven_Box = transform.GetComponent<Button>();
@@ -45,6 +25,29 @@ public class InventoryBox : MonoBehaviour {
         //Inven_Text.text = Item_count.ToString();
     }
 
+    public void UpdateBox(Item item) {
+        currentItem = item;
+
+        if (currentItem != null) {
+            if (currentItem is CountableItem countItem) {
+                itemText.text = countItem.countableData.CurrStackCount.ToString();
+            }
+            else {
+                itemText.text = "";
+            }
+            itemIcon.sprite = currentItem.itemData.Icon;
+            itemIcon.enabled = true;
+            itemIcon.gameObject.SetActive(true);
+            isItemIn = true;
+        }
+        else {
+            itemText.text = "";
+            itemIcon.sprite = null;
+            itemIcon.enabled = false;
+            itemIcon.gameObject.SetActive(false);
+            isItemIn = false;
+        }
+    }
     // item box 클릭시 현재 클릭한 box index로 item 뭉텅이 찾기
     // 
     //private void Update() {

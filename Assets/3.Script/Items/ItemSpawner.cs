@@ -24,8 +24,16 @@ public class ItemSpawner : MonoBehaviour
             Random.Range(-spawnArea.z / 2, spawnArea.z / 2)
         );
 
-        GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);
-        Item itemComponent = itemObject.GetComponent<Item>();
+        if (itemToSpawn is CountableItemData countItem) {
+            countItem.resetCurrStack();
+            countItem.addCurrStack(Random.Range(1, 8));
+            GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);
+            Item itemComponent = itemObject.GetComponent<Item>();
+        }
+        else {
+            GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);
+            Item itemComponent = itemObject.GetComponent<Item>();
+        }
         //itemComponent.itemData = itemToSpawn;
 
         //if (itemComponent.itemData is FoodItemData foodItemData) {

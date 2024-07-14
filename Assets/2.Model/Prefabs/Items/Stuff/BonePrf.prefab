@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1002038769421707451}
   - component: {fileID: 2378083571176240523}
   - component: {fileID: 3531459087442689261}
-  m_Layer: 0
+  - component: {fileID: -2769849273917235409}
+  m_Layer: 6
   m_Name: BonePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-2769849273917235409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3521091520333388907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 4ba7763373f0f67418567f2d1bbc2e0e, type: 2}
+  countableData: {fileID: 11400000, guid: 4ba7763373f0f67418567f2d1bbc2e0e, type: 2}

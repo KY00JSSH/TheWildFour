@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9006417730375903741}
   - component: {fileID: 3799225871242826113}
   - component: {fileID: 7284410424818630164}
-  m_Layer: 0
+  - component: {fileID: 3283662581214864368}
+  m_Layer: 6
   m_Name: ChemicalsPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +96,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3258517, y: 0.17499946, z: 0.5245277}
   m_Center: {x: 0.009723648, y: 0, z: 0.26608983}
+--- !u!114 &3283662581214864368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096535666184557031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 88ed01c2795667e4089b3a2f9bc9804a, type: 2}
+  countableData: {fileID: 11400000, guid: 88ed01c2795667e4089b3a2f9bc9804a, type: 2}

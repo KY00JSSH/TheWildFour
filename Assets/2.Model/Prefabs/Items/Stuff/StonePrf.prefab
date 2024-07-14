@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7701811157366613261}
   - component: {fileID: 1376101344184636318}
   - component: {fileID: 1568018239116667565}
-  m_Layer: 0
+  - component: {fileID: 5364994449487232007}
+  m_Layer: 6
   m_Name: StonePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,17 @@ CapsuleCollider:
   m_Height: 0.1
   m_Direction: 0
   m_Center: {x: 0.005, y: 0.00092937984, z: 0}
+--- !u!114 &5364994449487232007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048052764256119999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 27d3ceeb280cd874e82bdb09c2e1673b, type: 2}
+  countableData: {fileID: 11400000, guid: 27d3ceeb280cd874e82bdb09c2e1673b, type: 2}

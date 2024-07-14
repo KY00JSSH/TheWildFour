@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8570837357549594144}
   - component: {fileID: 729298941103894657}
   - component: {fileID: 369797371531320437}
-  m_Layer: 0
+  - component: {fileID: 2288768476166651280}
+  m_Layer: 6
   m_Name: WoodDropPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,17 @@ CapsuleCollider:
   m_Height: 0.8
   m_Direction: 0
   m_Center: {x: 0.02, y: 0.06073825, z: 0}
+--- !u!114 &2288768476166651280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683666770049514664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: aee65b99cd8d27848a9823872f92447a, type: 2}
+  countableData: {fileID: 11400000, guid: aee65b99cd8d27848a9823872f92447a, type: 2}

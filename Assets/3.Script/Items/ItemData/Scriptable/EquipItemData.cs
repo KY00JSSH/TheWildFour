@@ -23,4 +23,8 @@ public class EquipItemData : ItemData {
     public int Level { get { return level; } }
     public int[] MaterialKey { get { return materialKey; } }
     public int[] MaterialCount { get { return materialCount; } }
+
+    public void SetCurrDurability(float value) {
+        currDurability = value;
+    }
 }

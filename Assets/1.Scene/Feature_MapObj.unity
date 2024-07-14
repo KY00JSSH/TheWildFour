@@ -1326,8 +1326,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254232714}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.44389686, y: 0.052899744, z: -0.02626479, w: -0.8941294}
+  m_LocalPosition: {x: 0.509594, y: 7.9513526, z: -3.3681111}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3875,6 +3875,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: 7a6ee3e6c5a6e9643b7617b0cb3d1ba5, type: 2}
+  - {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
+  - {fileID: 11400000, guid: 57d6a6564a71f724eb205911110cf11e, type: 2}
+  - {fileID: 11400000, guid: e604e33478102844faae40971c5b7b9f, type: 2}
+  - {fileID: 11400000, guid: d3508110bb3181645b7ec8fe3b237946, type: 2}
+  - {fileID: 11400000, guid: 929abd875ca79ab41b8cb6e1ac0d931d, type: 2}
   spawnCount: 5
   spawnArea: {x: 5, y: 0, z: 5}
 --- !u!4 &1093256112
@@ -5675,6 +5680,7 @@ GameObject:
   - component: {fileID: 1611154997}
   - component: {fileID: 1611154996}
   - component: {fileID: 1611154995}
+  - component: {fileID: 1611154999}
   m_Layer: 0
   m_Name: Players
   m_TagString: Untagged
@@ -5742,6 +5748,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 76.011, z: 0}
+--- !u!114 &1611154999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611154994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bff7dbb8b1e284bbd2789403fa1540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRadius: 5
 --- !u!1 &1616761430
 GameObject:
   m_ObjectHideFlags: 0
@@ -6115,6 +6134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965b509446e65814ba668fb798c7070e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemObejct: {fileID: 0}
   itemTest: 0
   testItem: {fileID: 11400000, guid: 7a6ee3e6c5a6e9643b7617b0cb3d1ba5, type: 2}
 --- !u!114 &1667745183

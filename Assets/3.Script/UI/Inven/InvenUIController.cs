@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InvenUIController : MonoBehaviour {
-    [SerializeField] private List<InventoryBox> inventoryBoxes;
+    [SerializeField] private List<InventoryBox> inventoryBoxes = new List<InventoryBox>();
     private InvenController invenController;
 
     private List<GameObject> InvenTotal = new List<GameObject>();
@@ -17,7 +17,7 @@ public class InvenUIController : MonoBehaviour {
     private void Awake() {
         currInvenCount = 8;
         invenController = GetComponent<InvenController>();
-        invenController.InventoryChanged += UpdateUI;
+        invenController.InvenChanged += UpdateUI;
         InvenTotal = InitInven();
         for (int i = 0; i < currInvenCount; i++) {
             InvenTotal[i].SetActive(true);
@@ -25,12 +25,12 @@ public class InvenUIController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        invenController.InventoryChanged -= UpdateUI;
+        invenController.InvenChanged -= UpdateUI;
     }
 
-    private void UpdateUI(List<ItemData> inventory) {
+    private void UpdateUI(List<Item> inventory) {
         for (int i = 0; i < inventoryBoxes.Count; i++) {
-            if (i < inventory.Count) {
+            if (i < inventory.Count && inventory[i] != null) {
                 inventoryBoxes[i].UpdateBox(inventory[i]);
             }
             else {

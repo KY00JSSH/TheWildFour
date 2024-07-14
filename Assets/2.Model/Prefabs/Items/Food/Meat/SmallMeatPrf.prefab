@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7528485058265650665}
   - component: {fileID: 6657948237124617600}
   - component: {fileID: 9209296495273648801}
-  m_Layer: 0
+  - component: {fileID: 3564175598060701417}
+  m_Layer: 6
   m_Name: SmallMeatPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,18 @@ CapsuleCollider:
   m_Height: 0.41
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3564175598060701417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003843842228425325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c50918b718c3f47935892c28ebe902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: a87808167e646084a9e8dceca18e1bb7, type: 2}
+  countableData: {fileID: 11400000, guid: a87808167e646084a9e8dceca18e1bb7, type: 2}
+  foodItemData: {fileID: 11400000, guid: a87808167e646084a9e8dceca18e1bb7, type: 2}

@@ -25,8 +25,9 @@ public class CountableItemData : ItemData {
     }
 
     public void useCurrStack(int num) {
-        if (!(currStackCount - num < 0)) {
-            currStackCount -= num;
+        currStackCount -= num;
+        if (currStackCount <= 0) {
+            Destroy(this);
         }
     }
 }

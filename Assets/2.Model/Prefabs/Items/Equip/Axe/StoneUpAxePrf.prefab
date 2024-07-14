@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6037548962177223713}
   - component: {fileID: 4799228513197571420}
   - component: {fileID: 3972216161343540770}
-  m_Layer: 0
+  - component: {fileID: 7926608735938254877}
+  m_Layer: 6
   m_Name: StoneUpAxePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,3 +82,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7926608735938254877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725262414926512324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76541571d1201db42814f1f872dc00e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
+  equipItemData: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
+  WeaponItemData: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
