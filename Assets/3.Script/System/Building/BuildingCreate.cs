@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 
 public class BuildingCreate : MonoBehaviour {
@@ -10,6 +11,9 @@ public class BuildingCreate : MonoBehaviour {
 
     protected bool isExist = false;
     protected bool isBuild = false;
+
+    //TODO: UI > isValidBuild 값 조사해서 가능 불가능 UI 이미지 띄우기
+    public bool isValidBuild = false;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -38,8 +42,11 @@ public class BuildingCreate : MonoBehaviour {
 
     public virtual void BuildMode() {
         if (!isExist) {
-            foreach(Collider collider in buildingColliders)
+            foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
+                if (!collider.TryGetComponent(out BuildingValidity validity))
+                    collider.gameObject.AddComponent<BuildingValidity>();
+            }
             isBuild = true;
 
             MaterialTransparent();
@@ -88,7 +95,9 @@ public class BuildingCreate : MonoBehaviour {
                 pointTolook.y,
                 Mathf.Clamp(pointTolook.z + 0.01f, playerTransform.position.z - buildAreaRadius, playerTransform.position.z + buildAreaRadius)
             );
-            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerTransform.position);
+            Quaternion targetRotation =
+                Quaternion.LookRotation(targetPosition - playerTransform.position) *
+                Quaternion.Euler(180, 0, 180);
 
             Building.transform.position = targetPosition;
             Building.transform.rotation = Quaternion.Slerp(
