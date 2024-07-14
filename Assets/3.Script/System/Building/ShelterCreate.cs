@@ -15,7 +15,7 @@ public class ShelterCreate : BuildingCreate {
     }
 
     public override GameObject Building {
-        get { return buildingPrefabs[shelterManager.ShelterLevel]; }
+        get { return buildingPrefabs[shelterManager.ShelterLevel - 1]; }
     }
 
     public override void BuildMode() {

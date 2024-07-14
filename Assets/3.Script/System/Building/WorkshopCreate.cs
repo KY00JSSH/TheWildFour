@@ -11,7 +11,7 @@ public class WorkshopCreate : BuildingCreate {
     }
 
     public override GameObject Building {
-        get { return buildingPrefabs[workshopManager.WorkshopLevel]; }
+        get { return buildingPrefabs[workshopManager.WorkshopLevel - 1]; }
     }
 
     public override void BuildMode() {
