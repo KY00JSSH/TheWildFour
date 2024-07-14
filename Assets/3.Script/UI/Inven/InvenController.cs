@@ -25,22 +25,6 @@ public class InvenController : MonoBehaviour {
         isInvenFull = false;
     }
 
-    private void Update() {
-        //if(itemTest) {
-        //    if(testItem is CountableItemData countItem) {
-        //        //TODO: 카운팅 체크...해야해
-        //        countItem.resetCurrStack();
-        //        countItem.addCurrStack(3);
-        //        itemObejct = Instantiate(testItem.DropItemPrefab);
-        //        ItemAdd();
-        //    }
-
-        //    itemTest = false;
-        //    Debug.Log(inventory[0].itemData.ItemName);
-        //    Debug.Log(inventory[0].itemData.Key);
-        //}
-    }
-
     //if 해당 아이템이 inven에 있고,(해당 box item count < itemMaxStackCount)
     // 해당 칸에 아이템 추가
     //  else if(!full)  새박스에 아이템 add
@@ -72,23 +56,16 @@ public class InvenController : MonoBehaviour {
             }
         }
 
-        for (int i = 0; i < inventory.Count; i++) {
-            if(inventory[i] is CountableItem countItem) {
-                Debug.Log($"{i} > {countItem.itemData.ItemName} : {countItem.countableData.CurrStackCount}");
-            }
-        }
         InvenChanged?.Invoke(inventory);
     }
 
     //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
     private int canAddThisBox(int itemKey) {
-        for (int i = 0; i < invenUi.CurrInvenCount; i++) {
-            if (i < inventory.Count && inventory[i].itemData.Key == itemKey) {
-                if (inventory[i].Key == itemKey) {
-                    if (inventory[i] is CountableItem countItem) {
-                        if (countItem.CurrentCount < countItem.MaxStackCount) {
-                            return i;
-                        }
+        for (int i = 0; i < inventory.Count; i++) {
+            if (inventory[i] != null && inventory[i].itemData.Key == itemKey) {
+                if (inventory[i] is CountableItem countItem) {
+                    if (countItem.CurrentCount < countItem.MaxStackCount) {
+                        return i;
                     }
                 }
             }
@@ -116,7 +93,7 @@ public class InvenController : MonoBehaviour {
         if (index >= 0 && index < inventory.Count) {
             inventory[index] = null;
         }
-        InvenChanged?.Invoke(new List<Item>(inventory));
+        InvenChanged?.Invoke(inventory);
     }
 
     //아이템 1개 사용

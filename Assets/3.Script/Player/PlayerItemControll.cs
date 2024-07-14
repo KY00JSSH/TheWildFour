@@ -52,31 +52,16 @@ public class PlayerItemControll : MonoBehaviour {
     private void PickupItem(GameObject item) {
         if (item != null) {
             Item itemComponent = item.GetComponent<Item>();
-            if (itemComponent == null) {
-                Debug.LogWarning("아이템에 Item 컴포넌트가 없습니다.");
-                return;
-            }
-            else {
-                if (itemComponent.itemData != null) {
-                   // Debug.Log("Item Name: " + itemComponent.itemData.ItemName);
-                }
-                else {
-                    Debug.LogError("itemComponent.itemData가 null입니다.");
-                    return;
-                }
-            }
-            if (invenController == null) {
-                Debug.LogError("invenController가 초기화되지 않았습니다.");
-                return;
-            }
+            
             if (!invenController.IsInvenFull) {
                 invenController.itemObejct = item;
                 invenController.ItemAdd();
+                //TODO: 초과하면 DESTROY안하고 ITEM COUNT 수정해서 그대로 두기
                 Destroy(item);
             }
         }
         else {
-            Debug.LogWarning("PickupItem이 null 아이템으로 호출되었습니다.");
+            Debug.LogWarning("null");
         }
     }
 }

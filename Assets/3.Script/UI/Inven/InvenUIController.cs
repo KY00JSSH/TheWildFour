@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InvenUIController : MonoBehaviour {
-    [SerializeField] private List<InventoryBox> inventoryBoxes = new List<InventoryBox>();
     private InvenController invenController;
 
     private List<GameObject> InvenTotal = new List<GameObject>();
@@ -29,12 +28,22 @@ public class InvenUIController : MonoBehaviour {
     }
 
     private void UpdateUI(List<Item> inventory) {
-        for (int i = 0; i < inventoryBoxes.Count; i++) {
-            if (i < inventory.Count && inventory[i] != null) {
-                inventoryBoxes[i].UpdateBox(inventory[i]);
-            }
-            else {
-                inventoryBoxes[i].UpdateBox(null);
+        for (int i = 0; i < currInvenCount; i++) {
+            InventoryBox box = InvenTotal[i].GetComponent<InventoryBox>();
+            if (box != null) {
+                if (i < inventory.Count) {
+                    Item newItem = inventory[i];
+                    if (box.CurrentItem != newItem) {
+                        Debug.Log($"{i} : {newItem?.itemData.ItemName}");
+                        box.UpdateBox(newItem);
+                    }
+                }
+                else {
+                    // If there are no more items in the inventory list, clear the remaining boxes
+                    if (box.CurrentItem != null) {
+                        box.UpdateBox(null);
+                    }
+                }
             }
         }
     }
@@ -49,11 +58,6 @@ public class InvenUIController : MonoBehaviour {
             invenBoxPrefabs.name = InvenBoxPrefab.name;
             invenBoxPrefabs.SetActive(false);
             InvenBox.Add(invenBoxPrefabs);
-
-            InventoryBox box = invenBoxPrefabs.GetComponent<InventoryBox>();
-            if (box != null) {
-                inventoryBoxes.Add(box);
-            }
         }
         return InvenBox;
     }
