@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: HumanMeat
   m_EditorClassIdentifier: 
   key: 11
-  itemName: "\uC778\uC721"
-  description: "\uC778\uC721"
+  itemName: "\uC778\uC721(\uB0A0\uAC83)"
+  description: "\uC774 \uACE0\uAE30\uB97C \uBCF4\uAE30\uB9CC \uD574\uB3C4 \uB3D9\uBB3C\uC801
+    \uBCF8\uB2A5\uC774 \uAE68\uC5B4\uB098\uB294 \uB4EF\uD569\uB2C8\uB2E4"
   icon: {fileID: 21300000, guid: fce047e72e0eb4d4ea18fde83130e9f7, type: 3}
   dropItemPrefab: {fileID: 4133617424083260398, guid: d8defb9850e4126449cb133bb5440ff0, type: 3}
-  maxCount: 10
+  type: 0
+  maxStackCount: 10
+  currStackCount: 0
   fullPoint: 20
   healPoint: 20
-  decayTime: 30
+  totalDecayTime: 30
+  currDecayTime: 30
