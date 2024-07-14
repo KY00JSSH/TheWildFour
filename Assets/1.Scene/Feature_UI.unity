@@ -6786,8 +6786,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 918540477}
-        m_TargetAssemblyTypeName: ShelterCreate, Assembly-CSharp
-        m_MethodName: BuildShelter
+        m_TargetAssemblyTypeName: BuildingCreate, Assembly-CSharp
+        m_MethodName: BuildMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9258,7 +9258,7 @@ MonoBehaviour:
   btn: {fileID: 731401937}
   cooltime: 10
   isClicked: 0
-  speed: 5
+  speed: 20
   shelterManager: {fileID: 0}
 --- !u!1 &733183490
 GameObject:
@@ -11101,13 +11101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d5ef9b716ac3f49881707fecefc888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shelterPrefabs:
+  buildingPrefabs:
   - {fileID: 1982348726}
   - {fileID: 361105996}
   - {fileID: 1174681436}
   - {fileID: 686438092}
   - {fileID: 1342722267}
-  shelterMaterial: {fileID: 2100000, guid: bbf94353dc843aa458176059cdcfb0f6, type: 2}
+  buildingMaterial: {fileID: 2100000, guid: bbf94353dc843aa458176059cdcfb0f6, type: 2}
 --- !u!114 &918540478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11120,6 +11120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0323d7856c51c3498eb1f03ec9359ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradeCooltime: {fileID: 731401940}
   skillMove:
   - skillName: "\uC804\uB825 \uC9C8\uC8FC"
     maxSkillLevel: 1

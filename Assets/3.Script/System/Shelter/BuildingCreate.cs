@@ -30,7 +30,7 @@ public class BuildingCreate : MonoBehaviour {
         }
     }
 
-    protected virtual GameObject Building {
+    public virtual GameObject Building {
         get { return buildingPrefabs[0]; }
     }
 

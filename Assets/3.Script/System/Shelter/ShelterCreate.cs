@@ -15,7 +15,7 @@ public class ShelterCreate : BuildingCreate {
         shelterManager = GetComponent<ShelterManager>();
     }
 
-    protected override GameObject Building {
+    public override GameObject Building {
         get { return buildingPrefabs[shelterManager.ShelterLevel]; }
     }
 
@@ -23,5 +23,4 @@ public class ShelterCreate : BuildingCreate {
         base.CreateBuilding();
         shelterAnimator.SetTrigger("Create");
     }
-
 }
