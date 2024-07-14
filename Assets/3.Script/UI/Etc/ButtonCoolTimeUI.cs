@@ -10,6 +10,8 @@ public class ButtonCoolTimeUI : MonoBehaviour
     [SerializeField] private float cooltime = 10f;
     [SerializeField] private bool isClicked = false;
 
+    public float CoolTime { get { return leftTime; } } // ShelterManager에서 받아가는 용도
+
     private float leftTime = 10f;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private ShelterManager shelterManager;

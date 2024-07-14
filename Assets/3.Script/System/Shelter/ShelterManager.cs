@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 // ############ 임의 수정 금지 ############ //
@@ -76,12 +77,24 @@ public class ShelterManager : MonoBehaviour {
 
     //TODO: UI > 거처 내부 버튼 '업그레이드' 버튼 Onclicked => LevelUp();
     public void LevelUp() {     // 거처 레벨업
-        ShelterCreate shelter = GetComponent<ShelterCreate>();
-        //TODO: UI > 코루틴으로 '업그레이드' 버튼 슬라이더 채우기 로직
-        shelter.Shelter().SetActive(false);
-        ShelterLevel++;
-        shelter.Shelter().SetActive(true);
+        StartCoroutine(WaitForUpgrade());
     }
+
+    [SerializeField] ButtonCoolTimeUI upgradeCooltime;
+    private IEnumerator WaitForUpgrade() {
+        ShelterCreate shelter = GetComponent<ShelterCreate>();
+
+        while (upgradeCooltime.CoolTime > 0)
+            yield return null;
+
+        Transform shelterPosition = shelter.Building.transform;
+        shelter.Building.SetActive(false);
+        ShelterLevel++;
+        shelter.Building.transform.position = shelterPosition.position;
+        shelter.Building.transform.rotation = shelterPosition.rotation;
+        shelter.Building.SetActive(true);
+    }
+
 
     public Skill[] skillMove = new Skill[5];
     public Skill[] skillAttack = new Skill[5];
