@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 
 public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
     private Transform playerTransform;
+    protected Collider[] buildingColliders;
 
     protected bool isExist = false;
     protected bool isBuild = false;
 
+    //TODO: UI > isValidBuild 값 조사해서 가능 불가능 UI 이미지 띄우기
+    public bool isValidBuild = false;
+
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
+
     private void Update() {
         // TEST KEYCODE P for Debugging
         if (Input.GetKeyDown(KeyCode.P)) BuildMode();
@@ -34,8 +40,13 @@ public class BuildingCreate : MonoBehaviour {
         get { return buildingPrefabs[0]; }
     }
 
-    public void BuildMode() {
+    public virtual void BuildMode() {
         if (!isExist) {
+            foreach (Collider collider in buildingColliders) {
+                collider.isTrigger = true;
+                if (!collider.TryGetComponent(out BuildingValidity validity))
+                    collider.gameObject.AddComponent<BuildingValidity>();
+            }
             isBuild = true;
 
             MaterialTransparent();
@@ -46,6 +57,8 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void CreateBuilding() {
+        foreach (Collider collider in buildingColliders)
+            collider.isTrigger = false;
         isBuild = false;
         isExist = true;
         MaterialOpaque();
@@ -82,7 +95,9 @@ public class BuildingCreate : MonoBehaviour {
                 pointTolook.y,
                 Mathf.Clamp(pointTolook.z + 0.01f, playerTransform.position.z - buildAreaRadius, playerTransform.position.z + buildAreaRadius)
             );
-            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerTransform.position);
+            Quaternion targetRotation =
+                Quaternion.LookRotation(targetPosition - playerTransform.position) *
+                Quaternion.Euler(180, 0, 180);
 
             Building.transform.position = targetPosition;
             Building.transform.rotation = Quaternion.Slerp(

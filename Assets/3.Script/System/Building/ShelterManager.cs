@@ -74,8 +74,6 @@ public class ShelterManager : MonoBehaviour {
         }
     }
 
-
-    //TODO: UI > 거처 내부 버튼 '업그레이드' 버튼 Onclicked => LevelUp();
     public void LevelUp() {     // 거처 레벨업
         StartCoroutine(WaitForUpgrade());
     }
