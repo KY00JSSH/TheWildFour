@@ -78,9 +78,9 @@ public class ShelterManager : MonoBehaviour {
     public void LevelUp() {     // 거처 레벨업
         ShelterCreate shelter = GetComponent<ShelterCreate>();
         //TODO: UI > 코루틴으로 '업그레이드' 버튼 슬라이더 채우기 로직
-        shelter.Shelter().SetActive(false);
+        shelter.Building.SetActive(false);
         ShelterLevel++;
-        shelter.Shelter().SetActive(true);
+        shelter.Building.SetActive(true);
     }
 
     public Skill[] skillMove = new Skill[5];
