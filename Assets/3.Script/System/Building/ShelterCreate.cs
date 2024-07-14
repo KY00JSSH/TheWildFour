@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShelterCreate : BuildingCreate {
@@ -21,12 +19,12 @@ public class ShelterCreate : BuildingCreate {
     }
 
     public override void BuildMode() {
-        boxCollider = Building.GetComponentInChildren<BoxCollider>();
+        buildingColliders = Building.GetComponentsInChildren<Collider>();
         base.BuildMode();
     }
 
     public override void CreateBuilding() {
-        boxCollider = Building.GetComponentInChildren<BoxCollider>();
+        buildingColliders = Building.GetComponentsInChildren<Collider>();
         base.CreateBuilding();
         shelterAnimator.SetTrigger("Create");
     }

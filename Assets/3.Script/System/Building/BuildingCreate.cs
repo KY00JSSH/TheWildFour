@@ -6,7 +6,7 @@ public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
     private Transform playerTransform;
-    protected BoxCollider boxCollider;
+    protected Collider[] buildingColliders;
 
     protected bool isExist = false;
     protected bool isBuild = false;
@@ -38,7 +38,8 @@ public class BuildingCreate : MonoBehaviour {
 
     public virtual void BuildMode() {
         if (!isExist) {
-            boxCollider.isTrigger = true;
+            foreach(Collider collider in buildingColliders)
+                collider.isTrigger = true;
             isBuild = true;
 
             MaterialTransparent();
@@ -49,7 +50,8 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void CreateBuilding() {
-        boxCollider.isTrigger = false;
+        foreach (Collider collider in buildingColliders)
+            collider.isTrigger = false;
         isBuild = false;
         isExist = true;
         MaterialOpaque();
