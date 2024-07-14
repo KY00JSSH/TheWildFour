@@ -6,6 +6,7 @@ public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
     private Transform playerTransform;
+    protected BoxCollider boxCollider;
 
     protected bool isExist = false;
     protected bool isBuild = false;
@@ -13,6 +14,7 @@ public class BuildingCreate : MonoBehaviour {
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
+
     private void Update() {
         // TEST KEYCODE P for Debugging
         if (Input.GetKeyDown(KeyCode.P)) BuildMode();
@@ -34,8 +36,9 @@ public class BuildingCreate : MonoBehaviour {
         get { return buildingPrefabs[0]; }
     }
 
-    public void BuildMode() {
+    public virtual void BuildMode() {
         if (!isExist) {
+            boxCollider.isTrigger = true;
             isBuild = true;
 
             MaterialTransparent();
@@ -46,6 +49,7 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void CreateBuilding() {
+        boxCollider.isTrigger = false;
         isBuild = false;
         isExist = true;
         MaterialOpaque();

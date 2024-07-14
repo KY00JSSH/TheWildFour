@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4374898, g: 0.4853109, b: 0.5655852, a: 1}
+  m_IndirectSpecularColor: {r: 0.4374901, g: 0.48531127, b: 0.56558615, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1837,15 +1837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0323d7856c51c3498eb1f03ec9359ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillMoveLevel: 0
-  skillAttackLevel: 0
-  skillGatherLevel: 0
-  skillMoveTotalExp: 0
-  skillAttackTotalExp: 0
-  skillGatherTotalExp: 0
-  skillMoveCurrentExp: 0
-  skillAttackCurrentExp: 0
-  skillGatherCurrentExp: 0
+  upgradeCooltime: {fileID: 0}
   skillMove:
   - skillName: "\uC804\uB825 \uC9C8\uC8FC"
     maxSkillLevel: 1
@@ -1940,13 +1932,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d5ef9b716ac3f49881707fecefc888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shelterPrefabs:
+  buildingPrefabs:
   - {fileID: 6699266070964218958}
   - {fileID: 666031373}
   - {fileID: 1310437701}
   - {fileID: 2077698189}
   - {fileID: 375863299}
-  shelterMaterial: {fileID: 2100000, guid: bbf94353dc843aa458176059cdcfb0f6, type: 2}
+  buildingMaterial: {fileID: 2100000, guid: bbf94353dc843aa458176059cdcfb0f6, type: 2}
 --- !u!95 &923510966
 Animator:
   serializedVersion: 3
