@@ -88,8 +88,7 @@ public class PlayerAbility : MonoBehaviour {
         playerAddInvenCount = shelterManager.GetSkill("강화 배낭").GetValue();
         //TODO: Inven_Bottom_Controll.cs 에서 InvenCountUpgrade()  => 그냥 버튼 클릭에 묶어두자
 
-
-
+        //TODO: Gather 스킬 ability 설정. 0715
         
     }
 

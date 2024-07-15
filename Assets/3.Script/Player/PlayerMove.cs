@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour {
     private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
-    private Animator player_ani; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
+    private Animator playerAnimator; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
 
     public static bool isMove { get; private set; }
 
@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
-        player_ani = GetComponentInParent<Animator>();
+        playerAnimator = GetComponentInParent<Animator>();
     }
 
     private void Start() {
@@ -66,13 +66,10 @@ public class PlayerMove : MonoBehaviour {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
             Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
             Quaternion targetRotation =
-                Quaternion.LookRotation(targetPosition - playerRigid.position) *
-                Quaternion.Euler(180, 0, 180);
-            Debug.Log("Target Position: " + targetPosition);
-            Debug.Log("Target Rotation: " + targetRotation);
+                Quaternion.LookRotation(targetPosition - playerRigid.position);
 
-            transform.rotation = Quaternion.Slerp(
-            transform.rotation,
+            playerRigid.rotation = Quaternion.Slerp(
+            playerRigid.rotation,
             targetRotation,
             rotationSpeed * Time.deltaTime);
         }
@@ -95,15 +92,14 @@ public class PlayerMove : MonoBehaviour {
         if (InputX != 0 || InputZ != 0) isMove = true;
         else isMove = false;
 
-        targetPosition = new Vector3(
-            playerRigid.transform.position.x + InputX * Time.deltaTime * constMoveSpeed * speed,
-            playerRigid.transform.position.y,
-            playerRigid.transform.position.z + InputZ * Time.deltaTime * constMoveSpeed * speed);
-        playerRigid.MovePosition(targetPosition);
-        transform.position = targetPosition;
+        playerRigid.velocity = Vector3.zero;
+        Vector3 moveDirection = new Vector3(InputX, 0, InputZ).normalized;
+        playerRigid.velocity = moveDirection * constMoveSpeed * speed;
+        //transform.parent.position = playerRigid.position;
 
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
-        //player_ani.SetFloat("Speed", currentSpeed);
+        playerAnimator.SetFloat("Speed", currentSpeed);
+        Debug.Log(currentSpeed);
 
     }
 }
