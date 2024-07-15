@@ -71,7 +71,7 @@ public class ShelterUI : MonoBehaviour {
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
         shelterLevelText = transform.GetChild(2).gameObject;
-        skillCountImg.Init(spritesPath);
+        skillCountImg.Init(spritesPath);        
     }
     private void Start() {
         ShelterLevel_Alpha();
@@ -92,6 +92,13 @@ public class ShelterUI : MonoBehaviour {
         SkillPointerValue();
     }
 
+    public void ExitButtonOnClick() {
+        menuButton.SetActive(true);
+        transform.gameObject.SetActive(false);
+    }
+
+
+    
     // ShelterManager 레벨받아와서 Text 알파값 조정
     public void ShelterLevel_Alpha() {
         for (int i = 0; i < shelterLevelText.transform.childCount; i++) {
@@ -155,11 +162,11 @@ public class ShelterUI : MonoBehaviour {
         Button btn = clickedButton.GetComponent<Button>();
 
         // 버튼 포인트값이 없으면 return
-        /*
+
         if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
         else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
         else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return; 
-        */
+
 
         if (btn != null) {
             string nowBtnSpriteName = btn.transform.GetChild(2).GetComponent<Image>().sprite.name;

@@ -41,6 +41,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
     //[SerializeField] private Button[] sleepOrAwake;
     private string[] additionalText = { "필요 포인트 1", "현재 필요 레벨" };
     private Vector2[] textPositionSave;
+    private Vector2[][] itemNeedPositionSave;
 
     [Space((int)2)]
     [Header("Skill Info")]
@@ -67,47 +68,62 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (tooltipMain == null) tooltipMain = ShelterTooltip.transform.GetChild(0).GetChild(1).GetComponent<Text>();
         if (tooltipAdditionalText == null) tooltipAdditionalText = ShelterTooltip.transform.GetChild(0).GetChild(2).GetComponent<Text>();
         textPositionSave = new Vector2[2];
+
+        itemNeedPositionSave = new Vector2[2][];
+        itemNeedPositionSave[0] = new Vector2[4];
+        itemNeedPositionSave[1] = new Vector2[4];
         // 위치 변경되는 Text 위치 저장
         SaveTextPositions();
+        SaveTextPositions_Func();
     }
 
     private void SaveTextPositions() {
         RectTransform tooltipMainRe = tooltipMain.GetComponent<RectTransform>();
-        textPositionSave[0] = new Vector2(tooltipMainRe.anchoredPosition.x, tooltipMainRe.anchoredPosition.y);
+        textPositionSave[0] = tooltipMainRe.anchoredPosition;
         RectTransform tooltipAdditionalTextRe = tooltipAdditionalText.GetComponent<RectTransform>();
-        textPositionSave[1] = new Vector2(tooltipAdditionalTextRe.anchoredPosition.x, tooltipAdditionalTextRe.anchoredPosition.y);
+        textPositionSave[1] = tooltipAdditionalTextRe.anchoredPosition;
+    }
+    private void SaveTextPositions_Func() {
+        for (int i = 0; i < itemtexts.transform.childCount; i++) {
+            RectTransform eachRe = itemtexts.transform.GetChild(i).GetComponent<RectTransform>();
+            itemNeedPositionSave[0][i] = eachRe.anchoredPosition;
+        }
+        for (int i = 0; i < itemimgs.transform.childCount; i++) {
+            RectTransform eachRe = itemimgs.transform.GetChild(i).GetComponent<RectTransform>();
+            itemNeedPositionSave[1][i] = eachRe.anchoredPosition;
+        }
     }
 
-    // 저장된 Text 위치 불러오기 + Function 객체들 초기화
+    // 저장된 Text 위치 불러오기 + Function 객체들 비활성화
     private void LoadTextPositions() {
         // 배경 길이 초기화
         RectTransform tooltipBg = ShelterTooltip.transform.GetChild(0).GetComponent<RectTransform>();
-        Vector2 BgnewPosition = tooltipBg.anchoredPosition;
-        Vector2 BgSize = tooltipBg.sizeDelta;
-        BgSize.y = 350;
-        tooltipBg.sizeDelta = BgSize;
-        BgnewPosition.y = 0;
-        tooltipBg.anchoredPosition = BgnewPosition;
+        tooltipBg.sizeDelta = new Vector2(tooltipBg.sizeDelta.x, 350);
+        tooltipBg.anchoredPosition = new Vector2(tooltipBg.anchoredPosition.x, 0);
 
         // Text 위치 크기 초기화
         RectTransform tooltipMainRe = tooltipMain.GetComponent<RectTransform>();
-        tooltipMainRe.anchoredPosition = new Vector2(textPositionSave[0].x, textPositionSave[0].y);
-        Vector2 MainnewSize = tooltipMainRe.sizeDelta;
-        MainnewSize.x = 270;
-        tooltipMainRe.sizeDelta = MainnewSize;
-
+        tooltipMainRe.anchoredPosition = textPositionSave[0];
+        tooltipMainRe.sizeDelta = new Vector2(270, tooltipMainRe.sizeDelta.y);
 
         RectTransform tooltipAdditionalTextRe = tooltipAdditionalText.GetComponent<RectTransform>();
-        tooltipAdditionalTextRe.anchoredPosition = new Vector2(textPositionSave[1].x, textPositionSave[1].y);
-        Vector2 AddnewPosition = tooltipAdditionalTextRe.anchoredPosition;
-        AddnewPosition.y = 60;
-        tooltipAdditionalTextRe.anchoredPosition = AddnewPosition;
+        tooltipAdditionalTextRe.anchoredPosition = new Vector2(textPositionSave[1].x, 60);
 
         sleepTime.gameObject.SetActive(false);
         itemimgs.SetActive(false);
         itemtexts.SetActive(false);
-
     }
+    private void LoadTextPositions_Func() {
+        for (int i = 0; i < itemtexts.transform.childCount; i++) {
+            RectTransform eachRe = itemtexts.transform.GetChild(i).GetComponent<RectTransform>();
+            eachRe.anchoredPosition = itemNeedPositionSave[0][i];
+        }
+        for (int i = 0; i < itemimgs.transform.childCount; i++) {
+            RectTransform eachRe = itemimgs.transform.GetChild(i).GetComponent<RectTransform>();
+            eachRe.anchoredPosition = itemNeedPositionSave[1][i];
+        }
+    }
+
 
     // 설명글  dictionary에 저장
     private void TextRead() {
@@ -154,7 +170,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         else if (btn.name.Contains("Sleep")) DictionKey = 60;
         else if (btn.name.Contains("Upgrade")) DictionKey = 70;
         else if (btn.name.Contains("Packing")) DictionKey = 80;
-
+        else return -1;
         if (dictionaryKey <= 50) {
             if (char.IsDigit(lastChar)) skillnum = lastChar - '1';
             else Debug.Log("Last character is not a number: " + lastChar);
@@ -170,6 +186,9 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void ShelterTooltipShow(GameObject btn) {
         dictionaryKey = FindDictionaryKey(btn.gameObject);
         Debug.Log("dictionaryKey" + dictionaryKey);
+
+        if (dictionaryKey == -1) return;
+
         // skill 설명란
         if (dictionaryKey <= 50) {
             // 이미지 변경
@@ -182,6 +201,8 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         //TODO: Function 추가 예정
         else {
+
+            LoadTextPositions_Func();
             FunctionTooltip(btn, dictionaryKey);
         }
     }
@@ -270,7 +291,6 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
             }
         }
     }
-
     private void FunctionTooltip(GameObject btn, int dictionaryKey) {
         /*
          * 0. 배경 길이 변경
@@ -305,7 +325,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // 추가 설명 Text 위치 변경
         RectTransform tooltipAddRe = tooltipAdditionalText.GetComponent<RectTransform>();
         Vector2 AddnewPosition = tooltipAddRe.anchoredPosition;
-        AddnewPosition.y = 180;
+        AddnewPosition.y = 150;
         tooltipAddRe.anchoredPosition = AddnewPosition;
 
         switch (dictionaryKey) {
@@ -317,28 +337,20 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 // 슬라이터 활성화
                 sleepTime.gameObject.SetActive(true);
                 break;
+
             case 70:
                 // 2. 업그레이드
-
                 tooltipTitle.text = shelterFuncTooltip[1][shelterManager.ShelterLevel].Title;
                 tooltipMain.text = shelterFuncTooltip[1][shelterManager.ShelterLevel].MainText;
                 tooltipAdditionalText.text = "필요 구성품";
 
-                // 아이템 이미지 활성화
-
-                itemimgs.gameObject.SetActive(true);
-                foreach (Transform child in itemimgs.transform) {
-                    child.gameObject.SetActive(true);
-                }
-
-                // 아이템 텍스트 변경
                 //TODO: 아이템 Inven에서 받아와야함
-                itemtexts.gameObject.SetActive(true);
-                foreach (Transform child in itemtexts.transform) {
-                    child.gameObject.SetActive(true);
-                }
-
+                // 아이템 이미지 활성화
+                UpgradeFunc_ItemTextInit();
+                // 아이템 텍스트 변경
+                UpgradeFunc_ItemTextPosition(UpgradeFunc_ItemText());
                 break;
+
             case 80:
                 // 3. 짐 싸기
                 tooltipTitle.text = shelterFuncTooltip[2][0].Title;
@@ -350,6 +362,67 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 break;
         }
 
+    }
+    private void UpgradeFunc_ItemTextInit() {
+        itemimgs.gameObject.SetActive(true);
+        foreach (Transform item in itemimgs.transform) {
+            item.gameObject.SetActive(true);
+        }
+        itemtexts.gameObject.SetActive(true);
+        foreach (Transform item in itemtexts.transform) {
+            item.gameObject.SetActive(true);
+        }
+    }
+
+    private List<GameObject>[] UpgradeFunc_ItemText() {
+        List<GameObject>[] needItems = new List<GameObject>[2];
+        needItems[0] = new List<GameObject>();
+        needItems[1] = new List<GameObject>();
+
+        for (int i = 0; i < itemtexts.transform.childCount; i++) {
+            int needItem = shelterFuncTooltip[1][shelterManager.ShelterLevel].ItemNeedNum[i];
+            if (needItem == 0) {
+                itemtexts.transform.GetChild(i).gameObject.SetActive(false);
+                itemimgs.transform.GetChild(i).gameObject.SetActive(false);
+                continue;
+            }
+            else {
+                int currentItem = ItemNumCheck_Func(itemtexts.transform.GetChild(i).name);
+                Text text = itemtexts.transform.GetChild(i).GetComponent<Text>();
+                string textColor = "white";
+                textColor = currentItem >= needItem ? "white" : "red";
+                text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
+                needItems[0].Add(text.gameObject);
+                needItems[1].Add(itemimgs.transform.GetChild(i).gameObject);
+            }
+        }
+        return needItems;
+    }
+    private void UpgradeFunc_ItemTextPosition(List<GameObject>[] needItems) {
+        if (needItems == null) return;
+
+        for (int i = 0; i < needItems.Length; i++) {
+            for (int j = 0; j < needItems[i].Count; j++) {
+                RectTransform eachRe = needItems[i][j].GetComponent<RectTransform>();
+                eachRe.anchoredPosition = new Vector2(eachRe.anchoredPosition.x + 40 * (4 - needItems[i].Count), eachRe.anchoredPosition.y);
+            }
+        }
+
+    }
+
+    // InvenController 스크립트의 전체 인벤토리에 아이템이 이름 확인해서 갯수 확인
+    private int ItemNumCheck_Func(string itemname) {
+        InvenController inven = FindObjectOfType<InvenController>();
+        int itemTotalNum = 0;
+        if (inven.Inventory != null) {
+            foreach (Item each in inven.Inventory) {
+                if (each.name == itemname) {
+                    if (each is CountableItem countItem) itemTotalNum += countItem.countableData.CurrStackCount;
+                }
+            }
+            return itemTotalNum;
+        }
+        return -1;
     }
 
     public void SleepFuncOnClick() {

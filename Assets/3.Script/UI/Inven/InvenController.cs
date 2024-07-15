@@ -5,7 +5,9 @@ using UnityEngine;
 public class InvenController : MonoBehaviour {
     private bool isInvenFull = false;               //인벤토리 전체 차있고 기존에도 추가 못함 여부
     public bool IsInvenFull { get { return isInvenFull; } }
-    private List<Item> inventory;
+    private List<Item> inventory; 
+    public List<Item> Inventory { get { return inventory; } }
+
 
     private InvenUIController invenUi;
     public GameObject itemObejct;

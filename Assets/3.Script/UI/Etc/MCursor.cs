@@ -95,10 +95,7 @@ public class MCursor : MonoBehaviour {
         }
     }
 
-    public bool IsCusorOnButton(Button button) {
-        Vector2 CursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
-        return button.GetComponent<RectTransform>().rect.Contains(CursorPosition);
-    }
+
 
 
 }

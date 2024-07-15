@@ -24,7 +24,6 @@ public class Menu_Controll : MonoBehaviour {
             buttons[i] = transform.GetChild(i).GetComponent<Button>();
             RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
             buttonsPosition[i] = buttonRectTransform.anchoredPosition;
-            Debug.Log("buttonsPosition rectÆ÷Áö¼Ç" + buttonsPosition[i]);
         }
     }
 
