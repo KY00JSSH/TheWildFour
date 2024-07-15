@@ -52,6 +52,7 @@ public class BuildPrefabUI : MonoBehaviour {
 
     }
 
+
     protected virtual void OnDisable() {
         isBuiltStart = false;
         if (BuildImg != null) {

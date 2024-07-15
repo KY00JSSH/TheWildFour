@@ -52,8 +52,8 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     public void EatFood(FoodItem item) {
-        if (item.HealPoint == 0) PlayerHp += PlayerMaxHp * 0.8f;
-        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealPoint);
+        if (item.HealTime == 0) PlayerHp += PlayerMaxHp * 0.8f;
+        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
     }
 
     public void RestoreHpHunger() {

@@ -417,7 +417,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (inven.Inventory != null) {
             foreach (Item each in inven.Inventory) {
                 if (each.name == itemname) {
-                    if (each is CountableItem countItem) itemTotalNum += countItem.countableData.CurrStackCount;
+                    if (each is CountableItem countItem) itemTotalNum += countItem.CurrStackCount;
                 }
             }
             return itemTotalNum;
