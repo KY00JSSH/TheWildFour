@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    public List<ItemData> items; 
+    public List<Item> items; 
     public int spawnCount = 1;  
     public Vector3 spawnArea = new Vector3(10, 0, 10); 
 
@@ -17,25 +17,24 @@ public class ItemSpawner : MonoBehaviour
     }
 
     void SpawnItem() {
-        ItemData itemToSpawn = items[Random.Range(0, items.Count)];
+        Item itemToSpawn = items[Random.Range(0, items.Count)];
         Vector3 randomPosition = new Vector3(
             Random.Range(-spawnArea.x / 2, spawnArea.x / 2),
             spawnArea.y,
             Random.Range(-spawnArea.z / 2, spawnArea.z / 2)
         );
 
-        if (itemToSpawn is CountableItemData countItem) {
+        if (itemToSpawn is CountableItem countItem) {
             countItem.resetCurrStack();
             countItem.addCurrStack(Random.Range(1, 8));
-            GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);
+            GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity);
             Item itemComponent = itemObject.GetComponent<Item>();
         }
         else {
-            GameObject itemObject = Instantiate(itemToSpawn.DropItemPrefab, randomPosition, Quaternion.identity);
+            GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity);
             Item itemComponent = itemObject.GetComponent<Item>();
         }
         //itemComponent.itemData = itemToSpawn;
-
         //if (itemComponent.itemData is FoodItemData foodItemData) {
         //    Debug.Log($"{foodItemData.ItemName} + {foodItemData.FullPoint}");
         //}

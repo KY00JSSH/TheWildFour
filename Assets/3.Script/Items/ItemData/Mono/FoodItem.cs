@@ -5,6 +5,5 @@ public class FoodItem : CountableItem {
     private float currDecayTime = 0;   //현재 부패 시간
     public float CurrDecayTime { get { return currDecayTime; } }
 
-    public float FullPoint => foodItemData.FullPoint;
-    public float HealPoint => foodItemData.HealPoint;
+    public float HealTime => foodItemData.HealTime;
 }

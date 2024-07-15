@@ -1,25 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CountableItem : Item {
     public CountableItemData countableData;
 
-    public int CurrentCount => countableData.CurrStackCount;
+    private int currStackCount = 1;  //현재 겹치고있는 개수
+    public int CurrStackCount { get { return currStackCount; } }
 
-    public bool IsMax => countableData.CurrStackCount >= countableData.MaxStackCount;
+    public bool IsMax => CurrStackCount >= countableData.MaxStackCount;
 
     public int MaxStackCount => countableData.MaxStackCount;
 
-    public void addToStack(int amount) {
-        countableData.addCurrStack(amount);
+    public void addCurrStack(int num) {
+        currStackCount += num;
+
+        if (currStackCount > MaxStackCount) {
+            int over = currStackCount - MaxStackCount;
+            currStackCount = MaxStackCount;
+        }
     }
 
-    public void useFromStack(int amount) {
-        countableData.useCurrStack(amount);
+    public void resetCurrStack() {
+        currStackCount = 1;
     }
 
-    public void resetStack() {
-        countableData.resetCurrStack();
+    public void useCurrStack(int num) {
+        currStackCount -= num;
+        if (currStackCount <= 0) {
+            Destroy(this);
+        }
     }
 }
