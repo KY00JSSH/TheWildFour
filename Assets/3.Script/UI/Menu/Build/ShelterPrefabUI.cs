@@ -6,11 +6,10 @@ public class ShelterPrefabUI : BuildPrefabUI {
     /* 
       1. 활성화되어있는 상위 오브젝트 찾기
       2. 상위 오브젝트에서 활성화 되어있는 오브젝트 찾기
-      3. 
       */
 
     private GameObject parentbuildingObj;
-    ShelterCreate shelterCreate;
+    private ShelterCreate shelterCreate;
     protected override void Awake() {
         base.Awake();
         shelterCreate = FindObjectOfType<ShelterCreate>();
@@ -26,21 +25,17 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
     protected override void Update() {
         if(buildingObj != null) {
-            Debug.Log("??????????????????");
             base.Update();
         }
-        Debug.Log(shelterCreate.Building.transform.position);
-
-        //if(buildingCreate.isValidBuild) buildImg.
     }
 
     // 버튼이 눌렸을 경우 UI표시
     public void ShelterBuildAvailable() {
-        Debug.Log("?여기는 들어오는뎅?");
+        if (buildingCreate.isExist) return;
         buildingObj = shelterCreate.Building;
         isBuiltStart = true;
-        buildImg.gameObject.SetActive(true);
+        BuildImg.SetActive(true);
+        //buildImg.gameObject.SetActive(true);
     }
-
 
 }

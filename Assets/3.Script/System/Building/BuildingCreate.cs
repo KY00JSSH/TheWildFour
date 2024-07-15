@@ -6,7 +6,7 @@ public class BuildingCreate : MonoBehaviour {
     private Transform playerTransform;
     protected Collider[] buildingColliders;
 
-    protected bool isExist = false;
+    public bool isExist = false;
     protected bool isBuild = false;
 
     //TODO: UI > isValidBuild 값 조사해서 가능 불가능 UI 이미지 띄우기
