@@ -79,7 +79,6 @@ public class StatusControl : MonoBehaviour {
     }
 
 
-
     private IEnumerator Tick(StatusData status, PlayerStatus player) {
         status.SetRemainTime(status.totalTime);
         status.isTicked = true;
