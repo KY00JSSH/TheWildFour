@@ -6,8 +6,10 @@ public class BuildingValidity : MonoBehaviour {
     private void Awake() {
         buildingCreate = GetComponentInParent<BuildingCreate>();
     }
+
     private void OnTriggerStay(Collider other) {
-        buildingCreate.isValidBuild = false;
+        if(other.gameObject.layer != 7)
+            buildingCreate.isValidBuild = false;
     }
 
     private void OnTriggerExit(Collider other) {

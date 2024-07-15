@@ -9,11 +9,14 @@ public class BuildingCreate : MonoBehaviour {
     protected bool isExist = false;
     protected bool isBuild = false;
 
-    //TODO: UI > isValidBuild 값 조사해서 가능 불가능 UI 이미지 띄우기
-    public bool isValidBuild = false;
+    public bool isValidBuild = true;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void Start() {
+        isValidBuild = true;
     }
 
     private void Update() {
@@ -25,7 +28,8 @@ public class BuildingCreate : MonoBehaviour {
                 CancelBuilding();
             }
             else if (Input.GetMouseButton(0)) {
-                CreateBuilding();
+                if(isValidBuild)
+                    CreateBuilding();
             }
         }
     }
@@ -38,8 +42,10 @@ public class BuildingCreate : MonoBehaviour {
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
-                if (!collider.TryGetComponent(out BuildingValidity validity))
+                if (!collider.TryGetComponent(out BuildingValidity validity)) {
                     collider.gameObject.AddComponent<BuildingValidity>();
+                    collider.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+                }
             }
             isBuild = true;
 

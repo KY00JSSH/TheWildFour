@@ -30,7 +30,7 @@ public class BuildPrefabUI : MonoBehaviour {
     }
     protected virtual void Update() {
         if (isBuiltStart) {
-            Debug.Log(" 설치 가능 불가능 확인 " + buildingCreate.isValidBuild);
+            //Debug.Log(" 설치 가능 불가능 확인 " + buildingCreate.isValidBuild);
             BuildPrefabUIPosition();
             BuildPrefabUISize();
             if (buildingCreate.isValidBuild) {

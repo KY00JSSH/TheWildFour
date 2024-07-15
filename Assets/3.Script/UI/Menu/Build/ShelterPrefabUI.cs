@@ -26,10 +26,9 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
     protected override void Update() {
         if(buildingObj != null) {
-            Debug.Log("??????????????????");
+            //Debug.Log("??????????????????");
             base.Update();
         }
-        Debug.Log(shelterCreate.Building.transform.position);
 
         //if(buildingCreate.isValidBuild) buildImg.
     }

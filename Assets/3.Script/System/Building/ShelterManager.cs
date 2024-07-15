@@ -25,7 +25,7 @@ public class ShelterManager : MonoBehaviour {
 
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
-        ShelterLevel = 1;
+        ShelterLevel = 4;
 
         MoveLevel = 0;
         AttackLevel = 0;
