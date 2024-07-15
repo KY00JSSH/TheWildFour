@@ -12,6 +12,9 @@ public class CameraControl2 : MonoBehaviour
     public float minFOV = 70f;
     public float maxFOV = 100f;
 
+    //미니맵 카메라 부모 객체 참조 추가
+    public Transform miniMapCameraParent;
+
     private void Awake() {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
@@ -23,10 +26,18 @@ public class CameraControl2 : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
         {
             cinemachineFreeLook.m_XAxis.Value -= rotationSpeed * Time.deltaTime;
+            if(miniMapCameraParent != null)
+            {
+                miniMapCameraParent.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+            }
         }
         if (Input.GetKey(KeyCode.E))
         {
             cinemachineFreeLook.m_XAxis.Value += rotationSpeed * Time.deltaTime;
+            if(miniMapCameraParent != null)
+            {
+                miniMapCameraParent.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+            }
         }
 
 
