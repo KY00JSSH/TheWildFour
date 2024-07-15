@@ -6,6 +6,7 @@ public class PlayerItemControll : MonoBehaviour {
 
     [SerializeField] private float checkRadius = 5.0f;
     private InvenController invenController;
+    [SerializeField] private GameObject player;
 
     private void Start() {
         invenController = FindObjectOfType<InvenController>();
@@ -19,7 +20,8 @@ public class PlayerItemControll : MonoBehaviour {
 
     private void CheckForItems() {
         int layerMask = 1 << 6;
-        Collider[] cols = Physics.OverlapSphere(gameObject.transform.position, checkRadius, layerMask);
+        Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
+
         float closestDistance = Mathf.Infinity;
         GameObject closestItem = null;
 
@@ -45,8 +47,13 @@ public class PlayerItemControll : MonoBehaviour {
         }
     }
 
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(player.transform.position, checkRadius);
+    }
+
     private void ShowTooltip(GameObject item) {
-        Debug.Log("Tooltip º¸¿©ÁÜ");
+        //Debug.Log("Tooltip º¸¿©ÁÜ");
     }
 
     private void PickupItem(GameObject item) {

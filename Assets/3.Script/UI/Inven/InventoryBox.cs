@@ -27,28 +27,29 @@ public class InventoryBox : MonoBehaviour {
 
     public void UpdateBox(Item item) {
         currentItem = item;
-        if (currentItem is CountableItem countItemTest) {
-            Debug.Log($"{currentItem} : {countItemTest.CurrentCount}");
-        }
 
-        if (currentItem != null) {
-            if (currentItem is CountableItem countItem) {
-                itemText.text = countItem.countableData.CurrStackCount.ToString();
-            }
-            else {
-                itemText.text = "";
-            }
-            itemIcon.sprite = currentItem.itemData.Icon;
+        if (currentItem is CountableItem countItem) {
+            itemText.text = countItem.CurrStackCount.ToString();
+            itemIcon.sprite = countItem.itemData.Icon;
             itemIcon.enabled = true;
             itemIcon.gameObject.SetActive(true);
             isItemIn = true;
         }
         else {
-            itemText.text = "";
-            itemIcon.sprite = null;
-            itemIcon.enabled = false;
-            itemIcon.gameObject.SetActive(false);
-            isItemIn = false;
+            if (currentItem != null) {
+                itemText.text = "";
+                itemIcon.sprite = currentItem.itemData.Icon;
+                itemIcon.enabled = true;
+                itemIcon.gameObject.SetActive(true);
+                isItemIn = true;
+            }
+            else {
+                itemText.text = "";
+                itemIcon.sprite = null;
+                itemIcon.enabled = false;
+                itemIcon.gameObject.SetActive(false);
+                isItemIn = false;
+            }
         }
     }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6941538496473972840}
   - component: {fileID: -9074205537421920567}
   - component: {fileID: -3505573477509303869}
+  - component: {fileID: 6859759988046049508}
   m_Layer: 6
   m_Name: MushroomPrf
   m_TagString: Untagged
@@ -112,3 +113,19 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: c36af9647ef729c48a0ab52d37594e13, type: 2}
   countableData: {fileID: 11400000, guid: c36af9647ef729c48a0ab52d37594e13, type: 2}
   foodItemData: {fileID: 11400000, guid: c36af9647ef729c48a0ab52d37594e13, type: 2}
+--- !u!54 &6859759988046049508
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2415949312005088204}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
