@@ -13,7 +13,7 @@ public class BuildPrefabUI : MonoBehaviour {
     1. 각 prefabs UI에서 오브젝트를 찾음
     2. 오브젝트 찾아서 위치 따라감
      */
-
+    [Header("Build Prefab UI")]
     public Sprite[] BuildAvailable;
     protected BuildingCreate buildingCreate;
 

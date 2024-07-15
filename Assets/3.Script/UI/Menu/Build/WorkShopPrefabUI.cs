@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShelterPrefabUI : BuildPrefabUI {
+public class WorkShopPrefabUI : BuildPrefabUI {
 
-    private ShelterCreate shelterCreate;
+    private WorkshopCreate workshopCreate;
     protected override void Awake() {
         base.Awake();
-        shelterCreate = FindObjectOfType<ShelterCreate>();
+        workshopCreate = FindObjectOfType<WorkshopCreate>();
     }
 
     protected override void Update() {
-        if(buildingObj != null) {
+        if (buildingObj != null) {
             base.Update();
         }
     }
 
     // 버튼이 눌렸을 경우 UI표시
-    public void ShelterBuildAvailable() {
+    public void WorkshopBuildAvailable() {
         if (buildingCreate.isExist) return;
-        buildingObj = shelterCreate.Building;
+        buildingObj = workshopCreate.Building;
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }
-
 }
