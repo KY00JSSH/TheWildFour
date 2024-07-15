@@ -14,7 +14,7 @@ public class Inven_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
      */
 
-    [SerializeField] private ItemData itemData;
+    [SerializeField] private Item item;
 
     public GameObject tooltipbox;
     [SerializeField] private Text _titleText;   // 아이템 이름 텍스트
@@ -22,12 +22,12 @@ public class Inven_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 
     private void InvenItemTooltip(Button btn) {
-        ItemData itemData = btn.GetComponent<InventoryBox>().currentItem;
-        if (itemData != null) {
-            Debug.Log("Item_Input 아이템이 있음" + itemData.name);
+        item = btn.GetComponent<InventoryBox>().CurrentItem;
+        if (item != null) {
+            Debug.Log("Item_Input 아이템이 있음" + item.name);
             tooltipbox.gameObject.SetActive(true);
-            _titleText.text = itemData.ItemName;
-            _contentText.text = itemData.Description;
+            _titleText.text = item.name;
+            _contentText.text = item.itemData.Description;
         }
         else {
             Debug.Log("Item_Input 아이템이 없음");
@@ -51,8 +51,6 @@ public class Inven_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (eventData.pointerEnter != null || Input.mousePosition.y > 100) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse enter");
-
                 tooltipbox.gameObject.SetActive(false);
                 _titleText.text = "";
                 _contentText.text = "";
