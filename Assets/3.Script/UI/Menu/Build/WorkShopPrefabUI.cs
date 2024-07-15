@@ -12,15 +12,17 @@ public class WorkShopPrefabUI : BuildPrefabUI {
 
     protected override void Update() {
         if (buildingObj != null) {
+            isValid = workshopCreate.isValidBuild;
             base.Update();
         }
     }
 
     // 버튼이 눌렸을 경우 UI표시
     public void WorkshopBuildAvailable() {
-        if (buildingCreate.isExist) return;
+        if (workshopCreate.isExist) return;
         buildingObj = workshopCreate.Building;
         isBuiltStart = true;
-        BuildImg.SetActive(true);
+        BuildImg.SetActive(true);        
     }
+
 }

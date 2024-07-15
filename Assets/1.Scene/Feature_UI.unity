@@ -20776,6 +20776,7 @@ GameObject:
   - component: {fileID: 1563114404}
   - component: {fileID: 1563114406}
   - component: {fileID: 1563114405}
+  - component: {fileID: 1563114407}
   m_Layer: 0
   m_Name: WorkshopManager
   m_TagString: Untagged
@@ -20836,6 +20837,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeCooltime: {fileID: 0}
+--- !u!95 &1563114407
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563114403}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a04c5224943cbd9409a7ae6f14942876, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1569180394
 GameObject:
   m_ObjectHideFlags: 0
@@ -21506,7 +21526,7 @@ GameObject:
   - component: {fileID: 1605936378}
   - component: {fileID: 1605936377}
   - component: {fileID: 1605936376}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

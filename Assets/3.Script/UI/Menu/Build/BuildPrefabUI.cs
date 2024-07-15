@@ -18,7 +18,7 @@ public class BuildPrefabUI : MonoBehaviour {
     protected BuildingCreate buildingCreate;
 
     public GameObject BuildImg;
-    private Image[] buildImgs;
+    protected Image[] buildImgs;
 
     public float[] positions = new float[2];
     public float[] sizes = new float[2];
@@ -33,33 +33,28 @@ public class BuildPrefabUI : MonoBehaviour {
         }
     }
 
+    protected bool isValid;
+
     protected virtual void Update() {
         if (isBuiltStart) {
-            if (buildingCreate.isValidBuild) {
+            Debug.Log(" 설치 가능 불가능" + isValid);
 
+            if (isValid) {
                 buildImgs[0].sprite = BuildAvailable[1];
-                if (Input.GetMouseButton(0)) {
+                if (Input.GetMouseButtonDown(0)) {
                     isBuiltStart = false;
                     BuildImg.SetActive(false);
                 }
             }
-            else buildImgs[0].sprite = BuildAvailable[2];
+            else {
+                buildImgs[0].sprite = BuildAvailable[2];
+            }
 
             BuildPrefabUIPosition();
             //BuildPrefabUIFixedSize();
             BuildPrefabUISize();
         }
-
     }
-
-
-    protected virtual void OnDisable() {
-        isBuiltStart = false;
-        if (BuildImg != null) {
-            BuildImg.SetActive(false);
-        }
-    }
-
     // UI 위치 정렬
     private void BuildPrefabUIPosition() {
         for (int i = 0; i < buildImgs.Length; i++) {

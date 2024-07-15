@@ -12,13 +12,15 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
     protected override void Update() {
         if(buildingObj != null) {
+            isValid = shelterCreate.isValidBuild;
             base.Update();
+
         }
     }
 
     // 버튼이 눌렸을 경우 UI표시
     public void ShelterBuildAvailable() {
-        if (buildingCreate.isExist) return;
+        if (shelterCreate.isExist) return;
         buildingObj = shelterCreate.Building;
         isBuiltStart = true;
         BuildImg.SetActive(true);
