@@ -5,9 +5,8 @@ public class FoodItemData : CountableItemData {
     [SerializeField] private float fullPoint;   //포만감 포인트
     [SerializeField] private float healPoint;   //회복 포인트
     [SerializeField] private float totalDecayTime;   //전체 부패 시간
-    [SerializeField] private float currDecayTime;   //현재 부패 시간
 
     public float FullPoint { get { return fullPoint; } }
     public float HealPoint { get { return healPoint; } }
-    public float CurrDecayTime { get { return currDecayTime; } }
+    public float TotalDecayTime { get { return totalDecayTime; } }
 }

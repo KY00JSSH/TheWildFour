@@ -2,12 +2,9 @@ using UnityEngine;
 
 public class FoodItem : CountableItem {
     public FoodItemData foodItemData;
+    private float currDecayTime = 0;   //현재 부패 시간
+    public float CurrDecayTime { get { return currDecayTime; } }
 
-    public void useFood(int amount) {
-        //TODO: 사용시 포만+힐 -> PLAYER 특성에 추가
-        float heal = foodItemData.HealPoint;
-        float full = foodItemData.FullPoint;
-
-        this.useFromStack(amount);
-    }
+    public float FullPoint => foodItemData.FullPoint;
+    public float HealPoint => foodItemData.HealPoint;
 }
