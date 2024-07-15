@@ -35,7 +35,7 @@ public class StatusData {
         remainTime = time;
     }
     public void Tick() {
-        remainTime -= tickTime;
+        remainTime -= tickTime * Time.deltaTime;
     }
 }
 
@@ -64,14 +64,21 @@ public class StatusControl : MonoBehaviour {
         return statusList[(int)status].remainTime;
     }
 
-    public void GiveStatus(Status status, PlayerStatus player) {
+    public void GiveStatus(Status status, PlayerStatus player, float time = 0) {
         StatusData currentStatus = statusList[(int)status];
+        if (time != 0) currentStatus.totalTime = time;
 
-        if (currentStatus.isTicked)
-            currentStatus.SetRemainTime(currentStatus.totalTime);
+        if (currentStatus.isTicked) {
+            if (status == Status.Heat || status == Status.Satiety)
+                currentStatus.SetRemainTime(currentStatus.totalTime);
+            else if (status == Status.Full)
+                currentStatus.SetRemainTime(currentStatus.totalTime + currentStatus.remainTime);
+        }
         else
             StartCoroutine(Tick(currentStatus, player));
     }
+
+
 
     private IEnumerator Tick(StatusData status, PlayerStatus player) {
         status.SetRemainTime(status.totalTime);
@@ -79,7 +86,7 @@ public class StatusControl : MonoBehaviour {
 
         player.SetPlayerStatus(status.type);
         while (status.remainTime > 0) {
-            yield return new WaitForSeconds(1f);
+            yield return null;
             status.Tick();
         }
         status.SetRemainTime(0f);
