@@ -99,7 +99,7 @@ public class PlayerMove : MonoBehaviour {
 
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
         playerAnimator.SetFloat("Speed", currentSpeed);
-        Debug.Log(currentSpeed);
+        //Debug.Log(currentSpeed);
 
     }
 }

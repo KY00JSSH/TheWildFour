@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FireUI : MonoBehaviour {
+public class FirePrefabUI : BuildPrefabUI {
     public GameObject player;
     [SerializeField] private GameObject fireSliderPrefab;
     [SerializeField] private List<GameObject> fireObjects;
@@ -11,17 +11,19 @@ public class FireUI : MonoBehaviour {
     private int fireObjsNum = 0;
     private int fireSlidersNum = 0;
 
+
     private void FixedUpdate() {
-        fireObjsNum = FireObjectNumCheck();
-        fireSlidersNum = fireSliders.Count;
+        if (isBuiltStart) {
+            fireObjsNum = FireObjectNumCheck();
+            fireSlidersNum = fireSliders.Count;
 
-        if (fireObjsNum != fireSlidersNum) {
-            FireObjectInit(fireObjsNum);
+            if (fireObjsNum != fireSlidersNum) {
+                FireObjectInit(fireObjsNum);
+            }
+
+            SettingFireSliderPosition();
+            SettingFireSliderSize();
         }
-
-        SettingFireSliderPosition();
-
-        SettingFireSliderSize(); ;
     }
 
     private int FireObjectNumCheck() {

@@ -56,13 +56,6 @@ public class PlayerStatus : MonoBehaviour {
         StatusControl.Instance.GiveStatus(Status.Satiety, this, item.FullPoint);
     }
 
-    public void RestoreHp(float heal) {
-
-    }
-    private IEnumerator Heal() {
-
-    }
-
 
     private void Awake() {
         infoViewer = FindObjectOfType<Player_InfoViewer>();

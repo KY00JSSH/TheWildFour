@@ -71,7 +71,7 @@ public class ShelterUI : MonoBehaviour {
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
         shelterLevelText = transform.GetChild(2).gameObject;
-        skillCountImg.Init(spritesPath);
+        skillCountImg.Init(spritesPath);        
     }
     private void Start() {
         ShelterLevel_Alpha();
@@ -97,6 +97,8 @@ public class ShelterUI : MonoBehaviour {
         transform.gameObject.SetActive(false);
     }
 
+
+    
     // ShelterManager 레벨받아와서 Text 알파값 조정
     public void ShelterLevel_Alpha() {
         for (int i = 0; i < shelterLevelText.transform.childCount; i++) {
