@@ -22,17 +22,11 @@ public class MCursor : MonoBehaviour {
     private void Awake() {
         if (instance == null) {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else {
             Destroy(gameObject);
             // return => 하단에 초기화가 있을경우
         }
-        /*
-        Cursor.visible = false;
-        transform_cursor.pivot = Vector2.up;
-        */
-
     }
 
 

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8069361410878034566}
   - component: {fileID: 7369075280810373616}
   - component: {fileID: 4467737366249705872}
-  m_Layer: 0
+  - component: {fileID: -6346529550774818388}
+  m_Layer: 6
   m_Name: BowPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2661537, y: 0.27257785, z: 0.06055528}
   m_Center: {x: -0.000000059604645, y: 0.07154837, z: 0.000000020489097}
+--- !u!114 &-6346529550774818388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741606325189790613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76541571d1201db42814f1f872dc00e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: a95f7d3f0c5f7d848a7241c68ac72288, type: 2}
+  equipItemData: {fileID: 11400000, guid: a95f7d3f0c5f7d848a7241c68ac72288, type: 2}
+  WeaponItemData: {fileID: 11400000, guid: a95f7d3f0c5f7d848a7241c68ac72288, type: 2}

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1820211495496457298}
   - component: {fileID: 3239597338833659869}
   - component: {fileID: 3536914373606160794}
-  m_Layer: 0
+  - component: {fileID: 7877851913091380709}
+  m_Layer: 6
   m_Name: Fabrics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +96,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6195001, y: 0.4415025, z: 0.12100674}
   m_Center: {x: -0.013550758, y: 0.0043903515, z: 0.062262826}
+--- !u!114 &7877851913091380709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5896424649008467377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: e604e33478102844faae40971c5b7b9f, type: 2}
+  countableData: {fileID: 11400000, guid: e604e33478102844faae40971c5b7b9f, type: 2}

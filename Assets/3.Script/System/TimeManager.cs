@@ -15,7 +15,7 @@ public class TimeManager : MonoBehaviour {
         else
             Destroy(gameObject);
 
-        timeScale = 20f;
+        timeScale = 1f;
     }
 
     [SerializeField] private float timeScale;

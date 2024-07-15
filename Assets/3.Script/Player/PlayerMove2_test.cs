@@ -116,6 +116,6 @@ public class PlayerMove2_test : MonoBehaviour
         player_ani.SetFloat("Vertical", InputZ);  /**/
         player_ani.SetFloat("Speed", moveDirection.magnitude * speed);  /**/
 
-        Debug.Log($"이동 속도: {new Vector3(InputX, 0, InputZ).magnitude * speed}");
+        //Debug.Log($"이동 속도: {new Vector3(InputX, 0, InputZ).magnitude * speed}");
     }
 }
