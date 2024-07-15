@@ -6,7 +6,7 @@ public class BuildingCreate : MonoBehaviour {
     private Transform playerTransform;
     protected Collider[] buildingColliders;
 
-    protected bool isExist = false;
+    public bool isExist = false;
     protected bool isBuild = false;
 
     public bool isValidBuild = true;

@@ -47,13 +47,13 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: »ç¸Á ÀÌº¥Æ® ÇÊ¿ä. 0707
+            //TODO: ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½Ê¿ï¿½. 0707
         }
     }
 
     public void EatFood(FoodItem item) {
-        if (item.HealPoint == 0) PlayerHp += PlayerMaxHp * 0.8f;
-        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealPoint);
+        if (item.HealTime == 0) PlayerHp += PlayerMaxHp * 0.8f;
+        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
     }
 
     public void RestoreHpHunger() {
