@@ -59,9 +59,9 @@ public class PlayerStatus : MonoBehaviour {
     public void RestoreHp(float heal) {
 
     }
-    private IEnumerator Heal() {
-
-    }
+    //private IEnumerator Heal() {
+    //
+    //}
 
 
     private void Awake() {
