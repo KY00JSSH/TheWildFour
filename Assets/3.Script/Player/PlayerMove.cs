@@ -6,7 +6,7 @@ public class PlayerMove : MonoBehaviour {
 
     private float InputX, InputZ;
     private const float constMoveSpeed = 2f;
-    [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
+    [SerializeField] private float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
     private Animator playerAnimator; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
 
@@ -21,6 +21,7 @@ public class PlayerMove : MonoBehaviour {
     private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
 
     public bool isSkilled = false;
+    public float GetPlayerMoveSpeed() { return playerMoveSpeed; }
     public void SetPlayerMoveSpeed(float speed) { playerMoveSpeed = speed; }
     public float GetTatalDashGage() { return TotalDashGage; }
     public float GetCurrentDashGage() { return CurrentDashGage; }
@@ -77,7 +78,7 @@ public class PlayerMove : MonoBehaviour {
 
     private void Dash(bool isDash) {
         this.isDash = isDash;
-        if (isDash) CurrentDashGage -= DecDashGage * Time.deltaTime;
+        if (isDash && isMove) CurrentDashGage -= DecDashGage * Time.deltaTime;
         else CurrentDashGage += IncDashGage * Time.deltaTime;
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
@@ -99,7 +100,7 @@ public class PlayerMove : MonoBehaviour {
 
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
         playerAnimator.SetFloat("Speed", currentSpeed);
-        Debug.Log(currentSpeed);
+        //Debug.Log(currentSpeed);
 
     }
 }

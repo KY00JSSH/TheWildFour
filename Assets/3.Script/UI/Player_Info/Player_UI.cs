@@ -77,10 +77,12 @@ public class Player_UI : MonoBehaviour {
     }
     private void SettingSliderPosition() {
         RectTransform sliderPosition = playerSlider.GetComponent<RectTransform>();
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+
+        Vector3 positionadjusting = new Vector3(transform.GetChild(0).position.x, 0, transform.GetChild(0).position.z);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(positionadjusting);
 
         screenPosition.y += Slider_AddY;
-
+        
         sliderPosition.position = screenPosition;
         
     }

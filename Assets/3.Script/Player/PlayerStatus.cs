@@ -11,7 +11,7 @@ public class PlayerStatus : MonoBehaviour {
     public float PlayerMaxHp;
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
-
+    private float HealRestore = 0.3f, HungerRestore = 0.5f;
 
 
     private bool[] statusList;
@@ -47,22 +47,47 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: »ç¸Á ÀÌº¥Æ® ÇÊ¿ä. 0707
+            //TODO: ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½Ê¿ï¿½. 0707
         }
     }
 
     public void EatFood(FoodItem item) {
-        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealPoint);
-        StatusControl.Instance.GiveStatus(Status.Satiety, this, item.FullPoint);
+        if (item.HealTime == 0) PlayerHp += PlayerMaxHp * 0.8f;
+        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
     }
 
-    public void RestoreHp(float heal) {
-
+    public void RestoreHpHunger() {
+        if(GetPlayerStatus(Status.Full)) {
+            PlayerHp += HealRestore * Time.deltaTime;
+            PlayerHunger += HungerRestore * Time.deltaTime;
+            if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;
+            if (PlayerHunger > 100) {
+                PlayerHunger = 100;
+                if(!GetPlayerStatus(Status.Satiety)) {
+                    StatusControl.Instance.GiveStatus(Status.Satiety, this);
+                }
+            }
+        }
     }
-    //private IEnumerator Heal() {
-    //
-    //}
 
+    private bool isSlowed = false;
+    public void SatietySlow() {
+        if (GetPlayerStatus(Status.Satiety) && !isSlowed) {
+            StartCoroutine(Slow());
+        }
+    }
+    public IEnumerator Slow() {
+        isSlowed = true;
+
+        PlayerMove plyaerMove = GetComponent<PlayerMove>();
+        float speed = plyaerMove.GetPlayerMoveSpeed();
+        plyaerMove.SetPlayerMoveSpeed(speed * 0.8f);
+        while(GetPlayerStatus(Status.Satiety)) {
+            yield return null;
+        }
+        plyaerMove.SetPlayerMoveSpeed(speed);
+        isSlowed = false;
+    }
 
     private void Awake() {
         infoViewer = FindObjectOfType<Player_InfoViewer>();
@@ -83,6 +108,7 @@ public class PlayerStatus : MonoBehaviour {
 
         TakeWarmDamage();
         TakeHungerDamage();
+        RestoreHpHunger();
+        SatietySlow();
     }
-
 }
