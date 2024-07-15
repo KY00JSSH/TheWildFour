@@ -5,13 +5,16 @@ using UnityEngine.UI;
 using System.Reflection;
 
 public class Menu_Controll : MonoBehaviour {
+
     /*
-     menu에 붙어서 키보드를 입력받는다면 해당 버튼이 클릭되도록 할 예정     
+     * 스크립트 위치 : Menu
+     * 역할 : 키보드 입력 -> 버튼 클릭
+     *        버튼의 하위 버튼이 열려있을 경우 esc키는 하위 버튼에 붙어야함 
      */
+
     [SerializeField] private Button[] buttons;
+    //public Button[] buttons;
     private Vector3[] buttonsPosition;
-    private bool isGetKey = false;
-    public bool isEscapeMain = true;
 
     private int buttonIndex = -1;
 
@@ -26,109 +29,95 @@ public class Menu_Controll : MonoBehaviour {
     }
 
     private void Update() {
-        /*
-        if (Input.anyKey) {
-            InitButtonEvent();
-            isGetKey = true;
-        }
-        */
-        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.N) 
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.N)
             || Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape)) {
 
-            InitButtonEvent();
-            int btIndex = ButtonPress();
-
-            if ((0 <= btIndex && btIndex <= 4) || btIndex == 99) {
-
-                Debug.Log("Menu_Controll 스크립트 isEscapeMain가 변경될 위치" + isEscapeMain);
-                if (ButtonAction(btIndex)) GetButtonScript(btIndex);
-            }
+            Escape();
+            ButtonPress();
         }
     }
 
     // 키값 확인
     private int ButtonPress() {
-        isGetKey = false;
         if (Input.GetKeyDown(KeyCode.B)) {
             // 건설 열리기
             Debug.Log("건설 열려야함");
-            buttonIndex = 0;
+            ButtonMove(150, true);
+            GetButtonScript(0);
         }
         else if (Input.GetKeyDown(KeyCode.M)) {
             // 맵 열리기
             Debug.Log("맵 열려야함");
-            buttonIndex = 1;
+            CloseUI();
+            GetButtonScript(1);
         }
         else if (Input.GetKeyDown(KeyCode.N)) {
             // 노트 열리기
             Debug.Log("노트 열려야함");
-            buttonIndex = 2;
+            CloseUI();
+            GetButtonScript(2);
         }
         else if (Input.GetKeyDown(KeyCode.V)) {
             // 가방 열리기
             Debug.Log("가방 열려야함");
-            buttonIndex = 3;
+            CloseUI();
+            GetButtonScript(3);
         }
         else if (Input.GetKeyDown(KeyCode.X)) {
             // 무기 변경
             Debug.Log("무기 변경 열려야함");
-            buttonIndex = 4;
+            GetButtonScript(4);
         }
         else if (Input.GetKeyDown(KeyCode.Escape)) {
-            // 전체 원위치 => 하위 오브젝트가 열려있을 경우 닫기 버튼은 누리지 않게 해야함
-            // 예시 : 건설의 툴바가 열려있을 경우 툴바가 닫히고 원위치 시켜야함
-            if (isEscapeMain) {
-                Debug.Log("Menu_Controll 스크립트 isEscapeMain가 해당하는 위치" + isEscapeMain);
-
-                buttonIndex = 99;
-                buttons[buttons.Length - 1].gameObject.SetActive(true);
-            }
+            buttons[buttons.Length - 1].gameObject.SetActive(true);
+            Escape();
         }
         return buttonIndex;
     }
 
 
-    // 인덱스로 위치 변경
-    public bool ButtonAction(int buttonIndex) {
-        switch (buttonIndex) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                for (int i = 0; i < buttons.Length; i++) {
-                    if (i == (buttons.Length - 1)) {
-                        buttons[i].gameObject.SetActive(false);
-                    }
-                    else {
-                        RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
-                        if (i <= buttonIndex) {
-                            // 버튼이 위로 올라가야함
-                            buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
-                        }
-                        else {
-                            // 버튼이 아래로 내려가야함
-                            buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - 150, buttonsPosition[i].z);
-                        }
+    // 건설만 인덱스로 위치 변경
+    public void ButtonMove(int moveamount, bool isBuildMove) {
+        for (int i = 0; i < buttons.Length; i++) {
+            if (i == (buttons.Length - 1)) {
+                buttons[i].gameObject.SetActive(false);
+            }
+            else {
+                RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
+                if (i == 0) {
+                    if (isBuildMove) {
+                        // 버튼이 위로 올라가야함
+                        buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
                     }
                 }
-                return true;
-            case 4:
-                // 무기 버튼 활성화 시켜야함
-                Debug.Log("무기 버튼 선택됨 => 메소드 넣을 것");
-                return true;
-            case 99:
-                // 버튼 나가기
-                for (int i = 0; i < buttons.Length; i++) {
-                    RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
-                    buttonRectTransform.anchoredPosition = buttonsPosition[i];
+                else {
+                    // 버튼이 아래로 내려가야함
+                    buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - moveamount, buttonsPosition[i].z);
                 }
-                return false;
-            default:
-                return false;
+            }
+        }
+    }
+
+    // 맵, 기록, 가방 -> UI버튼 닫힘
+    public void CloseUI() {
+        for (int i = 0; i < buttons.Length; i++) {
+            buttons[i].gameObject.SetActive(false);
         }
     }
 
 
+    // 초기화
+    public void Escape() {
+        // 버튼 나가기
+        for (int i = 0; i < buttons.Length; i++) {
+            buttons[i].gameObject.SetActive(true);
+            RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
+            buttonRectTransform.anchoredPosition = buttonsPosition[i];
+        }
+        InitButtonEvent();
+    }
+
+    // 버튼이벤트 불러오기
     private void GetButtonScript(int buttonIndex) {
 
         IMenuButton buttonAction = buttons[buttonIndex].GetComponent<IMenuButton>();

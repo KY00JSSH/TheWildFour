@@ -7,6 +7,7 @@ public class PlayerStatus : MonoBehaviour {
     
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
+    public float PlayerMaxHp;
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
 
@@ -43,7 +44,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            // TODO : 사망 이벤트 필요. 0707
+            //TODO: 사망 이벤트 필요. 0707
         }
     }
 
@@ -52,7 +53,8 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     private void Start() {
-        PlayerHp = defaultHp;
+        PlayerMaxHp = defaultHp;
+        PlayerHp = PlayerMaxHp;
         PlayerHunger = defaultHunger;
         PlayerWarm = defaultWarm;
         statusList = new bool[Enum.GetValues(typeof(Status)).Length];

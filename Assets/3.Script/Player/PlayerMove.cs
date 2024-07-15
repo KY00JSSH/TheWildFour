@@ -8,27 +8,37 @@ public class PlayerMove : MonoBehaviour {
     private const float constMoveSpeed = 2f;
     [SerializeField] float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
-    private Animator player_ani; //Ä³¸¯ÅÍ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» À§ÇØ Ãß°¡ - ÁöÈÆ ¼öÁ¤ 240708 10:59
+    private Animator player_ani; //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 240708 10:59
 
-    public static bool isMove { get; private set; }     // ¿ÜºÎ ½ºÅ©¸³Æ®¿¡¼­ ÇöÀç ÀÌµ¿ »óÅÂ¸¦ ¾Ë ¼ö ÀÖ´Â Flag
+    public static bool isMove { get; private set; }     // ï¿½Üºï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ Flag
 
-    private bool isAvailableDash = true;                // ´ë½¬ °ÔÀÌÁö¿¡ µû¶ó¼­ ¼³Á¤µÇ´Â Flag
+    private bool isAvailableDash = true;                // ï¿½ë½¬ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ Flag
     public void SetDash() { isAvailableDash = true; }
     public void ResetDash() { isAvailableDash = false; }
 
-    // TODO : ´ë½Ã °ÔÀÌÁö UI ±¸Çö. 0707
-    private float TotalDashGage, CurrentDashGage, DecDashGage, IncDashGage;
+    // TODO : ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½. 0707
+    private float TotalDashGage, CurrentDashGage;
+    public float DecDashGage, IncDashGage;
     private float defaultDashGage = 10f, defaultDecDashGage = 8f, defaultIncDashGage = 2f;
+
+    public bool isSkilled = false;      // ï¿½ï¿½Ã³ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+    public void SetPlayerMoveSpeed(float speed) { playerMoveSpeed = speed; }
+
+
+    public float GetTatalDashGage() { return TotalDashGage; }
+    public float GetCurrentDashGage() { return CurrentDashGage; }
+    public bool isDash { get; private set; }
 
     private void Awake() {
         playerRigid = GetComponentInChildren<Rigidbody>();
-        player_ani = GetComponentInParent<Animator>(); //Ä³¸¯ÅÍ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» À§ÇØ Ãß°¡ - ÁöÈÆ ¼öÁ¤ 240708 10:59
+        player_ani = GetComponentInParent<Animator>(); //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 240708 10:59
     }
 
     private void Start() {
         isMove = false;
+        isDash = false;
 
-        // TODO : JSON ±¸Çö µÇ¸é default¸¦ SaveµÈ °ªÀ¸·Î ¹Ù²Ü °Í
+        //TODO: JSON ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½ defaultï¿½ï¿½ Saveï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½
         TotalDashGage = defaultDashGage;
         CurrentDashGage = TotalDashGage;
         DecDashGage = defaultDecDashGage;
@@ -51,22 +61,29 @@ public class PlayerMove : MonoBehaviour {
     private void LookatMouse() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-
+        float rotationSpeed = 5f;
         float rayLength;
+
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            playerRigid.transform.LookAt(
-                new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f));
+            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.transform.position.y, pointTolook.z + 0.01f);
+            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerRigid.transform.position);
+
+            playerRigid.transform.rotation = Quaternion.Slerp(
+            playerRigid.transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime);
         }
     }
 
     private void Dash(bool isDash) {
+        this.isDash = isDash;
         if (isDash) CurrentDashGage -= DecDashGage * Time.deltaTime;
         else CurrentDashGage += IncDashGage * Time.deltaTime;
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
-        else if (CurrentDashGage > TotalDashGage * 0.2f) SetDash();
+        else if (CurrentDashGage == TotalDashGage) SetDash();
     }
 
     private void Move(float speed) {
@@ -84,10 +101,11 @@ public class PlayerMove : MonoBehaviour {
         //transform.position = playerRigid.position;
 
 
-        //Ä³¸¯ÅÍ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» À§ÇØ Ãß°¡ - ÁöÈÆ ¼öÁ¤ 240708 10:59
+        //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 240708 10:59
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
-        player_ani.SetFloat("Speed", currentSpeed);
 
-        //Debug.Log($"¼Óµµ : {currentSpeed}");
+        //player_ani.SetFloat("Speed", currentSpeed);
+
+        // Debug.Log($"ï¿½Óµï¿½ : {currentSpeed}");
     }
 }
