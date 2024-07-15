@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1044343459541460211}
   - component: {fileID: 6449772272404811299}
   - component: {fileID: 5386714465864624902}
-  m_Layer: 0
+  - component: {fileID: -3311096145439245189}
+  m_Layer: 6
   m_Name: BandagePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,18 @@ CapsuleCollider:
   m_Height: 0.35
   m_Direction: 0
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &-3311096145439245189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982709177913435256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7848085ee4c6dd941ac1a8248a9d03f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
+  countableData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
+  medicItemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}

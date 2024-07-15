@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5985999769711887857}
   - component: {fileID: 4167308051552796062}
   - component: {fileID: 872878669701365342}
-  m_Layer: 0
+  - component: {fileID: -5608781965460578792}
+  m_Layer: 6
   m_Name: LeatherPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +96,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.73, y: 0.14, z: 0.85}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5608781965460578792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8032157233702520667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 737bbccf3375dd6409b57c226a66cdaa, type: 2}
+  countableData: {fileID: 11400000, guid: 737bbccf3375dd6409b57c226a66cdaa, type: 2}

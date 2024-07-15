@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5214678266346960842}
   - component: {fileID: 3365675333246998470}
   - component: {fileID: 1880697342427371731}
-  m_Layer: 0
+  - component: {fileID: 8970913661599970108}
+  m_Layer: 6
   m_Name: MedKitPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.43, y: 0.2, z: 0.34}
   m_Center: {x: 0, y: 0, z: 0.02}
+--- !u!114 &8970913661599970108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6802898112593999144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7848085ee4c6dd941ac1a8248a9d03f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 57d6a6564a71f724eb205911110cf11e, type: 2}
+  countableData: {fileID: 11400000, guid: 57d6a6564a71f724eb205911110cf11e, type: 2}
+  medicItemData: {fileID: 11400000, guid: 57d6a6564a71f724eb205911110cf11e, type: 2}

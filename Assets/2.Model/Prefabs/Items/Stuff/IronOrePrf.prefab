@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8475035356996292301}
   - component: {fileID: 627045593877177552}
   - component: {fileID: 2182222731406784480}
-  m_Layer: 0
+  - component: {fileID: -7729778623438631139}
+  m_Layer: 6
   m_Name: IronOrePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,17 @@ CapsuleCollider:
   m_Height: 0.6731671
   m_Direction: 1
   m_Center: {x: 0.005514458, y: 0.12459854, z: 0.019635946}
+--- !u!114 &-7729778623438631139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621619284462442978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: d3e1397820cb43f49ba24521415216db, type: 2}
+  countableData: {fileID: 11400000, guid: d3e1397820cb43f49ba24521415216db, type: 2}

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4785926661835181019}
   - component: {fileID: 841942234389495262}
   - component: {fileID: -6337831712328061358}
-  m_Layer: 0
+  - component: {fileID: 193137966400638570}
+  m_Layer: 6
   m_Name: MidMeatRoastPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,18 @@ CapsuleCollider:
   m_Height: 0.68
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &193137966400638570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465492113604737998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c50918b718c3f47935892c28ebe902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: a0ea2fbb39ecd54478309690737d2a02, type: 2}
+  countableData: {fileID: 11400000, guid: a0ea2fbb39ecd54478309690737d2a02, type: 2}
+  foodItemData: {fileID: 11400000, guid: a0ea2fbb39ecd54478309690737d2a02, type: 2}

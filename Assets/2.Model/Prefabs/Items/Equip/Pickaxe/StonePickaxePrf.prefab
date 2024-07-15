@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5249816419820156872}
   - component: {fileID: 6158845666257721349}
   - component: {fileID: 5817153184425170022}
-  m_Layer: 0
-  m_Name: PickaxePrf
+  - component: {fileID: 2099921113212063136}
+  m_Layer: 6
+  m_Name: StonePickaxePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,3 +82,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2099921113212063136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3401622093610938345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76541571d1201db42814f1f872dc00e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
+  equipItemData: {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
+  WeaponItemData: {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}

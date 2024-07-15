@@ -9,14 +9,12 @@ public class CountableItemData : ItemData {
     public int CurrStackCount { get { return currStackCount; } }
 
     public void addCurrStack(int num) {
-        if ((currStackCount + num) <= maxStackCount) {
-            currStackCount += num;
-        }
-        else {
-            int leftItemCount = (currStackCount + num) - maxStackCount;
+        currStackCount += num;
+
+        if(currStackCount > maxStackCount) {
+            int over = currStackCount - maxStackCount;
             currStackCount = maxStackCount;
-            Debug.Log($"추가 못한 item Count : {leftItemCount}");
-            //TODO: 추가못한 ITEM COUNT -> 새 INVENTORY 차지할지 혹은 바닥에 버릴지 체크
+            Debug.Log($"over num : {over}");
         }
     }
 
@@ -25,8 +23,9 @@ public class CountableItemData : ItemData {
     }
 
     public void useCurrStack(int num) {
-        if (!(currStackCount - num < 0)) {
-            currStackCount -= num;
+        currStackCount -= num;
+        if (currStackCount <= 0) {
+            Destroy(this);
         }
     }
 }

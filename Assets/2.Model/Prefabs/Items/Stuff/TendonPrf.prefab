@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5354889148624158826}
   - component: {fileID: 1486262774091744353}
   - component: {fileID: 3785273801506854617}
-  m_Layer: 0
+  - component: {fileID: 6334625890010984769}
+  m_Layer: 6
   m_Name: TendonPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +96,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.1, z: 0.35}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6334625890010984769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252287102822194141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfd1a576997a804cb6dfadfc38b9fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 929abd875ca79ab41b8cb6e1ac0d931d, type: 2}
+  countableData: {fileID: 11400000, guid: 929abd875ca79ab41b8cb6e1ac0d931d, type: 2}

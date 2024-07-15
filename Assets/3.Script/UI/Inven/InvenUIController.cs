@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InvenUIController : MonoBehaviour {
-    [SerializeField] private List<InventoryBox> inventoryBoxes;
     private InvenController invenController;
 
     private List<GameObject> InvenTotal = new List<GameObject>();
@@ -17,7 +16,7 @@ public class InvenUIController : MonoBehaviour {
     private void Awake() {
         currInvenCount = 8;
         invenController = GetComponent<InvenController>();
-        invenController.InventoryChanged += UpdateUI;
+        invenController.InvenChanged += UpdateUI;
         InvenTotal = InitInven();
         for (int i = 0; i < currInvenCount; i++) {
             InvenTotal[i].SetActive(true);
@@ -25,16 +24,26 @@ public class InvenUIController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        invenController.InventoryChanged -= UpdateUI;
+        invenController.InvenChanged -= UpdateUI;
     }
 
-    private void UpdateUI(List<ItemData> inventory) {
-        for (int i = 0; i < inventoryBoxes.Count; i++) {
-            if (i < inventory.Count) {
-                inventoryBoxes[i].UpdateBox(inventory[i]);
-            }
-            else {
-                inventoryBoxes[i].UpdateBox(null);
+    private void UpdateUI(List<Item> inventory) {
+        for (int i = 0; i < currInvenCount; i++) {
+            InventoryBox box = InvenTotal[i].GetComponent<InventoryBox>();
+            if (box != null) {
+                if (i < inventory.Count) {
+                    Item newItem = inventory[i];
+                    if (box.CurrentItem != newItem) {
+                        Debug.Log($"{i} : {newItem?.itemData.ItemName}");
+                        box.UpdateBox(newItem);
+                    }
+                }
+                else {
+                    // If there are no more items in the inventory list, clear the remaining boxes
+                    if (box.CurrentItem != null) {
+                        box.UpdateBox(null);
+                    }
+                }
             }
         }
     }
@@ -49,11 +58,6 @@ public class InvenUIController : MonoBehaviour {
             invenBoxPrefabs.name = InvenBoxPrefab.name;
             invenBoxPrefabs.SetActive(false);
             InvenBox.Add(invenBoxPrefabs);
-
-            InventoryBox box = invenBoxPrefabs.GetComponent<InventoryBox>();
-            if (box != null) {
-                inventoryBoxes.Add(box);
-            }
         }
         return InvenBox;
     }
