@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7583800545578435292}
   - component: {fileID: 7697173113109888736}
   - component: {fileID: -4698263238384743357}
+  - component: {fileID: -7771655205123903986}
   m_Layer: 6
   m_Name: LargeMeatRoastPrf
   m_TagString: Untagged
@@ -112,3 +113,19 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 80e820c0e3e860044a90bd95c2127c5e, type: 2}
   countableData: {fileID: 11400000, guid: 80e820c0e3e860044a90bd95c2127c5e, type: 2}
   foodItemData: {fileID: 11400000, guid: 80e820c0e3e860044a90bd95c2127c5e, type: 2}
+--- !u!54 &-7771655205123903986
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355465926015893845}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
