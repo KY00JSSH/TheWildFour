@@ -33,16 +33,20 @@ public class InvenController : MonoBehaviour {
         Item item = itemObejct.GetComponent<Item>();
 
         int checkNum = canAddThisBox(item.Key);
-        if (checkNum != 99) {
+
+        if (checkNum == 16) {
+            inventory.Add(item);
+        }
+        else if (checkNum != 99) {
             //해당칸에 아이템 추가
             if (item is CountableItem countItem &&
                 inventory[checkNum] is CountableItem newCountItem) {
-                newCountItem.addToStack(countItem.CurrentCount);
+                newCountItem.addCurrStack(countItem.CurrStackCount);
             }
         }
         else {
             int existBox = isExistEmptyBox();
-            if (existBox == 16) {
+            if (existBox == 17) {
                 //새 박스에 아이템 add
                 inventory.Add(item);
             }
@@ -61,22 +65,27 @@ public class InvenController : MonoBehaviour {
 
     //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
     private int canAddThisBox(int itemKey) {
-        for (int i = 0; i < inventory.Count; i++) {
-            if (inventory[i] != null && inventory[i].itemData.Key == itemKey) {
-                if (inventory[i] is CountableItem countItem) {
-                    if (countItem.CurrentCount < countItem.MaxStackCount) {
-                        return i;
+        if (inventory.Count == 0) {
+            return 16;
+        }
+        else {
+            for (int i = 0; i < inventory.Count; i++) {
+                if (inventory[i].Key == itemKey) {
+                    if (inventory[i] is CountableItem countItem) {
+                        if (countItem.CurrStackCount < countItem.MaxStackCount) {
+                            return i;
+                        }
                     }
                 }
             }
+            return 99;
         }
-        return 99;
     }
 
     //빈 inven box가 있는지 여부
     private int isExistEmptyBox() {
         if (inventory.Count < invenUi.CurrInvenCount) {
-            return 16;  //아예 생성도 안한 inven이 있으면 16으로 return
+            return 17;  //아예 생성도 안한 inven이 있으면 17으로 return
         }
         else {
             for (int i = 0; i < inventory.Count; i++) {
@@ -100,11 +109,11 @@ public class InvenController : MonoBehaviour {
     public void useItem(int index) {
         if (index >= 0 && index < inventory.Count && inventory[index] != null) {
             if (inventory[index] is CountableItem countItem) {
-                if (countItem.CurrentCount == 1) {
+                if (countItem.CurrStackCount == 1) {
                     removeItem(index);
                 }
                 else {
-                    countItem.useFromStack(1);
+                    countItem.useCurrStack(1);
                 }
             }
             else {
@@ -114,29 +123,28 @@ public class InvenController : MonoBehaviour {
         InvenChanged?.Invoke(inventory);
     }
 
-
     private void dropItem(int index) {
         if (index >= 0 && index < inventory.Count && inventory[index] != null) {
             if (inventory[index].itemData.Key != 1 && inventory[index].itemData.Key != 2) {
                 //돌, 나무 아닐때
                 if (inventory[index] is CountableItem countItem) {
-                    countItem.useFromStack(1);
+                    countItem.useCurrStack(1);
                     //TODO: 아이템 드랍
                 }
             }
             else {
                 if (inventory[index] is CountableItem countItem) {
-                    if (countItem.CurrentCount > 8) {
-                        countItem.useFromStack(8);
+                    if (countItem.CurrStackCount > 8) {
+                        countItem.useCurrStack(8);
                         //TODO: 아이템 드랍
                     }
-                    else if (countItem.CurrentCount == 8) {
-                        countItem.useFromStack(8);
+                    else if (countItem.CurrStackCount == 8) {
+                        countItem.useCurrStack(8);
                         removeItem(index);
                         //TODO: 아이템 드랍
                     }
                     else {
-                        countItem.useFromStack(countItem.CurrentCount);
+                        countItem.useCurrStack(countItem.CurrStackCount);
                         //TODO: 아이템 드랍
 
                         removeItem(index);

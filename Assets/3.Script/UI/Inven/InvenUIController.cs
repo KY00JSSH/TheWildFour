@@ -28,18 +28,32 @@ public class InvenUIController : MonoBehaviour {
     }
 
     private void UpdateUI(List<Item> inventory) {
+        for (int i = 0; i < inventory.Count; i++) {
+            if (inventory[i] is CountableItem ci) {
+                Debug.Log($"{i} : {inventory[i].itemData.ItemName} , {ci.CurrStackCount}");
+            }
+            else {
+                Debug.Log($"{i} : {inventory[i].itemData.ItemName} - ITEM");
+            }
+        }
+
         for (int i = 0; i < currInvenCount; i++) {
             InventoryBox box = InvenTotal[i].GetComponent<InventoryBox>();
             if (box != null) {
                 if (i < inventory.Count) {
                     Item newItem = inventory[i];
                     if (box.CurrentItem != newItem) {
-                        Debug.Log($"{i} : {newItem?.itemData.ItemName}");
-                        box.UpdateBox(newItem);
+                        box.UpdateBox(inventory[i]);
+                    }
+                    else {
+                        if (box.CurrentItem is CountableItem ci) {
+                            if (ci.CurrStackCount != 0) {
+                                box.UpdateBox(newItem);
+                            }
+                        }
                     }
                 }
                 else {
-                    // If there are no more items in the inventory list, clear the remaining boxes
                     if (box.CurrentItem != null) {
                         box.UpdateBox(null);
                     }
@@ -67,11 +81,11 @@ public class InvenUIController : MonoBehaviour {
         if (currInvenCount <= invenMaxcount) {
             currInvenCount++;
             invenController.invenFullReset();
-            InvenTotal[currInvenCount - 1].SetActive(true); 
+            InvenTotal[currInvenCount - 1].SetActive(true);
 
             InventoryBox box = InvenTotal[currInvenCount - 1].GetComponent<InventoryBox>();
             if (box != null) {
-                box.UpdateBox(null); 
+                box.UpdateBox(null);
             }
         }
         else {
