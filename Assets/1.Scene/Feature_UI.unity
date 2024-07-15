@@ -10463,12 +10463,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 11400000, guid: 7a6ee3e6c5a6e9643b7617b0cb3d1ba5, type: 2}
-  - {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
-  - {fileID: 11400000, guid: 57d6a6564a71f724eb205911110cf11e, type: 2}
-  - {fileID: 11400000, guid: e604e33478102844faae40971c5b7b9f, type: 2}
-  - {fileID: 11400000, guid: d3508110bb3181645b7ec8fe3b237946, type: 2}
-  - {fileID: 11400000, guid: 929abd875ca79ab41b8cb6e1ac0d931d, type: 2}
+  - {fileID: 5144707792496740942, guid: 3132c7a918c452244b1991b9d61d165c, type: 3}
+  - {fileID: 8970913661599970108, guid: 6c420395431f10b4d8b80c67448dad52, type: 3}
+  - {fileID: 7877851913091380709, guid: 00476264d0d6fd94fabb373b55b38520, type: 3}
+  - {fileID: 2435709904402575444, guid: 05e25e5e92dc9634c909f57405db724a, type: 3}
+  - {fileID: 6334625890010984769, guid: 19bbc4bbd5e749f4eb402ae10825846c, type: 3}
+  - {fileID: -6346529550774818388, guid: e4cafe9b9b8775c4d8ccab17cb5da668, type: 3}
   spawnCount: 5
   spawnArea: {x: 5, y: 0, z: 5}
 --- !u!4 &750615575
@@ -14299,6 +14299,7 @@ GameObject:
   - component: {fileID: 1110733504}
   - component: {fileID: 1110733503}
   - component: {fileID: 1110733502}
+  - component: {fileID: 1110733501}
   m_Layer: 5
   m_Name: Workshop
   m_TagString: Untagged
@@ -14326,6 +14327,29 @@ RectTransform:
   m_AnchoredPosition: {x: 265, y: -90}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1110733501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110733499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99397ac301dfd084491be4b2d0868fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildAvailable:
+  - {fileID: 21300000, guid: 2d1d5d1e450ee5f43a939e1cd0944356, type: 3}
+  - {fileID: 21300000, guid: 5f8caeb4870c65e47bb3aa5c741b816f, type: 3}
+  - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
+  BuildImg: {fileID: 1510222522}
+  positions:
+  - 30
+  - 5
+  sizes:
+  - 10
+  - 1
 --- !u!114 &1110733502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14370,9 +14394,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Menu_Build, Assembly-CSharp
-        m_MethodName: ButtonOnClick
+      - m_Target: {fileID: 1110733501}
+        m_TargetAssemblyTypeName: WorkShopPrefabUI, Assembly-CSharp
+        m_MethodName: WorkshopBuildAvailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1563114405}
+        m_TargetAssemblyTypeName: WorkshopCreate, Assembly-CSharp
+        m_MethodName: BuildMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

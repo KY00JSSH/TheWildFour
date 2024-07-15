@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class FirePrefabUI : BuildPrefabUI {
     public GameObject player;
+
+    [Space((int)2)]
+    [Header("Slider UI")]
     [SerializeField] private GameObject fireSliderPrefab;
     [SerializeField] private List<GameObject> fireObjects;
     [SerializeField] private List<GameObject> fireSliders;
