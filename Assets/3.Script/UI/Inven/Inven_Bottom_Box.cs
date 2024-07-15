@@ -27,9 +27,9 @@ public class Inven_Bottom_Box : Inven_Bottom_Controll {
     private InvenController invenCon;
 
     private void Awake() {
-        invenCon = GetComponent<InvenController>();
-        Inven_Box = transform.GetComponent<Button>();
-        Inven_Text = transform.GetChild(0).GetComponent<Text>();
+        //invenCon = GetComponent<InvenController>();
+        //Inven_Box = transform.GetComponent<Button>();
+        //Inven_Text = transform.GetChild(0).GetComponent<Text>();
         Inven_Text.text = Item_count.ToString();
     }
 
