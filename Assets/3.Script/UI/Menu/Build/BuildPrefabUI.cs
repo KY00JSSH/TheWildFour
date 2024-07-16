@@ -17,14 +17,17 @@ public class BuildPrefabUI : MonoBehaviour {
     public Sprite[] BuildAvailable;
     protected BuildingCreate buildingCreate;
 
+    // 따라다닐 오브젝트
     public GameObject BuildImg;
     protected Image[] buildImgs;
 
-    public float[] positions = new float[2];
-    public float[] sizes = new float[2];
+    public float positions = 2;
+    //public float[] sizes = new float[2];
 
+    // 설치될 오브젝트
     protected GameObject buildingObj;
     protected bool isBuiltStart = false;
+
     protected virtual void Awake() {
         buildingCreate = FindObjectOfType<BuildingCreate>();
         buildImgs = new Image[2];
@@ -51,46 +54,73 @@ public class BuildPrefabUI : MonoBehaviour {
             }
 
             BuildPrefabUIPosition();
-            //BuildPrefabUIFixedSize();
             BuildPrefabUISize();
+            BuildPrefabUIPosition_Vertical();
         }
     }
-    // UI 위치 정렬
+
+    protected virtual void OnDisable() {
+        if (BuildImg != null) {
+            BuildImg.SetActive(false);
+            isBuiltStart = false;
+        }
+    }
+
+    // UI 위치 조정
     private void BuildPrefabUIPosition() {
-        for (int i = 0; i < buildImgs.Length; i++) {
-            RectTransform buildImgRe = buildImgs[i].GetComponent<RectTransform>();
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(buildingObj.transform.position);
-
-            // 화면상의 멀리있는 물체와 가까이 있는 물체의 슬라이더의 y좌표 보정값
-            float depthFactor = Mathf.Clamp(15f / screenPosition.z, 0.7f, 5f);
-            screenPosition.y += positions[i] * depthFactor;
-            buildImgRe.position = screenPosition;
-        }
+        
+        BuildImg.transform.position = buildingObj.transform.position;
     }
 
+    // 원 크기 조정
     private void BuildPrefabUISize() {
-        for (int i = 0; i < buildImgs.Length; i++) {
-            RectTransform buildImgRe = buildImgs[i].GetComponent<RectTransform>();
-            Renderer buildImgRenderer = buildingObj.transform.GetChild(0).GetComponent<Renderer>();
-            if (buildImgRenderer != null) {
-                Bounds bounds = buildImgRenderer.bounds;
-                Vector3 screenMin = Camera.main.WorldToScreenPoint(bounds.min);
-                Vector3 screenMax = Camera.main.WorldToScreenPoint(bounds.max);
-                float width = Mathf.Abs(screenMax.x - screenMin.x);
-                float height = Mathf.Abs(screenMax.y - screenMin.y);
+        RectTransform buildImgRe = buildImgs[1].GetComponent<RectTransform>();
 
-                buildImgRe.sizeDelta = new Vector2(width / sizes[i], height / sizes[i]);
+        // 바닥면의 사이즈 확인
+        Renderer buildPrefabRe = buildingObj.transform.GetChild(0).GetComponent<Renderer>();
+        if(buildPrefabRe == null) {
+            Transform buildPrefabChild = buildingObj.transform.GetChild(0);
+            foreach(Transform child in buildPrefabChild) {
+                if(child.TryGetComponent(out Renderer childRe)) {
+                    buildPrefabRe = childRe;
+                    break;
+                }
             }
         }
+
+        if (buildPrefabRe == null) Debug.LogWarning("Rendere 없음");
+
+        Vector3 size = buildPrefabRe.bounds.size;
+        float width = size.x;
+        float height = size.z;
+
+        buildImgRe.sizeDelta = new Vector2(width, height);
     }
 
-    private void BuildPrefabUIFixedSize() {
-        for (int i = 0; i < buildImgs.Length; i++) {
-            RectTransform buildImgRe = buildImgs[i].GetComponent<RectTransform>();
-            buildImgRe.sizeDelta = new Vector2(buildImgRe.sizeDelta.x * sizes[i], buildImgRe.sizeDelta.y * sizes[i]);
+    // check 이미지 위치 조정
+    private void BuildPrefabUIPosition_Vertical() {
+        RectTransform buildImgRe = buildImgs[0].GetComponent<RectTransform>();
+        Renderer buildPrefabRe = buildingObj.transform.GetChild(0).GetComponent<Renderer>();
+        if (buildPrefabRe == null) {
+            Transform buildPrefabChild = buildingObj.transform.GetChild(0);
+            foreach (Transform child in buildPrefabChild) {
+                if (child.TryGetComponent(out Renderer childRe)) {
+                    buildPrefabRe = childRe;
+                    break;
+                }
+            }
+        }
+
+        if (buildPrefabRe == null) {
+            Debug.LogWarning("Renderer 없음");
+        }
+        else {
+            Vector3 size = buildPrefabRe.bounds.size;
+            Vector3 center = buildPrefabRe.bounds.center;
+            Vector3 topCenter = new Vector3(center.x, center.y + size.y / 2, center.z);
+
+            buildImgRe.position = topCenter + new Vector3(0, 0.2f, 0); 
         }
     }
-
-
 
 }

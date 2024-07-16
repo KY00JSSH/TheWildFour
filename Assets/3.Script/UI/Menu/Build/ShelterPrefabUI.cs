@@ -11,7 +11,7 @@ public class ShelterPrefabUI : BuildPrefabUI {
     }
 
     protected override void Update() {
-        if(buildingObj != null) {
+        if (buildingObj != null) {
             isValid = shelterCreate.isValidBuild;
             base.Update();
 
@@ -25,5 +25,5 @@ public class ShelterPrefabUI : BuildPrefabUI {
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }
-
 }
+
