@@ -55,6 +55,26 @@ public class PlayerMove : MonoBehaviour {
             Dash(false);
             Move(playerMoveSpeed);
         }
+
+        TakeFallDamage();
+    }
+
+    private float minFallSpeed = -5f, maxFallSpeed = -20f, currentFallSpeed = 0f;
+    private bool isFallDamage = false;
+    private void TakeFallDamage() {
+        if (playerRigid.velocity.y < minFallSpeed) {
+            currentFallSpeed = playerRigid.velocity.y;
+            isFallDamage = true;
+        }
+        else if (playerRigid.velocity.y > minFallSpeed && isFallDamage) {
+            isFallDamage = false;
+            float fallingRate = Mathf.InverseLerp(
+                minFallSpeed, maxFallSpeed, currentFallSpeed);
+            float damage = 100 * (Mathf.Exp(fallingRate) - 1) / (Mathf.Exp(1) - 1);
+
+            GetComponent<PlayerStatus>().TakeDamage(damage);
+            currentFallSpeed = 0f;
+        }
     }
 
     private void LookatMouse() {

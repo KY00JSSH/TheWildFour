@@ -26,7 +26,7 @@ public class PlayerStatus : MonoBehaviour {
         
         if(PlayerWarm <= 0) {
             PlayerWarm = 0;
-            TakeHpDamage(2f);
+            TakeHpDotDamage(2f);
         }
     }
 
@@ -39,15 +39,23 @@ public class PlayerStatus : MonoBehaviour {
 
         if (PlayerHunger <= 0) {
             PlayerHunger = 0;
-            TakeHpDamage(3f);
+            TakeHpDotDamage(3f);
         }
     }
 
-    public void TakeHpDamage(float damage = 1f) {
+    public void TakeHpDotDamage(float damage = 1f) {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: ��� �̺�Ʈ �ʿ�. 0707
+            //TODO: Dead Event Need. 사망 이벤트 구현 필요. 0707
+        }
+    }
+
+    public void TakeDamage(float damage) {
+        PlayerHp -= damage;
+        if (PlayerHp <= 0) {
+            PlayerHp = 0;
+            //TODO: Dead Event Need. 사망 이벤트 구현 필요. 0707
         }
     }
 
