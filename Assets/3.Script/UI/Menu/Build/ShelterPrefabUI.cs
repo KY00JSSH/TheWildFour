@@ -18,12 +18,18 @@ public class ShelterPrefabUI : BuildPrefabUI {
         }
     }
 
+
     // 버튼이 눌렸을 경우 UI표시
-    public void ShelterBuildAvailable() {
+    public void BuildAvailableMode() {
+
+        if (!build_Tooltip.isStartBuildingNumCheck) return; 
+        
         if (shelterCreate.isExist) return;
         buildingObj = shelterCreate.Building;
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }
+
+
 }
 

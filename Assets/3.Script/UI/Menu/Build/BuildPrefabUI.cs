@@ -16,6 +16,8 @@ public class BuildPrefabUI : MonoBehaviour {
     [Header("Build Prefab UI")]
     public Sprite[] BuildAvailable;
     protected BuildingCreate buildingCreate;
+    // 24 07 16 김수주 건설 설치 가능 여부 bool 추가 - 아이템 개수 확인
+    protected Build_Tooltip build_Tooltip;
 
     // 따라다닐 오브젝트
     public GameObject BuildImg;
@@ -30,6 +32,7 @@ public class BuildPrefabUI : MonoBehaviour {
 
     protected virtual void Awake() {
         buildingCreate = FindObjectOfType<BuildingCreate>();
+        build_Tooltip = FindObjectOfType<Build_Tooltip>();
         buildImgs = new Image[2];
         for (int i = 0; i < BuildImg.transform.childCount; i++) {
             buildImgs[i] = BuildImg.transform.GetChild(i).GetComponent<Image>();

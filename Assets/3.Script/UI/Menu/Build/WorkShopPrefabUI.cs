@@ -16,13 +16,13 @@ public class WorkShopPrefabUI : BuildPrefabUI {
             base.Update();
         }
     }
-
     // 버튼이 눌렸을 경우 UI표시
-    public void WorkshopBuildAvailable() {
+    public void BuildAvailableMode() {
+        if (!build_Tooltip.isStartBuildingNumCheck) return;
+
         if (workshopCreate.isExist) return;
         buildingObj = workshopCreate.Building;
         isBuiltStart = true;
-        BuildImg.SetActive(true);        
+        BuildImg.SetActive(true);
     }
-
 }

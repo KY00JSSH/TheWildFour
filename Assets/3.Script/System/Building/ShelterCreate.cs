@@ -19,6 +19,9 @@ public class ShelterCreate : BuildingCreate {
     }
 
     public override void BuildMode() {
+
+        if (!build_Tooltip.isStartBuildingNumCheck) return;
+
         buildingColliders = Building.GetComponentsInChildren<Collider>();
         base.BuildMode();
     }

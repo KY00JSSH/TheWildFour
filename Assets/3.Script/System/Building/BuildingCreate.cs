@@ -11,10 +11,14 @@ public class BuildingCreate : MonoBehaviour {
 
     public bool isValidBuild = true;
 
+    // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
+    protected Build_Tooltip build_Tooltip;
+
     private int layerMask;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        build_Tooltip = FindObjectOfType<Build_Tooltip>();
     }
 
     private void Start() {
