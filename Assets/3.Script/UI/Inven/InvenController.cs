@@ -5,7 +5,7 @@ using UnityEngine;
 public class InvenController : MonoBehaviour {
     private bool isInvenFull = false;               //인벤토리 전체 차있고 기존에도 추가 못함 여부
     public bool IsInvenFull { get { return isInvenFull; } }
-    private List<Item> inventory; 
+    private List<Item> inventory;
     public List<Item> Inventory { get { return inventory; } }
 
     private InvenUIController invenUi;
@@ -55,13 +55,46 @@ public class InvenController : MonoBehaviour {
                 //null로 비워둔 inventory에 추가
                 inventory[existBox] = item;
             }
-            else {
-                isInvenFull = true;
-                Debug.Log("전체 차있고, 기존 box에도 추가 못함");
-            }
+        }
+
+        if (checkInvenFull()) {
+            isInvenFull = true;
         }
 
         InvenChanged?.Invoke(inventory);
+    }
+
+    public bool canItemAdd() {
+        Item item = itemObejct.GetComponent<Item>();
+        int checkNum = canAddThisBox(item.Key);
+        if (checkNum == 16 || checkNum != 99) {
+            return true;
+        }
+        else {
+            int existBox = isExistEmptyBox();
+            if (existBox == 17 || existBox != 99) {
+                return true;
+            }
+            else {
+                Debug.Log("기존 box에 추가 못함");
+                return false;
+            }
+        }
+    }
+
+    private bool checkInvenFull() {
+        if (!canItemAdd()) {
+            for (int i = 0; i < inventory.Count; i++) {
+                //모든 인벤토리 아이템이  countable일 때 stack == MAX 체크 모두 MAX 면 TRUE 로 바뀜
+                //이거는 아이템 ADD 하고 나서 매번 체크
+                if (inventory[i] is CountableItem ci) {
+                    if (!ci.IsMax) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
@@ -84,15 +117,23 @@ public class InvenController : MonoBehaviour {
     }
 
     //빈 inven box가 있는지 여부
-    private int isExistEmptyBox() {
+    public int isExistEmptyBox() {
         if (inventory.Count < invenUi.CurrInvenCount) {
             return 17;  //아예 생성도 안한 inven이 있으면 17으로 return
         }
         else {
             for (int i = 0; i < inventory.Count; i++) {
-                if (inventory[i] == null) {
-                    //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
-                    return i;
+                var weaponItem = inventory[i].itemData as WeaponItemData;
+                var countableItem = inventory[i].itemData as CountableItemData;
+                var foodItem = inventory[i].itemData as FoodItemData;
+                var equipItem = inventory[i].itemData as EquipItemData;
+                var medicItem = inventory[i].itemData as MedicItemData;
+
+                if (weaponItem == null && countableItem == null && foodItem == null && equipItem == null && medicItem == null) {
+                    if (inventory[i] == null) {
+                        //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
+                        return i;
+                    }
                 }
             }
             return 99;  //아예 빈 박스를 사용못할때

@@ -78,7 +78,7 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     //tooltip 보여주는 시점
     private void ShowTooltip(GameObject item) {
-        Debug.Log("Tooltip 보여줌");
+        // Debug.Log("Tooltip 보여줌");
     }
 
     //아이템 줍기
@@ -86,10 +86,9 @@ public class PlayerItemPickControll : MonoBehaviour {
         if (item != null) {
             Item itemComponent = item.GetComponent<Item>();
 
-            if (!invenController.IsInvenFull) {
-                invenController.itemObejct = item;
+            invenController.itemObejct = item;
+            if(invenController.canItemAdd()){
                 invenController.ItemAdd();
-                //TODO: 초과하면 DESTROY안하고 ITEM COUNT 수정해서 그대로 두기
                 Destroy(item);
             }
         }

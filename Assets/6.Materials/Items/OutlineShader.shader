@@ -1,7 +1,7 @@
 Shader "Draw/OutlineShader" {
 	Properties{
 		_OutlineColor("Outline Color", Color) = (1,0.95,0.74,0.75)
-		_Outline("Outline width", Range(0.05,0.15)) = 0.2
+		_Outline("Outline width", Range(0,0.2)) = 0.1
 		_NoiseTex("Noise Texture", 2D) = "white" {}
 		_NoiseScale("Noise Scale", Range(1,10)) = 5
 	}
