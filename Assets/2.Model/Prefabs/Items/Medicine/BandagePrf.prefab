@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 6449772272404811299}
   - component: {fileID: 5386714465864624902}
   - component: {fileID: -3311096145439245189}
-  m_Layer: 6
+  - component: {fileID: -6932427849531484510}
+  - component: {fileID: 4610086410986696041}
+  m_Layer: 8
   m_Name: BandagePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,3 +114,31 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
   countableData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
   medicItemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
+--- !u!114 &-6932427849531484510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982709177913435256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &4610086410986696041
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982709177913435256}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

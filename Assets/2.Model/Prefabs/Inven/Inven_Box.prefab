@@ -430,8 +430,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 254944653252238467}
-        m_TargetAssemblyTypeName: Inven_Bottom_Box, Assembly-CSharp
-        m_MethodName: ItemUse_Button
+        m_TargetAssemblyTypeName: InventoryBox, Assembly-CSharp
+        m_MethodName: onBoxClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -453,8 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 254944653252238464}
   itemText: {fileID: 254944652746293187}
   itemIcon: {fileID: 254944652572792092}
   isItemUse: 0
   isItemIn: 0
-  currentItem: {fileID: 0}
