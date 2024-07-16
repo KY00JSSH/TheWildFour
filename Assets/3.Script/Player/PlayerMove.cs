@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour {
     public bool isDash { get; private set; }
 
     private void Awake() {
-        playerRigid = GetComponentInChildren<Rigidbody>();
+        playerRigid = GetComponentInParent<Rigidbody>();
         playerAnimator = GetComponentInParent<Animator>();
     }
 
@@ -87,16 +87,14 @@ public class PlayerMove : MonoBehaviour {
     }
 
     private void Move(float speed) {
-        InputX = Input.GetAxisRaw("Horizontal");
-        InputZ = Input.GetAxisRaw("Vertical");
+        InputX = Input.GetAxis("Horizontal");
+        InputZ = Input.GetAxis("Vertical");
 
         if (InputX != 0 || InputZ != 0) isMove = true;
         else isMove = false;
 
-        playerRigid.velocity = Vector3.zero;
         Vector3 moveDirection = new Vector3(InputX, 0, InputZ).normalized;
         playerRigid.velocity = moveDirection * constMoveSpeed * speed;
-        //transform.parent.position = playerRigid.position;
 
         float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
         playerAnimator.SetFloat("Speed", currentSpeed);
