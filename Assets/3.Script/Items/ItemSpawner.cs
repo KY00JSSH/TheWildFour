@@ -20,7 +20,7 @@ public class ItemSpawner : MonoBehaviour
         Item itemToSpawn = items[Random.Range(0, items.Count)];
         Vector3 randomPosition = new Vector3(
             Random.Range(-spawnArea.x / 2, spawnArea.x / 2),
-            spawnArea.y,
+            spawnArea.y +0.5f,
             Random.Range(-spawnArea.z / 2, spawnArea.z / 2)
         );
 
