@@ -20,12 +20,12 @@ public class BuildingCreate : MonoBehaviour {
     private void Start() {
         isValidBuild = true;
         layerMask = 1 << LayerMask.NameToLayer("Ground");
-
     }
 
     private void Update() {
         if (isBuild) {
-            Building.SetActive(true);
+            if (!Building.activeSelf)
+                Building.SetActive(true);
             FollowMouse();
 
             if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -43,6 +43,7 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void BuildMode() {
+        //TODO: 리지드바디... 설치된 이후에는 필요없지 않아?
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
@@ -73,7 +74,7 @@ public class BuildingCreate : MonoBehaviour {
         Building.SetActive(false);
     }
 
-    public void CancelBuilding() {
+    public virtual void CancelBuilding() {
         isBuild = false;
         Building.SetActive(false);
         MaterialOpaque();
