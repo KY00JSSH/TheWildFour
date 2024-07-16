@@ -78,7 +78,6 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        Debug.Log("OnPointerEnter called");
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null) {
@@ -92,7 +91,6 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        Debug.Log("OnPointerExit called");
         if (eventData.pointerCurrentRaycast.gameObject != null) {
             Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
             if (btn != null) {

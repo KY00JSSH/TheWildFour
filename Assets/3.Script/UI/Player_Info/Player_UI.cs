@@ -15,13 +15,23 @@ public class Player_UI : MonoBehaviour {
 
      */
     [SerializeField] private Slider playerSlider;
+
+
     private PlayerMove playerMove;
     private Coroutine fadeCoroutine;
     private bool isStart = false;
+
+
+    private Transform playerTransform;
+    public Canvas canvas;
     [SerializeField] private int Slider_AddY = 150;
+    [SerializeField] private int sliderStabilization = 1000;
+
+    private bool isInitialSetupDone = false;
 
     private void Awake() {
         playerMove = GetComponent<PlayerMove>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update() {
@@ -75,16 +85,31 @@ public class Player_UI : MonoBehaviour {
         newColor.a = 1;
         fillImage.color = newColor;
     }
+
+    //TODO: 위치 보정값 이상함
     private void SettingSliderPosition() {
+
+        // 슬라이더 위치 
         RectTransform sliderPosition = playerSlider.GetComponent<RectTransform>();
 
-        Vector3 positionadjusting = new Vector3(transform.GetChild(0).position.x, 0, transform.GetChild(0).position.z);
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(positionadjusting);
+        // 플레이어 위치 
+        Vector3 playerPosition = playerTransform.position;
+        Vector3 playerscreenPo = Camera.main.WorldToScreenPoint(playerPosition);
 
-        screenPosition.y += Slider_AddY;
-        
-        sliderPosition.position = screenPosition;
-        
+        // 캔버스 RectTransform 가져오기
+        RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, playerscreenPo, null, out localPoint);
+
+        if (!isInitialSetupDone || (sliderPosition.anchoredPosition.x - localPoint.x > sliderStabilization) || (sliderPosition.anchoredPosition.y - localPoint.y > sliderStabilization)) {
+
+            // 슬라이더의 위치를 조정하여 플레이어 위치에 맞춤
+            sliderPosition.anchoredPosition = localPoint;
+            sliderPosition.anchoredPosition += new Vector2(0, Slider_AddY);
+            isInitialSetupDone = true;
+
+        }
+
     }
 
 }
