@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Cinemachine;
 
-public class CameraControl2 : MonoBehaviour
+public class CameraControl2 : MonoBehaviour //IScrollHandler
 {
     public CinemachineFreeLook cinemachineFreeLook;
     public float rotationSpeed = 100f;
@@ -9,11 +10,15 @@ public class CameraControl2 : MonoBehaviour
 
     // 플레이어 스킬 시야범위 확장 때문에
     // newFov = Mathf.Clamp 윗줄에 선언된 지역변수를 클래스변수로 이동
-    public float minFOV = 70f;
-    public float maxFOV = 100f;
+    public float minCinemachineFOV = 70f;
+    public float maxCinemachineFOV = 100f;
 
     //미니맵 카메라 부모 객체 참조 추가
     public Transform miniMapCameraParent;
+
+    public Camera mainCamera;  //240716 17:00
+    public float minFOV = 15f; //240716 17:00
+    public float maxFOV = 70f; //240716 17:00
 
     private void Awake() {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -40,8 +45,23 @@ public class CameraControl2 : MonoBehaviour
             }
         }
 
+        //if(!IsmouseOverUI())
+        //{
+        //    float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        //    if (scrollInput != 0)
+        //    {
+        //        float newFOV = mainCamera.fieldOfView - scrollInput * zoomSpeed;
+        //        mainCamera.fieldOfView = Mathf.Clamp(newFOV, minFOV, maxFOV);
+        //    }
+        //}
 
-        // 카메라 줌
+        HandleCinemachinZoom();
+
+    }
+
+    private void HandleCinemachinZoom()
+    {
+        // 시네머신 줌
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (scrollInput != 0)
         {
@@ -50,9 +70,25 @@ public class CameraControl2 : MonoBehaviour
             float newFOV = currentFOV + deltaFOV;
 
 
-            newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);
+            newFOV = Mathf.Clamp(newFOV, minCinemachineFOV, maxCinemachineFOV);
 
             cinemachineFreeLook.m_Lens.FieldOfView = newFOV;
         }
     }
+
+    //private bool IsmouseOverUI()
+    //{
+    //    return EventSystem.current.IsPointerOverGameObject();
+    //}
+    //
+    //public void OnScroll(PointerEventData eventData)
+    //{
+    //    // 메뉴 맵 줌
+    //    float scrollInput = eventData.scrollDelta.y;
+    //    if( scrollInput != 0)
+    //    {
+    //        float newFOV = mainCamera.fieldOfView - scrollInput * zoomSpeed;
+    //        mainCamera.fieldOfView = Mathf.Clamp(newFOV, minFOV, maxFOV);
+    //    }
+    //}
 }
