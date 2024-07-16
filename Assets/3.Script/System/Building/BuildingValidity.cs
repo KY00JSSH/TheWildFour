@@ -10,13 +10,11 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void Update() {
-        Debug.Log("Valid : " + buildingCreate.isValidBuild);
+        //Debug.Log("Valid : " + buildingCreate.isValidBuild);
         if(buildingCreate.isBuild) {
             float xRotation = buildingCreate.Building.transform.rotation.eulerAngles.x;
             float zRotation = buildingCreate.Building.transform.rotation.eulerAngles.z;
 
-            Debug.Log("X Rotation : " + xRotation);
-            Debug.Log("Z Rotation : " + zRotation);
             if (Mathf.Abs(xRotation) > validAngle ||
                 Mathf.Abs(zRotation) > validAngle) {
                 Quaternion clampedRotation = Quaternion.Euler(

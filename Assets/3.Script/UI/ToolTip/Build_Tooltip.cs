@@ -80,8 +80,6 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse enter");
-
                 BuildTooltipShow(btn);
             }
         }
@@ -91,7 +89,6 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (eventData.pointerCurrentRaycast.gameObject != null) {
             Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
             if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse exit");
                 dictionaryKey = 0;
             }
         }
@@ -157,25 +154,45 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 needItems[1].Add(itemimgs.transform.GetChild(i).gameObject);
             }
         }
-
+        Debug.Log("아이템 인벤토리 개수 확인" + buildingCheckCount + " / " + itemtexts.transform.childCount);
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
         if (buildingCheckCount == itemtexts.transform.childCount)
             isStartBuildingNumCheck = true;
         else isStartBuildingNumCheck = false;
 
+        Debug.Log("아이템 인벤토리 bool 값 확인" + isStartBuildingNumCheck);
         return needItems;
     }
 
     // InvenController 스크립트의 전체 인벤토리에 아이템이 이름 확인해서 갯수 확인
+    //TODO: 아이템 검출 이상함! => 이름 말고 샤이니 KEY 를 찾아야함
     private int ItemNumCheck_Func(string itemname) {
         InvenController inven = FindObjectOfType<InvenController>();
         int itemTotalNum = 0;
         if (inven.Inventory != null) {
+
+
+            for (int i = 0; i < inven.Inventory.Count; i++) {
+                if (inven.Inventory[i] is CountableItem countItem) {
+                    if (countItem.itemData.ItemName == itemname) {
+                        itemTotalNum += countItem.CurrStackCount;
+                    }
+                    else {
+                        Debug.Log("아이템의 이름이 같지 않음" + inven.Inventory[i].itemData.ItemName);
+                    }
+                }
+                else {
+                    Debug.Log("아이템의 종류가 같지 않음" + inven.Inventory[i].itemData.Type);
+                }
+            }
+            /*
             foreach (Item each in inven.Inventory) {
                 if (each.name == itemname) {
                     if (each is CountableItem countItem) itemTotalNum += countItem.CurrStackCount;
                 }
+                else Debug.Log("아이템의 이름이 같지 않음" + each.name);
             }
+            */
             return itemTotalNum;
         }
         return -1;
