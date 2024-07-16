@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemUseControll : MonoBehaviour
@@ -13,8 +14,8 @@ public class PlayerItemUseControll : MonoBehaviour
     int selectBoxKey;
 
     private void Start() {
-        invenController = GetComponent<InvenController>();
-        invenBox = GetComponent<InventoryBox>();
+        invenController = FindObjectOfType<InvenController>();
+        invenBox = FindObjectOfType<InventoryBox>();
     }
 
     private void Update() {
@@ -31,7 +32,13 @@ public class PlayerItemUseControll : MonoBehaviour
                 timer += Time.deltaTime;
 
                 if (timer >= holdTime) {
-                    //TODO: 드랍 아이템 전체
+                    //아이템 한뭉텅이 떨구기
+                    List<Item> inven = invenController.Inventory;
+                    Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x-0.1f, gameObject.transform.position.y+0.5f, gameObject.transform.position.z - 0.1f);
+                    Item itemComponent = inven[selectBoxKey];
+                    Instantiate(itemComponent.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
+                    invenController.removeItem(selectBoxKey);
+                    invenController.invenFullFlagReset();
                     isHolding = false;
                     timer = 0f;
                 }
@@ -43,9 +50,10 @@ public class PlayerItemUseControll : MonoBehaviour
         }
     }
 
+
     public void SetSelectedBoxKey(int key) {
         selectBoxKey = key;
-        Debug.Log("Selected Box Key: " + selectBoxKey);
     }
+
 
 }

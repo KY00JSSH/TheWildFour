@@ -84,9 +84,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     //아이템 줍기
     private void pickupItem(GameObject item) {
         if (item != null) {
-            Item itemComponent = item.GetComponent<Item>();
-
-            invenController.itemObejct = item;
+            invenController.itemObject = item;
             if(invenController.canItemAdd()){
                 invenController.ItemAdd();
                 Destroy(item);

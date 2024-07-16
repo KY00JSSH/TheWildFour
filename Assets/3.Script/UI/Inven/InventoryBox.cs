@@ -43,6 +43,13 @@ public class InventoryBox : MonoBehaviour {
             itemIcon.gameObject.SetActive(true);
             isItemIn = true;
         }
+        else if (currentItem is EquipItem eqItem) {
+            itemText.text = "";
+            itemIcon.sprite = eqItem.itemData.Icon;
+            itemIcon.enabled = true;
+            itemIcon.gameObject.SetActive(true);
+            isItemIn = true;
+        }
         else {
             if (currentItem != null) {
                 itemText.text = "";
@@ -52,7 +59,7 @@ public class InventoryBox : MonoBehaviour {
                 isItemIn = true;
             }
             else {
-                itemText.text = "";
+                itemText.text = "0";
                 itemIcon.sprite = null;
                 itemIcon.enabled = false;
                 itemIcon.gameObject.SetActive(false);
@@ -62,7 +69,6 @@ public class InventoryBox : MonoBehaviour {
     }
 
     public void OnBoxClicked() {
-        Debug.Log("click");
         playerItemUse.SetSelectedBoxKey(key);
     }
 

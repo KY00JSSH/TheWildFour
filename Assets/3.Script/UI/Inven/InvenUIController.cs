@@ -29,36 +29,8 @@ public class InvenUIController : MonoBehaviour {
 
     private void UpdateUI(List<Item> inventory) {
         for (int i = 0; i < inventory.Count; i++) {
-            if (inventory[i] is CountableItem ci) {
-                Debug.Log($"{i} : {inventory[i].itemData.ItemName} , {ci.CurrStackCount}");
-            }
-            else {
-                Debug.Log($"{i} : {inventory[i].itemData.ItemName} - ITEM");
-            }
-        }
-
-        for (int i = 0; i < currInvenCount; i++) {
             InventoryBox box = InvenTotal[i].GetComponent<InventoryBox>();
-            if (box != null) {
-                if (i < inventory.Count) {
-                    Item newItem = inventory[i];
-                    if (box.CurrentItem != newItem) {
-                        box.UpdateBox(inventory[i]);
-                    }
-                    else {
-                        if (box.CurrentItem is CountableItem ci) {
-                            if (ci.CurrStackCount != 0) {
-                                box.UpdateBox(newItem);
-                            }
-                        }
-                    }
-                }
-                else {
-                    if (box.CurrentItem != null) {
-                        box.UpdateBox(null);
-                    }
-                }
-            }
+            box.UpdateBox(inventory[i]);
         }
     }
 
@@ -93,7 +65,6 @@ public class InvenUIController : MonoBehaviour {
             }
         }
         else {
-            Debug.Log("Inventory is already at maximum capacity.");
             return;
         }
     }
