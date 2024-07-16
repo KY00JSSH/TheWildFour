@@ -43,7 +43,6 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void BuildMode() {
-        //TODO: 리지드바디... 설치된 이후에는 필요없지 않아?
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
@@ -74,7 +73,7 @@ public class BuildingCreate : MonoBehaviour {
         Building.SetActive(false);
     }
 
-    public virtual void CancelBuilding() {
+    public void CancelBuilding() {
         isBuild = false;
         Building.SetActive(false);
         MaterialOpaque();

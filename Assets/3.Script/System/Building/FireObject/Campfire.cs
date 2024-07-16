@@ -27,12 +27,10 @@ public class Campfire : FireObject {
         isPlayerNear = false;
         foreach (Collider collider in colliders) {
             if (collider.CompareTag("Player")) {
-                if (collider.transform.parent.
-                    TryGetComponent(out PlayerStatus playerStatus)) {
-                    isPlayerNear = true;
-                    StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
-                    break;
-                }
+                isPlayerNear = true;
+                PlayerStatus playerStatus = collider.GetComponentInChildren<PlayerStatus>();
+                StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
+                break;
             }
         }
 
