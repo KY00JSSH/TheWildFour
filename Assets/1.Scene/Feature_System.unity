@@ -5113,6 +5113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 0}
   itemText: {fileID: 1174939070}
   itemIcon: {fileID: 1007137944}
   isItemUse: 0
@@ -5360,6 +5361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
   isItemUse: 0
@@ -14048,6 +14050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
   isItemUse: 0
@@ -17580,6 +17583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
   isItemUse: 0
@@ -25537,6 +25541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
   isItemUse: 0
@@ -27542,6 +27547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenBox: {fileID: 0}
   itemText: {fileID: 430926292}
   itemIcon: {fileID: 1475956821}
   isItemUse: 0
@@ -29058,8 +29064,8 @@ GameObject:
   - component: {fileID: 919132147509575503}
   - component: {fileID: 919132147509575502}
   m_Layer: 0
-  m_Name: Robin2
-  m_TagString: Untagged
+  m_Name: Robin
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29075,7 +29081,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.4
-  m_Height: 2.2
+  m_Height: 1.95
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!54 &919132147509575503
@@ -29092,7 +29098,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!4 &1140930710248363688
 Transform:
@@ -29315,9 +29321,10 @@ GameObject:
   - component: {fileID: 2329869790576016123}
   - component: {fileID: 2329869790576016122}
   - component: {fileID: 2329869790576016121}
+  - component: {fileID: 2329869790576016124}
   m_Layer: 0
   m_Name: Players
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29364,6 +29371,20 @@ MonoBehaviour:
   DecDashGage: 0
   IncDashGage: 0
   isSkilled: 0
+--- !u!114 &2329869790576016124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329869790576016120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bff7dbb8b1e284bbd2789403fa1540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRadius: 2.5
+  player: {fileID: 919132147509575501}
 --- !u!4 &2440046835663223753
 Transform:
   m_ObjectHideFlags: 0
@@ -29961,7 +29982,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 1f7c87853b0599b438840320ad3e328c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1

@@ -86,19 +86,26 @@ public class PlayerMove : MonoBehaviour {
         else if (CurrentDashGage == TotalDashGage) SetDash();
     }
 
+    private float currentSpeed = 0f;
     private void Move(float speed) {
         InputX = Input.GetAxis("Horizontal");
         InputZ = Input.GetAxis("Vertical");
 
         if (InputX != 0 || InputZ != 0) isMove = true;
-        else isMove = false;
+        else {
+            isMove = false;
+            speed = 0;
+        }
 
-        Vector3 moveDirection = new Vector3(InputX, 0, InputZ).normalized;
-        playerRigid.velocity = moveDirection * constMoveSpeed * speed;
+        currentSpeed = Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 3f);
+        if (currentSpeed < 0.01f) currentSpeed = 0;
+        targetPosition = new Vector3(
+            playerRigid.position.x + InputX * Time.deltaTime * constMoveSpeed * currentSpeed,
+            playerRigid.position.y,
+            playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * currentSpeed);
+        playerRigid.MovePosition(targetPosition);
 
-        float currentSpeed = new Vector3(InputX, 0, InputZ).magnitude * speed;
         playerAnimator.SetFloat("Speed", currentSpeed);
         //Debug.Log(currentSpeed);
-
     }
 }
