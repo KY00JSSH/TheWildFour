@@ -183,36 +183,35 @@ public class InvenController : MonoBehaviour {
     }
 
     public void dropItem(int index) {
-        if (index >= 0 && index < inventory.Count && inventory[index] != null) {
+        if (index >= 0 && index < inventory.Count) {
             if (inventory[index].itemData.Key != 1 && inventory[index].itemData.Key != 2) {
                 //돌, 나무 아닐때
                 if (inventory[index] is CountableItem countItem) {
-                    Debug.Log("1");
                     countItem.useCurrStack(1);
                     if (countItem.CurrStackCount == 0) {
                         removeItem(index);
                     }
                 }
+                else {
+                    removeItem(index);
+                }
             }
             else {
                 if (inventory[index] is CountableItem countItem) {
                     if (countItem.CurrStackCount > 8) {
-                        Debug.Log("2");
                         countItem.useCurrStack(8);
-                        if (countItem.CurrStackCount == 0) {
-                            removeItem(index);
-                        }
                     }
                     else if (countItem.CurrStackCount == 8) {
-                        Debug.Log("3");
                         countItem.useCurrStack(8);
                         removeItem(index);
                     }
                     else {
-                        Debug.Log("4");
                         countItem.useCurrStack(countItem.CurrStackCount);
                         removeItem(index);
                     }
+                }
+                else {
+                    removeItem(index);
                 }
             }
         }
