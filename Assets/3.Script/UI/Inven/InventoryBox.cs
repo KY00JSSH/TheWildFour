@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class InventoryBox : MonoBehaviour {
 
+    private int key;
     // 인벤 박스 -> 버튼
-    private Button Inven_Box;
+    public Button invenBox;
     [SerializeField] private Text itemText;
     [SerializeField] private Image itemIcon;
 
@@ -18,11 +19,18 @@ public class InventoryBox : MonoBehaviour {
     private Item currentItem;
     public Item CurrentItem { get { return currentItem; } }
 
+    private PlayerItemUseControll playerItemUse;
+
     private void Awake() {
-        Inven_Box = transform.GetComponent<Button>();
+        invenBox = transform.GetComponent<Button>();
         itemText = transform.GetChild(0).GetComponent<Text>();
         itemIcon = transform.GetChild(1).GetComponent<Image>();
+        playerItemUse = GetComponent<PlayerItemUseControll>();
         //Inven_Text.text = Item_count.ToString();
+        invenBox.onClick.AddListener(onBoxClicked);
+    }
+    public void setKey(int key) {
+        this.key = key;
     }
 
     public void UpdateBox(Item item) {
@@ -58,8 +66,8 @@ public class InventoryBox : MonoBehaviour {
     //TODO: 그냥 f 누르면 나무, 광석 8개씩 나머지 1개씩
     //TODO: 제련 돌 30 -> 철광석 1개
 
-    private bool IsCusorOutButton(Button button) {
-        Vector2 MCursorPosition = button.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
-        return button.GetComponent<RectTransform>().rect.Contains(MCursorPosition);
+    public void onBoxClicked() {
+        Debug.Log("click"+key);
+        playerItemUse.SetSelectedBoxKey(key);
     }
 }

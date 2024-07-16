@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerItemControll : MonoBehaviour {
+public class PlayerItemPickControll : MonoBehaviour {
 
-    [SerializeField] private float checkRadius = 5.0f;
+    [SerializeField] private float checkRadius = 2.5f;
     private InvenController invenController;
     [SerializeField] private GameObject player;
     private GameObject closestItem;
     private GameObject mouseHoverItem;
 
+    private GameObject previousItem = null;
 
     private void Start() {
         invenController = FindObjectOfType<InvenController>();
@@ -30,7 +31,7 @@ public class PlayerItemControll : MonoBehaviour {
     }
 
     private void CheckForItems() {
-        int layerMask = 1 << 6;
+        int layerMask = 1 << 8;
         Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
 
         float closestDistance = Mathf.Infinity;
@@ -53,10 +54,19 @@ public class PlayerItemControll : MonoBehaviour {
         }
 
         if (closestItem != null) {
-            ShowTooltip(closestItem);
+            if (previousItem != closestItem) {
+                ShowTooltip(closestItem);
+                if (previousItem != null) {
+                    previousItem.GetComponent<ItemSelectControll>().outSelect();
+                }
+                closestItem.GetComponent<ItemSelectControll>().selectItem();
+                previousItem = closestItem;
+            }
         }
-        else {
-            //쉐이더 꺼야함
+        else if (previousItem != null) {
+            // 선택된 아이템이 없을 때 이전 아이템의 outSelect 호출
+            previousItem.GetComponent<ItemSelectControll>().outSelect();
+            previousItem = null;
         }
     }
 
@@ -75,7 +85,7 @@ public class PlayerItemControll : MonoBehaviour {
     private void pickupItem(GameObject item) {
         if (item != null) {
             Item itemComponent = item.GetComponent<Item>();
-            
+
             if (!invenController.IsInvenFull) {
                 invenController.itemObejct = item;
                 invenController.ItemAdd();

@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 5086247416824465158}
   - component: {fileID: 2022415560886083086}
   - component: {fileID: -502938440218741460}
-  m_Layer: 6
+  - component: {fileID: 7588985767522106170}
+  - component: {fileID: 1636426102269394020}
+  m_Layer: 8
   m_Name: SalvePrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,3 +113,31 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: a71c44d28a1dec24ba0ec76371b48e94, type: 2}
   countableData: {fileID: 11400000, guid: a71c44d28a1dec24ba0ec76371b48e94, type: 2}
   medicItemData: {fileID: 11400000, guid: a71c44d28a1dec24ba0ec76371b48e94, type: 2}
+--- !u!114 &7588985767522106170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925855252656042164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1636426102269394020
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925855252656042164}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
