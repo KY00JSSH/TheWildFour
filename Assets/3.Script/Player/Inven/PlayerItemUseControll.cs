@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerItemUseControll : MonoBehaviour
-{
+public class PlayerItemUseControll : MonoBehaviour {
     [SerializeField]
     private float holdTime = 2f;
+    private float shortClickTime = 0.1f;
     private float timer = 0f;
     private bool isHolding = false;
 
@@ -24,29 +24,50 @@ public class PlayerItemUseControll : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.T)) {
-            if (!isHolding) {
-                isHolding = true;
-                timer = 0f;
-            }
-            else {
-                timer += Time.deltaTime;
+            List<Item> inven = invenController.Inventory;
 
-                if (timer >= holdTime) {
-                    //æ∆¿Ã≈€ «—π∂≈÷¿Ã ∂≥±∏±‚
-                    List<Item> inven = invenController.Inventory;
-                    Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x-0.1f, gameObject.transform.position.y+0.5f, gameObject.transform.position.z - 0.1f);
-                    Item itemComponent = inven[selectBoxKey];
-                    Instantiate(itemComponent.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
-                    invenController.removeItem(selectBoxKey);
-                    invenController.invenFullFlagReset();
-                    isHolding = false;
+            var weaponItem = inven[selectBoxKey]?.itemData as WeaponItemData;
+            var countableItem = inven[selectBoxKey]?.itemData as CountableItemData;
+            var foodItem = inven[selectBoxKey]?.itemData as FoodItemData;
+            var equipItem = inven[selectBoxKey]?.itemData as EquipItemData;
+            var medicItem = inven[selectBoxKey]?.itemData as MedicItemData;
+
+            if (weaponItem != null || countableItem != null || foodItem != null ||
+                    equipItem != null || medicItem != null || inven[selectBoxKey] != null) {
+                if (!isHolding) {
+                    isHolding = true;
                     timer = 0f;
                 }
+                else {
+                    timer += Time.deltaTime;
+
+                    if (timer >= holdTime) {
+                        // æ∆¿Ã≈€ «—π∂≈÷¿Ã ∂≥±∏±‚
+                        Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z - 0.1f);
+                        Item itemComponent = inven[selectBoxKey];
+                        Instantiate(itemComponent.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
+                        invenController.removeItem(selectBoxKey);
+                        invenController.invenFullFlagReset();
+                        isHolding = false;
+                        timer = 0f;
+                    }
+
+                    if (timer < shortClickTime) {
+                        // ¬™¿∫ ≈¨∏Ø¿∏∑Œ ∞£¡÷«œø© µø¿€ ºˆ«‡
+                        Debug.Log("≈¨∏Ø ™y");
+                        Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z - 0.1f);
+                        Item itemComponent = inven[selectBoxKey];
+                        Instantiate(itemComponent.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
+                        invenController.dropItem(selectBoxKey);
+                        invenController.invenFullFlagReset();
+                        isHolding = false;
+                        timer = 0f;
+                    }
+                }
             }
-        }
-        else {
-            isHolding = false;
-            timer = 0f;
+            else {
+                Debug.Log("333333333");
+            }
         }
     }
 
@@ -54,6 +75,4 @@ public class PlayerItemUseControll : MonoBehaviour
     public void SetSelectedBoxKey(int key) {
         selectBoxKey = key;
     }
-
-
 }
