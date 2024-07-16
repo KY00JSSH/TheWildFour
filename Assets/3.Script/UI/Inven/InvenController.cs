@@ -8,7 +8,6 @@ public class InvenController : MonoBehaviour {
     private List<Item> inventory; 
     public List<Item> Inventory { get { return inventory; } }
 
-
     private InvenUIController invenUi;
     public GameObject itemObejct;
 

@@ -71,6 +71,10 @@ public class InvenUIController : MonoBehaviour {
             invenBoxPrefabs.transform.SetParent(transform);
             invenBoxPrefabs.name = InvenBoxPrefab.name;
             invenBoxPrefabs.SetActive(false);
+            InventoryBox invenBox = invenBoxPrefabs.GetComponent<InventoryBox>();
+            if (invenBox != null) {
+                invenBox.setKey(i); // key ¼³Á¤
+            }
             InvenBox.Add(invenBoxPrefabs);
         }
         return InvenBox;
