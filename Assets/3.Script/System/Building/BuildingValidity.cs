@@ -7,9 +7,6 @@ public class BuildingValidity : MonoBehaviour {
         buildingCreate = GetComponentInParent<BuildingCreate>();
     }
 
-    private void Update() {
-        Debug.Log(this.name + " " + buildingCreate.isValidBuild);
-    }
     private void OnTriggerStay(Collider other) {
         if(other.gameObject.layer != 7)
             buildingCreate.isValidBuild = false;

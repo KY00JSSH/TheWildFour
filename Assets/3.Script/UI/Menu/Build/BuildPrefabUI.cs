@@ -40,8 +40,6 @@ public class BuildPrefabUI : MonoBehaviour {
 
     protected virtual void Update() {
         if (isBuiltStart) {
-            Debug.Log(" 설치 가능 불가능" + isValid);
-
             if (isValid) {
                 buildImgs[0].sprite = BuildAvailable[1];
                 if (Input.GetMouseButtonDown(0)) {
