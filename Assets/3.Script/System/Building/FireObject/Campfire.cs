@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Campfire : FireObject {
     private ParticleSystem fireEffect;
+    private CampfireUI campfireUI;
 
     protected override void OnCreated() {
         base.OnCreated();
+        campfireUI.FireSliderInit();
         fireEffect = GetComponentInChildren<ParticleSystem>();
         fireEffect.Stop();
         LightOff();
@@ -15,6 +17,7 @@ public class Campfire : FireObject {
 
     protected override void Awake() {
         base.Awake();
+        campfireUI = GetComponent<CampfireUI>();
         OnCreated();
     }
 

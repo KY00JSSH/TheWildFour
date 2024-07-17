@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CampfireSliderList {
-    public GameObject campfireSlPfb;
-    public Vector3 campfireSlPos;
-}
-
-
 public class CampfireUI : MonoBehaviour {
     private Transform playerTransform;
     private FireObject fireObject;
@@ -17,34 +11,40 @@ public class CampfireUI : MonoBehaviour {
     [Header("Slider UI")]
     [SerializeField] private GameObject fireSliderPrefab;
 
-    private bool isCamfireBuild = false;
+    [SerializeField] private GameObject parent;
+    [SerializeField] private Canvas canvas;
 
-    public Canvas canvas;
-
-    private int fireObjsNum = 0;
-    private int fireSlidersNum = 0;
     [SerializeField] private int Add_Y = 30;
+
+    GameObject sliderObj;
 
     private void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         fireObject = FindObjectOfType<FireObject>();
+        canvas = FindObjectOfType<Canvas>();
+        parent = canvas.transform.Find("Etc").GetChild(1).gameObject;
+        if (parent == null) {
+            Debug.Log("parent 없음");
+        }
     }
-
+    private void Update() {
+        if(sliderObj != null) {
+            SettingFireSliderPosition();
+            SettingFireSliderSize();
+        }
+    }
 
     // 슬라이더 생성
-    private void FireSliderInit(int fireObjsNum) {
-        GameObject sliderObj = Instantiate(fireSliderPrefab, canvas.transform);
-        sliderObj.name = fireSliderPrefab.name;
-        CampfireSliderList newFireSlider = new CampfireSliderList {
-            campfireSlPfb = sliderObj,
-            campfireSlPos = transform.position
-        };
-        Debug.Log(" 슬라이터 프리펩 수량 " + fireSlidersNum);
-
+    public void FireSliderInit() {
+        if (parent != null) {
+            sliderObj = Instantiate(fireSliderPrefab, parent.transform);
+            sliderObj.name = fireSliderPrefab.name;
+        }
     }
 
-    private void SettingFireSliderPosition(int fireSlidersNum) {
-        RectTransform fireSliderPosition = fireSliders[fireSlidersNum].campfireSlPfb.GetComponent<RectTransform>();
+    private void SettingFireSliderPosition() {
+        RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
+        if (fireSliderPosition == null) Debug.Log("????????????????");
         Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
         if (fireObjectRenderer != null) {
             Vector3 size = fireObjectRenderer.bounds.size;
@@ -54,14 +54,13 @@ public class CampfireUI : MonoBehaviour {
             Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, topCenter + new Vector3(0, 0.3f, 0));
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out Vector2 localPoint);
             fireSliderPosition.localPosition = localPoint;
-            fireSliders[fireSlidersNum].campfireSlPos = fireSliderPosition.localPosition;
-            fireSliders[fireSlidersNum].campfireSlPfb.GetComponent<Slider>().value = SliderValueCal(fireSlidersNum);
+            sliderObj.GetComponent<Slider>().value = SliderValueCal();
         }
     }
 
-    private void SettingFireSliderSize(int fireSlidersNum) {
-        RectTransform fireSliderPosition = fireSliders[fireSlidersNum].campfireSlPfb.GetComponent<RectTransform>();
-        Renderer fireObjectRenderer = fireObjects[fireSlidersNum].transform.GetChild(5).GetComponent<Renderer>();
+    private void SettingFireSliderSize() {
+        RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
+        Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
         if (fireObjectRenderer != null) {
             Bounds bounds = fireObjectRenderer.bounds;
             Vector3 screenMin = Camera.main.WorldToScreenPoint(bounds.min);
@@ -74,8 +73,8 @@ public class CampfireUI : MonoBehaviour {
         }
     }
 
-    private float SliderValueCal(int i) {
-        float sliderValue = fireObjects[i].GetComponent<FireObject>().GetCurrentTime() / fireObjects[i].GetComponent<FireObject>().GetTotalTime();
+    private float SliderValueCal() {
+        float sliderValue = GetComponent<Campfire>().GetCurrentTime() / GetComponent<Campfire>().GetTotalTime();
         return sliderValue;
     }
 
