@@ -12,7 +12,7 @@ public class BuildingCreate : MonoBehaviour {
 
     public bool isValidBuild = true;
 
-    // 24 07 16 ±è¼öÁÖ °Ç¼³ ¼³Ä¡ boolÃß°¡ -> ÀÎº¥ ¾ÆÀÌÅÛ °³¼ö È®ÀÎ
+    // 24 07 16 ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ ï¿½ï¿½Ä¡ boolï¿½ß°ï¿½ -> ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
     protected Build_Tooltip build_Tooltip;
 
     private int layerMask;
@@ -95,7 +95,7 @@ public class BuildingCreate : MonoBehaviour {
 
             float distanceToCenter = Vector3.Distance(pointTolook, playerTransform.position);
             if (distanceToCenter > buildAreaRadius) {
-                // ¸¸¾à °Å¸®°¡ ¹Ý°æº¸´Ù Å©´Ù¸é ¿øÀÇ °æ°è¿¡¼­ Á¦ÇÑÇÕ´Ï´Ù
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Ý°æº¸ï¿½ï¿½ Å©ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }

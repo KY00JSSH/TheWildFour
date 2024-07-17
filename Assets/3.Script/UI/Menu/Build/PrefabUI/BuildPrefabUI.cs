@@ -28,7 +28,7 @@ public class BuildPrefabUI : MonoBehaviour {
 
     // 설치될 오브젝트
     protected GameObject buildingObj;
-    protected bool isBuiltStart = false;
+    public bool isBuiltStart = false;
 
     protected virtual void Awake() {
         buildingCreate = FindObjectOfType<BuildingCreate>();
@@ -102,15 +102,24 @@ public class BuildPrefabUI : MonoBehaviour {
     private void BuildPrefabUIPosition_Vertical() {
         RectTransform buildImgRe = buildImgs[0].GetComponent<RectTransform>();
         Renderer buildPrefabRe = buildingObj.transform.GetChild(0).GetComponent<Renderer>();
-        if (buildPrefabRe == null) {
-            Transform buildPrefabChild = buildingObj.transform.GetChild(0);
-            foreach (Transform child in buildPrefabChild) {
-                if (child.TryGetComponent(out Renderer childRe)) {
-                    buildPrefabRe = childRe;
-                    break;
+        if (buildingObj.transform.GetChild(0).GetComponent<ParticleSystem>() != null) {
+            Transform buildPrefabChild = buildingObj.transform.GetChild(5);
+            if (buildPrefabChild.TryGetComponent(out Renderer childRe)) {
+                buildPrefabRe = childRe;
+            }
+        }
+        else {
+            if (buildPrefabRe == null) {
+                Transform buildPrefabChild = buildingObj.transform.GetChild(0);
+                foreach (Transform child in buildPrefabChild) {
+                    if (child.TryGetComponent(out Renderer childRe)) {
+                        buildPrefabRe = childRe;
+                        break;
+                    }
                 }
             }
         }
+
 
         if (buildPrefabRe == null) {
             Debug.LogWarning("Renderer 없음");

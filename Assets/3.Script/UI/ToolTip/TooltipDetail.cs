@@ -18,6 +18,7 @@ public enum SkillType {
     Gather
 }
 
+[System.Serializable]
 public enum UpgradeType {
     Shelter,
     Workshop
@@ -32,6 +33,7 @@ public class SkillDetail {
 
 [System.Serializable]
 public class BuildDetail {
+    public int buttonNum;
     public string name;
     public string description;
     public NeedItem[] needItems;
@@ -92,11 +94,11 @@ public class TooltipDetail : MonoBehaviour {
     private string sleepDetailFileName = "Detail/sleepDetail";
     private string packingDetailFileName = "Detail/packingDetail";
 
-    private SkillDetailList skillDetailList;
-    private BuildDetailList buildDetailList;
-    private UpgradeDetailList upgradeDetailList;
-    private SleepDetailList sleepDetailList;
-    private PackingDetailList packingDetailList;
+    public SkillDetailList skillDetailList;
+    public BuildDetailList buildDetailList;
+    public UpgradeDetailList upgradeDetailList;
+    public SleepDetailList sleepDetailList;
+    public PackingDetailList packingDetailList;
 
     private void Start() {
         TextAsset skillDetails = Resources.Load<TextAsset>(skillDetailFileName);
