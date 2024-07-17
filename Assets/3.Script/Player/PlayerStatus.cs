@@ -12,7 +12,6 @@ public class PlayerStatus : MonoBehaviour {
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
     private float HealRestore = 0.3f, HungerRestore = 0.5f;
 
-
     private bool[] statusList;
     public bool GetPlayerStatus(Status status) { return statusList[(int)status]; }
     public void SetPlayerStatus(Status status) { statusList[(int)status] = true; }
