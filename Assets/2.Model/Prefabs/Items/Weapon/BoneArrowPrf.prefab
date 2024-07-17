@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 118420535785080540}
   - component: {fileID: 1103089314763045054}
   - component: {fileID: 3521537048074551174}
-  - component: {fileID: 7754096228003183620}
   - component: {fileID: -9009613720329916604}
   - component: {fileID: 8464651674362083830}
-  m_Layer: 6
+  - component: {fileID: 940680089530126891}
+  - component: {fileID: 39599824001183844}
+  m_Layer: 8
   m_Name: BoneArrowPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7754096228003183620
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635803601969900351}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.05702648, y: 0.7508172, z: 0.014004806}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-9009613720329916604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +108,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635803601969900351}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -128,3 +116,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &940680089530126891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635803601969900351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &39599824001183844
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635803601969900351}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: fafdfca2fa1ac634e91e740d872fff82, type: 2}

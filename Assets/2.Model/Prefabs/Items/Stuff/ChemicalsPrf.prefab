@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 8731398035766735997}
   - component: {fileID: 9006417730375903741}
   - component: {fileID: 3799225871242826113}
-  - component: {fileID: 7284410424818630164}
   - component: {fileID: 3283662581214864368}
   - component: {fileID: 3736793090206135013}
-  m_Layer: 6
+  - component: {fileID: 2678379165763393239}
+  - component: {fileID: 8236479699348160738}
+  m_Layer: 8
   m_Name: ChemicalsPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7284410424818630164
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3096535666184557031}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3258517, y: 0.17499946, z: 0.5245277}
-  m_Center: {x: 0.009723648, y: 0, z: 0.26608983}
 --- !u!114 &3283662581214864368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +107,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3096535666184557031}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -127,3 +115,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2678379165763393239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096535666184557031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &8236479699348160738
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096535666184557031}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: d59464760f5ac06419b822b3aad1df48, type: 2}

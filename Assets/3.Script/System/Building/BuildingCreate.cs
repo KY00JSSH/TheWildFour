@@ -7,25 +7,33 @@ public class BuildingCreate : MonoBehaviour {
     protected Collider[] buildingColliders;
 
     public bool isExist = false;
-    protected bool isBuild = false;
+    public bool isBuild = false;
 
-    //TODO: UI > isValidBuild 값 조사해서 가능 불가능 UI 이미지 띄우기
-    public bool isValidBuild = false;
+    public bool isValidBuild = true;
+
+    private int layerMask;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    private void Start() {
+        isValidBuild = true;
+        layerMask = 1 << LayerMask.NameToLayer("Ground");
+    }
+
     private void Update() {
         if (isBuild) {
-            Building.SetActive(true);
+            if (!Building.activeSelf)
+                Building.SetActive(true);
             FollowMouse();
 
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 CancelBuilding();
             }
             else if (Input.GetMouseButton(0)) {
-                CreateBuilding();
+                if(isValidBuild)
+                    CreateBuilding();
             }
         }
     }
@@ -38,8 +46,10 @@ public class BuildingCreate : MonoBehaviour {
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
-                if (!collider.TryGetComponent(out BuildingValidity validity))
+                if (!collider.TryGetComponent(out BuildingValidity validity)) {
                     collider.gameObject.AddComponent<BuildingValidity>();
+                    collider.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+                }
             }
             isBuild = true;
 
@@ -71,17 +81,18 @@ public class BuildingCreate : MonoBehaviour {
 
     protected void FollowMouse() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
 
         float rotationSpeed = 5f;
         float buildAreaRadius = 3f;
 
-        if (GroupPlane.Raycast(cameraRay, out float rayLength)) {
-            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
+        if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, Mathf.Infinity, layerMask)) {
+            Vector3 pointTolook = raycastHit.point;
+
             float distanceToCenter = Vector3.Distance(pointTolook, playerTransform.position);
             if (distanceToCenter > buildAreaRadius) {
                 // 만약 거리가 반경보다 크다면 원의 경계에서 제한합니다
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
+                Debug.Log("direction : " + directionToCenter);
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }
             Vector3 targetPosition = new Vector3(
@@ -89,6 +100,12 @@ public class BuildingCreate : MonoBehaviour {
                 pointTolook.y,
                 Mathf.Clamp(pointTolook.z + 0.01f, playerTransform.position.z - buildAreaRadius, playerTransform.position.z + buildAreaRadius)
             );
+            Ray downRay = new Ray(new Vector3(
+                targetPosition.x, playerTransform.position.y + buildAreaRadius, targetPosition.z), Vector3.down);
+            if (Physics.Raycast(downRay, out RaycastHit downRaycastHit, Mathf.Infinity, layerMask)) {
+                targetPosition.y = downRaycastHit.point.y;
+            }
+
             Quaternion targetRotation =
                 Quaternion.LookRotation(targetPosition - playerTransform.position) *
                 Quaternion.Euler(180, 0, 180);

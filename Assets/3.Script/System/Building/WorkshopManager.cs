@@ -3,14 +3,19 @@ using UnityEngine;
 
 public class WorkshopManager : MonoBehaviour { 
     public int WorkshopLevel { get; private set; }
+
+    ShelterCreate shelter;
+    private void Awake() {
+        shelter = GetComponent<ShelterCreate>();
+    }
+
     public void LevelUp() {
+        Destroy(shelter.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
     }
 
     [SerializeField] ButtonCoolTimeUI upgradeCooltime;
     private IEnumerator WaitForUpgrade() {
-        ShelterCreate shelter = GetComponent<ShelterCreate>();
-
         while (upgradeCooltime.CoolTime > 0)
             yield return null;
 

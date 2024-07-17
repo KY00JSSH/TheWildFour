@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 1623226516821137257}
   - component: {fileID: 3909894254361372243}
   - component: {fileID: 1702339844193426633}
-  - component: {fileID: 6523718773849126438}
   - component: {fileID: 2435709904402575444}
   - component: {fileID: 2891950663966733663}
-  m_Layer: 6
+  - component: {fileID: 6625228758951748848}
+  - component: {fileID: 2911527455390496736}
+  m_Layer: 8
   m_Name: SackPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6523718773849126438
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122183901949410239}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 0.59
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.02, z: 0}
 --- !u!114 &2435709904402575444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +107,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122183901949410239}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -128,3 +115,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6625228758951748848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122183901949410239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &2911527455390496736
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122183901949410239}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 19a43844bb972a84db69e57495913034, type: 2}

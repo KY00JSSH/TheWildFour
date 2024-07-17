@@ -10,7 +10,7 @@ public class SunLight : MonoBehaviour {
     private Color nightColor = new Color(0f / 255f, 0f / 255f, 70f / 255f);
 
     private Color currentColor;
-    private float transitionDuration = 1f;
+    private float transitionDuration = 8f;
     private float transitionProgress = 0f;
 
     private bool isChanging = false;
