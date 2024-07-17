@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using Cinemachine;
 
@@ -47,12 +48,7 @@ public class CameraControl2 : MonoBehaviour //IScrollHandler
 
         //if(!IsmouseOverUI())
         //{
-        //    float scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        //    if (scrollInput != 0)
-        //    {
-        //        float newFOV = mainCamera.fieldOfView - scrollInput * zoomSpeed;
-        //        mainCamera.fieldOfView = Mathf.Clamp(newFOV, minFOV, maxFOV);
-        //    }
+        //    return;
         //}
 
         HandleCinemachinZoom();
@@ -76,19 +72,20 @@ public class CameraControl2 : MonoBehaviour //IScrollHandler
         }
     }
 
-    //private bool IsmouseOverUI()
-    //{
-    //    return EventSystem.current.IsPointerOverGameObject();
-    //}
-    //
-    //public void OnScroll(PointerEventData eventData)
-    //{
-    //    // ∏ﬁ¥∫ ∏  ¡‹
-    //    float scrollInput = eventData.scrollDelta.y;
-    //    if( scrollInput != 0)
-    //    {
-    //        float newFOV = mainCamera.fieldOfView - scrollInput * zoomSpeed;
-    //        mainCamera.fieldOfView = Mathf.Clamp(newFOV, minFOV, maxFOV);
-    //    }
-    //}
+    private bool IsmouseOverUI()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.GetComponent<Transform>() == transform)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
