@@ -5,11 +5,11 @@ using UnityEngine;
 public class InvenController : MonoBehaviour {
     private bool isInvenFull = false;               //인벤토리 전체 차있고 기존에도 추가 못함 여부
     public bool IsInvenFull { get { return isInvenFull; } }
-    private List<Item> inventory; 
+    private List<Item> inventory;
     public List<Item> Inventory { get { return inventory; } }
 
     private InvenUIController invenUi;
-    public GameObject itemObejct;
+    public GameObject itemObject;
 
     public bool itemTest = false;
     public ItemData testItem;
@@ -31,7 +31,7 @@ public class InvenController : MonoBehaviour {
     //  else if(!full)  새박스에 아이템 add
     //else isInvenFull = true
     public void ItemAdd() {
-        Item item = itemObejct.GetComponent<Item>();
+        Item item = itemObject.GetComponent<Item>();
 
         int checkNum = canAddThisBox(item.Key);
 
@@ -47,21 +47,54 @@ public class InvenController : MonoBehaviour {
         }
         else {
             int existBox = isExistEmptyBox();
-            if (existBox == 17) {
-                //새 박스에 아이템 add
-                inventory.Add(item);
-            }
-            else if (existBox != 99) {
+            if (existBox != 99 && existBox != 17) {
                 //null로 비워둔 inventory에 추가
                 inventory[existBox] = item;
             }
-            else {
-                isInvenFull = true;
-                Debug.Log("전체 차있고, 기존 box에도 추가 못함");
+            else if (existBox == 17) {
+                //새 박스에 아이템 add
+                inventory.Add(item);
             }
         }
 
+        if (checkInvenFull()) {
+            isInvenFull = true;
+        }
+
         InvenChanged?.Invoke(inventory);
+    }
+
+    public bool canItemAdd() {
+        Item item = itemObject.GetComponent<Item>();
+        int checkNum = canAddThisBox(item.Key);
+        if (checkNum == 16 || checkNum != 99) {
+            return true;
+        }
+        else {
+            int existBox = isExistEmptyBox();
+            if (existBox == 17 || existBox != 99) {
+                return true;
+            }
+            else {
+                Debug.Log("기존 box에 추가 못함");
+                return false;
+            }
+        }
+    }
+
+    private bool checkInvenFull() {
+        if (!canItemAdd()) {
+            for (int i = 0; i < inventory.Count; i++) {
+                //모든 인벤토리 아이템이 max 상태인지 체크
+                //아이템 ADD 하고 나서 매번 체크
+                if (inventory[i] is CountableItem ci) {
+                    if (!ci.IsMax) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
@@ -71,9 +104,9 @@ public class InvenController : MonoBehaviour {
         }
         else {
             for (int i = 0; i < inventory.Count; i++) {
-                if (inventory[i].Key == itemKey) {
+                if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
                     if (inventory[i] is CountableItem countItem) {
-                        if (countItem.CurrStackCount < countItem.MaxStackCount) {
+                        if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
                             return i;
                         }
                     }
@@ -84,25 +117,50 @@ public class InvenController : MonoBehaviour {
     }
 
     //빈 inven box가 있는지 여부
-    private int isExistEmptyBox() {
+    public int isExistEmptyBox() {
         if (inventory.Count < invenUi.CurrInvenCount) {
+            for (int i = 0; i < inventory.Count; i++) {
+                var weaponItem = inventory[i]?.itemData as WeaponItemData;
+                var countableItem = inventory[i]?.itemData as CountableItemData;
+                var foodItem = inventory[i]?.itemData as FoodItemData;
+                var equipItem = inventory[i]?.itemData as EquipItemData;
+                var medicItem = inventory[i]?.itemData as MedicItemData;
+
+                if (weaponItem == null && countableItem == null && foodItem == null && equipItem == null && medicItem == null) {
+                    if (inventory[i] == null) {
+                        //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
+                        return i;
+                    }
+                }
+            }
             return 17;  //아예 생성도 안한 inven이 있으면 17으로 return
         }
         else {
             for (int i = 0; i < inventory.Count; i++) {
-                if (inventory[i] == null) {
-                    //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
-                    return i;
+                var weaponItem = inventory[i]?.itemData as WeaponItemData;
+                var countableItem = inventory[i]?.itemData as CountableItemData;
+                var foodItem = inventory[i]?.itemData as FoodItemData;
+                var equipItem = inventory[i]?.itemData as EquipItemData;
+                var medicItem = inventory[i]?.itemData as MedicItemData;
+
+                if (weaponItem == null && countableItem == null && foodItem == null && equipItem == null && medicItem == null) {
+                    if (inventory[i] == null) {
+                        //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
+                        return i;
+                    }
                 }
             }
             return 99;  //아예 빈 박스를 사용못할때
         }
     }
 
-    private void removeItem(int index) {
-        if (index >= 0 && index < inventory.Count) {
-            inventory[index] = null;
-        }
+    //
+    public void invenFullFlagReset() {
+        isInvenFull = false;
+    }
+    //아이템 뭉텅이 인벤에서 삭제
+    public void removeItem(int index) {
+        inventory[index] = null;
         InvenChanged?.Invoke(inventory);
     }
 
@@ -124,35 +182,62 @@ public class InvenController : MonoBehaviour {
         InvenChanged?.Invoke(inventory);
     }
 
-    private void dropItem(int index) {
-        if (index >= 0 && index < inventory.Count && inventory[index] != null) {
+    public int checkItemType(int index) {
+        if (index >= 0 && index < inventory.Count) {
             if (inventory[index].itemData.Key != 1 && inventory[index].itemData.Key != 2) {
                 //돌, 나무 아닐때
                 if (inventory[index] is CountableItem countItem) {
-                    countItem.useCurrStack(1);
-                    //TODO: 아이템 드랍
+                    return 2;
+                }
+                else {
+                    return 3;
                 }
             }
             else {
+                return 1;   //돌, 나무일때
+            }
+        }
+        else {
+            return 0;   //아이템 없을때
+        }
+    }
+
+    public void dropItem(int index) {
+        int itemType = checkItemType(index);
+        //type 1: 돌,나무 , 2: 카운트 되는 item, 3: 카운트 없는 아이템
+        if (itemType > 0) {
+            if (itemType == 1) {
                 if (inventory[index] is CountableItem countItem) {
                     if (countItem.CurrStackCount > 8) {
                         countItem.useCurrStack(8);
-                        //TODO: 아이템 드랍
                     }
                     else if (countItem.CurrStackCount == 8) {
                         countItem.useCurrStack(8);
                         removeItem(index);
-                        //TODO: 아이템 드랍
                     }
                     else {
                         countItem.useCurrStack(countItem.CurrStackCount);
-                        //TODO: 아이템 드랍
-
+                        removeItem(index);
+                    }
+                    InvenChanged?.Invoke(inventory);
+                }
+            }
+            else if (itemType == 2) {
+                if (inventory[index] is CountableItem countItems) {
+                    countItems.useCurrStack(1);
+                    if (countItems.CurrStackCount == 0) {
                         removeItem(index);
                     }
                 }
+                InvenChanged?.Invoke(inventory);
             }
+            else {
+                removeItem(index);
+                InvenChanged?.Invoke(inventory);
+            }            
         }
-        InvenChanged?.Invoke(inventory);
+        else {
+            Debug.Log("no item");
+        }
     }
 }

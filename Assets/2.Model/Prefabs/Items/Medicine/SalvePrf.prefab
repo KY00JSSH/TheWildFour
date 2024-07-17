@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 8226673340557714570}
   - component: {fileID: 5844926566299121515}
   - component: {fileID: 5086247416824465158}
-  - component: {fileID: 2022415560886083086}
   - component: {fileID: -502938440218741460}
   - component: {fileID: 7588985767522106170}
   - component: {fileID: 1636426102269394020}
+  - component: {fileID: 8502769733234220548}
   m_Layer: 8
   m_Name: SalvePrf
   m_TagString: Untagged
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2022415560886083086
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7925855252656042164}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.43, z: 0.19025104}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-502938440218741460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +128,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &8502769733234220548
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925855252656042164}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: c5d7cad811fa3124ca113e694cb9a82c, type: 2}

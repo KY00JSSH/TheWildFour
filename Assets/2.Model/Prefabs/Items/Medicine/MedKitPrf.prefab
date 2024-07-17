@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 9109089301706552699}
   - component: {fileID: 5214678266346960842}
   - component: {fileID: 3365675333246998470}
-  - component: {fileID: 1880697342427371731}
   - component: {fileID: 8970913661599970108}
   - component: {fileID: -5449567350078214931}
   - component: {fileID: -3760427142573940779}
+  - component: {fileID: 7057561339461859539}
   m_Layer: 8
   m_Name: MedKitPrf
   m_TagString: Untagged
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1880697342427371731
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6802898112593999144}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.43, y: 0.2, z: 0.34}
-  m_Center: {x: 0, y: 0, z: 0.02}
 --- !u!114 &8970913661599970108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +128,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &7057561339461859539
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6802898112593999144}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 467448c4579bcb7428e836fb27a07082, type: 2}

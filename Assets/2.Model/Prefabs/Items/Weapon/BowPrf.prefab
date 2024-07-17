@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4481678353107730602}
   - component: {fileID: 8069361410878034566}
   - component: {fileID: 7369075280810373616}
-  - component: {fileID: 4467737366249705872}
   - component: {fileID: -6346529550774818388}
   - component: {fileID: -7119012684884416511}
   - component: {fileID: -5406689444936970429}
+  - component: {fileID: 1324730154511058749}
   m_Layer: 8
   m_Name: BowPrf
   m_TagString: Untagged
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4467737366249705872
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 741606325189790613}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2661537, y: 0.27257785, z: 0.06055528}
-  m_Center: {x: -0.000000059604645, y: 0.07154837, z: 0.000000020489097}
 --- !u!114 &-6346529550774818388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &1324730154511058749
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741606325189790613}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 5b44f257822080b48b6bb5b39fc91ca3, type: 2}

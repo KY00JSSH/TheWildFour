@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7853499729197972455}
   - component: {fileID: 6613128796637719327}
   - component: {fileID: 4910894351321424424}
-  - component: {fileID: 369517064854149520}
   - component: {fileID: 369517064854149521}
   - component: {fileID: -4381268543179500249}
   - component: {fileID: 6218004453208192205}
+  - component: {fileID: 6649202772637577030}
   m_Layer: 8
   m_Name: StonePrf
   m_TagString: Untagged
@@ -85,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &369517064854149520
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369517064854149524}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 0.5
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &369517064854149521
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,3 +127,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 27d3ceeb280cd874e82bdb09c2e1673b, type: 2}
   countableData: {fileID: 11400000, guid: 27d3ceeb280cd874e82bdb09c2e1673b, type: 2}
+--- !u!64 &6649202772637577030
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369517064854149524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: c78ad2ae857db974caa29dded0c4ccd2, type: 2}

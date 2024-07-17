@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5245939291756890002}
   - component: {fileID: 7528485058265650665}
   - component: {fileID: 6657948237124617600}
-  - component: {fileID: 9209296495273648801}
   - component: {fileID: 3564175598060701417}
   - component: {fileID: 809414806703508789}
   - component: {fileID: -6709492519269880774}
+  - component: {fileID: 8180004899546799197}
   m_Layer: 8
   m_Name: SmallMeatPrf
   m_TagString: Untagged
@@ -85,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &9209296495273648801
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003843842228425325}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.09
-  m_Height: 0.41
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3564175598060701417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &8180004899546799197
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003843842228425325}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 2a4450a890215b84d997a3864a7137b9, type: 2}

@@ -7,7 +7,10 @@ public class PlayerItemPickControll : MonoBehaviour {
     [SerializeField] private float checkRadius = 2.5f;
     private InvenController invenController;
     [SerializeField] private GameObject player;
+
     private GameObject closestItem;
+    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>().closestItem; } }
+
     private GameObject mouseHoverItem;
 
     private GameObject previousItem = null;
@@ -31,7 +34,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     private void CheckForItems() {
-        int layerMask = 1 << 8;
+        int layerMask = 1 << 8 + 1 << 9;
         Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
 
         float closestDistance = Mathf.Infinity;
@@ -78,18 +81,15 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     //tooltip 보여주는 시점
     private void ShowTooltip(GameObject item) {
-        Debug.Log("Tooltip 보여줌");
+        // Debug.Log("Tooltip 보여줌");
     }
 
     //아이템 줍기
     private void pickupItem(GameObject item) {
-        if (item != null) {
-            Item itemComponent = item.GetComponent<Item>();
-
-            if (!invenController.IsInvenFull) {
-                invenController.itemObejct = item;
+        if (item != null && item.layer == 8) {
+            invenController.itemObject = item;
+            if (invenController.canItemAdd()) {
                 invenController.ItemAdd();
-                //TODO: 초과하면 DESTROY안하고 ITEM COUNT 수정해서 그대로 두기
                 Destroy(item);
             }
         }
