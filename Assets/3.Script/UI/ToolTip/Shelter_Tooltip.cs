@@ -426,6 +426,9 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         return -1;
     }
 
+
+
+    [SerializeField] ButtonCoolTimeUI upgradeCooltime;
     public void SleepFuncOnClick() {
         StopCoroutine("SleepSliderValue");
         Text text = sleepTime.GetComponentInChildren<Text>();

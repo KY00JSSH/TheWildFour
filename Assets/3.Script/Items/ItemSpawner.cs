@@ -34,9 +34,5 @@ public class ItemSpawner : MonoBehaviour
             GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity);
             Item itemComponent = itemObject.GetComponent<Item>();
         }
-        //itemComponent.itemData = itemToSpawn;
-        //if (itemComponent.itemData is FoodItemData foodItemData) {
-        //    Debug.Log($"{foodItemData.ItemName} + {foodItemData.FullPoint}");
-        //}
     }
 }

@@ -15,7 +15,8 @@ public class NeedItem {
 public enum SkillType {
     Move,
     Attack,
-    Gather
+    Gather,
+    Null
 }
 
 [System.Serializable]

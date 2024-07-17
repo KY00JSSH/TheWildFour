@@ -10,17 +10,9 @@ public class InvenCountItem {
 }
 
 public class TooltipNum : MonoBehaviour {
-    /*
-     1. 버튼 정보 (Dictionary num) 
-     2. 인벤토리 필요한 아이템 키 확인 => 아이템 합산
-        - 아이템 키별로 int값 저장할 수 있게 
-     2. 아이템 개수 비교 -> 알아서 잘 해     
-     */
 
     private TooltipDetail tooltipDetail;
     private InvenController invenController;
-    private List<InvenCountItem> invenCountItems = new List<InvenCountItem>();
-    public List<InvenCountItem> InvenCountItems { get { return invenCountItems; } }
 
     private void Awake() {
         tooltipDetail = GetComponent<TooltipDetail>();
@@ -28,20 +20,17 @@ public class TooltipNum : MonoBehaviour {
     }
 
     // skill
-    public SkillDetail ShelterItemCheck(GameObject btn) {
-        string btnName = btn.name;
+    public SkillDetail ShelterItemCheck(SkillType skillType, GameObject btn) {
         int skillnum = 0;
         char lastChar = btn.name[btn.name.Length - 1];
-        foreach (SkillDetail each in tooltipDetail.skillDetailList.skillDetails) {
-            if (btnName.Contains(each.skillType.ToString())) {
+        foreach (SkillDetail each in tooltipDetail.skillDetailList.skillDetails) {            
+            if(skillType == each.skillType) {
                 if (char.IsDigit(lastChar)) {
                     skillnum = lastChar - '0';
                     if (each.skillNum == skillnum) {
-                        //TODO: 해당 파일을 return 해야하나?
                         return each;
                     }
                 }
-
             }
         }
         return null;
@@ -49,11 +38,9 @@ public class TooltipNum : MonoBehaviour {
 
     // upgrade
     public UpgradeDetail UpgradeItemCheck(UpgradeType upgradeType, int Level) {
-        // invenCountItems.Clear();
-        foreach(UpgradeDetail each in tooltipDetail.upgradeDetailList.upgradeDetails) {
-            if(upgradeType == each.upgradeType) {
+        foreach (UpgradeDetail each in tooltipDetail.upgradeDetailList.upgradeDetails) {
+            if (upgradeType == each.upgradeType) {
                 if (each.upgradeLevel == Level) {
-                    // 쉘터레벨이랑 같으면 정보 들고와야함 => +1 인지는 나중에 확인해
                     return each;
                 }
             }
@@ -61,13 +48,10 @@ public class TooltipNum : MonoBehaviour {
         return null;
     }
 
-
     // build
     public BuildDetail BuildItemCheck(int DictionaryKey) {
-        // invenCountItems.Clear();
         foreach (BuildDetail each in tooltipDetail.buildDetailList.buildDetails) {
             if (each.buttonNum == DictionaryKey) {
-                //InvenItemGet(each.needItems);
                 return each;
             }
         }

@@ -17,7 +17,7 @@ public class CampfirePrefabUI : BuildPrefabUI {
     }
 
     public void BuildAvaildableMode() {
-        //if (!build_Tooltip.isStartBuildingNumCheck) return;
+        //if (!build_Tooltip.isBuildAvailable) return;
         if (campfireCreate.isExist) return;
         buildingObj = campfireCreate.Building;
         isBuiltStart = true;

@@ -62,15 +62,9 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
     }
 
     public void TooltipOff() {
-
-        Build_Tooltip tootip = gameObject.GetComponent<Build_Tooltip>();
+        Tooltip_Build tootip = gameObject.GetComponent<Tooltip_Build>();
         tootip.tooltipbox.SetActive(false);
-        /*
-        for (int i = 0; i < Lowbuttons.Length; i++) {
-            Menu_Tooltip tootip = Lowbuttons[i].gameObject.GetComponent<Menu_Tooltip>();
-            tootip.tooltipbox.SetActive(false);
-        }
-        */
+
     }
 
 }

@@ -13,7 +13,7 @@ public class CampfireCreate : BuildingCreate {
 
     public override void BuildMode() {
 
-        if (!tooltip_Build.isStartBuildingNumCheck) return;
+        if (!tooltip_Build.isBuildAvailable) return;
 
         if (Building == null) {
             newCampfire = Instantiate(buildingPrefabs[0], transform);

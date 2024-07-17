@@ -36,6 +36,7 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private UpgradeDetail currentupgradeDetail;
     private PackingDetail currentpackingDetail;
 
+    public bool isUpgradeAvailable = false;
 
     private void Awake() {
 
@@ -45,13 +46,18 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (tooltipMain == null) tooltipMain = ShelterTooltip.transform.GetChild(0).GetChild(1).GetComponent<Text>();
         if (tooltipAdditionalText == null) tooltipAdditionalText = ShelterTooltip.transform.GetChild(0).GetChild(2).GetComponent<Text>();
         textPositionSave = new Vector2[2];
-
         itemNeedPositionSave = new Vector2[2][];
         itemNeedPositionSave[0] = new Vector2[4];
         itemNeedPositionSave[1] = new Vector2[4];
         // 위치 변경되는 Text 위치 저장
         SaveTextPositions();
         SaveTextPositions_Func();
+    }
+
+    private void Update() {
+        if (sleepTime.value < 0) {
+            SleepSliderInit();
+        }
     }
 
     private void SaveTextPositions() {
@@ -84,7 +90,7 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
         tooltipMainRe.sizeDelta = new Vector2(270, tooltipMainRe.sizeDelta.y);
 
         RectTransform tooltipAdditionalTextRe = tooltipAdditionalText.GetComponent<RectTransform>();
-        tooltipAdditionalTextRe.anchoredPosition = new Vector2(textPositionSave[1].x, 60);
+        tooltipAdditionalTextRe.anchoredPosition = new Vector2(textPositionSave[1].x, 20);
 
         sleepTime.gameObject.SetActive(false);
         itemimgs.SetActive(false);
@@ -106,36 +112,41 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
-            if (btn != null) {
-
+            if (btn != null && !btn.name.Contains("Exit")) {
                 ShelterTooltip.SetActive(true);
-                // 위치 초기화
-                LoadTextPositions();
-                LoadTextPositions_Func();
-
                 // 선택
                 if (eventData.position.y >= 520) {
-                    // skill type 나누는 메소드
+                    // 위치 초기화
+                    ShelterTooltip.SetActive(true);
+                    LoadTextPositions();
                     tooltipImg.gameObject.SetActive(true);
                     tooltipImg.sprite = btn.gameObject.transform.GetChild(1).GetComponent<Image>().sprite;
-                    currentskillDetail = tooltipNum.ShelterItemCheck(btn.gameObject);
+
+                    // skill type 나누는 메소드
+                    SkillType skillType = FindSkillType(btn.gameObject);
+                    currentskillDetail = tooltipNum.ShelterItemCheck(skillType, btn.gameObject);
+                    Debug.Log(currentskillDetail);
                     SkillTooltipShow();
                 }
-                else if (440 <= eventData.position.y && eventData.position.y < 520) {
-                    FunctionTooltipInit();
-                    currentsleepDetail = tooltipNum.SleepItemCheck();
-                    SleepTooltipShow();
-                }
-                else if (365 <= eventData.position.y && eventData.position.y < 440) {
-                    FunctionTooltipInit();
-                    currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Shelter, shelterManager.ShelterLevel);
-                    UpgradeTooltipShow();
-                }
                 else {
+
+                    LoadTextPositions_Func();
                     FunctionTooltipInit();
-                    currentpackingDetail = tooltipNum.PackingItemCheck();
-                    PackingTooltipShow();
+
+                    if (440 <= eventData.position.y && eventData.position.y < 520) {
+                        currentsleepDetail = tooltipNum.SleepItemCheck();
+                        SleepTooltipShow();
+                    }
+                    else if (365 <= eventData.position.y && eventData.position.y < 440) {
+                        currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Shelter, shelterManager.ShelterLevel + 1);
+                        UpgradeTooltipShow();
+                    }
+                    else {
+                        currentpackingDetail = tooltipNum.PackingItemCheck();
+                        PackingTooltipShow();
+                    }
                 }
+
 
             }
         }
@@ -151,15 +162,18 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     }
 
-    public void SkillTooltipShow() {
+    // ================================== Skill 
 
+    // skill 
+    public void SkillTooltipShow() {
         // 이미지 변경
-        Debug.Log(tooltipTitle);
+        Debug.Log(currentskillDetail.name);
+        Debug.Log(tooltipTitle.text);
+
         tooltipTitle.text = currentskillDetail.name;
         tooltipMain.text = currentskillDetail.description;
         AdditionalText();
     }
-
     private void AdditionalText() {
         if (currentskillDetail.skillNum > shelterManager.ShelterLevel)
             tooltipAdditionalText.text = string.Format("<color=red>{0} : {1}</color>", additionalText[1], currentskillDetail.skillNum);
@@ -172,8 +186,14 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
             tooltipAdditionalText.text = string.Format("<color={1}>{0}</color>", additionalText[0], textColor);
         }
     }
+    private SkillType FindSkillType(GameObject btn) {
+        if (btn.name.Contains("Move")) { return SkillType.Move; }
+        else if (btn.name.Contains("Attack")) { return SkillType.Attack; }
+        else if (btn.name.Contains("Gather")) { return SkillType.Gather; }
+        return SkillType.Null;
+    }
 
-
+    // ================================== Function 
 
     // function 위치 초기화
     private void FunctionTooltipInit() {
@@ -182,7 +202,6 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
         sleepTime.gameObject.SetActive(false);
         itemimgs.gameObject.SetActive(false);
         itemtexts.gameObject.SetActive(false);
-
 
         // 배경 길이 변경
         RectTransform tooltipBg = ShelterTooltip.transform.GetChild(0).GetComponent<RectTransform>();
@@ -223,22 +242,54 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     // 1. 자기
     private void SleepTooltipShow() {
-
         tooltipTitle.text = currentsleepDetail.name;
         tooltipMain.text = currentsleepDetail.description;
         tooltipAdditionalText.text = "";
         // 슬라이터 활성화
         sleepTime.gameObject.SetActive(true);
     }
+    public void SleepFuncOnClick() {
+
+        // item 개수 비교해야함
+
+        StopCoroutine("SleepSliderValue");
+        Text text = sleepTime.GetComponentInChildren<Text>();
+        // 코르틴 슬라이더 값 조절
+        StartCoroutine(SleepSliderValue(text, sleepTime));
+    }
+
+    private IEnumerator SleepSliderValue(Text text, Slider sleepTime) {
+        // 시간...
+        string[] timeParts = text.text.Split(':');
+        int minutes = int.Parse(timeParts[0]);
+        int seconds = int.Parse(timeParts[1]);
+        float totalSeconds = minutes * 60 + seconds;
+        float decrement = 1 / totalSeconds;
+
+        while (totalSeconds > 0) {
+            yield return new WaitForSeconds(1f);
+            totalSeconds--;
+            minutes = (int)(totalSeconds / 60);
+            seconds = (int)(totalSeconds % 60);
+            sleepTime.value -= decrement;
+            text.text = string.Format("{0}:{1:D2}", minutes, seconds);
+        }
+        sleepTime.value = 0;
+    }
+    private void SleepSliderInit() {
+        sleepTime.value = 1;
+        Text text = sleepTime.GetComponentInChildren<Text>();
+        text.text = "2:00";
+    }
+    private void OnDisable() {
+        SleepSliderInit();
+    }
 
     // 2. 업그레이드
     private void UpgradeTooltipShow() {
-
         tooltipTitle.text = currentupgradeDetail.name;
         tooltipMain.text = currentupgradeDetail.description;
         tooltipAdditionalText.text = "필요 구성품";
-        // 슬라이터 활성화
-        sleepTime.gameObject.SetActive(true);
 
         // 아이템 이미지 활성화
         UpgradeFunc_ItemTextInit();
@@ -267,38 +318,35 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
             }
         }
-        Debug.Log("아이템 인벤토리 개수 확인" + buildingCheckCount + " / " + itemtexts.transform.childCount);
-
+        // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
+        if (buildingCheckCount == itemtexts.transform.childCount)
+            isUpgradeAvailable = true;
+        else isUpgradeAvailable = false;
     }
 
     private void UpgradeFunc_ItemTextPosition() {
         if (currentupgradeDetail.needItems.All(item => item.ItemNeedNum == 0)) return;
 
-        int needitemcount = 0;
+        int needzeroitemcount = 0;
         foreach (NeedItem item in currentupgradeDetail.needItems) {
             if (item.ItemNeedNum != 0) {
-                needitemcount++;
+                needzeroitemcount++;
             }
         }
 
         for (int i = 0; i < currentupgradeDetail.needItems.Length; i++) {
-
             RectTransform eachTextsRe = itemtexts.transform.GetChild(i).GetComponent<RectTransform>();
             RectTransform eachImgsRe = itemimgs.transform.GetChild(i).GetComponent<RectTransform>();
-            eachTextsRe.anchoredPosition = new Vector2(eachTextsRe.anchoredPosition.x + 40 * (currentupgradeDetail.needItems.Length - needitemcount), eachTextsRe.anchoredPosition.y);
-            eachImgsRe.anchoredPosition = new Vector2(eachImgsRe.anchoredPosition.x + 40 * (currentupgradeDetail.needItems.Length - needitemcount), eachImgsRe.anchoredPosition.y);
-
+            eachTextsRe.anchoredPosition = new Vector2(eachTextsRe.anchoredPosition.x + 40 * (currentupgradeDetail.needItems.Length - needzeroitemcount), eachTextsRe.anchoredPosition.y);
+            eachImgsRe.anchoredPosition = new Vector2(eachImgsRe.anchoredPosition.x + 40 * (currentupgradeDetail.needItems.Length - needzeroitemcount), eachImgsRe.anchoredPosition.y);
         }
     }
 
     // 3. 짐 싸기
     private void PackingTooltipShow() {
-
         tooltipTitle.text = currentpackingDetail.name;
         tooltipMain.text = currentpackingDetail.description;
         tooltipAdditionalText.text = "";
-        // 슬라이터 활성화
-        sleepTime.gameObject.SetActive(true);
     }
 
 

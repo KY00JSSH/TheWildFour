@@ -19,7 +19,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private GameObject itemimgs;
     [SerializeField] private GameObject itemtexts;
 
-    public bool isStartBuildingNumCheck = false;
+    public bool isBuildAvailable = false;
     private int buttonNum;
 
     private void Awake() {
@@ -89,14 +89,13 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     // 아이템 개수비교
-
     private void UpgradeFunc_ItemText() {
         int buildingCheckCount = 0;
         for (int i = 0; i < currentBuildDetail.needItems.Length; i++) {
             int needItem = currentBuildDetail.needItems[i].ItemNeedNum;
             int currentItem = tooltipNum.InvenItemGet(currentBuildDetail.needItems[i].ItemKey);
             if (needItem == 0) {
-                isStartBuildingNumCheck = true;
+                isBuildAvailable = true;
                 itemtexts.transform.GetChild(i).gameObject.SetActive(false);
                 itemimgs.transform.GetChild(i).gameObject.SetActive(false);
                 buildingCheckCount++;
@@ -110,13 +109,10 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
             }
         }
-        Debug.Log("아이템 인벤토리 개수 확인" + buildingCheckCount + " / " + itemtexts.transform.childCount);
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
         if (buildingCheckCount == itemtexts.transform.childCount)
-            isStartBuildingNumCheck = true;
-        else isStartBuildingNumCheck = false;
-
-        Debug.Log("아이템 인벤토리 bool 값 확인" + isStartBuildingNumCheck);
+            isBuildAvailable = true;
+        else isBuildAvailable = false;
     }
 
 

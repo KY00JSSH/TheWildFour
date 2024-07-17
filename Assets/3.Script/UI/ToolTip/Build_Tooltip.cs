@@ -65,7 +65,7 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 
     //TODO: 아이템 체크는 시간 남으면 별도 스크립트 이동 예정
-    public bool isStartBuildingNumCheck = false;
+    public bool isBuildAvailable = false;
 
     private void Awake() {
         TextRead();
@@ -137,7 +137,7 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         for (int i = 0; i < itemtexts.transform.childCount; i++) {
             int needItem = BuildTooltip[dictionaryKey].ItemNeedNum[i];
             if (needItem == 0) {
-                isStartBuildingNumCheck = true;
+                isBuildAvailable = true;
                 itemtexts.transform.GetChild(i).gameObject.SetActive(false);
                 itemimgs.transform.GetChild(i).gameObject.SetActive(false);
                 buildingCheckCount++;
@@ -157,10 +157,10 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Debug.Log("아이템 인벤토리 개수 확인" + buildingCheckCount + " / " + itemtexts.transform.childCount);
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
         if (buildingCheckCount == itemtexts.transform.childCount)
-            isStartBuildingNumCheck = true;
-        else isStartBuildingNumCheck = false;
+            isBuildAvailable = true;
+        else isBuildAvailable = false;
 
-        Debug.Log("아이템 인벤토리 bool 값 확인" + isStartBuildingNumCheck);
+        Debug.Log("아이템 인벤토리 bool 값 확인" + isBuildAvailable);
         return needItems;
     }
 

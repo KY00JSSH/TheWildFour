@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -384,7 +384,7 @@ MonoBehaviour:
   tooltipbox: {fileID: 1796927296}
   itemimgs: {fileID: 53117302}
   itemtexts: {fileID: 667427620}
-  isStartBuildingNumCheck: 0
+  isBuildAvailable: 0
 --- !u!1 &15435662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,7 +3716,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &260186413
 GameObject:
   m_ObjectHideFlags: 0
@@ -6709,7 +6708,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &453712075
 GameObject:
   m_ObjectHideFlags: 0
@@ -7097,7 +7095,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1001 &457588027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8090,8 +8087,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Shelter_Tooltip, Assembly-CSharp
+      - m_Target: {fileID: 1797005540}
+        m_TargetAssemblyTypeName: Tooltip_Shelter, Assembly-CSharp
         m_MethodName: SleepFuncOnClick
         m_Mode: 1
         m_Arguments:
@@ -8157,7 +8154,6 @@ MonoBehaviour:
   cooltime: 120
   isClicked: 0
   speed: 1
-  shelterManager: {fileID: 0}
 --- !u!1 &501832115
 GameObject:
   m_ObjectHideFlags: 0
@@ -8674,7 +8670,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &545267426
 GameObject:
   m_ObjectHideFlags: 0
@@ -11323,8 +11318,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.88235295, b: 0.39215687, a: 1}
-    m_PressedColor: {r: 1, g: 0.88235295, b: 0.39215687, a: 1}
-    m_SelectedColor: {r: 1, g: 0.88235295, b: 0.39215687, a: 1}
+    m_PressedColor: {r: 0.9686275, g: 0.854902, b: 0.3803922, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -11344,7 +11339,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1033926953}
         m_TargetAssemblyTypeName: ShelterManager, Assembly-CSharp
         m_MethodName: LevelUp
         m_Mode: 1
@@ -11447,7 +11442,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 20
-  shelterManager: {fileID: 0}
 --- !u!1 &733183490
 GameObject:
   m_ObjectHideFlags: 0
@@ -11666,7 +11660,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &750615573
 GameObject:
   m_ObjectHideFlags: 0
@@ -13374,7 +13367,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &885675809
 GameObject:
   m_ObjectHideFlags: 0
@@ -14827,7 +14819,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &1005820306 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7933167167067385163, guid: b96860d8f00ffa347912ad8c5c271840, type: 3}
@@ -15072,7 +15063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0323d7856c51c3498eb1f03ec9359ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeCooltime: {fileID: 0}
+  upgradeCooltime: {fileID: 493194596}
   skillMove:
   - skillName: "\uC804\uB825 \uC9C8\uC8FC"
     maxSkillLevel: 1
@@ -19176,7 +19167,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &1301955938
 GameObject:
   m_ObjectHideFlags: 0
@@ -20209,7 +20199,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1001 &1361277117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24207,7 +24196,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &1623363296
 GameObject:
   m_ObjectHideFlags: 0
@@ -25394,7 +25382,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &1672372115
 GameObject:
   m_ObjectHideFlags: 0
@@ -25613,7 +25600,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &1675009916
 GameObject:
   m_ObjectHideFlags: 3
@@ -27514,7 +27500,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!1 &1775496060
 GameObject:
   m_ObjectHideFlags: 0
@@ -28166,6 +28151,7 @@ MonoBehaviour:
   sleepTime: {fileID: 1157102603}
   itemimgs: {fileID: 1537679120}
   itemtexts: {fileID: 1974929983}
+  isUpgradeAvailable: 0
 --- !u!114 &1797005541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28633,9 +28619,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShelterCreate, Assembly-CSharp
-        m_MethodName: DestroyShelter
+      - m_Target: {fileID: 1033926952}
+        m_TargetAssemblyTypeName: BuildingCreate, Assembly-CSharp
+        m_MethodName: DestroyBuilding
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29466,7 +29452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1890039508
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31490,7 +31476,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!4 &2085535546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f764720160e715a49a1b516058c458e9, type: 3}
@@ -32692,7 +32677,6 @@ MonoBehaviour:
   cooltime: 10
   isClicked: 0
   speed: 10
-  shelterManager: {fileID: 0}
 --- !u!114 &2637504647028986830
 MonoBehaviour:
   m_ObjectHideFlags: 0
