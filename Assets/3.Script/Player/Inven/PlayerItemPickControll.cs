@@ -34,7 +34,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     private void CheckForItems() {
-        int layerMask = 1 << 8 + 1 << 9;
+        int layerMask = (1 << 8) + (1 << 9);
         Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
 
         float closestDistance = Mathf.Infinity;
