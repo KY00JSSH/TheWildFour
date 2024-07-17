@@ -24,12 +24,12 @@ public class BuildingCreate : MonoBehaviour {
     private void Start() {
         isValidBuild = true;
         layerMask = 1 << LayerMask.NameToLayer("Ground");
-
     }
 
     private void Update() {
         if (isBuild) {
-            Building.SetActive(true);
+            if (!Building.activeSelf)
+                Building.SetActive(true);
             FollowMouse();
 
             if (Input.GetKeyDown(KeyCode.Escape)) {
