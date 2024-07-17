@@ -10,7 +10,7 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void Update() {
-        if(buildingCreate.isBuild) {
+        if (buildingCreate.isBuild) {
             float xRotation = buildingCreate.Building.transform.rotation.eulerAngles.x;
             float zRotation = buildingCreate.Building.transform.rotation.eulerAngles.z;
 

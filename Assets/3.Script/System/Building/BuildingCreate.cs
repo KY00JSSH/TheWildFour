@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
@@ -36,7 +37,7 @@ public class BuildingCreate : MonoBehaviour {
                 CancelBuilding();
             }
             else if (Input.GetMouseButton(0)) {
-                if(isValidBuild)
+                if(isValidBuild && !EventSystem.current.IsPointerOverGameObject())
                     CreateBuilding();
             }
         }
@@ -96,7 +97,6 @@ public class BuildingCreate : MonoBehaviour {
             if (distanceToCenter > buildAreaRadius) {
                 // 만약 거리가 반경보다 크다면 원의 경계에서 제한합니다
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
-                Debug.Log("direction : " + directionToCenter);
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }
             Vector3 targetPosition = new Vector3(

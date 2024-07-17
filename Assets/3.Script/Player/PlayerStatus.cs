@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
     
