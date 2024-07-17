@@ -10,6 +10,7 @@ public class FireObject : MonoBehaviour, IFireLight {
     // isPlayerNaer : 플레이어가 근처에 있을 때 true.
     //TODO : 추후 모닥불이 Lock 되었을 때로 변경 필요. 0708
     protected bool isPlayerNear = false;
+    protected bool isBuilding = true;
 
     private Light fireLight;
 
@@ -17,11 +18,11 @@ public class FireObject : MonoBehaviour, IFireLight {
     public float GetCurrentTime() { return currentTime; }
 
     protected virtual void Awake() {
-        fireLight = GetComponentInChildren<Light>();
     }
 
     public void LightUp(float intensity) {
-        fireLight.intensity = intensity;
+        if (!isBuilding)
+            fireLight.intensity = intensity;
     }
 
     public void LightOff() {
@@ -37,4 +38,8 @@ public class FireObject : MonoBehaviour, IFireLight {
         if (currentTime > totalTime) currentTime = totalTime;
     }
 
+    protected virtual void OnCreated() {
+        isBuilding = false;
+        fireLight = GetComponentInChildren<Light>();
+    }
 }

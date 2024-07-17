@@ -34,8 +34,8 @@ public class CampfireCreate : BuildingCreate {
 
         isExist = false;
         Building.GetComponent<Animator>().SetTrigger("Create");
+        Destroy(Building.GetComponentInChildren<Rigidbody>());
+        Destroy(Building.GetComponentInChildren<BuildingValidity>());
         newCampfire = null;
     }
-    //TODO: 캠프파이어 생성 후 파티클 정상출력 안됌
-    //TODO: 캠프파이어 설치 UI 연결 필요
 }
