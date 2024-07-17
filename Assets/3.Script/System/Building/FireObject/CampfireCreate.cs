@@ -16,15 +16,22 @@ public class CampfireCreate : BuildingCreate {
             newCampfire = Instantiate(buildingPrefabs[0], transform);
         }
 
-        Building.GetComponentInChildren<Renderer>().material = BuildMaterial;
+        Building.GetComponent<Campfire>().enabled = false;
+        foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
+            each.material = BuildMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
+
         base.BuildMode();
     }
 
     public override void CreateBuilding() {
-        Building.GetComponentInChildren<Renderer>().material = ExistMaterial;
+        Building.GetComponent<Campfire>().enabled = true;
+        foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
+            each.material = ExistMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
+
         base.CreateBuilding();
+
         isExist = false;
         Building.GetComponent<Animator>().SetTrigger("Create");
         newCampfire = null;
