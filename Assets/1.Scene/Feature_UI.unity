@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 14363920}
   - component: {fileID: 14363919}
   - component: {fileID: 14363918}
-  - component: {fileID: 14363922}
+  - component: {fileID: 14363923}
   - component: {fileID: 14363921}
   m_Layer: 5
   m_Name: Build
@@ -363,7 +363,7 @@ MonoBehaviour:
   - {fileID: 490242699}
   - {fileID: 1110733502}
   - {fileID: 443533026}
---- !u!114 &14363922
+--- !u!114 &14363923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -372,10 +372,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 14363916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e116c72f0d4218346988ae2c5ba1a62d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e27604e3328e3042bb4c7b82c5b4fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuControll: {fileID: 1804705874}
   buttons:
   - {fileID: 1933515610}
   - {fileID: 64419318}
@@ -383,13 +382,8 @@ MonoBehaviour:
   - {fileID: 1110733502}
   - {fileID: 443533026}
   tooltipbox: {fileID: 1796927296}
-  tooltipTitle: {fileID: 879041909}
-  tooltipMain: {fileID: 11862867}
   itemimgs: {fileID: 53117302}
   itemtexts: {fileID: 667427620}
-  dictionaryKey: 0
-  buildtexts: []
-  textFile: {fileID: 4900000, guid: 0d509f5b825601d45ab0c3065897261a, type: 3}
   isStartBuildingNumCheck: 0
 --- !u!1 &15435662
 GameObject:
@@ -553,7 +547,7 @@ GameObject:
   - component: {fileID: 30998256}
   - component: {fileID: 30998255}
   m_Layer: 5
-  m_Name: Bag_Shlt_Attacks
+  m_Name: Bag_Shlt_Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8096,7 +8090,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1797005540}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Shelter_Tooltip, Assembly-CSharp
         m_MethodName: SleepFuncOnClick
         m_Mode: 1
@@ -12353,7 +12347,7 @@ GameObject:
   - component: {fileID: 804654801}
   - component: {fileID: 804654800}
   m_Layer: 5
-  m_Name: Bag_Shlt_Gathering
+  m_Name: Bag_Shlt_Gather
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28118,8 +28112,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1797005539}
-  - component: {fileID: 1797005540}
   - component: {fileID: 1797005541}
+  - component: {fileID: 1797005540}
   m_Layer: 5
   m_Name: Shelter_Upgrade
   m_TagString: Untagged
@@ -28164,19 +28158,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1797005538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8f0f38c6dc589f47bda38e85f23bfe1, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ec40164d8ed1ce42a16407d6739fddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dictionaryKey: 0
-  shelterManager: {fileID: 0}
+  shelterManager: {fileID: 1033926953}
   ShelterTooltip: {fileID: 1890039507}
   sleepTime: {fileID: 1157102603}
-  sleepFunc: {fileID: 0}
   itemimgs: {fileID: 1537679120}
   itemtexts: {fileID: 1974929983}
-  textFile_Skill: {fileID: 4900000, guid: c4c8c3b2603659c4cb227099eddc696e, type: 3}
-  skilltexts: []
-  textFile_Func: {fileID: 4900000, guid: ff0bccbd1bd44ae4bb4e1e6ab1a20ddb, type: 3}
 --- !u!114 &1797005541
 MonoBehaviour:
   m_ObjectHideFlags: 0

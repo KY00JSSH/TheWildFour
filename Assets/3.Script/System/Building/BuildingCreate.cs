@@ -13,13 +13,13 @@ public class BuildingCreate : MonoBehaviour {
     public bool isValidBuild = true;
 
     // 24 07 16 ����� �Ǽ� ��ġ bool�߰� -> �κ� ������ ���� Ȯ��
-    protected Build_Tooltip build_Tooltip;
+    protected Tooltip_Build tooltip_Build;
 
     private int layerMask;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        build_Tooltip = FindObjectOfType<Build_Tooltip>();
+        tooltip_Build = FindObjectOfType<Tooltip_Build>();
     }
 
     private void Start() {

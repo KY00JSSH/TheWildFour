@@ -27,6 +27,7 @@ public enum UpgradeType {
 [System.Serializable]
 public class SkillDetail {
     public SkillType skillType;
+    public int skillNum;
     public string name;
     public string description;
 }

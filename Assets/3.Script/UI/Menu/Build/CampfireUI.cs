@@ -5,22 +5,23 @@ using UnityEngine.UI;
 
 public class CampfireUI : MonoBehaviour {
     private Transform playerTransform;
-    private FireObject fireObject;
 
     [Space((int)2)]
     [Header("Slider UI")]
     [SerializeField] private GameObject fireSliderPrefab;
 
-    [SerializeField] private GameObject parent;
-    [SerializeField] private Canvas canvas;
+    private GameObject parent;
+    private Canvas canvas;
 
-    [SerializeField] private int Add_Y = 30;
+    private Coroutine fadeCoroutine;
+    private Slider slider;
+    private GameObject sliderObj;
 
-    GameObject sliderObj;
+
+    private bool isStart = false;
 
     private void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        fireObject = FindObjectOfType<FireObject>();
         canvas = FindObjectOfType<Canvas>();
         parent = canvas.transform.Find("Etc").GetChild(1).gameObject;
         if (parent == null) {
@@ -28,10 +29,12 @@ public class CampfireUI : MonoBehaviour {
         }
     }
     private void Update() {
-        if(sliderObj != null) {
+        if (sliderObj != null) {
             SettingFireSliderPosition();
             SettingFireSliderSize();
+            SliderValueCal();
         }
+
     }
 
     // 슬라이더 생성
@@ -44,7 +47,6 @@ public class CampfireUI : MonoBehaviour {
 
     private void SettingFireSliderPosition() {
         RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
-        if (fireSliderPosition == null) Debug.Log("????????????????");
         Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
         if (fireObjectRenderer != null) {
             Vector3 size = fireObjectRenderer.bounds.size;
@@ -54,7 +56,6 @@ public class CampfireUI : MonoBehaviour {
             Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, topCenter + new Vector3(0, 0.3f, 0));
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out Vector2 localPoint);
             fireSliderPosition.localPosition = localPoint;
-            sliderObj.GetComponent<Slider>().value = SliderValueCal();
         }
     }
 
@@ -73,12 +74,45 @@ public class CampfireUI : MonoBehaviour {
         }
     }
 
-    private float SliderValueCal() {
+    private void SliderValueCal() {
+
+        slider = sliderObj.GetComponent<Slider>();
         float sliderValue = GetComponent<Campfire>().GetCurrentTime() / GetComponent<Campfire>().GetTotalTime();
-        return sliderValue;
+        slider.value = sliderValue;
+        SliderDisappear();
     }
 
 
+    private void SliderDisappear() {
+        if (slider.value == 0) {
+            fadeCoroutine = StartCoroutine(SliderDisappear_co());
+        }
+        else {
+            SliderAlphaInit();
+            if (fadeCoroutine != null) {
+                StopCoroutine(fadeCoroutine);
+                fadeCoroutine = null; // 코루틴 추적을 위해 null로 설정
+            }
+        }
+    }
 
+    private IEnumerator SliderDisappear_co() {
+        Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill 이미지 가져오기
+        Color newColor = fillImage.color;
 
+        while (newColor.a > 0.5f) {  // 알파값이 0보다 클 동안 반복
+            newColor.a -= 0.01f;  // 알파값을 감소
+            fillImage.color = newColor;
+            yield return null;
+        }
+        slider.gameObject.SetActive(false);
+    }
+
+    private void SliderAlphaInit() {
+        slider.gameObject.SetActive(true);
+        Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill 이미지 가져오기
+        Color newColor = fillImage.color;
+        newColor.a = 1;
+        fillImage.color = newColor;
+    }
 }
