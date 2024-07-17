@@ -92,6 +92,7 @@ public class BuildingCreate : MonoBehaviour {
             if (distanceToCenter > buildAreaRadius) {
                 // 만약 거리가 반경보다 크다면 원의 경계에서 제한합니다
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
+                Debug.Log("direction : " + directionToCenter);
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }
             Vector3 targetPosition = new Vector3(
@@ -99,6 +100,12 @@ public class BuildingCreate : MonoBehaviour {
                 pointTolook.y,
                 Mathf.Clamp(pointTolook.z + 0.01f, playerTransform.position.z - buildAreaRadius, playerTransform.position.z + buildAreaRadius)
             );
+            Ray downRay = new Ray(new Vector3(
+                targetPosition.x, playerTransform.position.y + buildAreaRadius, targetPosition.z), Vector3.down);
+            if (Physics.Raycast(downRay, out RaycastHit downRaycastHit, Mathf.Infinity, layerMask)) {
+                targetPosition.y = downRaycastHit.point.y;
+            }
+
             Quaternion targetRotation =
                 Quaternion.LookRotation(targetPosition - playerTransform.position) *
                 Quaternion.Euler(180, 0, 180);
