@@ -182,21 +182,31 @@ public class InvenController : MonoBehaviour {
         InvenChanged?.Invoke(inventory);
     }
 
-    public void dropItem(int index) {
+    public int checkItemType(int index) {
         if (index >= 0 && index < inventory.Count) {
             if (inventory[index].itemData.Key != 1 && inventory[index].itemData.Key != 2) {
                 //돌, 나무 아닐때
                 if (inventory[index] is CountableItem countItem) {
-                    countItem.useCurrStack(1);
-                    if (countItem.CurrStackCount == 0) {
-                        removeItem(index);
-                    }
+                    return 2;
                 }
                 else {
-                    removeItem(index);
+                    return 3;
                 }
             }
             else {
+                return 1;   //돌, 나무일때
+            }
+        }
+        else {
+            return 0;   //아이템 없을때
+        }
+    }
+
+    public void dropItem(int index) {
+        int itemType = checkItemType(index);
+        //type 1: 돌,나무 , 2: 카운트 되는 item, 3: 카운트 없는 아이템
+        if (itemType > 0) {
+            if (itemType == 1) {
                 if (inventory[index] is CountableItem countItem) {
                     if (countItem.CurrStackCount > 8) {
                         countItem.useCurrStack(8);
@@ -209,12 +219,25 @@ public class InvenController : MonoBehaviour {
                         countItem.useCurrStack(countItem.CurrStackCount);
                         removeItem(index);
                     }
-                }
-                else {
-                    removeItem(index);
+                    InvenChanged?.Invoke(inventory);
                 }
             }
+            else if (itemType == 2) {
+                if (inventory[index] is CountableItem countItems) {
+                    countItems.useCurrStack(1);
+                    if (countItems.CurrStackCount == 0) {
+                        removeItem(index);
+                    }
+                }
+                InvenChanged?.Invoke(inventory);
+            }
+            else {
+                removeItem(index);
+                InvenChanged?.Invoke(inventory);
+            }            
         }
-        InvenChanged?.Invoke(inventory);
+        else {
+            Debug.Log("no item");
+        }
     }
 }
