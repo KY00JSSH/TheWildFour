@@ -21,10 +21,14 @@ public class CameraControl2 : MonoBehaviour //IScrollHandler
     public float minFOV = 15f; //240716 17:00
     public float maxFOV = 70f; //240716 17:00
 
+    public GameObject uiCanvas; //특정 Canvas UI가 활성화되어 있을 때 게임 줌인아웃 안되게 240718 09:53
+
     private void Awake() {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
         cinemachineFreeLook.LookAt = player.transform;
+
+        uiCanvas = GameObject.Find("Menu_Map"); //특정 Canvas UI가 활성화되어 있을 때 게임 줌인아웃 안되게 240718 09:53
     }
     private void Update()
     {
@@ -44,6 +48,11 @@ public class CameraControl2 : MonoBehaviour //IScrollHandler
             {
                 miniMapCameraParent.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
             }
+        }
+
+        if(uiCanvas != null && uiCanvas.activeSelf) //특정 Canvas UI가 활성화되어 있을 때 게임 줌인아웃 안되게 240718 09:53
+        {
+            return;
         }
 
         //if(!IsmouseOverUI())
