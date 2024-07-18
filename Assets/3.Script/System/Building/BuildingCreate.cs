@@ -12,7 +12,6 @@ public class BuildingCreate : MonoBehaviour {
 
     public bool isValidBuild = true;
 
-    // 24 07 16 ����� �Ǽ� ��ġ bool�߰� -> �κ� ������ ���� Ȯ��
     protected Tooltip_Build tooltip_Build;
 
     private int layerMask;
@@ -80,7 +79,8 @@ public class BuildingCreate : MonoBehaviour {
 
     public void CancelBuilding() {
         isBuild = false;
-        Building.SetActive(false);
+        if (Building != null)
+            Building.SetActive(false);
         MaterialOpaque();
     }
 
