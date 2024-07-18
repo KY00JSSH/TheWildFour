@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CampfirePrefabUI : BuildPrefabUI {
-    private CampfireCreate campfireCreate;
+    [SerializeField]private CampfireChestCreate campfireCreate;
     protected override void Awake() {
         base.Awake();
-        campfireCreate = FindObjectOfType<CampfireCreate>();
     }
 
     protected override void Update() {
+        Debug.Log("!@@#!@#@!#!@#" + buildingObj);
         if (buildingObj != null) {
             isValid = campfireCreate.isValidBuild;
             base.Update();
