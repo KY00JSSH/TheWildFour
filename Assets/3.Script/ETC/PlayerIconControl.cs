@@ -12,7 +12,14 @@ public class PlayerIconControl : MonoBehaviour
     public float mapWidth;
     public float mapHeight;
 
+
+    private MenuMapZoom zoom;
     //public RectTransform arrowIcon;
+
+    private void Awake()
+    {
+        zoom = FindObjectOfType<MenuMapZoom>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +33,16 @@ public class PlayerIconControl : MonoBehaviour
         Vector3 playerPos = playerTransform.position;
         Vector3 relativePos = playerPos - worldMapCamera.transform.position;
 
+        //맵의 줌인/아웃에 따른 플레이어 아이콘의 위치이동 값 추가를 위한 비율 계산
+        float ratio = 
+            Mathf.InverseLerp(zoom.maxOrthSize, zoom.minOrthSize, zoom.menuMapCamera.orthographicSize) * 
+            (zoom.maxOrthSize / zoom.minOrthSize - 1) + 1;
+
         float normalizedX = relativePos.x / mapWidth;
         float normalizedZ = relativePos.z / mapHeight;
 
-        float iconPosX = normalizedX * mapRect.rect.width;
-        float iconPosY = normalizedZ * mapRect.rect.height;
+        float iconPosX = normalizedX * mapRect.rect.width * ratio;  //아이콘의 위치에 계산한 비율 추가 계산
+        float iconPosY = normalizedZ * mapRect.rect.height * ratio; //아이콘의 위치에 계산한 비율 추가 계산
 
         playerIconRect.anchoredPosition = new Vector2(iconPosX, iconPosY);
 

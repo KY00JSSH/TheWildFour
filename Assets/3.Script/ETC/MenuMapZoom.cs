@@ -101,7 +101,7 @@ public class MenuMapZoom : MonoBehaviour
         float rightBound = menuMap.anchoredPosition.x + horzExtent;
         float bottomBound = menuMap.anchoredPosition.y - vertExtent;
         float topBound = menuMap.anchoredPosition.y + vertExtent;
-
+        
         camPos.x = Mathf.Clamp(camPos.x, leftBound, rightBound);
         camPos.y = Mathf.Clamp(camPos.y, bottomBound, topBound);       
 
