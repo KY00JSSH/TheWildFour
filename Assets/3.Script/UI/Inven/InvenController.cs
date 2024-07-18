@@ -20,6 +20,13 @@ public class InvenController : MonoBehaviour {
     private void Start() {
         inventory = new List<Item>();
         invenUi = FindObjectOfType<InvenUIController>();
+        initInven();
+    }
+
+    private void initInven() {
+        for( int i = 0; i< invenUi.CurrInvenCount; i++) {
+            inventory.Add(null);
+        }
     }
 
     public void invenFullReset() {
@@ -154,7 +161,6 @@ public class InvenController : MonoBehaviour {
         }
     }
 
-    //
     public void invenFullFlagReset() {
         isInvenFull = false;
     }
@@ -182,6 +188,8 @@ public class InvenController : MonoBehaviour {
         InvenChanged?.Invoke(inventory);
     }
 
+    //아이템 타입 체크
+    //type 1: 돌,나무 , 2: 카운트 되는 item, 3: 카운트 없는 아이템
     public int checkItemType(int index) {
         if (index >= 0 && index < inventory.Count) {
             if (inventory[index].itemData.Key != 1 && inventory[index].itemData.Key != 2) {
@@ -202,9 +210,9 @@ public class InvenController : MonoBehaviour {
         }
     }
 
+    //아이템 드랍시 아이템 삭제
     public void dropItem(int index) {
         int itemType = checkItemType(index);
-        //type 1: 돌,나무 , 2: 카운트 되는 item, 3: 카운트 없는 아이템
         if (itemType > 0) {
             if (itemType == 1) {
                 if (inventory[index] is CountableItem countItem) {
@@ -234,10 +242,37 @@ public class InvenController : MonoBehaviour {
             else {
                 removeItem(index);
                 InvenChanged?.Invoke(inventory);
-            }            
+            }
         }
         else {
             Debug.Log("no item");
+        }
+    }
+
+    public void changeInvenIndex(int currentIndex, int changeIndex) {
+        Debug.Log($"CURRENT : { currentIndex }");
+        Debug.Log($"ChangeIndex : { changeIndex }");
+
+        if (currentIndex != changeIndex && changeIndex != 99) {
+
+            var weaponItem = inventory[changeIndex]?.itemData as WeaponItemData;
+            var countableItem = inventory[changeIndex]?.itemData as CountableItemData;
+            var foodItem = inventory[changeIndex]?.itemData as FoodItemData;
+            var equipItem = inventory[changeIndex]?.itemData as EquipItemData;
+            var medicItem = inventory[changeIndex]?.itemData as MedicItemData;
+
+            if (weaponItem != null || countableItem != null || foodItem != null ||
+                equipItem != null || medicItem != null || inventory[changeIndex] != null) {
+                Item changeItem = inventory[changeIndex];
+                inventory[changeIndex] = inventory[currentIndex];
+                inventory[currentIndex] = changeItem;
+                InvenChanged?.Invoke(inventory);
+            }
+            else {
+                inventory[changeIndex] = inventory[currentIndex];
+                inventory[currentIndex] = null;
+                InvenChanged?.Invoke(inventory);
+            }
         }
     }
 }

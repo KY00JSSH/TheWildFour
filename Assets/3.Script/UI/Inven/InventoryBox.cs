@@ -20,6 +20,9 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
     public Item CurrentItem { get { return currentItem; } }
 
     private PlayerItemUseControll playerItemUse;
+    private InvenDrop invenDrop;
+    private InvenController invenControll;
+    private InvenUIController invenUI;
 
     private Canvas canvas;
     private RectTransform originalParent;
@@ -30,9 +33,9 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
         itemText = transform.GetChild(0).GetComponent<Text>();
         itemIcon = transform.GetChild(1).GetComponent<Image>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
-        //Inven_Text.text = Item_count.ToString();
-        invenBox.onClick.AddListener(() => OnPointerClick(null));
-
+        invenControll = FindObjectOfType<InvenController>();
+        invenUI = FindObjectOfType<InvenUIController>();
+        invenDrop = FindObjectOfType<InvenDrop>();
         canvas = FindObjectOfType<Canvas>();
     }
     public void setKey(int key) {
@@ -75,30 +78,23 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
     }
 
     //TODO: 꾹 누르는 게이지 추가하기
-    //TODO: 꾹 누르거나 드래그 - 다떨어짐
-    //TODO: 그냥 f 누르면 나무, 광석 8개씩 나머지 1개씩
     //TODO: 제련 돌 30 -> 철광석 1개
 
     public void OnPointerClick(PointerEventData pointerEventData) {
         playerItemUse.SetSelectedBoxKey(key);
-        Debug.Log(key);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        Debug.Log("bd");
         playerItemUse.SetSelectedBoxKey(key);
-        Debug.Log(key);
         if (isItemIn) {
             originalParent = itemIcon.rectTransform.parent as RectTransform;
             originalPosition = itemIcon.rectTransform.anchoredPosition;
-
             itemIcon.transform.SetParent(canvas.transform, true);
-            itemIcon.transform.SetAsLastSibling();  // Make sure the icon is on top of other UI elements
+            itemIcon.transform.SetAsLastSibling(); 
         }
     }
 
     public void OnDrag(PointerEventData data) {
-        Debug.Log(key);
         if (isItemIn) {
             Vector2 position;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
@@ -107,11 +103,39 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        Debug.Log(key);
         if (isItemIn) {
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
+
+            bool isChangeInven = false;
+            int targetIndex = 99;
+            //foreach (Vector2[] boxPositions in FindObjectOfType<InvenUIController>().BoxPositions) {
+            //    Rect boxRect = new Rect(boxPositions[3], new Vector2(boxPositions[2].x - boxPositions[3].x, boxPositions[1].y - boxPositions[3].y));
+            //    if (boxRect.Contains(itemIcon.rectTransform.position)) {
+            //        isChangeInven = true;
+            //        break;
+            //    }
+            //}
+
+            for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                RectTransform boxRectTransform = invenUI.InvenTotalList[i].GetComponent<RectTransform>();
+                if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
+                    isChangeInven = true;
+                    targetIndex = i;
+                    break;
+                }
+            }
+
+            if (isChangeInven) {
+                //인벤 위치 변경
+                //원래 인벤 index 랑 바꿀 인벤 체크
+                invenControll.changeInvenIndex(key, targetIndex);
+            }
+            else {
+                //TODO: 장비창 position 검출 추가
+                //아이템 드랍
+                invenDrop.DropItemAll(key);
+            }
         }
     }
-
 }

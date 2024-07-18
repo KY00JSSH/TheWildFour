@@ -3693,7 +3693,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905245907}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 700
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4295,7 +4295,7 @@ MonoBehaviour:
   - {fileID: 2288768476166651280, guid: 4e0f63cd4a57c9f4eb672841c4bfd4ec, type: 3}
   - {fileID: 3283662581214864368, guid: 58ea6dc0b773f4449831f26f99b6d8bd, type: 3}
   - {fileID: 2984425592344015447, guid: 6c166c93ffc8fec4895b2074aef550b7, type: 3}
-  spawnCount: 20
+  spawnCount: 30
   spawnArea: {x: 10, y: 0, z: 10}
 --- !u!4 &1093256112
 Transform:
@@ -6762,6 +6762,7 @@ GameObject:
   - component: {fileID: 1667745181}
   - component: {fileID: 1667745182}
   - component: {fileID: 1667745183}
+  - component: {fileID: 1667745184}
   m_Layer: 5
   m_Name: Inven
   m_TagString: Untagged
@@ -6785,9 +6786,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -480, y: -480}
+  m_AnchoredPosition: {x: -530, y: -510}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1667745182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6816,6 +6817,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InvenBoxPrefab: {fileID: 254944653252238470, guid: a371409cfc2c05a44bef98c211b022c7, type: 3}
+--- !u!114 &1667745184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667745180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648cd3c92f2033e48964004557e3b5b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 905245907}
 --- !u!1 &1720173912
 GameObject:
   m_ObjectHideFlags: 0
