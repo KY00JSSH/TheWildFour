@@ -21,9 +21,9 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [Header("Tootip Function 추가")]
     // Function 용 추가
     [SerializeField] private Slider sleepTime;
-    //[SerializeField] private GameObject sleepFunc;
     [SerializeField] private GameObject itemimgs;
     [SerializeField] private GameObject itemtexts;
+    public Text shelterLevelText;
 
     private string[] additionalText = { "필요 포인트 1", "현재 필요 레벨" };
     private Vector2[] textPositionSave;
@@ -125,7 +125,6 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
                     // skill type 나누는 메소드
                     SkillType skillType = FindSkillType(btn.gameObject);
                     currentskillDetail = tooltipNum.ShelterItemCheck(skillType, btn.gameObject);
-                    Debug.Log(currentskillDetail);
                     SkillTooltipShow();
                 }
                 else {
@@ -167,9 +166,6 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     // skill 
     public void SkillTooltipShow() {
         // 이미지 변경
-        Debug.Log(currentskillDetail.name);
-        Debug.Log(tooltipTitle.text);
-
         tooltipTitle.text = currentskillDetail.name;
         tooltipMain.text = currentskillDetail.description;
         AdditionalText();
@@ -289,7 +285,8 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void UpgradeTooltipShow() {
         tooltipTitle.text = currentupgradeDetail.name;
         tooltipMain.text = currentupgradeDetail.description;
-        tooltipAdditionalText.text = "필요 구성품";
+        tooltipAdditionalText.text = "필요 구성품"; 
+        shelterLevelText.text = string.Format("<size=50>{0}</size>\n<size=30>레벨</size>", shelterManager.ShelterLevel);
 
         // 아이템 이미지 활성화
         UpgradeFunc_ItemTextInit();
@@ -314,12 +311,14 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 Text text = itemtexts.transform.GetChild(i).GetComponent<Text>();
                 string textColor = "white";
                 textColor = currentItem >= needItem ? "white" : "red";
-                buildingCheckCount = currentItem >= needItem ? buildingCheckCount++ : 0;
+                if (currentItem >= needItem) {
+                    buildingCheckCount++;
+                }
                 text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
             }
         }
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
-        if (buildingCheckCount == itemtexts.transform.childCount)
+        if (buildingCheckCount == currentupgradeDetail.needItems.Length)
             isUpgradeAvailable = true;
         else isUpgradeAvailable = false;
     }

@@ -42,6 +42,7 @@ public class CampfireUI : MonoBehaviour {
         if (parent != null) {
             sliderObj = Instantiate(fireSliderPrefab, parent.transform);
             sliderObj.name = fireSliderPrefab.name;
+            sliderObj.SetActive(true);
         }
     }
 

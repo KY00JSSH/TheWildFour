@@ -18,6 +18,7 @@ public class WorkShopPrefabUI : BuildPrefabUI {
     }
     // 버튼이 눌렸을 경우 UI표시
     public void BuildAvailableMode() {
+        Debug.Log(" build 확인"+ tooltip_Build.isBuildAvailable);
         if (!tooltip_Build.isBuildAvailable) return;
 
         if (workshopCreate.isExist) return;

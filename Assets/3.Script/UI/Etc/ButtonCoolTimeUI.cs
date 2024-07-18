@@ -36,7 +36,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
             if (leftTime > 0) {
                 leftTime -= Time.deltaTime;
                 if (leftTime < 0) {
-                    leftTime = 10f;
+                    leftTime = 0f;
                     if (btn) btn.enabled = true;
                     isClicked = false;
                 }
@@ -47,13 +47,22 @@ public class ButtonCoolTimeUI : MonoBehaviour {
         }
     }
 
-    public void StartCooltime() {
+    public void StartSleepCooltime() {
         if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
         else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
         else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return;
+
+        leftTime = cooltime;
+        leftTime = 10f;
+        isClicked = true;
+        if (btn) btn.enabled = false;
+    }
+    public void StartUpgradeCooltime() {
+        Debug.Log(" build È®ÀÎ" + tooltip_Shelter.isUpgradeAvailable);
         if (!tooltip_Shelter.isUpgradeAvailable) return;
 
         leftTime = cooltime;
+        leftTime = 10f;
         isClicked = true;
         if (btn) btn.enabled = false;
     }

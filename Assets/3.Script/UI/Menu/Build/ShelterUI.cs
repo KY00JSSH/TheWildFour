@@ -22,8 +22,6 @@ public class SkillCountImg {
     }
     private void LoadSprites(string path) {
         skillSprites = Resources.LoadAll<Sprite>(path);
-
-
         if (skillSprites.Length == 0) Debug.LogError("경로 오류 : " + path);
         else Debug.Log(skillSprites.Length + " 현재 스프라이트 경로: " + path);
     }
@@ -88,6 +86,7 @@ public class ShelterUI : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (Input.GetKeyDown(KeyCode.Escape)) Escape();
         SkillSliderValue();
         SkillPointerValue();
     }
@@ -97,8 +96,11 @@ public class ShelterUI : MonoBehaviour {
         transform.gameObject.SetActive(false);
     }
 
+    private void Escape() {
+        menuButton.SetActive(true);
+        transform.gameObject.SetActive(false);
+    }
 
-    
     // ShelterManager 레벨받아와서 Text 알파값 조정
     public void ShelterLevel_Alpha() {
         for (int i = 0; i < shelterLevelText.transform.childCount; i++) {
@@ -157,12 +159,9 @@ public class ShelterUI : MonoBehaviour {
      
      */
     public void HandleButtonClick(GameObject clickedButton) {
-        Debug.Log("HandleButtonClick called");
-
         Button btn = clickedButton.GetComponent<Button>();
 
         // 버튼 포인트값이 없으면 return
-
         if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
         else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
         else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return; 

@@ -23,8 +23,8 @@ public class TooltipNum : MonoBehaviour {
     public SkillDetail ShelterItemCheck(SkillType skillType, GameObject btn) {
         int skillnum = 0;
         char lastChar = btn.name[btn.name.Length - 1];
-        foreach (SkillDetail each in tooltipDetail.skillDetailList.skillDetails) {            
-            if(skillType == each.skillType) {
+        foreach (SkillDetail each in tooltipDetail.skillDetailList.skillDetails) {
+            if (skillType == each.skillType) {
                 if (char.IsDigit(lastChar)) {
                     skillnum = lastChar - '0';
                     if (each.skillNum == skillnum) {
@@ -49,14 +49,17 @@ public class TooltipNum : MonoBehaviour {
     }
 
     // build
-    public BuildDetail BuildItemCheck(int DictionaryKey) {
+    public BuildDetail BuildItemCheck(int btnNum, int buildLevel) {
         foreach (BuildDetail each in tooltipDetail.buildDetailList.buildDetails) {
-            if (each.buttonNum == DictionaryKey) {
-                return each;
+            if (each.buttonNum == btnNum) {
+                if (each.buildLevel == buildLevel)
+                    return each;
             }
         }
         return null;
     }
+    
+
 
     public SleepDetail SleepItemCheck() {
         foreach (SleepDetail each in tooltipDetail.sleepDetailList.sleepDetails) {

@@ -20,7 +20,8 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private GameObject itemtexts;
 
     public bool isBuildAvailable = false;
-    private int buttonNum;
+    int btnIndex = 0;
+    private int[] btnNum = new int[5];
 
     private void Awake() {
         if (buttons == null) buttons = transform.GetComponentsInChildren<Button>();
@@ -36,14 +37,15 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             if (btn != null) {
                 menuControll.ButtonMove(400, false);
                 tooltipbox.gameObject.SetActive(true);
-                buttonNum = FindDictionaryKey(btn);
-                currentBuildDetail = tooltipNum.BuildItemCheck(buttonNum);
-                Debug.Log(currentBuildDetail.name);
+                //buttonNum = FindDictionaryKey(btn);
+                btnIndex = FindDictionaryKey(btn);
+                int buttonValue = btnNum[btnIndex];
+                currentBuildDetail = tooltipNum.BuildItemCheck(btnIndex, buttonValue);
                 if (currentBuildDetail != null) {
                     // Text 표시
                     BuildTooltipShow();
-                    UpgradeFunc_ItemTextInit();
-                    UpgradeFunc_ItemText();
+                    Build_ItemTextInit();
+                    Build_ItemText();
                 }
             }
         }
@@ -53,7 +55,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (eventData.pointerCurrentRaycast.gameObject != null) {
             Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
             if (btn != null) {
-                buttonNum = 0;
+                btnIndex = 0;
                 //currentBuildDetail = null;
             }
         }
@@ -77,7 +79,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     // tooltip 이미지 활성화
-    private void UpgradeFunc_ItemTextInit() {
+    private void Build_ItemTextInit() {
         itemimgs.gameObject.SetActive(true);
         foreach (Transform item in itemimgs.transform) {
             item.gameObject.SetActive(true);
@@ -89,8 +91,9 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     // 아이템 개수비교
-    private void UpgradeFunc_ItemText() {
+    private void Build_ItemText() {
         int buildingCheckCount = 0;
+
         for (int i = 0; i < currentBuildDetail.needItems.Length; i++) {
             int needItem = currentBuildDetail.needItems[i].ItemNeedNum;
             int currentItem = tooltipNum.InvenItemGet(currentBuildDetail.needItems[i].ItemKey);
@@ -105,15 +108,21 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Text text = itemtexts.transform.GetChild(i).GetComponent<Text>();
                 string textColor = "white";
                 textColor = currentItem >= needItem ? "white" : "red";
-                buildingCheckCount = currentItem >= needItem ? buildingCheckCount++ : 0;
+                if(currentItem >= needItem) {
+                    buildingCheckCount++;
+                }
                 text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
             }
         }
+
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
-        if (buildingCheckCount == itemtexts.transform.childCount)
+        if (buildingCheckCount == currentBuildDetail.needItems.Length)
             isBuildAvailable = true;
         else isBuildAvailable = false;
     }
 
+    public void OnWorkshopButton() {
+        btnNum[3] = 1;
+    }
 
 }

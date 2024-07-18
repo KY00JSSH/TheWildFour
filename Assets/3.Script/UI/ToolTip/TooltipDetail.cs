@@ -37,6 +37,7 @@ public class SkillDetail {
 public class BuildDetail {
     public int buttonNum;
     public string name;
+    public int buildLevel;
     public string description;
     public NeedItem[] needItems;
 }
