@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
-    private PlayerMove playerMove;
+    [SerializeField] Collider[] fistCollider;
     private Animator playerAnimator;
-    private bool isAttack, isEquip;
+    private PlayerMove playerMove;
+
+    private bool isAttack, isEquip, isLeftFist;
 
     private float moveSpeed;
+    public float attackSpeed { get; private set; }
 
     private void Awake() {
         playerAnimator = GetComponentInParent<Animator>();
@@ -19,6 +22,8 @@ public class PlayerAttack : MonoBehaviour {
     private void Update() {
         playerAnimator.SetBool("isAttack", isAttack);
         playerAnimator.SetBool("isEquip", isEquip);
+        playerAnimator.SetBool("isLeftFist", isLeftFist);
+        playerAnimator.SetFloat("AttackSpeed", attackSpeed);
 
         CheckAttack();
     }
@@ -28,14 +33,16 @@ public class PlayerAttack : MonoBehaviour {
         if (Input.GetMouseButton(0)) {
             if (!EventSystem.current.IsPointerOverGameObject()) {
                 if (!isAttack) {
+                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+                        moveSpeed = playerMove.GetPlayerMoveSpeed();
+                    isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                     isAttack = true;
-                    moveSpeed = playerMove.GetPlayerMoveSpeed();
+
                 }
             }
         }
         else 
             isAttack = false;
-        
 
     }
     private void SetMoveSpeedOnAttack() {

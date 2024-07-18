@@ -1,22 +1,22 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-public class CampfireCreate : BuildingCreate {
+public class CampfireChestCreate : BuildingCreate {
     [SerializeField] private Material BuildMaterial;
     [SerializeField] private Material ExistMaterial;
 
-    private GameObject newCampfire;
+    private GameObject newCampfireChest;
 
     public override GameObject Building {
-        get { return newCampfire; }
+        get { return newCampfireChest; }
     }
 
     public override void BuildMode() {
         if (Building == null) {
-            newCampfire = Instantiate(buildingPrefabs[0], transform);
+            newCampfireChest = Instantiate(buildingPrefabs[0], transform);
         }
 
-        Building.GetComponent<Campfire>().enabled = false;
+        if (name == "Campfire(Clone)")
+            Building.GetComponent<Campfire>().enabled = false;
         foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
             each.material = BuildMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
@@ -25,7 +25,8 @@ public class CampfireCreate : BuildingCreate {
     }
 
     public override void CreateBuilding() {
-        Building.GetComponent<Campfire>().enabled = true;
+        if (name == "Campfire(Clone)")
+            Building.GetComponent<Campfire>().enabled = true;
         foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
             each.material = ExistMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
@@ -36,6 +37,6 @@ public class CampfireCreate : BuildingCreate {
         Building.GetComponent<Animator>().SetTrigger("Create");
         Destroy(Building.GetComponentInChildren<Rigidbody>());
         Destroy(Building.GetComponentInChildren<BuildingValidity>());
-        newCampfire = null;
+        newCampfireChest = null;
     }
 }

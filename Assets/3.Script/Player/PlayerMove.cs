@@ -125,7 +125,7 @@ public class PlayerMove : MonoBehaviour {
             playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * currentSpeed);
         playerRigid.MovePosition(targetPosition);
 
-        playerAnimator.SetFloat("Speed", currentSpeed);
+        playerAnimator.SetFloat("MoveSpeed", currentSpeed);
         //Debug.Log(currentSpeed);
     }
 }

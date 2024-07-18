@@ -3398,7 +3398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965b509446e65814ba668fb798c7070e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObejct: {fileID: 0}
+  itemObject: {fileID: 0}
   itemTest: 1
   testItem: {fileID: 11400000, guid: 7a6ee3e6c5a6e9643b7617b0cb3d1ba5, type: 2}
 --- !u!1001 &269812730
@@ -21141,7 +21141,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1511120304}
-  - component: {fileID: 1511120305}
   - component: {fileID: 1511120306}
   m_Layer: 0
   m_Name: CampfireManager
@@ -21164,18 +21163,6 @@ Transform:
   m_Father: {fileID: 2115704042}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1511120305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511120303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf48fc046ebad64c850204a5a2fbd73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1511120306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23579,6 +23566,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656471190}
   m_CullTransparentMesh: 1
+--- !u!1 &1657200457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1657200458}
+  - component: {fileID: 1657200459}
+  m_Layer: 0
+  m_Name: ChestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1657200458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657200457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2115704042}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1657200459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657200457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006d82736b10fb84cb640ac0610bbdf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefabs:
+  - {fileID: 5572319718668089496, guid: 319904042c80a4b469cec7bc998bd4fc, type: 3}
+  buildingMaterial: {fileID: 2100000, guid: a4489ac67e966f24c97096ec34d92f11, type: 2}
+  isExist: 0
+  isBuild: 0
+  isValidBuild: 1
+  BuildMaterial: {fileID: 2100000, guid: a4489ac67e966f24c97096ec34d92f11, type: 2}
+  ExistMaterial: {fileID: 2100000, guid: ed09f2e3eae7466469851bfcd7947137, type: 2}
 --- !u!4 &1658657090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b96860d8f00ffa347912ad8c5c271840, type: 3}
@@ -25163,9 +25201,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Menu_Build, Assembly-CSharp
-        m_MethodName: ButtonOnClick
+      - m_Target: {fileID: 1657200459}
+        m_TargetAssemblyTypeName: CampfireChestCreate, Assembly-CSharp
+        m_MethodName: BuildMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30715,6 +30753,7 @@ Transform:
   - {fileID: 321931114}
   - {fileID: 815992180}
   - {fileID: 1511120304}
+  - {fileID: 1657200458}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31466,7 +31505,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147509575501}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1500
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -31716,7 +31755,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257874d8c23f1cb46839e180078b6299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerMaxHp: 0
+  onDead:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2329869790576016122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31772,6 +31813,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09dc8133466c764b8e88a8eaa4cd222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fistCollider:
+  - {fileID: 7157253467009907194}
+  - {fileID: 4631152874672399426}
 --- !u!4 &2440046835663223753
 Transform:
   m_ObjectHideFlags: 0
@@ -32178,7 +32222,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4631152874672399425}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.12
@@ -32554,7 +32598,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7157253467009907193}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.12
