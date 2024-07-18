@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 254944653252238465}
   - component: {fileID: 254944653252238464}
   - component: {fileID: 254944653252238467}
+  - component: {fileID: 1855120494819710709}
   m_Layer: 5
   m_Name: Inven_Box
   m_TagString: Untagged
@@ -398,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: -1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -428,19 +429,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 254944653252238465}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 254944653252238467}
-        m_TargetAssemblyTypeName: InventoryBox, Assembly-CSharp
-        m_MethodName: onBoxClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &254944653252238467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,3 +447,20 @@ MonoBehaviour:
   itemIcon: {fileID: 254944652572792092}
   isItemUse: 0
   isItemIn: 0
+--- !u!114 &1855120494819710709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254944653252238470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 5
+    callback:
+      m_PersistentCalls:
+        m_Calls: []

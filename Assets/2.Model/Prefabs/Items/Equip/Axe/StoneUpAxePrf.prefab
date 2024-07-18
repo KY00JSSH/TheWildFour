@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7926608735938254877}
   - component: {fileID: -1202337385831870020}
   - component: {fileID: -6411871112497519975}
+  - component: {fileID: 1978117727361538344}
   m_Layer: 8
   m_Name: StoneUpAxePrf
   m_TagString: Untagged
@@ -127,3 +128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &1978117727361538344
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725262414926512324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 372439a4eb22e634a9693fa61b0b58ac, type: 2}

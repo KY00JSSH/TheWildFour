@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7241461538534479240}
   - component: {fileID: 2881103185870418860}
   - component: {fileID: 8772763526291457549}
-  - component: {fileID: 8292393148716083449}
   - component: {fileID: 679198189875339631}
   - component: {fileID: -904421748084225932}
   - component: {fileID: 1361080719864287270}
+  - component: {fileID: 4295004315558393636}
   m_Layer: 8
   m_Name: HumanMeatPrf
   m_TagString: Untagged
@@ -85,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8292393148716083449
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4133617424083260398}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.11
-  m_Height: 0.52
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.000000014901161, z: 0}
 --- !u!114 &679198189875339631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &4295004315558393636
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4133617424083260398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 47c6e4a5a3e992c498532a8f84b79b85, type: 2}

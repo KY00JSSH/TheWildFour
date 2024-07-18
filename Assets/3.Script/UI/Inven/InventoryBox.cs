@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class InventoryBox : MonoBehaviour {
+using UnityEngine.EventSystems;
+public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler { 
 
     private int key;
     // 인벤 박스 -> 버튼
@@ -21,13 +21,19 @@ public class InventoryBox : MonoBehaviour {
 
     private PlayerItemUseControll playerItemUse;
 
+    private Canvas canvas;
+    private RectTransform originalParent;
+    private Vector2 originalPosition;
+
     private void Awake() {
         invenBox = transform.GetComponent<Button>();
         itemText = transform.GetChild(0).GetComponent<Text>();
         itemIcon = transform.GetChild(1).GetComponent<Image>();
-        playerItemUse = GetComponent<PlayerItemUseControll>();
+        playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         //Inven_Text.text = Item_count.ToString();
-        invenBox.onClick.AddListener(onBoxClicked);
+        invenBox.onClick.AddListener(() => OnPointerClick(null));
+
+        canvas = FindObjectOfType<Canvas>();
     }
     public void setKey(int key) {
         this.key = key;
@@ -43,6 +49,13 @@ public class InventoryBox : MonoBehaviour {
             itemIcon.gameObject.SetActive(true);
             isItemIn = true;
         }
+        else if (currentItem is EquipItem eqItem) {
+            itemText.text = "";
+            itemIcon.sprite = eqItem.itemData.Icon;
+            itemIcon.enabled = true;
+            itemIcon.gameObject.SetActive(true);
+            isItemIn = true;
+        }
         else {
             if (currentItem != null) {
                 itemText.text = "";
@@ -52,7 +65,7 @@ public class InventoryBox : MonoBehaviour {
                 isItemIn = true;
             }
             else {
-                itemText.text = "";
+                itemText.text = "0";
                 itemIcon.sprite = null;
                 itemIcon.enabled = false;
                 itemIcon.gameObject.SetActive(false);
@@ -66,8 +79,39 @@ public class InventoryBox : MonoBehaviour {
     //TODO: 그냥 f 누르면 나무, 광석 8개씩 나머지 1개씩
     //TODO: 제련 돌 30 -> 철광석 1개
 
-    public void onBoxClicked() {
-        Debug.Log("click"+key);
+    public void OnPointerClick(PointerEventData pointerEventData) {
         playerItemUse.SetSelectedBoxKey(key);
+        Debug.Log(key);
     }
+
+    public void OnBeginDrag(PointerEventData eventData) {
+        Debug.Log("bd");
+        playerItemUse.SetSelectedBoxKey(key);
+        Debug.Log(key);
+        if (isItemIn) {
+            originalParent = itemIcon.rectTransform.parent as RectTransform;
+            originalPosition = itemIcon.rectTransform.anchoredPosition;
+
+            itemIcon.transform.SetParent(canvas.transform, true);
+            itemIcon.transform.SetAsLastSibling();  // Make sure the icon is on top of other UI elements
+        }
+    }
+
+    public void OnDrag(PointerEventData data) {
+        Debug.Log(key);
+        if (isItemIn) {
+            Vector2 position;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
+            itemIcon.rectTransform.anchoredPosition = position;
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData) {
+        Debug.Log(key);
+        if (isItemIn) {
+            itemIcon.transform.SetParent(originalParent, true);
+            itemIcon.rectTransform.anchoredPosition = originalPosition;
+        }
+    }
+
 }

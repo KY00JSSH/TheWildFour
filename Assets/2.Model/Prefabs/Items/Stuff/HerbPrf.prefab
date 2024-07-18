@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1191444349328635660}
   - component: {fileID: 6877010362301562392}
   - component: {fileID: 6876773572662817859}
-  - component: {fileID: 7717689724679798100}
   - component: {fileID: -7423218067449370834}
   - component: {fileID: 6444311503371336112}
   - component: {fileID: -2823758192078373471}
+  - component: {fileID: 4528772656670158612}
   m_Layer: 8
   m_Name: HerbPrf
   m_TagString: Untagged
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7717689724679798100
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752382247610725027}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.3, z: 0.6}
-  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!114 &-7423218067449370834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +127,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &4528772656670158612
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752382247610725027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: b76a28274a31268468a4f9127d043ffd, type: 2}

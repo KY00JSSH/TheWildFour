@@ -27,11 +27,11 @@ public class ItemSpawner : MonoBehaviour
         if (itemToSpawn is CountableItem countItem) {
             countItem.resetCurrStack();
             countItem.addCurrStack(Random.Range(1, 8));
-            GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity);
+            GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity, transform);
             Item itemComponent = itemObject.GetComponent<Item>();
         }
         else {
-            GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity);
+            GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity, transform);
             Item itemComponent = itemObject.GetComponent<Item>();
         }
     }

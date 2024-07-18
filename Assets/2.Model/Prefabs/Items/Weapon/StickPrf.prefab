@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4798508714249033508}
   - component: {fileID: 986287259159088005}
   - component: {fileID: 650412164596872948}
-  - component: {fileID: 5297856436828123392}
   - component: {fileID: -8827652254511994126}
   - component: {fileID: -2476749796353804080}
   - component: {fileID: -526645321982249077}
+  - component: {fileID: 1838861806221787016}
   m_Layer: 8
   m_Name: StickPrf
   m_TagString: Untagged
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5297856436828123392
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7369283704072196613}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.11914655, y: 0.9736309, z: 0.116478965}
-  m_Center: {x: 0.00000014528632, y: 0.000000059604645, z: -0.00000006891787}
 --- !u!114 &-8827652254511994126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300a170f59adb0e4a9a956ee0868e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &1838861806221787016
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7369283704072196613}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 8dd91074d2f3a1246b50cf7a4ee9d8e9, type: 2}
