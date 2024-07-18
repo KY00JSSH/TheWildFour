@@ -15,6 +15,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     [SerializeField] private float speed = 5.0f;
     private ShelterManager shelterManager;
     private Tooltip_Shelter tooltip_Shelter;
+    private Tooltip_Workshop tooltip_Workshop;
 
     public float ratio { get; private set; }
 
@@ -26,6 +27,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
 
     private void Start() {
         if (tooltip_Shelter == null) tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
+        if (tooltip_Workshop == null) tooltip_Workshop = FindObjectOfType<Tooltip_Workshop>();
         if (shelterManager == null) shelterManager = FindObjectOfType<ShelterManager>();
         if (img == null) img = gameObject.GetComponent<Image>();
         if (btn == null) btn = gameObject.GetComponent<Button>();
@@ -60,6 +62,16 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     public void StartUpgradeCooltime() {
         Debug.Log(" build 확인" + tooltip_Shelter.isUpgradeAvailable);
         if (!tooltip_Shelter.isUpgradeAvailable) return;
+
+        leftTime = cooltime;
+        leftTime = 10f;
+        isClicked = true;
+        if (btn) btn.enabled = false;
+    }
+
+    public void StartUpgradeCooltime_WS() {
+        //Debug.Log(" build 확인" + tooltip_Workshop.isUpgradeAvailable);
+        //if (!tooltip_Workshop.isUpgradeAvailable) return;
 
         leftTime = cooltime;
         leftTime = 10f;

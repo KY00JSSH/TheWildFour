@@ -91,16 +91,6 @@ public class ShelterUI : MonoBehaviour {
         SkillPointerValue();
     }
 
-    public void ExitButtonOnClick() {
-        menuButton.SetActive(true);
-        transform.gameObject.SetActive(false);
-    }
-
-    private void Escape() {
-        menuButton.SetActive(true);
-        transform.gameObject.SetActive(false);
-    }
-
     // ShelterManager ·¹º§¹Þ¾Æ¿Í¼­ Text ¾ËÆÄ°ª Á¶Á¤
     public void ShelterLevel_Alpha() {
         for (int i = 0; i < shelterLevelText.transform.childCount; i++) {
@@ -205,10 +195,10 @@ public class ShelterUI : MonoBehaviour {
         }
     }
 
-    // Áü½Î±â
-    public void PackingOnClick() {
-        menuButton.SetActive(false);
+    // Áü½Î±â -> escape
+
+    public void Escape() {
+        menuButton.SetActive(true);
         transform.gameObject.SetActive(false);
     }
-
 }

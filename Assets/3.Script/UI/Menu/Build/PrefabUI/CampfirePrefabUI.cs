@@ -9,7 +9,6 @@ public class CampfirePrefabUI : BuildPrefabUI {
     }
 
     protected override void Update() {
-        Debug.Log("!@@#!@#@!#!@#" + buildingObj);
         if (buildingObj != null) {
             isValid = campfireCreate.isValidBuild;
             base.Update();
@@ -20,7 +19,19 @@ public class CampfirePrefabUI : BuildPrefabUI {
         if (!tooltip_Build.isBuildAvailable) return;
 
         if (campfireCreate.isExist) return;
+
         buildingObj = campfireCreate.Building;
+        StartCoroutine(FindObject());
+    }
+    protected IEnumerator FindObject()
+    {
+        while (buildingObj == null)
+        {
+            buildingObj = campfireCreate.Building;
+            yield return null;
+        }
+
+        Debug.Log("==========================" + buildingObj.name);
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }

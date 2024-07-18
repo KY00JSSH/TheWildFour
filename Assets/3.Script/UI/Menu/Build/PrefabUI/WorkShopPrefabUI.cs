@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WorkShopPrefabUI : BuildPrefabUI {
 
-    private WorkshopCreate workshopCreate;
+    public WorkshopCreate workshopCreate;
     protected override void Awake() {
         base.Awake();
-        workshopCreate = FindObjectOfType<WorkshopCreate>();
+        //workshopCreate = FindObjectOfType<WorkshopCreate>();
     }
 
     protected override void Update() {
@@ -15,6 +15,7 @@ public class WorkShopPrefabUI : BuildPrefabUI {
             isValid = workshopCreate.isValidBuild;
             base.Update();
         }
+
     }
     // 버튼이 눌렸을 경우 UI표시
     public void BuildAvailableMode() {
@@ -23,7 +24,19 @@ public class WorkShopPrefabUI : BuildPrefabUI {
 
         if (workshopCreate.isExist) return;
         buildingObj = workshopCreate.Building;
+        StartCoroutine(FindObject());
+    }
+    protected IEnumerator FindObject()
+    {
+        while (buildingObj == null)
+        {
+            buildingObj = workshopCreate.Building;
+            yield return null;
+        }
+
+        Debug.Log("==========================" + buildingObj.name);
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }
 }
+

@@ -34,7 +34,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
-            if (btn != null) {
+            if (btn != null && IsButtonInArray(btn)) {
                 menuControll.ButtonMove(400, false);
                 tooltipbox.gameObject.SetActive(true);
                 //buttonNum = FindDictionaryKey(btn);
@@ -59,6 +59,15 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 //currentBuildDetail = null;
             }
         }
+    }
+
+    private bool IsButtonInArray(Button btn) {
+        for (int i = 0; i < buttons.Length; i++) {
+            if (buttons[i] == btn) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void BuildTooltipShow() {
@@ -108,7 +117,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Text text = itemtexts.transform.GetChild(i).GetComponent<Text>();
                 string textColor = "white";
                 textColor = currentItem >= needItem ? "white" : "red";
-                if(currentItem >= needItem) {
+                if (currentItem >= needItem) {
                     buildingCheckCount++;
                 }
                 text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
