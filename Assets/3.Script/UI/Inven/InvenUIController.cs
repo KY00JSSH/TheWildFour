@@ -14,9 +14,6 @@ public class InvenUIController : MonoBehaviour {
     public int CurrInvenCount { get { return currInvenCount; } }
     private int invenMaxcount = 15;         //인벤토리 활성화 최대 개수    
 
-    private List<Vector2[]> boxPositionsList = new List<Vector2[]>();
-    public List<Vector2[]> BoxPositions { get { return boxPositionsList; } }
-
     private void Awake() {
         //기본 인벤 초기화
         invenController = GetComponent<InvenController>();
@@ -53,12 +50,6 @@ public class InvenUIController : MonoBehaviour {
             }
             invenBoxList.Add(invenBoxPrefabs);
             //positon 왼쪽위, 오른쪽위, 오른쪽아래, 왼쪽아래 순으로 설정
-            boxPositionsList.Add(new Vector2[]{
-                new Vector2(invenBoxList[i].transform.position.x - 35, invenBoxList[i].transform.position.y + 35),
-                new Vector2(invenBoxList[i].transform.position.x + 35, invenBoxList[i].transform.position.y + 35),
-                new Vector2(invenBoxList[i].transform.position.x + 35, invenBoxList[i].transform.position.y - 35),
-                new Vector2(invenBoxList[i].transform.position.x - 35, invenBoxList[i].transform.position.y - 35)
-                });
         }
         invenTotalList = invenBoxList;
         for (int i = 0; i < currInvenCount; i++) {

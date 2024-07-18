@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler { 
+
+public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     private int key;
     // 인벤 박스 -> 버튼
@@ -23,6 +22,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
     private InvenDrop invenDrop;
     private InvenController invenControll;
     private InvenUIController invenUI;
+    private MenuWeapon menuWeapon;
 
     private Canvas canvas;
     private RectTransform originalParent;
@@ -34,6 +34,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
         itemIcon = transform.GetChild(1).GetComponent<Image>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         invenControll = FindObjectOfType<InvenController>();
+        menuWeapon = FindObjectOfType<MenuWeapon>();
         invenUI = FindObjectOfType<InvenUIController>();
         invenDrop = FindObjectOfType<InvenDrop>();
         canvas = FindObjectOfType<Canvas>();
@@ -46,30 +47,31 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
         currentItem = item;
 
         if (currentItem is CountableItem countItem) {
-            itemText.text = countItem.CurrStackCount.ToString();
             itemIcon.sprite = countItem.itemData.Icon;
+            itemText.text = countItem.CurrStackCount.ToString();
             itemIcon.enabled = true;
             itemIcon.gameObject.SetActive(true);
             isItemIn = true;
+            itemText.transform.SetAsLastSibling();
         }
         else if (currentItem is EquipItem eqItem) {
-            itemText.text = "";
             itemIcon.sprite = eqItem.itemData.Icon;
+            itemText.text = "";
             itemIcon.enabled = true;
             itemIcon.gameObject.SetActive(true);
             isItemIn = true;
         }
         else {
             if (currentItem != null) {
-                itemText.text = "";
                 itemIcon.sprite = currentItem.itemData.Icon;
+                itemText.text = "";
                 itemIcon.enabled = true;
                 itemIcon.gameObject.SetActive(true);
                 isItemIn = true;
             }
             else {
-                itemText.text = "0";
                 itemIcon.sprite = null;
+                itemText.text = "0";
                 itemIcon.enabled = false;
                 itemIcon.gameObject.SetActive(false);
                 isItemIn = false;
@@ -90,7 +92,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
             originalParent = itemIcon.rectTransform.parent as RectTransform;
             originalPosition = itemIcon.rectTransform.anchoredPosition;
             itemIcon.transform.SetParent(canvas.transform, true);
-            itemIcon.transform.SetAsLastSibling(); 
+            itemIcon.transform.SetAsLastSibling();
         }
     }
 
@@ -109,13 +111,6 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
 
             bool isChangeInven = false;
             int targetIndex = 99;
-            //foreach (Vector2[] boxPositions in FindObjectOfType<InvenUIController>().BoxPositions) {
-            //    Rect boxRect = new Rect(boxPositions[3], new Vector2(boxPositions[2].x - boxPositions[3].x, boxPositions[1].y - boxPositions[3].y));
-            //    if (boxRect.Contains(itemIcon.rectTransform.position)) {
-            //        isChangeInven = true;
-            //        break;
-            //    }
-            //}
 
             for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
                 RectTransform boxRectTransform = invenUI.InvenTotalList[i].GetComponent<RectTransform>();
@@ -131,8 +126,31 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
                 //원래 인벤 index 랑 바꿀 인벤 체크
                 invenControll.changeInvenIndex(key, targetIndex);
             }
+            else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapFirstBoxPos, eventData.position, eventData.pressEventCamera)) {
+                //무기 1번 슬롯일때
+                ItemData invenWeapItemData = invenControll.getIndexItem(key).itemData;
+                if (invenWeapItemData) {
+                    Debug.Log("check22222222222"+ invenWeapItemData.ItemName);
+                    ItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
+                    Debug.Log(weapPrevItem);
+                    if (weapPrevItem) {
+                        //무기가 이미 있을때 인벤창이랑 스위칭
+                        invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                    }
+                }
+            }
+            //else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
+            //    //무기 2번 슬롯일떄
+            //    Item invenWeapItem = invenControll.getIndexItem(key);
+            //    if (invenWeapItem != null) {
+            //        Item weapPrevItem = menuWeapon.addItemBox(2, invenWeapItem);
+            //        if (weapPrevItem != null) {
+            //            //무기가 이미 있을때 인벤창이랑 스위칭
+            //            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+            //        }
+            //    }
+            //}
             else {
-                //TODO: 장비창 position 검출 추가
                 //아이템 드랍
                 invenDrop.DropItemAll(key);
             }

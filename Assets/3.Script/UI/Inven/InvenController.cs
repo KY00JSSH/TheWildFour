@@ -250,9 +250,6 @@ public class InvenController : MonoBehaviour {
     }
 
     public void changeInvenIndex(int currentIndex, int changeIndex) {
-        Debug.Log($"CURRENT : { currentIndex }");
-        Debug.Log($"ChangeIndex : { changeIndex }");
-
         if (currentIndex != changeIndex && changeIndex != 99) {
 
             var weaponItem = inventory[changeIndex]?.itemData as WeaponItemData;
@@ -275,4 +272,29 @@ public class InvenController : MonoBehaviour {
             }
         }
     }
+    
+    public void changeItemIntoWeapSlot(ItemData item, int index) {
+
+        if (item != null) {
+            GameObject newItemObject = new GameObject("Item");
+            Item newItem = newItemObject.AddComponent<Item>();
+            newItem.itemData = item;
+            inventory[index] = newItem;
+        }
+    }
+
+    public Item getIndexItem(int index) {
+
+        var weapItem = inventory[index]?.itemData as WeaponItemData;
+
+        if (weapItem) {
+            return inventory[index];
+        }
+        else {
+            return null;
+        }
+    }
+
+    //TODO: 제작시 사용하는 필요 아이템 있으면 사용
+    //TODO: 제작 후 인벤 차있으면 드랍
 }
