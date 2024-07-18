@@ -10,6 +10,11 @@ public class PlayerMove : MonoBehaviour {
 
     private Animator playerAnimator; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
 
+    public void PlayerDieAnimation() {
+        playerAnimator.SetTrigger("triggerDie");
+    }
+
+
     public static bool isMove { get; private set; }
 
     private bool isAvailableDash = true;
@@ -45,6 +50,8 @@ public class PlayerMove : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") || PlayerStatus.isDead) return;
+
         LookatMouse();
 
         if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {

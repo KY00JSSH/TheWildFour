@@ -5,6 +5,8 @@ public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
     private Transform playerTransform;
+    private Animator playerAnimator;
+
     protected Collider[] buildingColliders;
 
     public bool isExist = false;
@@ -18,6 +20,7 @@ public class BuildingCreate : MonoBehaviour {
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerAnimator = playerTransform.GetComponent<Animator>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
     }
 
@@ -70,6 +73,7 @@ public class BuildingCreate : MonoBehaviour {
         isBuild = false;
         isExist = true;
         MaterialOpaque();
+        playerAnimator.SetTrigger("triggerCreate");
     }
 
     public void DestroyBuilding() {
