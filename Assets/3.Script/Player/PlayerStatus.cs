@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
-    
+    public UnityEvent onDead;
+
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
-    public float PlayerMaxHp;
+    public float PlayerMaxHp { get; set; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
     private float HealRestore = 0.3f, HungerRestore = 0.5f;
-
 
     private bool[] statusList;
     public bool GetPlayerStatus(Status status) { return statusList[(int)status]; }
@@ -46,7 +47,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: Dead Event Need. 사망 이벤트 구현 필요. 0707
+            onDead?.Invoke();
         }
     }
 
@@ -54,7 +55,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage;
         if (PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: Dead Event Need. 사망 이벤트 구현 필요. 0707
+            onDead?.Invoke();
         }
     }
 
