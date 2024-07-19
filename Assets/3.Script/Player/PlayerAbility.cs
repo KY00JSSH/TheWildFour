@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour {
     private ShelterManager shelterManager;
-    private CameraControl2 cameraControl;
+    private CameraControl cameraControl;
     private PlayerStatus playerStatus;
     private PlayerMove playerMove;
 
@@ -34,7 +34,7 @@ public class PlayerAbility : MonoBehaviour {
 
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
-        cameraControl = FindObjectOfType<CameraControl2>();
+        cameraControl = FindObjectOfType<CameraControl>();
         playerStatus = FindObjectOfType<PlayerStatus>();
         playerMove = FindObjectOfType<PlayerMove>();
     }

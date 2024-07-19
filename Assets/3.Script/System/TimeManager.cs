@@ -62,6 +62,8 @@ public class TimeManager : MonoBehaviour {
     }
     
     private void Update() {
+        if (PlayerStatus.isDead) return;
+
         WorldTime += Time.deltaTime * timeScale;
         WorldHour = WorldTime / (360f / 24f) % 24;
 

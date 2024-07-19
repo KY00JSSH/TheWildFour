@@ -5,6 +5,10 @@ public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
     private Transform playerTransform;
+    private Animator playerAnimator;
+
+    ItemSelectControll itemSelectControl;
+
     protected Collider[] buildingColliders;
 
     public bool isExist = false;
@@ -18,6 +22,7 @@ public class BuildingCreate : MonoBehaviour {
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerAnimator = playerTransform.GetComponent<Animator>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
     }
 
@@ -57,6 +62,10 @@ public class BuildingCreate : MonoBehaviour {
             }
             isBuild = true;
 
+            itemSelectControl = Building.GetComponentInChildren<ItemSelectControll>();
+            itemSelectControl.GetComponent<Collider>().enabled = false;
+            itemSelectControl.enabled = false;
+
             MaterialTransparent();
             Color materialColor = buildingMaterial.color;
             materialColor.a = 0.3f;
@@ -69,7 +78,17 @@ public class BuildingCreate : MonoBehaviour {
             collider.isTrigger = false;
         isBuild = false;
         isExist = true;
+
+        itemSelectControl = Building.GetComponentInChildren<ItemSelectControll>();
+        itemSelectControl.GetComponent<Collider>().enabled = true;
+        itemSelectControl.enabled = true;
+
         MaterialOpaque();
+        playerAnimator.SetTrigger("triggerCreate");
+
+        MenuMap_MarkerSpawner markerSpawner = FindObjectOfType<MenuMap_MarkerSpawner>();
+
+        markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
     }
 
     public void DestroyBuilding() {

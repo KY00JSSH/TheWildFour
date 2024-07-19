@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
     public UnityEvent onDead;
+    public static bool isDead { get; private set; }
+    public void SetPlayerDead () { isDead = true; }
 
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
@@ -23,7 +25,6 @@ public class PlayerStatus : MonoBehaviour {
 
     public void TakeWarmDamage() {
         if (GetPlayerStatus(Status.Heat)) return;
-
         PlayerWarm -= WarmDamage * Time.deltaTime;
         
         if(PlayerWarm <= 0) {
@@ -109,6 +110,8 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHunger = defaultHunger;
         PlayerWarm = defaultWarm;
         statusList = new bool[Enum.GetValues(typeof(Status)).Length];
+        
+        isDead = false;
     }
 
     private void Update() {
@@ -116,9 +119,11 @@ public class PlayerStatus : MonoBehaviour {
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);
 
-        TakeWarmDamage();
-        TakeHungerDamage();
-        RestoreHpHunger();
-        SatietySlow();
+        if (!isDead) {
+            TakeWarmDamage();
+            TakeHungerDamage();
+            RestoreHpHunger();
+            SatietySlow();
+        }
     }
 }

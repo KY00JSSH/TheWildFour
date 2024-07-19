@@ -69,7 +69,6 @@ public class BuildPrefabUI : MonoBehaviour {
 
     // UI 위치 조정
     private void BuildPrefabUIPosition() {
-
         BuildImg.transform.position = buildingObj.transform.position;
     }
 
@@ -132,8 +131,5 @@ public class BuildPrefabUI : MonoBehaviour {
             buildImgRe.position = topCenter + new Vector3(0, 0.2f, 0); 
         }
     }
-
-
-
 
 }
