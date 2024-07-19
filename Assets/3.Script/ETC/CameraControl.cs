@@ -18,6 +18,13 @@ public class CameraControl : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
         cinemachineFreeLook.LookAt = player.transform;
+
+
+
+        GameObject.FindGameObjectWithTag("Player");
+        GameObject.FindObjectOfType<Renderer>();
+
+     //   transform.GetComponent<>();
     }
     
     private void Update()
