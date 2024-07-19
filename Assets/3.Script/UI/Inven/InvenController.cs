@@ -96,13 +96,13 @@ public class InvenController : MonoBehaviour {
             var equipItem = inventory[i]?.itemData as EquipItemData;
             var medicItem = inventory[i]?.itemData as MedicItemData;
 
-            if (weaponItem != null && countableItem != null && foodItem != null && equipItem != null && medicItem != null) {
-                if (inventory[i] != null) {
-                    if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
-                        if (inventory[i] is CountableItem countItem) {
-                            if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
-                                return i;
-                            }
+            if (weaponItem != null || countableItem != null || foodItem != null || equipItem != null || medicItem != null) {
+                if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
+                    Debug.Log("check22");
+                    if (inventory[i] is CountableItem countItem) {
+                        Debug.Log("check33");
+                        if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
+                            return i;
                         }
                     }
                 }
@@ -285,10 +285,22 @@ public class InvenController : MonoBehaviour {
 
     //아이템 F로 사용
     public void useInvenItem(int index) {
-        //선택한 아이템이 음식, 약품 이면 1개 사용
-        //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
 
+        var weaponItem = inventory[index]?.itemData as WeaponItemData;
+        var foodItem = inventory[index]?.itemData as FoodItemData;
+        var medicItem = inventory[index]?.itemData as MedicItemData;
 
+        if (medicItem != null || foodItem != null) {
+            //선택한 아이템이 음식, 약품 이면 1개 사용
+
+        }
+        else if (weaponItem != null) {
+            //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
+
+        }
+        else {
+            return;
+        }
     }
 
     //TODO: 제작시 사용하는 필요 아이템 있으면 사용
