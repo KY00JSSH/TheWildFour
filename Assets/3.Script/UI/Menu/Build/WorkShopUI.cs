@@ -67,8 +67,7 @@ public class WorkShopUI : MonoBehaviour {
                     LockButtonWithLevel(childbutton, weap.Level);
                 }
                 else if (nowbtnkey.itemData is MedicItemData medi) {
-                    //TODO: 의약품 현재 레벨 없음 추가해야함!!!
-                    LockButtonWithLevel(childbutton, 99);
+                    LockButtonWithLevel(childbutton, medi.Level);
                 }
                 BtnItem.Add(childbutton, nowbtnkey);
             }

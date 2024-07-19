@@ -161,6 +161,14 @@ public class TooltipInfo : MonoBehaviour {
         }
     }
 
+    protected void L_StatsActiveInit() {
+        foreach (Transform each in L_StatsTexts.transform) {
+            each.gameObject.SetActive(true);
+        }
+        foreach (Transform each in L_StatsImgs.transform) {
+            each.gameObject.SetActive(true);
+        }
+    }
 
 
 }

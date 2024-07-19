@@ -16,6 +16,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
     private TooltipNum tooltipNum;
     private UpgradeDetail currentupgradeDetail;
     private PackingDetail currentpackingDetail;
+    private PlayerStatus playerStatus;
 
     public bool isWSUpgradeAvailable = false;
 
@@ -25,6 +26,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
         workShopUI = GetComponent<WorkShopUI>();
         tooltipNum = FindObjectOfType<TooltipNum>();
         workshopManager = FindObjectOfType<WorkshopManager>();
+        playerStatus = FindObjectOfType<PlayerStatus>();
     }
 
 
@@ -62,8 +64,8 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
                 else {
                     Tooltip_S.SetActive(true);
                     Tooltip_L.SetActive(false);
-                    Debug.Log(eventData.position.x);
-                    if(eventData.position.x >= 210) { // 창고 위치 막음
+                    L_StatsActiveInit();
+                    if (eventData.position.x >= 210) { // 창고 위치 막음
                         // y 위치에 따라 CurrentupgradeDetail or PackingDetal
                         if (365 <= eventData.position.y && eventData.position.y < 440) {
                             PackingTooltipShow();
@@ -89,35 +91,68 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
     }
 
     private void WorkshopItemShow(Item btnItem) {
+        L_StatsActiveInit();
         L_TextTitle.text = btnItem.itemData.name;
         L_TextMain.text = btnItem.itemData.Description;
+        L_ItemImg.sprite = btnItem.itemData.Icon;
+        // 1. 스탯 2. 필요한 아이템
         WorkshopLevelText(btnItem);
-        WorkshopItemImgShow(btnItem);
+        //TODO: 2. 필요한 아이템 추가 해야함!! + 아이템을 못들고 오고있음
     }
+
 
     private void WorkshopLevelText(Item btnItem) {
         int btnItemLevel = 0;
         if (btnItem.itemData is WeaponItemData weap) {
             btnItemLevel = weap.Level;
+            WorkshopItemData(weap);
         }
         else if (btnItem.itemData is MedicItemData medi) {
-            //TODO: 의약품 현재 레벨 없음 추가해야함!!!
-            btnItemLevel = 99;
+            Debug.Log("???????????????????????");
+            btnItemLevel = medi.Level;
+            WorkshopItemData(medi);
         }
 
-        string color = "White";
-        color = btnItemLevel <= workshopManager.WorkshopLevel ? "White" : "Red";
+        string color = btnItemLevel <= workshopManager.WorkshopLevel ? "White" : "Red";
 
         L_TextResult.text = string.Format("<color={1}>필요 작업장 레벨:{0}</color>", btnItemLevel, color);
     }
 
-    private void WorkshopItemImgShow(Item btnItem) {
-        //TODO: 아이템별로 각 Stat 정보를 들고와야함 -> 1~3 위치도 변경되어야함
+    private void WorkshopItemData(WeaponItemData weap) {
+        //TODO: 아이템별로 각 Stat 정보를 들고와야함 -> 1~3 위치도 변경되어야함 => 채집량 없음 2개만 들고옴
+        // 공격력
+        L_StatsImgs.transform.GetChild(0).GetComponent<Image>().sprite = L_StatsSprites[1];
 
+        L_StatsImgs.transform.GetChild(1).gameObject.SetActive(false);
+        //내구도
+        L_StatsImgs.transform.GetChild(2).GetComponent<Image>().sprite = L_StatsSprites[5];
 
+        // 공격력
+        L_StatsTexts.transform.GetChild(0).GetComponent<Text>().text = string.Format("{0}-{1}", weap.MinPowerPoint, weap.MaxPowerPoint);
+
+        L_StatsTexts.transform.GetChild(1).gameObject.SetActive(false);
+        //내구도
+        L_StatsTexts.transform.GetChild(2).GetComponent<Text>().text = weap.TotalDurability.ToString();
     }
 
+    private void WorkshopItemData(MedicItemData medi) {
+        //TODO: 아이템별로 각 Stat 정보를 들고와야함 -> 1~3 위치도 변경되어야함
 
+        L_StatsImgs.transform.GetChild(0).gameObject.SetActive(false);
+        // 힐
+        L_StatsImgs.transform.GetChild(1).GetComponent<Image>().sprite = L_StatsSprites[3];
+
+        L_StatsImgs.transform.GetChild(2).gameObject.SetActive(false);
+
+        int healAmount = (int)(medi.HealTime * playerStatus.GetHealTick());
+
+        L_StatsTexts.transform.GetChild(0).gameObject.SetActive(false);
+        // 힐
+        L_StatsTexts.transform.GetChild(1).GetComponent<Text>().text = healAmount.ToString();
+
+        L_StatsTexts.transform.GetChild(2).gameObject.SetActive(false);
+
+    }
     //============== Func
 
     // 2. 업그레이드
@@ -136,7 +171,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
         // 아이템 텍스트 변경
         UpgradeFunc_ItemText();
         // 아이템 텍스트 이미지 위치 변경
-        UpgradeFunc_ItemTextPosition();
+        //UpgradeFunc_ItemTextPosition();
     }
     private void UpgradeFunc_ItemTextInit() {
         S_ItemImgs.gameObject.SetActive(true);

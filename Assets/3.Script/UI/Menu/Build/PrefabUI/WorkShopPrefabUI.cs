@@ -7,7 +7,7 @@ public class WorkShopPrefabUI : BuildPrefabUI {
     public WorkshopCreate workshopCreate;
     protected override void Awake() {
         base.Awake();
-        //workshopCreate = FindObjectOfType<WorkshopCreate>();
+        workshopCreate = FindObjectOfType<WorkshopCreate>();
     }
 
     protected override void Update() {

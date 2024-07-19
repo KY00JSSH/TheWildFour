@@ -127,7 +127,8 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
         if (buildingCheckCount == currentBuildDetail.needItems.Length)
             isBuildAvailable = true;
-        else isBuildAvailable = false;
+        else isBuildAvailable = true;
+        //TODO: !!!!!!!!!!!!!!!인벤아이템 개수 false => true 로 임시 변경 바꿔야함
     }
 
     public void OnWorkshopButton() {

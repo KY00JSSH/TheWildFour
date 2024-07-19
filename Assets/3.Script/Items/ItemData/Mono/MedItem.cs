@@ -5,9 +5,15 @@ using UnityEngine;
 public class MedItem : CountableItem {
     public MedicItemData medicItemData;
 
+    public PlayerStatus playerStatus;
+
     public float HealTime => medicItemData.HealTime;
 
-    //public float getHealAmount() {
-    //    return PlayerStatus.GetHealTick() * HealTime;
-    //}
+    private void Awake() {
+        playerStatus = FindObjectOfType<PlayerStatus>();
+    }
+
+    public float getHealAmount() {
+        return playerStatus.GetHealTick() * HealTime;
+    }
 }
