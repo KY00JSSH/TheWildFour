@@ -6,4 +6,8 @@ public class FoodItem : CountableItem {
     public float CurrDecayTime { get { return currDecayTime; } }
 
     public float HealTime => foodItemData.HealTime;
+
+    //public float getHealAmount() {
+    //    return PlayerStatus.GetHealTick() * HealTime;
+    //}
 }

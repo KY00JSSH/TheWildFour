@@ -6,4 +6,8 @@ public class MedItem : CountableItem {
     public MedicItemData medicItemData;
 
     public float HealTime => medicItemData.HealTime;
+
+    //public float getHealAmount() {
+    //    return PlayerStatus.GetHealTick() * HealTime;
+    //}
 }
