@@ -79,6 +79,7 @@ public class TooltipNum : MonoBehaviour {
 
     // 저장했던 Json에서 NeedItem을 받아와서 아이템들의 Key와 비교
     // 비교해서 맞으면 해당 키의 리스트 저장 없으면 0개
+    /*
     public int InvenItemGet(int itemKey) {
         int cntitemnum = 0;
         foreach (Item each in invenController.Inventory) {
@@ -92,6 +93,22 @@ public class TooltipNum : MonoBehaviour {
         }
         return cntitemnum;
     }
+    */
+    public int InvenItemGet(int itemKey) {
+        int cntitemnum = 0;
+        for (int i = 0; i < invenController.Inventory.Count; i++) {
+            if(invenController.Inventory[i]?.itemData?.Key == itemKey) {
+                // 키가 같음 갯수 세야하는데z`
+                if (invenController.Inventory[i] is CountableItem _item)
+                    cntitemnum += _item.CurrStackCount;
+                else {
+                    cntitemnum++;
+                }
+            }
+        }
+        return cntitemnum;
+    }
+
 
     // workshop -> 합성 item key 찾기
     public Item FindButtonItemKey(Button btn) {

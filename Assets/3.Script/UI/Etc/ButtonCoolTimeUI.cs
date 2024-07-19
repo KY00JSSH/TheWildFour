@@ -10,6 +10,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     [SerializeField] private bool isClicked = false;
 
     public float CoolTime { get { return leftTime; } } // ShelterManager에서 받아가는 용도
+    public bool isBuildComplete { get; private set; }
 
     private float leftTime = 10f;
     [SerializeField] private float speed = 5.0f;
@@ -41,6 +42,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
                     leftTime = 0f;
                     if (btn) btn.enabled = true;
                     isClicked = false;
+                    isBuildComplete = true;
                 }
 
                 ratio = 1.0f - (leftTime / cooltime);
@@ -56,6 +58,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
 
         leftTime = cooltime;
         leftTime = 10f;
+        isBuildComplete = false;
         isClicked = true;
         if (btn) btn.enabled = false;
     }
@@ -65,6 +68,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
 
         leftTime = cooltime;
         leftTime = 10f;
+        isBuildComplete = false;
         isClicked = true;
         if (btn) btn.enabled = false;
     }
@@ -75,6 +79,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
 
         leftTime = cooltime;
         leftTime = 10f;
+        isBuildComplete = false;
         isClicked = true;
         if (btn) btn.enabled = false;
     }

@@ -58,7 +58,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
                     Tooltip_L.SetActive(true);
                     // 버튼 DICTIONARY에 아이템 값이 있다면
                     if (workShopUI.BtnItem.TryGetValue(btn, out Item btnItem)) {
-                        WorkshopItemShow(btnItem);
+                        WorkshopItemShow(btn, btnItem);
                     }
                 }
                 else {
@@ -90,25 +90,65 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    private void WorkshopItemShow(Item btnItem) {
+    private void WorkshopItemShow(Button btn, Item btnItem) {
         L_StatsActiveInit();
         L_TextTitle.text = btnItem.itemData.name;
         L_TextMain.text = btnItem.itemData.Description;
         L_ItemImg.sprite = btnItem.itemData.Icon;
         // 1. 스탯 2. 필요한 아이템
-        WorkshopLevelText(btnItem);
-        //TODO: 2. 필요한 아이템 추가 해야함!! + 아이템을 못들고 오고있음
+        WorkshopStatsLevelText(btnItem);
+        //TODO: 2. 필요한 아이템 추가 해야함!!
+        WorkshopNeedItemCheck(btn, btnItem);
     }
 
 
-    private void WorkshopLevelText(Item btnItem) {
+    private void WorkshopNeedItemCheck(Button btn, Item btnItem) {
+        //TODO: 변경해야함
+        int buildingCheckCount = 0;
+        /*
+        for (int i = 0; i < btnItem.itemData.MaterialKey; i++) {
+            int needItem = currentupgradeDetail.needItems[i].ItemNeedNum;
+            int currentItem = tooltipNum.InvenItemGet(currentupgradeDetail.needItems[i].ItemKey);
+            if (needItem == 0) {
+                S_ItemTexts.transform.GetChild(i).gameObject.SetActive(false);
+                S_ItemImgs.transform.GetChild(i).gameObject.SetActive(false);
+                buildingCheckCount++;
+                continue;
+            }
+            else {
+                Text text = S_ItemTexts.transform.GetChild(i).GetComponent<Text>();
+                string textColor = currentItem >= needItem ? "white" : "red";
+                if (currentItem >= needItem) {
+                    buildingCheckCount++;
+                }
+                text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
+            }
+        }
+
+        */
+
+        // 인벤 개수 확인 후 버튼 클릭가능 불가능 여부 확인
+        if (buildingCheckCount == currentupgradeDetail.needItems.Length) {
+            btn.enabled = true;
+            L_TextResult.text = "<color=White>제작 가능</color>";
+        }
+        else {
+            btn.enabled = false;
+            L_TextResult.text = "<color=Red>자원 부족</color>";
+        }
+
+
+    }
+
+
+
+    private void WorkshopStatsLevelText(Item btnItem) {
         int btnItemLevel = 0;
         if (btnItem.itemData is WeaponItemData weap) {
             btnItemLevel = weap.Level;
             WorkshopItemData(weap);
         }
         else if (btnItem.itemData is MedicItemData medi) {
-            Debug.Log("???????????????????????");
             btnItemLevel = medi.Level;
             WorkshopItemData(medi);
         }
@@ -119,7 +159,6 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
     }
 
     private void WorkshopItemData(WeaponItemData weap) {
-        //TODO: 아이템별로 각 Stat 정보를 들고와야함 -> 1~3 위치도 변경되어야함 => 채집량 없음 2개만 들고옴
         // 공격력
         L_StatsImgs.transform.GetChild(0).GetComponent<Image>().sprite = L_StatsSprites[1];
 
@@ -136,7 +175,6 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
     }
 
     private void WorkshopItemData(MedicItemData medi) {
-        //TODO: 아이템별로 각 Stat 정보를 들고와야함 -> 1~3 위치도 변경되어야함
 
         L_StatsImgs.transform.GetChild(0).gameObject.SetActive(false);
         // 힐
@@ -196,8 +234,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler, IPointerExitH
             }
             else {
                 Text text = S_ItemTexts.transform.GetChild(i).GetComponent<Text>();
-                string textColor = "white";
-                textColor = currentItem >= needItem ? "white" : "red";
+                string textColor = currentItem >= needItem ? "white" : "red";
                 if (currentItem >= needItem) {
                     buildingCheckCount++;
                 }
