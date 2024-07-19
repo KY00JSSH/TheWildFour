@@ -11,8 +11,8 @@ public class CreateManager : MonoBehaviour {
 
     public void CancelAllBuildings() {
         foreach (BuildingCreate each in buildingCreates) {
+            if (!each.isExist)
             each.CancelBuilding();
         }
     }
-
 }

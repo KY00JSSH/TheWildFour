@@ -33,7 +33,6 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void Interaction(BuildingType type) {
-        menuControl.gameObject.SetActive(false);
         switch (type) {
             case BuildingType.Campfire: CampfireInteraction(); break;
             case BuildingType.Furnace: FurnaceInteraction(); break;
@@ -48,18 +47,21 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void FurnaceInteraction() {
-        
+        //menuControl.gameObject.SetActive(false);
+
     }
 
     private void ShelterInteraction() {
+        menuControl.gameObject.SetActive(false);
         InteractionUI.ShelterUI.SetActive(true);
     }
 
     private void WorkshopInteraction() {
+        menuControl.gameObject.SetActive(false);
         InteractionUI.WorkShopUI.SetActive(true);
     }
 
     private void ChestInteraction() {
-    
+        //menuControl.gameObject.SetActive(false);
     }
 }
