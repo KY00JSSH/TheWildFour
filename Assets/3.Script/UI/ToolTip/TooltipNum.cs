@@ -82,6 +82,8 @@ public class TooltipNum : MonoBehaviour {
     public int InvenItemGet(int itemKey) {
         int cntitemnum = 0;
         foreach (Item each in invenController.Inventory) {
+            if (each == null) return 0;
+
             if (each.itemData.Key == itemKey) {
                 // 키가 같음 갯수 세야하는데
                 if (each is CountableItem _item)
