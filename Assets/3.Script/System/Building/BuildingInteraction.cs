@@ -10,6 +10,7 @@ public enum BuildingType {
 
 public class BuildingInteraction : MonoBehaviour {
     [SerializeField] private BuildingType buildingType;
+    public BuildingType Type { get { return buildingType; } }
 
     private InteractionUIMapping InteractionUI;
 

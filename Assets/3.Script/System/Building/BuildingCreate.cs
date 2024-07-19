@@ -85,6 +85,10 @@ public class BuildingCreate : MonoBehaviour {
 
         MaterialOpaque();
         playerAnimator.SetTrigger("triggerCreate");
+
+        MenuMap_MarkerSpawner markerSpawner = FindObjectOfType<MenuMap_MarkerSpawner>();
+
+        markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
     }
 
     public void DestroyBuilding() {

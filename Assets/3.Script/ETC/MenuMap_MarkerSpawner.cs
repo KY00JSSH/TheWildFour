@@ -30,10 +30,6 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
         zoom = FindObjectOfType<MenuMapZoom>();        
     }
 
-    public enum BuildingType
-    {
-        Campfire, Furnace, Chest, Shelter, Workshop
-    }
 
     public void SetMarker(BuildingType type, Vector3 position)
     {
