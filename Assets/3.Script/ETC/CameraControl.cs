@@ -1,51 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
 public class CameraControl : MonoBehaviour
 {
-    public CinemachineVirtualCamera cinemachineVirtualCamera;
-    public Transform player;
-    public float rotationSpeed = 100f;
+    public CinemachineFreeLook cinemachineFreeLook;
+    private float rotationSpeed = 3f;
     public float zoomSpeed = 2f;
-    public float minZoomDistance = 2f;
-    public float maxZoomDistance = 10f;
 
-    private Transform cameraTransform;
-    private float currentZoomDistance;
+    // 플레이어 스킬 시야범위 확장 때문에
+    // newFov = Mathf.Clamp 윗줄에 선언된 지역변수를 클래스변수로 이동
+    public float minFOV = 70f;
+    public float maxFOV = 100f;
 
-    private void Start()
-    {
-        cameraTransform = cinemachineVirtualCamera.transform;
-        currentZoomDistance = Vector3.Distance(cameraTransform.position, player.position);
+    public float rotationDirection = 0f;
+
+    private void Awake() {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        cinemachineFreeLook.Follow = player.transform;
+        cinemachineFreeLook.LookAt = player.transform;
     }
-
+    
     private void Update()
     {
-        //카메라 좌우 회전
-        if(Input.GetKey(KeyCode.Q))
-        {
-            cameraTransform.RotateAround(player.position, Vector3.up, -rotationSpeed * Time.deltaTime);
-            Debug.Log("Q" + cameraTransform.position);
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            rotationDirection -= 90f;
+            if (rotationDirection < 0) rotationDirection += 360f;
         }
-        if (Input.GetKey(KeyCode.E))
-        {
-            cameraTransform.RotateAround(player.position, Vector3.up, rotationSpeed * Time.deltaTime);
-            Debug.Log("E" + cameraTransform.position);
+        else if(Input.GetKeyDown(KeyCode.E)) {
+            rotationDirection += 90f;
+            if (rotationDirection >= 360) rotationDirection -= 360f;
         }
+        cinemachineFreeLook.m_XAxis.Value = Mathf.LerpAngle(
+            cinemachineFreeLook.m_XAxis.Value, rotationDirection, Time.deltaTime * rotationSpeed) ;
 
-        //줌
+        // 카메라 줌
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (scrollInput != 0)
         {
-            currentZoomDistance -= scrollInput * zoomSpeed;
-            currentZoomDistance = Mathf.Clamp(currentZoomDistance, minZoomDistance, maxZoomDistance);
+            float currentFOV = cinemachineFreeLook.m_Lens.FieldOfView;
+            float deltaFOV = scrollInput * 15f * -1; // -1 안곱하면 마우스 스크롤이 반대가 됨. 직관성을 위해 이렇게 합니다.
+            float newFOV = currentFOV + deltaFOV;
 
-            Vector3 direction = (cameraTransform.position - player.position).normalized;
-            cameraTransform.position = player.position + direction * currentZoomDistance;
+            newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);
 
-            Debug.Log("줌" + scrollInput + "줌 거리" + currentZoomDistance + "카메라포지션" + cameraTransform.position);
+            cinemachineFreeLook.m_Lens.FieldOfView = newFOV;
         }
     }
 }

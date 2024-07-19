@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
+    private CameraControl cameraControl;
     private Rigidbody playerRigid;
     private Vector3 targetPosition;
 
@@ -36,6 +37,7 @@ public class PlayerMove : MonoBehaviour {
     private void Awake() {
         playerRigid = GetComponentInParent<Rigidbody>();
         playerAnimator = GetComponentInParent<Animator>();
+        cameraControl = FindObjectOfType<CameraControl>();
     }
 
     private void Start() {
@@ -126,13 +128,14 @@ public class PlayerMove : MonoBehaviour {
 
         currentSpeed = Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 3f);
         if (currentSpeed < 0.01f) currentSpeed = 0;
-        targetPosition = new Vector3(
-            playerRigid.position.x + InputX * Time.deltaTime * constMoveSpeed * currentSpeed,
-            playerRigid.position.y,
-            playerRigid.position.z + InputZ * Time.deltaTime * constMoveSpeed * currentSpeed);
+
+        targetPosition = 
+            Quaternion.Euler(0, cameraControl.rotationDirection, 0) * 
+            new Vector3(InputX, 0, InputZ) * Time.deltaTime * constMoveSpeed * currentSpeed;
+        targetPosition += playerRigid.position;
+        
         playerRigid.MovePosition(targetPosition);
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);
-        //Debug.Log(currentSpeed);
     }
 }
