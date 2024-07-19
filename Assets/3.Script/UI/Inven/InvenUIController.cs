@@ -61,13 +61,14 @@ public class InvenUIController : MonoBehaviour {
     public void InvenCountUpgrade() {
         if (currInvenCount <= invenMaxcount) {
             currInvenCount++;
-            invenController.invenFullReset();
+            invenController.addInvenBox();          //활성화 1개 될때마다 실제 데이터 inventory.add(null)
+            invenController.invenFullReset();   
             invenTotalList[currInvenCount - 1].SetActive(true);
 
             InventoryBox box = invenTotalList[currInvenCount - 1].GetComponent<InventoryBox>();
             if (box != null) {
                 box.UpdateBox(null);
-            }
+            }            
         }
         else {
             return;

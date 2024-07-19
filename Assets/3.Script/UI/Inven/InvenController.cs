@@ -24,13 +24,17 @@ public class InvenController : MonoBehaviour {
     }
 
     private void initInven() {
-        for( int i = 0; i< invenUi.CurrInvenCount; i++) {
+        for (int i = 0; i < invenUi.CurrInvenCount; i++) {
             inventory.Add(null);
         }
     }
 
     public void invenFullReset() {
         isInvenFull = false;
+    }
+
+    public void addInvenBox() {
+        inventory.Add(null);
     }
 
     //if 해당 아이템이 inven에 있고,(해당 box item count < itemMaxStackCount)
@@ -42,10 +46,7 @@ public class InvenController : MonoBehaviour {
 
         int checkNum = canAddThisBox(item.Key);
 
-        if (checkNum == 16) {
-            inventory.Add(item);
-        }
-        else if (checkNum != 99) {
+        if (checkNum != 99) {
             //해당칸에 아이템 추가
             if (item is CountableItem countItem &&
                 inventory[checkNum] is CountableItem newCountItem) {
@@ -54,18 +55,13 @@ public class InvenController : MonoBehaviour {
         }
         else {
             int existBox = isExistEmptyBox();
-            if (existBox != 99 && existBox != 17) {
+            if (existBox != 99) {
                 //null로 비워둔 inventory에 추가
                 inventory[existBox] = item;
             }
-            else if (existBox == 17) {
-                //새 박스에 아이템 add
-                inventory.Add(item);
+            else {
+                isInvenFull = true;
             }
-        }
-
-        if (checkInvenFull()) {
-            isInvenFull = true;
         }
 
         InvenChanged?.Invoke(inventory);
@@ -89,76 +85,47 @@ public class InvenController : MonoBehaviour {
         }
     }
 
-    private bool checkInvenFull() {
-        if (!canItemAdd()) {
-            for (int i = 0; i < inventory.Count; i++) {
-                //모든 인벤토리 아이템이 max 상태인지 체크
-                //아이템 ADD 하고 나서 매번 체크
-                if (inventory[i] is CountableItem ci) {
-                    if (!ci.IsMax) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
     //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
     private int canAddThisBox(int itemKey) {
-        if (inventory.Count == 0) {
-            return 16;
-        }
-        else {
-            for (int i = 0; i < inventory.Count; i++) {
-                if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
-                    if (inventory[i] is CountableItem countItem) {
-                        if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
-                            return i;
+        for (int i = 0; i < inventory.Count; i++) {
+            var weaponItem = inventory[i]?.itemData as WeaponItemData;
+            var countableItem = inventory[i]?.itemData as CountableItemData;
+            var foodItem = inventory[i]?.itemData as FoodItemData;
+            var equipItem = inventory[i]?.itemData as EquipItemData;
+            var medicItem = inventory[i]?.itemData as MedicItemData;
+
+            if (weaponItem != null && countableItem != null && foodItem != null && equipItem != null && medicItem != null) {
+                if (inventory[i] != null) {
+                    if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
+                        if (inventory[i] is CountableItem countItem) {
+                            if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
+                                return i;
+                            }
                         }
                     }
                 }
             }
-            return 99;
         }
+        return 99;
     }
 
     //빈 inven box가 있는지 여부
     public int isExistEmptyBox() {
-        if (inventory.Count < invenUi.CurrInvenCount) {
-            for (int i = 0; i < inventory.Count; i++) {
-                var weaponItem = inventory[i]?.itemData as WeaponItemData;
-                var countableItem = inventory[i]?.itemData as CountableItemData;
-                var foodItem = inventory[i]?.itemData as FoodItemData;
-                var equipItem = inventory[i]?.itemData as EquipItemData;
-                var medicItem = inventory[i]?.itemData as MedicItemData;
+        for (int i = 0; i < inventory.Count; i++) {
+            var weaponItem = inventory[i]?.itemData as WeaponItemData;
+            var countableItem = inventory[i]?.itemData as CountableItemData;
+            var foodItem = inventory[i]?.itemData as FoodItemData;
+            var equipItem = inventory[i]?.itemData as EquipItemData;
+            var medicItem = inventory[i]?.itemData as MedicItemData;
 
-                if (weaponItem == null && countableItem == null && foodItem == null && equipItem == null && medicItem == null) {
-                    if (inventory[i] == null) {
-                        //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
-                        return i;
-                    }
+            if (weaponItem == null && countableItem == null && foodItem == null && equipItem == null && medicItem == null) {
+                if (inventory[i] == null) {
+                    //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
+                    return i;
                 }
             }
-            return 17;  //아예 생성도 안한 inven이 있으면 17으로 return
         }
-        else {
-            for (int i = 0; i < inventory.Count; i++) {
-                var weaponItem = inventory[i]?.itemData as WeaponItemData;
-                var countableItem = inventory[i]?.itemData as CountableItemData;
-                var foodItem = inventory[i]?.itemData as FoodItemData;
-                var equipItem = inventory[i]?.itemData as EquipItemData;
-                var medicItem = inventory[i]?.itemData as MedicItemData;
-
-                if (weaponItem == null && countableItem == null && foodItem == null && equipItem == null && medicItem == null) {
-                    if (inventory[i] == null) {
-                        //기존에 생성했지만 null로 초기화 한 inventory일때는 해당 index return
-                        return i;
-                    }
-                }
-            }
-            return 99;  //아예 빈 박스를 사용못할때
-        }
+        return 99;  //아예 빈 박스를 사용못할때
     }
 
     public void invenFullFlagReset() {
@@ -251,7 +218,6 @@ public class InvenController : MonoBehaviour {
 
     public void changeInvenIndex(int currentIndex, int changeIndex) {
         if (currentIndex != changeIndex && changeIndex != 99) {
-
             var weaponItem = inventory[changeIndex]?.itemData as WeaponItemData;
             var countableItem = inventory[changeIndex]?.itemData as CountableItemData;
             var foodItem = inventory[changeIndex]?.itemData as FoodItemData;
@@ -272,23 +238,26 @@ public class InvenController : MonoBehaviour {
             }
         }
     }
-    
-    public void changeItemIntoWeapSlot(ItemData item, int index) {
 
+    public void changeItemIntoWeapSlot(WeaponItemData item, int index) {
+        //무기가 이미 있을때 인벤창이랑 스위칭 아니면 인벤에 있는 아이템 지움
         if (item != null) {
-            GameObject newItemObject = new GameObject("Item");
-            Item newItem = newItemObject.AddComponent<Item>();
+            WeaponItem newItem = new WeaponItem();
+            newItem.WeaponItemData = item;
+            newItem.equipItemData = item;
             newItem.itemData = item;
             inventory[index] = newItem;
+            InvenChanged?.Invoke(inventory);
+        }
+        else {
+            inventory[index] = null;
+            InvenChanged?.Invoke(inventory);
         }
     }
 
-    public Item getIndexItem(int index) {
-
-        var weapItem = inventory[index]?.itemData as WeaponItemData;
-
-        if (weapItem) {
-            return inventory[index];
+    public WeaponItemData getIndexItem(int index) {
+        if (inventory[index]?.itemData is WeaponItemData weapItem) {
+            return weapItem;
         }
         else {
             return null;

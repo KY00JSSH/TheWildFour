@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuWeapon : MonoBehaviour {
@@ -19,18 +17,18 @@ public class MenuWeapon : MonoBehaviour {
         secondBoxTransf = secondSlot.GetComponent<RectTransform>();
     }
 
-    public ItemData addItemBox(int index, ItemData item) {
+    public WeaponItemData addItemBox(int index, WeaponItemData item) {
         if (index == 1) {
             //1번 슬롯에 아이템 추가
-            ItemData reItem = getcurrentItem(index);
+            WeaponItemData reItem = getcurrentItem(index);
             firstSlot.GetComponent<WeaponSlotControll>().setWeaponSlot(item);
-            return reItem != null ? reItem : null;
+            return reItem;
         }
         else {
             //2번 슬롯에 아이템 추가
-            ItemData reItem = getcurrentItem(index);
+            WeaponItemData reItem = getcurrentItem(index);
             secondSlot.GetComponent<WeaponSlotControll>().setWeaponSlot(item);
-            return reItem == null ? null : reItem;
+            return reItem;
         }
     }
 
@@ -45,16 +43,15 @@ public class MenuWeapon : MonoBehaviour {
         }
     }
 
-    public ItemData getcurrentItem(int index) {
+    public WeaponItemData getcurrentItem(int index) {
         //선택한 필드의 item return
         if (index == 1) {
-            ItemData item = firstSlot?.GetComponent<WeaponSlotControll>().returnItem();
-            Debug.Log("ITEM " + item);
-
-            return item != null ? item : null;
+            WeaponItemData item = firstSlot?.GetComponent<WeaponSlotControll>().returnItem();
+            return item;
         }
         else {
-            return secondSlot.GetComponent<WeaponSlotControll>().returnItem();
+            WeaponItemData item = secondSlot.GetComponent<WeaponSlotControll>().returnItem();
+            return item;
         }
     }
 }

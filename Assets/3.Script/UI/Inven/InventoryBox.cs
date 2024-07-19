@@ -128,28 +128,20 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
             }
             else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapFirstBoxPos, eventData.position, eventData.pressEventCamera)) {
                 //무기 1번 슬롯일때
-                ItemData invenWeapItemData = invenControll.getIndexItem(key).itemData;
+                WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
                 if (invenWeapItemData) {
-                    Debug.Log("check22222222222"+ invenWeapItemData.ItemName);
-                    ItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
-                    Debug.Log(weapPrevItem);
-                    if (weapPrevItem) {
-                        //무기가 이미 있을때 인벤창이랑 스위칭
-                        invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
-                    }
+                    WeaponItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
+                    invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
                 }
             }
-            //else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
-            //    //무기 2번 슬롯일떄
-            //    Item invenWeapItem = invenControll.getIndexItem(key);
-            //    if (invenWeapItem != null) {
-            //        Item weapPrevItem = menuWeapon.addItemBox(2, invenWeapItem);
-            //        if (weapPrevItem != null) {
-            //            //무기가 이미 있을때 인벤창이랑 스위칭
-            //            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
-            //        }
-            //    }
-            //}
+            else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
+                //무기 2번 슬롯일떄
+                WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
+                if (invenWeapItemData) {
+                    WeaponItemData weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItemData);
+                    invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                }
+            }
             else {
                 //아이템 드랍
                 invenDrop.DropItemAll(key);

@@ -51,7 +51,6 @@ public class PlayerItemUseControll : MonoBehaviour {
     }
 
     public void SetSelectedBoxKey(int key) {
-        Debug.Log("key" + key);
         selectBoxKey = key;
     }
 }
