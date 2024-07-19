@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
-    
+    public UnityEvent onDead;
+    public static bool isDead { get; private set; }
+    public void SetPlayerDead () { isDead = true; }
+
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
-    public float PlayerMaxHp;
+    public float PlayerMaxHp { get; set; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
     private float HealRestore = 0.3f, HungerRestore = 0.5f;
-
 
     private bool[] statusList;
     public bool GetPlayerStatus(Status status) { return statusList[(int)status]; }
@@ -21,7 +23,6 @@ public class PlayerStatus : MonoBehaviour {
 
     public void TakeWarmDamage() {
         if (GetPlayerStatus(Status.Heat)) return;
-
         PlayerWarm -= WarmDamage * Time.deltaTime;
         
         if(PlayerWarm <= 0) {
@@ -47,7 +48,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage * Time.deltaTime;
         if(PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: Dead Event Need. 사망 이벤트 구현 필요. 0707
+            onDead?.Invoke();
         }
     }
 
@@ -55,7 +56,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHp -= damage;
         if (PlayerHp <= 0) {
             PlayerHp = 0;
-            //TODO: Dead Event Need. 사망 이벤트 구현 필요. 0707
+            onDead?.Invoke();
         }
     }
 
@@ -107,16 +108,22 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHunger = defaultHunger;
         PlayerWarm = defaultWarm;
         statusList = new bool[Enum.GetValues(typeof(Status)).Length];
+        
+        isDead = false;
     }
 
     private void Update() {
+        Debug.Log(PlayerItemPickControll.ClosestItem.name);
+
         infoViewer.SetPlayerHp((int)PlayerHp);
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);
 
-        TakeWarmDamage();
-        TakeHungerDamage();
-        RestoreHpHunger();
-        SatietySlow();
+        if (!isDead) {
+            TakeWarmDamage();
+            TakeHungerDamage();
+            RestoreHpHunger();
+            SatietySlow();
+        }
     }
 }

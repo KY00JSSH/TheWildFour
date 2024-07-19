@@ -142,6 +142,7 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
     // 하위 버튼 마우스 위치 확인
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
+            Debug.Log("Mouse Position: " + eventData.position);
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null) ShelterTooltipShow(btn.gameObject);
         }
@@ -425,6 +426,9 @@ public class Shelter_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
         return -1;
     }
 
+
+
+    [SerializeField] ButtonCoolTimeUI upgradeCooltime;
     public void SleepFuncOnClick() {
         StopCoroutine("SleepSliderValue");
         Text text = sleepTime.GetComponentInChildren<Text>();

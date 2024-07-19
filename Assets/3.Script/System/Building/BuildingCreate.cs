@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingCreate : MonoBehaviour {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
     private Transform playerTransform;
+    private Animator playerAnimator;
+
     protected Collider[] buildingColliders;
 
     public bool isExist = false;
@@ -11,10 +14,14 @@ public class BuildingCreate : MonoBehaviour {
 
     public bool isValidBuild = true;
 
+    protected Tooltip_Build tooltip_Build;
+
     private int layerMask;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerAnimator = playerTransform.GetComponent<Animator>();
+        tooltip_Build = FindObjectOfType<Tooltip_Build>();
     }
 
     private void Start() {
@@ -32,7 +39,7 @@ public class BuildingCreate : MonoBehaviour {
                 CancelBuilding();
             }
             else if (Input.GetMouseButton(0)) {
-                if(isValidBuild)
+                if(isValidBuild && !EventSystem.current.IsPointerOverGameObject())
                     CreateBuilding();
             }
         }
@@ -66,6 +73,7 @@ public class BuildingCreate : MonoBehaviour {
         isBuild = false;
         isExist = true;
         MaterialOpaque();
+        playerAnimator.SetTrigger("triggerCreate");
     }
 
     public void DestroyBuilding() {
@@ -75,7 +83,8 @@ public class BuildingCreate : MonoBehaviour {
 
     public void CancelBuilding() {
         isBuild = false;
-        Building.SetActive(false);
+        if (Building != null)
+            Building.SetActive(false);
         MaterialOpaque();
     }
 
@@ -90,9 +99,8 @@ public class BuildingCreate : MonoBehaviour {
 
             float distanceToCenter = Vector3.Distance(pointTolook, playerTransform.position);
             if (distanceToCenter > buildAreaRadius) {
-                // ¸¸¾à °Å¸®°¡ ¹Ý°æº¸´Ù Å©´Ù¸é ¿øÀÇ °æ°è¿¡¼­ Á¦ÇÑÇÕ´Ï´Ù
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Ý°æº¸ï¿½ï¿½ Å©ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
-                Debug.Log("direction : " + directionToCenter);
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }
             Vector3 targetPosition = new Vector3(

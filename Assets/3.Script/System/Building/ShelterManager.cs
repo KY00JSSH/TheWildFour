@@ -75,6 +75,11 @@ public class ShelterManager : MonoBehaviour {
     }
 
     public void LevelUp() {     // 거처 레벨업
+
+        // 24 07 18 김수주 Shelter upgrade item 부족하면 return
+        Tooltip_Shelter tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
+        if (!tooltip_Shelter.isUpgradeAvailable) return;
+
         StartCoroutine(WaitForUpgrade());
     }
 
@@ -84,7 +89,6 @@ public class ShelterManager : MonoBehaviour {
 
         while (upgradeCooltime.CoolTime > 0)
             yield return null;
-
         Transform shelterPosition = shelter.Building.transform;
         shelter.Building.SetActive(false);
         ShelterLevel++;

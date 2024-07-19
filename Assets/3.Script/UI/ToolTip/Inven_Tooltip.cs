@@ -10,8 +10,7 @@ public class Inven_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     /*
      * 인벤토리 아이템 Tooltip 
      * inventory box button의 component -> itemdata가 있으면 Tooltip 표시 없으면 리턴
-     //TODO: 아이템 신선함 표시, 아이템 기본 이미지 추가 필요함 + 시간 남으면 전반적인 리모델링 
-
+     //TODO: 아이템 신선함 표시 slide
      */
 
     [SerializeField] private Item item;

@@ -9,15 +9,16 @@ using UnityEngine.EventSystems;
 public class MenuBuildInfo {
     public string Title;
     public string MainText;
-    public int woodNeed;
-    public int stoneNeed;
+    public GameObject ItemNeeds;
+    public int[] ItemNeedNum;
 
-    public MenuBuildInfo(string Title, string MainText, int woodNeed, int stoneNeed) {
+    public MenuBuildInfo(string Title, string MainText, GameObject ItemNeeds, int[] ItemNeedNum) {
         this.Title = Title;
         this.MainText = MainText;
-        this.woodNeed = woodNeed;
-        this.stoneNeed = stoneNeed;
+        this.ItemNeeds = ItemNeeds;
+        this.ItemNeedNum = ItemNeedNum;
     }
+
 }
 
 public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
@@ -37,22 +38,21 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     ========== 
     현재 아이템 개수 
-    //TODO: 아이템 불러오기
+    - 인벤 리스트 돌면서 개수 확인 후 bool값 리턴
 
      */
 
 
     [SerializeField] private Menu_Controll menuControll;
-
     [SerializeField] private Button[] buttons;
 
     public GameObject tooltipbox;
     [SerializeField] private Text tooltipTitle;   // 아이템 이름 텍스트
     [SerializeField] private Text tooltipMain; // 아이템 설명 텍스트
-    [SerializeField] private Text woodhave;
-    [SerializeField] private Text stonehave;
 
-    //[SerializeField] private Image[] itemNeed; // 아이템 설명 텍스트
+
+    [SerializeField] private GameObject itemimgs;
+    [SerializeField] private GameObject itemtexts;
 
 
     [Space((int)2)]
@@ -64,28 +64,23 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public TextAsset textFile;
 
 
+    //TODO: 아이템 체크는 시간 남으면 별도 스크립트 이동 예정
+    public bool isBuildAvailable = false;
+
     private void Awake() {
         TextRead();
         if (buttons == null) buttons = transform.GetComponentsInChildren<Button>();
         menuControll = FindObjectOfType<Menu_Controll>();
 
-        if(tooltipTitle ==null) tooltipTitle = tooltipbox.transform.GetChild(1).GetComponent<Text>();
-        if(tooltipMain == null) tooltipMain = tooltipbox.transform.GetChild(0).GetChild(0).GetComponent<Text>();
-        if(woodhave == null) woodhave = tooltipbox.transform.GetChild(0).GetChild(2).GetComponentInChildren<Text>();
-        if(stonehave == null) stonehave = tooltipbox.transform.GetChild(0).GetChild(3).GetComponentInChildren<Text>();
-
-        Debug.Log("Build_Tooltip 스크립트 buttons 갯수 확인 " + buttons.Length);
+        if (tooltipTitle == null) tooltipTitle = tooltipbox.transform.GetChild(1).GetComponent<Text>();
+        if (tooltipMain == null) tooltipMain = tooltipbox.transform.GetChild(0).GetChild(0).GetComponent<Text>();
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse enter");
-
                 BuildTooltipShow(btn);
-
-                Debug.Log("dictionaryKey 확인" + dictionaryKey); ;
             }
         }
     }
@@ -94,7 +89,6 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (eventData.pointerCurrentRaycast.gameObject != null) {
             Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
             if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse exit");
                 dictionaryKey = 0;
             }
         }
@@ -118,31 +112,91 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         tooltipTitle.text = BuildTooltip[dictionaryKey].Title;
         tooltipMain.text = BuildTooltip[dictionaryKey].MainText;
 
-        //TODO: 현재 아이템 중 나무 돌 확인하여 들고 와야함 + 아이템 갯수확인하여 글자 색 변경
-        //TODO: 
+        UpgradeFunc_ItemTextInit();
+        UpgradeFunc_ItemText();
 
-        Image wood = tooltipbox.transform.GetChild(0).GetChild(2).GetComponent<Image>();
-        Image stone = tooltipbox.transform.GetChild(0).GetChild(3).GetComponent<Image>();
-        if (BuildTooltip[dictionaryKey].woodNeed == 0) {
-            woodhave.gameObject.SetActive(false);
-            wood.gameObject.SetActive(false);
+    }
+
+    // 텍스트 초기화
+    private void UpgradeFunc_ItemTextInit() {
+        itemimgs.gameObject.SetActive(true);
+        foreach (Transform item in itemimgs.transform) {
+            item.gameObject.SetActive(true);
         }
-        else {
-            woodhave.gameObject.SetActive(true);
-            wood.gameObject.SetActive(true);
-            woodhave.text = string.Format("{0} / {0}", BuildTooltip[dictionaryKey].woodNeed);
-        }
-        if (BuildTooltip[dictionaryKey].stoneNeed == 0) {
-            stonehave.gameObject.SetActive(false);
-            stone.gameObject.SetActive(false);
-        }
-        else {
-            stonehave.gameObject.SetActive(true);
-            stone.gameObject.SetActive(true);
-            stonehave.text = string.Format("{0} / {0}", BuildTooltip[dictionaryKey].stoneNeed);
+        itemtexts.gameObject.SetActive(true);
+        foreach (Transform item in itemtexts.transform) {
+            item.gameObject.SetActive(true);
         }
     }
 
+    private List<GameObject>[] UpgradeFunc_ItemText() {
+        List<GameObject>[] needItems = new List<GameObject>[2];
+        needItems[0] = new List<GameObject>();
+        needItems[1] = new List<GameObject>();
+        int buildingCheckCount = 0;
+        for (int i = 0; i < itemtexts.transform.childCount; i++) {
+            int needItem = BuildTooltip[dictionaryKey].ItemNeedNum[i];
+            if (needItem == 0) {
+                isBuildAvailable = true;
+                itemtexts.transform.GetChild(i).gameObject.SetActive(false);
+                itemimgs.transform.GetChild(i).gameObject.SetActive(false);
+                buildingCheckCount++;
+                continue;
+            }
+            else {
+                int currentItem = ItemNumCheck_Func(itemtexts.transform.GetChild(i).name);
+                Text text = itemtexts.transform.GetChild(i).GetComponent<Text>();
+                string textColor = "white";
+                textColor = currentItem >= needItem ? "white" : "red";
+                buildingCheckCount = currentItem >= needItem ? buildingCheckCount++ : 0;
+                text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
+                needItems[0].Add(text.gameObject);
+                needItems[1].Add(itemimgs.transform.GetChild(i).gameObject);
+            }
+        }
+        Debug.Log("아이템 인벤토리 개수 확인" + buildingCheckCount + " / " + itemtexts.transform.childCount);
+        // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
+        if (buildingCheckCount == itemtexts.transform.childCount)
+            isBuildAvailable = true;
+        else isBuildAvailable = false;
+
+        Debug.Log("아이템 인벤토리 bool 값 확인" + isBuildAvailable);
+        return needItems;
+    }
+
+    // InvenController 스크립트의 전체 인벤토리에 아이템이 이름 확인해서 갯수 확인
+    //TODO: 아이템 검출 이상함! => 이름 말고 샤이니 KEY 를 찾아야함
+    private int ItemNumCheck_Func(string itemname) {
+        InvenController inven = FindObjectOfType<InvenController>();
+        int itemTotalNum = 0;
+        if (inven.Inventory != null) {
+
+
+            for (int i = 0; i < inven.Inventory.Count; i++) {
+                if (inven.Inventory[i] is CountableItem countItem) {
+                    if (countItem.itemData.ItemName == itemname) {
+                        itemTotalNum += countItem.CurrStackCount;
+                    }
+                    else {
+                        Debug.Log("아이템의 이름이 같지 않음" + inven.Inventory[i].itemData.ItemName);
+                    }
+                }
+                else {
+                    Debug.Log("아이템의 종류가 같지 않음" + inven.Inventory[i].itemData.Type);
+                }
+            }
+            /*
+            foreach (Item each in inven.Inventory) {
+                if (each.name == itemname) {
+                    if (each is CountableItem countItem) itemTotalNum += countItem.CurrStackCount;
+                }
+                else Debug.Log("아이템의 이름이 같지 않음" + each.name);
+            }
+            */
+            return itemTotalNum;
+        }
+        return -1;
+    }
 
 
     private void TextRead() {
@@ -155,7 +209,9 @@ public class Build_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             int woodneed = int.Parse(wood);
             string stone = lines[i].Split('-')[3].Trim();
             int stoneneed = int.Parse(stone);
-            MenuBuildInfo newbuildInfo = new MenuBuildInfo(title, mainText, woodneed, stoneneed);
+            int[] itemneed = { woodneed, stoneneed };
+
+            MenuBuildInfo newbuildInfo = new MenuBuildInfo(title, mainText, itemimgs, itemneed);
             buildtexts.Add(newbuildInfo);
             BuildTooltip.Add(i, buildtexts[i]);
         }

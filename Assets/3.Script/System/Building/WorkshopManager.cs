@@ -10,6 +10,8 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     public void LevelUp() {
+        //TODO: Workshop upgrade item 부족하면 return
+
         Destroy(shelter.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
     }

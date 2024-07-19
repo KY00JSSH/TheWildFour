@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class Campfire : FireObject {
     private ParticleSystem fireEffect;
+    private CampfireUI campfireUI;
+
+    protected override void OnCreated() {
+        base.OnCreated();
+        campfireUI.FireSliderInit();
+        fireEffect = GetComponentInChildren<ParticleSystem>();
+        fireEffect.Stop();
+        LightOff();
+    }
 
     protected override void Awake() {
         base.Awake();
-
-        fireEffect = GetComponentInChildren<ParticleSystem>();
-        fireEffect.Stop();
-
-        LightOff();
+        campfireUI = GetComponent<CampfireUI>();
+        OnCreated();
     }
 
     private void Start() {
@@ -39,7 +45,7 @@ public class Campfire : FireObject {
         }
         LightUp(Mathf.InverseLerp(0, totalTime, currentTime) * 4f);
     }
-
+    
     protected override void AddWood() {
         base.AddWood();
         if (currentTime > 0 && !isBurn) {

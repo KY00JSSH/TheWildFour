@@ -29,14 +29,9 @@ public class Player_InfoViewer : MonoBehaviour
                 Debug.Log(slider.name+ "추가");
                 Text t = child.GetComponentInChildren<Text>();
                 if (t != null)
-                {
                     slidersTextList.Add(t);
-                    Debug.Log("text : " + t.text);
-                }
                 else
-                {
                     Debug.Log("못찾음?");
-                }
             }
             else
             {
