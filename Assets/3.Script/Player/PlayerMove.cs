@@ -88,26 +88,34 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
+    private Vector3 pastPosition = Vector3.zero;
     private void LookatMouse() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
         float rotationSpeed = 5f;
         float rayLength;
 
+        if (isDash) return;
+
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
             Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
+
+            Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
+            Debug.Log(pointPosition);
+//            if (pastPosition == Vector3.zero) pastPosition = pointPosition;
+            Vector3 targetPosition = Vector3.Slerp(pastPosition, pointPosition, rotationSpeed * Time.deltaTime);
+            pastPosition = targetPosition; // Update pastPosition
+
+
             Quaternion targetRotation =
                 Quaternion.LookRotation(targetPosition - playerRigid.position);
 
-            /*
-            Debug.Log(targetRotation.eulerAngles);
-            targetRotation = Quaternion.Euler(
-                targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, targetRotation.eulerAngles.x - 95.816f);
             Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
+            targetRotation = Quaternion.Euler(playerSpine.eulerAngles.x,
+               playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
+                playerSpine.eulerAngles.z);
             playerSpine.rotation = targetRotation;
-            Debug.Log("@@"+playerSpine.rotation.eulerAngles);
-            */
+            
             /*
             playerRigid.rotation = Quaternion.Slerp(
             playerRigid.rotation,

@@ -12454,14 +12454,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 546799117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7bbe2c5710ccf7408f4ff7053938256, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  cinemachineFreeLook: {fileID: 1745526981}
-  zoomSpeed: 2
-  minFOV: 70
-  maxFOV: 100
-  rotationDirection: 0
 --- !u!4 &546799119
 Transform:
   m_ObjectHideFlags: 0
@@ -22101,7 +22096,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1033926952}
+      - m_Target: {fileID: 725592847}
         m_TargetAssemblyTypeName: BuildingCreate, Assembly-CSharp
         m_MethodName: DestroyBuilding
         m_Mode: 1

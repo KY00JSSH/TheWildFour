@@ -4997,6 +4997,7 @@ MonoBehaviour:
   BuildImg: {fileID: 1529558583}
   positions: 0.5
   isBuiltStart: 0
+  workshopCreate: {fileID: 0}
 --- !u!114 &281420789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10197,6 +10198,10 @@ MonoBehaviour:
     tickTime: 0
     isTicked: 0
   - type: 6
+    totalTime: 0
+    tickTime: 0
+    isTicked: 0
+  - type: 7
     totalTime: 0
     tickTime: 0
     isTicked: 0
@@ -18156,6 +18161,7 @@ MonoBehaviour:
   BuildImg: {fileID: 1529558583}
   positions: 0.5
   isBuiltStart: 0
+  shelterCreate: {fileID: 0}
 --- !u!114 &840451961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42005,10 +42011,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786bfb0f2c08ead40a95c44da0621a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponBoxs:
-  - {fileID: 86672514}
-  - {fileID: 1317519955}
-  WeaponItem: []
 --- !u!114 &1907549940
 MonoBehaviour:
   m_ObjectHideFlags: 0
