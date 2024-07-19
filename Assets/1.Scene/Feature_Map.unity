@@ -3304,7 +3304,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402366534}
-  m_LocalRotation: {x: 0.48758814, y: -0.00000003679731, z: 0.000000020550303, w: 0.8730738}
+  m_LocalRotation: {x: 0.4875881, y: 5.94996e-15, z: -4.8942085e-15, w: 0.8730738}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7209,7 +7209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &811984859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7339,8 +7339,9 @@ GameObject:
   - component: {fileID: 832013302}
   - component: {fileID: 832013304}
   - component: {fileID: 832013303}
+  - component: {fileID: 832013305}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: MenuMapSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7401,6 +7402,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832013301}
   m_CullTransparentMesh: 1
+--- !u!114 &832013305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832013301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e65cd34897c2da44bf8be2cfbb1ddee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  markerPrefabs: []
+  mapRect: {fileID: 832013302}
+  mapWidth: 250
+  mapHeight: 250
 --- !u!1 &838795165
 GameObject:
   m_ObjectHideFlags: 0
@@ -8211,7 +8228,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928092028}
-  m_LocalRotation: {x: 0.5646034, y: -0.00000006230882, z: 0.000000042623423, w: 0.82536244}
+  m_LocalRotation: {x: 0.5646034, y: 0.00000006230882, z: -0.000000042623423, w: 0.82536244}
   m_LocalPosition: {x: -2.53, y: 4.5, z: -13.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -10800,7 +10817,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143786313}
-  m_LocalRotation: {x: 0.52631724, y: 0.000000020690486, z: -0.000000012807135, w: 0.85028833}
+  m_LocalRotation: {x: 0.52631724, y: -0.000000020690488, z: 0.000000012807137, w: 0.85028833}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11976,7 +11993,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219027768}
-  m_LocalRotation: {x: 0.5646033, y: -0.0000000382387, z: 0.000000026157835, w: 0.82536244}
+  m_LocalRotation: {x: 0.5646033, y: 0.00000003823871, z: -0.000000026157846, w: 0.82536244}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14741,10 +14758,8 @@ MonoBehaviour:
   BuildAvailable: []
   BuildImg: {fileID: 0}
   positions: 2
-  player: {fileID: 0}
-  fireSliderPrefab: {fileID: 6683354587745199810, guid: b914a6d22954c1348b54808b52188616, type: 3}
-  fireObjects: []
-  fireSliders: []
+  isBuiltStart: 0
+  campfireCreate: {fileID: 0}
 --- !u!1 &1589210443
 GameObject:
   m_ObjectHideFlags: 0

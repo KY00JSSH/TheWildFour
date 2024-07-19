@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//메뉴 UI에서 확인할 수 있는 맵의 플레이어 아이콘 컨트롤
+
 public class PlayerIconControl : MonoBehaviour
 {
     public Transform playerTransform;
     public RectTransform playerIconRect;
     public RectTransform mapRect;
-    public Camera worldMapCamera; //이게 꼭 필요한가
+    public Camera worldMapCamera; 
     public float mapWidth;
     public float mapHeight;
 
