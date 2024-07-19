@@ -21,6 +21,10 @@ public class Campfire : FireObject {
         OnCreated();
     }
 
+    private void OnEnable() {
+        OnCreated();
+    }
+
     private void Start() {
         totalTime = 100f;
         currentTime = 0f;

@@ -113,8 +113,6 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     private void Update() {
-        Debug.Log(PlayerItemPickControll.ClosestItem.name);
-
         infoViewer.SetPlayerHp((int)PlayerHp);
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);

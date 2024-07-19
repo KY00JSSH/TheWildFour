@@ -74,7 +74,6 @@ public class Menu_Weapon : MonoBehaviour, IMenuButton {
 
     // UI 하단 인벤토리에서 무기 아이템을 사용할 경우 아이템을 들고와야함
     private void UpdateWeaponInven(List<Item> inventory) {
-        Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         foreach(Item each in WeaponItem) {
             inventoryBox.UpdateBox(each);
         }

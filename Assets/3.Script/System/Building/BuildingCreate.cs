@@ -7,6 +7,8 @@ public class BuildingCreate : MonoBehaviour {
     private Transform playerTransform;
     private Animator playerAnimator;
 
+    ItemSelectControll itemSelectControl;
+
     protected Collider[] buildingColliders;
 
     public bool isExist = false;
@@ -60,6 +62,10 @@ public class BuildingCreate : MonoBehaviour {
             }
             isBuild = true;
 
+            itemSelectControl = Building.GetComponentInChildren<ItemSelectControll>();
+            itemSelectControl.GetComponent<Collider>().enabled = false;
+            itemSelectControl.enabled = false;
+
             MaterialTransparent();
             Color materialColor = buildingMaterial.color;
             materialColor.a = 0.3f;
@@ -72,6 +78,11 @@ public class BuildingCreate : MonoBehaviour {
             collider.isTrigger = false;
         isBuild = false;
         isExist = true;
+
+        itemSelectControl = Building.GetComponentInChildren<ItemSelectControll>();
+        itemSelectControl.GetComponent<Collider>().enabled = true;
+        itemSelectControl.enabled = true;
+
         MaterialOpaque();
         playerAnimator.SetTrigger("triggerCreate");
     }

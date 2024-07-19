@@ -69,9 +69,7 @@ public class BuildPrefabUI : MonoBehaviour {
 
     // UI 위치 조정
     private void BuildPrefabUIPosition() {
-        
         BuildImg.transform.position = buildingObj.transform.position;
-        Debug.Log(buildingObj.transform.position);
     }
 
     // 원 크기 조정
