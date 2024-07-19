@@ -54,7 +54,6 @@ public class PlayerMove : MonoBehaviour {
     private void FixedUpdate() {
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") || PlayerStatus.isDead) return;
 
-        LookatMouse();
 
         if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
             Dash(true);
@@ -66,6 +65,9 @@ public class PlayerMove : MonoBehaviour {
         }
 
         TakeFallDamage();
+    }
+    private void LateUpdate() {
+        LookatMouse();
     }
 
     private float minFallSpeed = -5f, maxFallSpeed = -20f, currentFallSpeed = 0f;
@@ -98,10 +100,20 @@ public class PlayerMove : MonoBehaviour {
             Quaternion targetRotation =
                 Quaternion.LookRotation(targetPosition - playerRigid.position);
 
+            /*
+            Debug.Log(targetRotation.eulerAngles);
+            targetRotation = Quaternion.Euler(
+                targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, targetRotation.eulerAngles.x - 95.816f);
+            Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
+            playerSpine.rotation = targetRotation;
+            Debug.Log("@@"+playerSpine.rotation.eulerAngles);
+            */
+            /*
             playerRigid.rotation = Quaternion.Slerp(
             playerRigid.rotation,
             targetRotation,
             rotationSpeed * Time.deltaTime);
+            */
         }
     }
 
