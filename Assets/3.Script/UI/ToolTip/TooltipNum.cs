@@ -13,13 +13,13 @@ public class TooltipNum : MonoBehaviour {
 
     private TooltipDetail tooltipDetail;
     private InvenController invenController;
-    private ItemSpawner itemSpawner;
+    private WorkshopItemSpawner workshopitemSpawner;
     
 
     private void Awake() {
         tooltipDetail = GetComponent<TooltipDetail>();
         invenController = FindObjectOfType<InvenController>();
-        itemSpawner = FindObjectOfType<ItemSpawner>();
+        workshopitemSpawner = FindObjectOfType<WorkshopItemSpawner>();
     }
 
     // skill
@@ -97,7 +97,7 @@ public class TooltipNum : MonoBehaviour {
         
         if (int.TryParse(btn.name, out itemKeyNum)) {
             // 아이템의 합성 재료를 찾기
-            foreach(Item finditem in itemSpawner.items) {
+            foreach(Item finditem in workshopitemSpawner.Workshopitems) {
                 if(finditem.Key == itemKeyNum) {
                     return finditem;
                 }

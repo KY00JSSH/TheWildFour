@@ -14,25 +14,23 @@ public class WorkShopUI : MonoBehaviour {
     private WorkshopManager workshopManager;
     private TooltipNum tooltipNum;
 
-    [SerializeField] private Text workshopLevel;       // shelter 레벨 표시
     [Space((int)2)]
     [Header("Main Button Disapear")]
     [SerializeField] private GameObject menuButton;
     public GameObject content;
 
-    public UpgradeDetail CurrentupgradeDetail { get; private set; }
+    public Dictionary<Button, Item> BtnItem { get; private set; }
 
     private void Awake() {
         workshopManager = FindObjectOfType<WorkshopManager>();
-        workshopLevel = transform.Find("Text_Ws_Level").GetComponent<Text>();
         tooltipNum = FindObjectOfType<TooltipNum>();
+        BtnItem = new Dictionary<Button, Item>();
     }
     private void FixedUpdate() {
         if (Input.GetKeyDown(KeyCode.Escape)) Escape();
     }
 
     private void OnEnable() {
-        WorkshopInit();
         FindButtonLevel();
         menuButton.SetActive(false);
     }
@@ -45,33 +43,48 @@ public class WorkShopUI : MonoBehaviour {
         transform.gameObject.SetActive(false);
     }
 
-    // 시작할 때 레벨 확인 
-    private void WorkshopInit() {
-        Debug.Log(workshopManager.WorkshopLevel);
-        CurrentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Workshop, workshopManager.WorkshopLevel);
-    }
+
 
     // 받은 정보로 content 안의 버튼 돌릴 것 
     private void FindButtonLevel() {
-        Item nowbtnkey = new Item(); 
         foreach (Transform child in content.transform) {
             Button childbutton = child.GetComponent<Button>();
-            nowbtnkey = tooltipNum.FindButtonItemKey(childbutton);
-            if (nowbtnkey.itemData is WeaponItemData weap ) {
-                LockButtonWithLevel(childbutton, weap.Level) ;
+
+            // 버튼이 비활성화되어 있다면 건너뜀
+            if (!child.gameObject.activeSelf) {
+                Debug.Log("비활성화 이름 확인" + child.name);
+                continue;
             }
-            else if (nowbtnkey.itemData is MedicItemData medi) {
-                //TODO: 의약품 현재 레벨 없음 추가해야함!!!
-                LockButtonWithLevel(childbutton , 99);
-            }            
+
+            // TooltipNum.FindButtonItemKey에서 null 체크 추가
+            Item nowbtnkey = tooltipNum.FindButtonItemKey(childbutton);
+            if (nowbtnkey == null || nowbtnkey.itemData == null) {
+                Debug.LogWarning("Item or ItemData is null");
+                continue;
+            }
+            else {
+                if (nowbtnkey.itemData is WeaponItemData weap) {
+                    LockButtonWithLevel(childbutton, weap.Level);
+                }
+                else if (nowbtnkey.itemData is MedicItemData medi) {
+                    //TODO: 의약품 현재 레벨 없음 추가해야함!!!
+                    LockButtonWithLevel(childbutton, 99);
+                }
+                BtnItem.Add(childbutton, nowbtnkey);
+            }
+
+           
         }
     }
 
     private void LockButtonWithLevel(Button childbutton, int level) {
+        Debug.Log(level +"/"+ workshopManager.WorkshopLevel);
         if (level <= workshopManager.WorkshopLevel) {
+            childbutton.transform.GetChild(2).gameObject.SetActive(false);
             childbutton.enabled = true;
         }
         else {
+            childbutton.transform.GetChild(2).gameObject.SetActive(true);
             childbutton.enabled = false;
         }
     }

@@ -39,10 +39,13 @@ public class Inven_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null && Input.mousePosition.y <= 100) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
-            if (btn != null) {
-                Debug.Log(btn.gameObject.name + " - Mouse enter");
-                InvenItemTooltip(btn);
+            if (eventData.position.y <= 520 && eventData.position.x >= 210) {
+                if (btn != null) {
+                    Debug.Log(btn.gameObject.name + " - Mouse enter");
+                    InvenItemTooltip(btn);
+                }
             }
+
         }
     }
 
