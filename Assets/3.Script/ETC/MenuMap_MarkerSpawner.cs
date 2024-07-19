@@ -40,7 +40,9 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
         }
 
         GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], transform);
-        markerOnMap.transform.localPosition = position;
+
+        Vector3 correctedPosition = WorldToMapPosition(position); /**/
+        markerOnMap.transform.localPosition = correctedPosition;
         markers.Add(markerOnMap);
     }
 
@@ -50,7 +52,7 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
 
         foreach(GameObject markerOnMap in markers)
         {
-            if(markerOnMap.transform.localPosition == position && markerOnMap.name.Contains(type.ToString()))
+            if(markerOnMap.transform.position == position && markerOnMap.name.Contains(type.ToString()))
             {
                 markerToRemove = markerOnMap;
                 break;
@@ -71,18 +73,24 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     {
         foreach(var each in markers)
         {
-            each.transform.localPosition = NewPosition(each.transform.localPosition);
+            each.transform.localPosition = WorldToMapPosition(each.transform.position);
         }
     }
 
-    private Vector3 NewPosition(Vector3 LerpPosition)
+    private Vector3 WorldToMapPosition(Vector3 worldPosition) //LerpPosition = 마커의 월드 좌표
     {
+        if (mapWidth == 0 || mapHeight == 0)
+        {
+            Debug.LogError("mapWidth 또는 mapHeight가 0입니다. 올바른 값을 설정하세요.");
+            return Vector3.zero;
+        }
+
         //월드 좌표를 미니맵 좌표로 변환
-        Vector3 relativePosition = LerpPosition - transform.position;
+        Vector3 relativePosition = worldPosition - transform.position;
 
         //미니맵의 실제 크기에 맞춰 비율 계산
         float normalizedX = relativePosition.x / mapWidth;
-        float normalizedZ = relativePosition.z / mapHeight;
+        float normalizedY = relativePosition.z / mapHeight;
 
         //좌표 보정
         float ratio =
@@ -90,8 +98,13 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
             (zoom.maxOrthSize / zoom.minOrthSize - 1) + 1;
 
         float markerPosX = normalizedX * mapRect.rect.width * ratio;
-        float markerPosY = normalizedZ * mapRect.rect.height * ratio;
+        float markerPosY = normalizedY * mapRect.rect.height * ratio;
 
+        if (float.IsNaN(markerPosX) || float.IsInfinity(markerPosX) || float.IsNaN(markerPosY) || float.IsInfinity(markerPosY))
+        {
+            Debug.LogError("계산된 마커 위치가 유효하지 않습니다. 입력값을 확인하세요.");
+            return Vector3.zero;
+        }
         return new Vector3(markerPosX, markerPosY, 0);
     }
 }

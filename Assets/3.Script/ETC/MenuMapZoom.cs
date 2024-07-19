@@ -16,15 +16,12 @@ public class MenuMapZoom : MonoBehaviour
 
     private void Awake()
     {
-        menuMap = GameObject.Find("MenuMapSprite").GetComponent<RectTransform>();
-        menuMapCamera = GetComponent<Camera>();
-
         menuMapCamera.orthographic = true; //카메라를 orthographic으로 설정
     }
 
     private void Update()
-    {
-        if(IsMouseOverUIElement(menuMap))
+    {       
+        if (IsMouseOverUIElement(menuMap))
         {                              
             MenuMap_Zoom();
 
@@ -106,5 +103,5 @@ public class MenuMapZoom : MonoBehaviour
         camPos.y = Mathf.Clamp(camPos.y, bottomBound, topBound);       
 
         menuMapCamera.transform.position = camPos;
-    }
+    }    
 }

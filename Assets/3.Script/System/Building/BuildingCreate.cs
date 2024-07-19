@@ -86,7 +86,7 @@ public class BuildingCreate : MonoBehaviour {
         MaterialOpaque();
         playerAnimator.SetTrigger("triggerCreate");
 
-        MenuMap_MarkerSpawner markerSpawner = FindObjectOfType<MenuMap_MarkerSpawner>();
+        MenuMap_MarkerSpawner markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
 
         markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
     }

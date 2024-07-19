@@ -20,6 +20,7 @@ public class PlayerIconControl : MonoBehaviour
 
     private void Awake()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         zoom = FindObjectOfType<MenuMapZoom>();
     }
 
