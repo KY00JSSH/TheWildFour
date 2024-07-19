@@ -82,7 +82,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
 
-            bool isChangeSlot = false;
+            bool isChangeSlot;
             int targetIndex = 99;
             bool isInvenAdd = false;
 

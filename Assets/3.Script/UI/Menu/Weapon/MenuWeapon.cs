@@ -93,7 +93,6 @@ public class MenuWeapon : MonoBehaviour {
     }
 
     public void addToInventory(int index, int target) {
-
         var weaponItem = invenCont.Inventory[target]?.itemData as WeaponItemData;
         var countableItem = invenCont.Inventory[target]?.itemData as CountableItemData;
         var foodItem = invenCont.Inventory[target]?.itemData as FoodItemData;
@@ -124,6 +123,31 @@ public class MenuWeapon : MonoBehaviour {
             else {
                 invenCont.addWeaponItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
                 secondCont.setWeaponSlot(null);
+            }
+        }
+    }
+
+    public void addSlotFromInvenWeapon(WeaponItemData weapItem, int target) {
+        if (currSelectSlot == 1) {
+            WeaponItemData firstWeapon = firstCont?.CurrentItem?.itemData as WeaponItemData;
+            if (firstWeapon) {
+                firstCont.setWeaponSlot(weapItem);
+                invenCont.addWeaponItem(firstWeapon, target);
+            }
+            else {
+                firstCont.setWeaponSlot(weapItem);
+                invenCont.removeItem(target);
+            }
+        }
+        else {
+            WeaponItemData secondWeapon = secondCont?.CurrentItem?.itemData as WeaponItemData;
+            if (secondWeapon) {
+                secondCont.setWeaponSlot(weapItem);
+                invenCont.addWeaponItem(secondWeapon, target);
+            }
+            else {
+                secondCont.setWeaponSlot(weapItem);
+                invenCont.removeItem(target);
             }
         }
     }

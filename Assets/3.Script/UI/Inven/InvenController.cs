@@ -9,6 +9,8 @@ public class InvenController : MonoBehaviour {
     public List<Item> Inventory { get { return inventory; } }
 
     private InvenUIController invenUi;
+    private MenuWeapon menuWeapon;
+
     public GameObject itemObject;
 
     public bool itemTest = false;
@@ -20,6 +22,7 @@ public class InvenController : MonoBehaviour {
     private void Start() {
         inventory = new List<Item>();
         invenUi = FindObjectOfType<InvenUIController>();
+        menuWeapon = FindObjectOfType<MenuWeapon>();
         initInven();
     }
 
@@ -63,7 +66,6 @@ public class InvenController : MonoBehaviour {
                 isInvenFull = true;
             }
         }
-
         InvenChanged?.Invoke(inventory);
     }
 
@@ -98,9 +100,7 @@ public class InvenController : MonoBehaviour {
 
             if (weaponItem != null || countableItem != null || foodItem != null || equipItem != null || medicItem != null) {
                 if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
-                    Debug.Log("check22");
                     if (inventory[i] is CountableItem countItem) {
-                        Debug.Log("check33");
                         if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
                             return i;
                         }
@@ -285,18 +285,25 @@ public class InvenController : MonoBehaviour {
 
     //아이템 F로 사용
     public void useInvenItem(int index) {
-
-        var weaponItem = inventory[index]?.itemData as WeaponItemData;
-        var foodItem = inventory[index]?.itemData as FoodItemData;
-        var medicItem = inventory[index]?.itemData as MedicItemData;
-
-        if (medicItem != null || foodItem != null) {
-            //선택한 아이템이 음식, 약품 이면 1개 사용
-
+        if (inventory[index]?.itemData is MedicItemData medicItem) {
+            //선택한 아이템이 약품이면 1개 사용
+            var countItem = inventory[index] as CountableItem;
+            countItem.useCurrStack(1);
+            if (countItem.CurrStackCount == 0) {
+                inventory[index] = null;
+            }
         }
-        else if (weaponItem != null) {
+        else if (inventory[index]?.itemData is FoodItemData foodItem) {
+            //선택한 아이템이 음식이면 1개 사용
+            var countItem = inventory[index] as CountableItem;
+            countItem.useCurrStack(1);
+            if (countItem.CurrStackCount == 0) {
+                inventory[index] = null;
+            }
+        }
+        else if (inventory[index]?.itemData is WeaponItemData weapItem) {
             //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
-
+            menuWeapon.addSlotFromInvenWeapon(weapItem, index);
         }
         else {
             return;
