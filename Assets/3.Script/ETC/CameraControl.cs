@@ -15,6 +15,7 @@ public class CameraControl : MonoBehaviour
     public float rotationDirection = 0f;
 
     private void Awake() {
+        cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
         cinemachineFreeLook.LookAt = player.transform;
