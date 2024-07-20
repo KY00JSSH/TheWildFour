@@ -99,12 +99,15 @@ public class PlayerMove : MonoBehaviour {
             Quaternion.LookRotation(GetLookatPoint() - playerRigid.position);
 
         if (isMove) {
+            // 상반신 회전
             Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
             targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
                 Quaternion.Euler(playerSpine.eulerAngles.x,
                 playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                 playerSpine.eulerAngles.z);
-            playerSpine.rotation = targetRotation;
+            playerSpine.rotation = Quaternion.Euler(0, moveDirection, 0) * targetRotation;
+
+            // 하반신 회전
             playerRigid.rotation = 
                 Quaternion.Slerp(playerRigid.rotation,
                 Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0), rotationSpeed * Time.deltaTime);
@@ -128,8 +131,11 @@ public class PlayerMove : MonoBehaviour {
         Vector3 pointTolook;
         Vector3 targetPosition = Vector3.zero;
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
-            if (isDash) pointTolook =playerRigid.position + Vector3.forward * 5f;
+            if (isDash) pointTolook =
+                    Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, -moveDirection, 0) *
+                    new Vector3(InputX, 0, InputZ) * 2f + playerRigid.position;
             else pointTolook = cameraRay.GetPoint(rayLength);
+            Debug.Log(pointTolook);
             Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
 
             if (isMove) {
