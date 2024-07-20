@@ -105,15 +105,20 @@ public class PlayerMove : MonoBehaviour {
                 playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                 playerSpine.eulerAngles.z);
             playerSpine.rotation = targetRotation;
+            playerRigid.rotation = 
+                Quaternion.Slerp(playerRigid.rotation,
+                Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0), rotationSpeed * Time.deltaTime);
         }
         else {
             playerRigid.rotation = Quaternion.Slerp(
                         playerRigid.rotation,
                         targetRotation,
-                        3f * Time.deltaTime);
+                        rotationSpeed * Time.deltaTime);
         }
     }
 
+    // key input에 따라서 playerDirection이 있어야 하고.
+    // direction에 따라서 모든 방향 수정 로직은 보정을 받아야 함.
 
     private Vector3 GetLookatPoint() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -123,7 +128,7 @@ public class PlayerMove : MonoBehaviour {
         Vector3 pointTolook;
         Vector3 targetPosition = Vector3.zero;
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
-            if (isDash) pointTolook = playerRigid.position + Vector3.forward * 5f;
+            if (isDash) pointTolook =playerRigid.position + Vector3.forward * 5f;
             else pointTolook = cameraRay.GetPoint(rayLength);
             Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
 
@@ -149,9 +154,12 @@ public class PlayerMove : MonoBehaviour {
     }
 
     private float currentSpeed = 0f;
+    private float moveDirection = 0f;
     private void Move(float speed) {
         InputX = Input.GetAxis("Horizontal");
         InputZ = Input.GetAxis("Vertical");
+        moveDirection = Mathf.Atan2(InputX, InputZ) * Mathf.Rad2Deg;
+        if (moveDirection < 0) moveDirection += 360;
 
         if (InputX != 0 || InputZ != 0) isMove = true;
         else {
