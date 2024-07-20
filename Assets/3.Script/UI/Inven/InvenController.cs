@@ -10,11 +10,9 @@ public class InvenController : MonoBehaviour {
 
     private InvenUIController invenUi;
     private MenuWeapon menuWeapon;
+    private PlayerStatus playerStatus;
 
     public GameObject itemObject;
-
-    public bool itemTest = false;
-    public ItemData testItem;
 
     public delegate void OnInvenChanged(List<Item> inventory);
     public event OnInvenChanged InvenChanged;
@@ -23,6 +21,7 @@ public class InvenController : MonoBehaviour {
         inventory = new List<Item>();
         invenUi = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
+        playerStatus = FindObjectOfType<PlayerStatus>();
         initInven();
     }
 
@@ -289,21 +288,28 @@ public class InvenController : MonoBehaviour {
             //선택한 아이템이 약품이면 1개 사용
             var countItem = inventory[index] as CountableItem;
             countItem.useCurrStack(1);
+            MedItem eatMed = inventory[index] as MedItem;
+            playerStatus.EatMedicine(eatMed);   //플레이어 실제 아이템 섭취
             if (countItem.CurrStackCount == 0) {
                 inventory[index] = null;
             }
+            InvenChanged?.Invoke(inventory);
         }
         else if (inventory[index]?.itemData is FoodItemData foodItem) {
             //선택한 아이템이 음식이면 1개 사용
             var countItem = inventory[index] as CountableItem;
             countItem.useCurrStack(1);
+            FoodItem eatFood = inventory[index] as FoodItem;
+            playerStatus.EatFood(eatFood);  //플레이어 실제 아이템 섭취
             if (countItem.CurrStackCount == 0) {
                 inventory[index] = null;
             }
+            InvenChanged?.Invoke(inventory);
         }
         else if (inventory[index]?.itemData is WeaponItemData weapItem) {
             //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
             menuWeapon.addSlotFromInvenWeapon(weapItem, index);
+            InvenChanged?.Invoke(inventory);
         }
         else {
             return;
