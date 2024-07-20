@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour {
     private CameraControl cameraControl;
     private Rigidbody playerRigid;
+    private Transform playerSpine;
+
     private Vector3 targetPosition;
 
     private float InputX, InputZ;
@@ -39,6 +41,7 @@ public class PlayerMove : MonoBehaviour {
         playerRigid = GetComponentInParent<Rigidbody>();
         playerAnimator = GetComponentInParent<Animator>();
         cameraControl = FindObjectOfType<CameraControl>();
+        playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
     }
 
     private void Start() {
@@ -100,19 +103,22 @@ public class PlayerMove : MonoBehaviour {
 
         if (isMove) {
             // 상반신 회전
-            Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
             targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
                 Quaternion.Euler(playerSpine.eulerAngles.x,
                 playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                 playerSpine.eulerAngles.z);
             playerSpine.rotation = Quaternion.Euler(0, moveDirection, 0) * targetRotation;
 
+
             // 하반신 회전
+            targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0);
             playerRigid.rotation = 
                 Quaternion.Slerp(playerRigid.rotation,
-                Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0), rotationSpeed * Time.deltaTime);
+                targetRotation, rotationSpeed * Time.deltaTime);
+
         }
         else {
+            targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
             playerRigid.rotation = Quaternion.Slerp(
                         playerRigid.rotation,
                         targetRotation,
@@ -135,7 +141,6 @@ public class PlayerMove : MonoBehaviour {
                     Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, -moveDirection, 0) *
                     new Vector3(InputX, 0, InputZ) * 2f + playerRigid.position;
             else pointTolook = cameraRay.GetPoint(rayLength);
-            Debug.Log(pointTolook);
             Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
 
             if (isMove) {
