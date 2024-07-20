@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
@@ -89,71 +90,55 @@ public class PlayerMove : MonoBehaviour {
     }
 
 
-    /*
     private Vector3 pastPosition = Vector3.zero;
+    private float rotationSpeed = 5f;
+
     private void LookatMouse() {
         if (PlayerStatus.isDead) return;
+        Quaternion targetRotation =
+            Quaternion.LookRotation(GetLookatPoint() - playerRigid.position);
 
+        if (isMove) {
+            Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
+            targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
+                Quaternion.Euler(playerSpine.eulerAngles.x,
+                playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
+                playerSpine.eulerAngles.z);
+            playerSpine.rotation = targetRotation;
+        }
+        else {
+            playerRigid.rotation = Quaternion.Slerp(
+                        playerRigid.rotation,
+                        targetRotation,
+                        3f * Time.deltaTime);
+        }
+    }
+
+
+    private Vector3 GetLookatPoint() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-        float rotationSpeed = 5f;
         float rayLength;
 
         Vector3 pointTolook;
+        Vector3 targetPosition = Vector3.zero;
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
             if (isDash) pointTolook = playerRigid.position + Vector3.forward * 5f;
             else pointTolook = cameraRay.GetPoint(rayLength);
+            Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
 
             if (isMove) {
-                Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
-                Vector3 targetPosition = Vector3.Slerp(pastPosition, pointPosition, rotationSpeed * Time.deltaTime);
+                targetPosition = Vector3.Slerp(pastPosition, pointPosition, rotationSpeed * Time.deltaTime);
                 pastPosition = targetPosition;
-
-                Quaternion targetRotation =
-                    Quaternion.LookRotation(targetPosition - playerRigid.position);
-
-
-                Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
-                targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
-                    Quaternion.Euler(playerSpine.eulerAngles.x,
-                    playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
-                    playerSpine.eulerAngles.z);
-                playerSpine.rotation = targetRotation;
             }
-            else {
-                Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
-                Quaternion targetRotation =
-                    Quaternion.LookRotation(targetPosition - playerRigid.position);
-                playerRigid.rotation = Quaternion.Slerp(
-                            playerRigid.rotation,
-                            targetRotation,
-                            3f * Time.deltaTime);
-            }
+            else
+                targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
         }
-    }
-    */
-    private void LookatMouse() {
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-
-        float rotationSpeed = 2f;
-        float rayLength;
-
-        if (GroupPlane.Raycast(cameraRay, out rayLength)) {
-            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            playerRigid.transform.LookAt(
-                new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f));
-            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
-            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - playerRigid.position);
-
-            playerRigid.rotation = Quaternion.Slerp(
-            playerRigid.rotation,
-            targetRotation,
-            Time.deltaTime);
-        }
+        return targetPosition;
     }
 
-        private void Dash(bool isDash) {
+
+    private void Dash(bool isDash) {
         this.isDash = isDash;
         if (isDash && isMove) CurrentDashGage -= DecDashGage * Time.deltaTime;
         else CurrentDashGage += IncDashGage * Time.deltaTime;
@@ -185,11 +170,6 @@ public class PlayerMove : MonoBehaviour {
         Quaternion targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0);
 
         playerRigid.MovePosition(targetPosition);
-        playerRigid.rotation = Quaternion.Slerp(
-            playerRigid.rotation,
-            targetRotation,
-            5f * Time.deltaTime);
-
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);
     }
