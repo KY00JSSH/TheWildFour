@@ -20,6 +20,8 @@ public class MenuWeapon : MonoBehaviour {
     private int currSelectSlot = 1; //현재 선택된 장비창 슬롯 기본값 1
 
     private void Update() {
+        if (PlayerStatus.isDead) return;
+
         if (Input.GetKeyDown(KeyCode.X)) {
             if(currSelectSlot == 1) {
                 setCurrSelectSlot(2);

@@ -309,7 +309,6 @@ public class InvenController : MonoBehaviour {
             return;
         }
     }
-
     //TODO: 제작시 사용하는 필요 아이템 있으면 사용
     //TODO: 제작 후 인벤 차있으면 드랍
 }
