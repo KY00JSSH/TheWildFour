@@ -86,7 +86,6 @@ public class Player_UI : MonoBehaviour {
         fillImage.color = newColor;
     }
 
-    //TODO: 위치 보정값 이상함
     private void SettingSliderPosition() {
 
         // 슬라이더 위치 

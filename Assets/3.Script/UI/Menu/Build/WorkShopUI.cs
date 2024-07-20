@@ -26,7 +26,7 @@ public class WorkShopUI : MonoBehaviour {
         tooltipNum = FindObjectOfType<TooltipNum>();
         BtnItem = new Dictionary<Button, Item>();
     }
-    private void FixedUpdate() {
+    private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) Escape();
     }
 
@@ -70,14 +70,11 @@ public class WorkShopUI : MonoBehaviour {
                     LockButtonWithLevel(childbutton, medi.Level);
                 }
                 BtnItem.Add(childbutton, nowbtnkey);
-            }
-
-           
+            }           
         }
     }
 
     private void LockButtonWithLevel(Button childbutton, int level) {
-        Debug.Log(level +"/"+ workshopManager.WorkshopLevel);
         if (level <= workshopManager.WorkshopLevel) {
             childbutton.transform.GetChild(2).gameObject.SetActive(false);
             childbutton.enabled = true;
