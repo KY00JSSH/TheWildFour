@@ -68,11 +68,15 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
+        if (PlayerStatus.isDead) return;
+
         //클릭했을때 장비창 slot key 선택
         menuWeapon.setCurrSelectSlot(key);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (PlayerStatus.isDead) return;
+
         if (currentItem is WeaponItem) {
             originalParent = itemIcon.rectTransform.parent as RectTransform;
             originalPosition = itemIcon.rectTransform.anchoredPosition;
@@ -82,6 +86,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnDrag(PointerEventData data) {
+        if (PlayerStatus.isDead) return;
+
         if (currentItem is WeaponItem) {
             Vector2 position;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
@@ -90,6 +96,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (PlayerStatus.isDead) return;
+
         if (currentItem is WeaponItem) {
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
@@ -143,6 +151,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void DropItem() {
+        if (PlayerStatus.isDead) return;
+
         Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
         Instantiate(currentItem.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
         setWeaponSlot(null);
