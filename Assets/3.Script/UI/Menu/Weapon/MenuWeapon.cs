@@ -19,6 +19,17 @@ public class MenuWeapon : MonoBehaviour {
 
     private int currSelectSlot = 1; //현재 선택된 장비창 슬롯 기본값 1
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.X)) {
+            if(currSelectSlot == 1) {
+                setCurrSelectSlot(2);
+            }
+            else {
+                setCurrSelectSlot(1);
+            }
+        }
+    }
+
     private void Start() {
         firstBoxTransf = firstSlot.GetComponent<RectTransform>();
         secondBoxTransf = secondSlot.GetComponent<RectTransform>();
@@ -29,6 +40,14 @@ public class MenuWeapon : MonoBehaviour {
 
     public void setCurrSelectSlot(int slotNum) {
         currSelectSlot = slotNum;
+        if(slotNum ==1) {
+            firstCont.enableCursor();
+            secondCont.disableCursor();
+        }
+        else {
+            firstCont.disableCursor();
+            secondCont.enableCursor();
+        }
     }
 
     public WeaponItemData addItemBox(int index, WeaponItemData item) {

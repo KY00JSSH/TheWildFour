@@ -7,6 +7,9 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     [SerializeField]
     public Image itemIcon;
 
+    [SerializeField]
+    public Image cursorIcon;
+
     public int key;
 
     private Item currentItem;
@@ -28,6 +31,15 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
         canvas = FindObjectOfType<Canvas>();
     }
 
+    public void enableCursor() {
+        cursorIcon.gameObject.SetActive(true);
+    }
+
+    public void disableCursor() {
+        cursorIcon.gameObject.SetActive(false);
+    }
+
+    //슬롯에 무기 추가
     public void setWeaponSlot(WeaponItemData item = null) {
         if (item != null) {
             WeaponItem newItem = new WeaponItem();
