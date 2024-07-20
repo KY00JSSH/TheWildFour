@@ -10,8 +10,6 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
     [SerializeField] private Text itemText;
     [SerializeField] private Image itemIcon;
 
-    // 아이템을 사용하는지 확인
-    public bool isItemUse = false;
     // 아이템이 들어가있는지 확인
     public bool isItemIn = false;
 
@@ -30,8 +28,6 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
 
     private void Awake() {
         invenBox = transform.GetComponent<Button>();
-        itemText = transform.GetChild(0).GetComponent<Text>();
-        itemIcon = transform.GetChild(1).GetComponent<Image>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         invenControll = FindObjectOfType<InvenController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
@@ -48,6 +44,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
 
         if (currentItem is CountableItem countItem) {
             itemIcon.sprite = countItem.itemData.Icon;
+            itemText.enabled = true;
             itemText.text = countItem.CurrStackCount.ToString();
             itemIcon.enabled = true;
             itemIcon.gameObject.SetActive(true);
@@ -56,6 +53,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
         }
         else if (currentItem is EquipItem eqItem) {
             itemIcon.sprite = eqItem.itemData.Icon;
+            itemText.enabled = false;
             itemText.text = "";
             itemIcon.enabled = true;
             itemIcon.gameObject.SetActive(true);
@@ -64,6 +62,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
         else {
             if (currentItem != null) {
                 itemIcon.sprite = currentItem.itemData.Icon;
+                itemText.enabled = false;
                 itemText.text = "";
                 itemIcon.enabled = true;
                 itemIcon.gameObject.SetActive(true);
@@ -71,7 +70,8 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
             }
             else {
                 itemIcon.sprite = null;
-                itemText.text = "0";
+                itemText.text = "";
+                itemText.enabled = false;
                 itemIcon.enabled = false;
                 itemIcon.gameObject.SetActive(false);
                 isItemIn = false;
