@@ -29,13 +29,13 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // 음식 슬라이더 쿨타임
     private float currentTime;
 
-    private bool isItemUse = false;
-
     public ItemDurability ItemDurability { get; private set; }
     private Image durability_Food;
     private Image durability_Weap;
 
     private void Awake() {
+
+
         inventoryBox = GetComponent<InventoryBox>();
         if (Tooltip_inven == null) transform.GetChild(2);
         textTitle = Tooltip_inven.transform.GetChild(1).GetChild(0).GetComponent<Text>();
@@ -79,23 +79,30 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 ItemDurability = InvenItemDurabilityCheck(value);
                 InvenItemDurabilityShow();
             }
-
+            else {
+                ItemOff();
+            }
         }
         else {
             // 아이템을 사용했거나 버렸을 경우
             invenBoxSlider.transform.Find("Background").GetComponent<Image>().color = Color.white;
-            currentTime = 0;
-            invenBoxSlider.value = 1;
-            invenBoxSlider.gameObject.SetActive(false);
-            weapSlider.gameObject.SetActive(false);
+            ItemOff();
         }
+    }
+
+    public void ItemOff() {
+        currentTime = 0;
+        invenBoxSlider.value = 1;
+
+        invenBoxSlider.gameObject.SetActive(false);
+        durability_Food.gameObject.SetActive(false);
+        durability_Weap.gameObject.SetActive(false);
+        weapSlider.gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter == gameObject) {
-            Debug.Log("=======마우스 입력됨==========");
             if (inventoryBox.CurrentItem?.itemData != null) {
-                Debug.Log("=================");
                 Tooltip_inven.SetActive(true);
                 InvenBoxItemInfo();
             }
