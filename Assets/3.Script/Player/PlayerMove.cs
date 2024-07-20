@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
@@ -88,34 +89,54 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
+
+    private Vector3 pastPosition = Vector3.zero;
+    private float rotationSpeed = 5f;
+
     private void LookatMouse() {
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
-        float rotationSpeed = 5f;
-        float rayLength;
+        if (PlayerStatus.isDead) return;
+        Quaternion targetRotation =
+            Quaternion.LookRotation(GetLookatPoint() - playerRigid.position);
 
-        if (GroupPlane.Raycast(cameraRay, out rayLength)) {
-            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
-            Vector3 targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
-            Quaternion targetRotation =
-                Quaternion.LookRotation(targetPosition - playerRigid.position);
-
-            /*
-            Debug.Log(targetRotation.eulerAngles);
-            targetRotation = Quaternion.Euler(
-                targetRotation.eulerAngles.x, targetRotation.eulerAngles.y, targetRotation.eulerAngles.x - 95.816f);
+        if (isMove) {
             Transform playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
+            targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
+                Quaternion.Euler(playerSpine.eulerAngles.x,
+                playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
+                playerSpine.eulerAngles.z);
             playerSpine.rotation = targetRotation;
-            Debug.Log("@@"+playerSpine.rotation.eulerAngles);
-            */
-            /*
+        }
+        else {
             playerRigid.rotation = Quaternion.Slerp(
-            playerRigid.rotation,
-            targetRotation,
-            rotationSpeed * Time.deltaTime);
-            */
+                        playerRigid.rotation,
+                        targetRotation,
+                        3f * Time.deltaTime);
         }
     }
+
+
+    private Vector3 GetLookatPoint() {
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayLength;
+
+        Vector3 pointTolook;
+        Vector3 targetPosition = Vector3.zero;
+        if (GroupPlane.Raycast(cameraRay, out rayLength)) {
+            if (isDash) pointTolook = playerRigid.position + Vector3.forward * 5f;
+            else pointTolook = cameraRay.GetPoint(rayLength);
+            Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
+
+            if (isMove) {
+                targetPosition = Vector3.Slerp(pastPosition, pointPosition, rotationSpeed * Time.deltaTime);
+                pastPosition = targetPosition;
+            }
+            else
+                targetPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
+        }
+        return targetPosition;
+    }
+
 
     private void Dash(bool isDash) {
         this.isDash = isDash;
@@ -145,7 +166,9 @@ public class PlayerMove : MonoBehaviour {
             Quaternion.Euler(0, cameraControl.rotationDirection, 0) * 
             new Vector3(InputX, 0, InputZ) * Time.deltaTime * constMoveSpeed * currentSpeed;
         targetPosition += playerRigid.position;
-        
+
+        Quaternion targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0);
+
         playerRigid.MovePosition(targetPosition);
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);

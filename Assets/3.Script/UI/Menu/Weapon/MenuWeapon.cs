@@ -19,6 +19,19 @@ public class MenuWeapon : MonoBehaviour {
 
     private int currSelectSlot = 1; //현재 선택된 장비창 슬롯 기본값 1
 
+    private void Update() {
+        if (PlayerStatus.isDead) return;
+
+        if (Input.GetKeyDown(KeyCode.X)) {
+            if(currSelectSlot == 1) {
+                setCurrSelectSlot(2);
+            }
+            else {
+                setCurrSelectSlot(1);
+            }
+        }
+    }
+
     private void Start() {
         firstBoxTransf = firstSlot.GetComponent<RectTransform>();
         secondBoxTransf = secondSlot.GetComponent<RectTransform>();
@@ -29,6 +42,14 @@ public class MenuWeapon : MonoBehaviour {
 
     public void setCurrSelectSlot(int slotNum) {
         currSelectSlot = slotNum;
+        if(slotNum ==1) {
+            firstCont.enableCursor();
+            secondCont.disableCursor();
+        }
+        else {
+            firstCont.disableCursor();
+            secondCont.enableCursor();
+        }
     }
 
     public WeaponItemData addItemBox(int index, WeaponItemData item) {
@@ -93,7 +114,6 @@ public class MenuWeapon : MonoBehaviour {
     }
 
     public void addToInventory(int index, int target) {
-
         var weaponItem = invenCont.Inventory[target]?.itemData as WeaponItemData;
         var countableItem = invenCont.Inventory[target]?.itemData as CountableItemData;
         var foodItem = invenCont.Inventory[target]?.itemData as FoodItemData;
@@ -124,6 +144,31 @@ public class MenuWeapon : MonoBehaviour {
             else {
                 invenCont.addWeaponItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
                 secondCont.setWeaponSlot(null);
+            }
+        }
+    }
+
+    public void addSlotFromInvenWeapon(WeaponItemData weapItem, int target) {
+        if (currSelectSlot == 1) {
+            WeaponItemData firstWeapon = firstCont?.CurrentItem?.itemData as WeaponItemData;
+            if (firstWeapon) {
+                firstCont.setWeaponSlot(weapItem);
+                invenCont.addWeaponItem(firstWeapon, target);
+            }
+            else {
+                firstCont.setWeaponSlot(weapItem);
+                invenCont.removeItem(target);
+            }
+        }
+        else {
+            WeaponItemData secondWeapon = secondCont?.CurrentItem?.itemData as WeaponItemData;
+            if (secondWeapon) {
+                secondCont.setWeaponSlot(weapItem);
+                invenCont.addWeaponItem(secondWeapon, target);
+            }
+            else {
+                secondCont.setWeaponSlot(weapItem);
+                invenCont.removeItem(target);
             }
         }
     }

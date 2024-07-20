@@ -144,7 +144,7 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
             }
             else {
                 //아이템 드랍
-                invenDrop.DropItemAll(key);
+                invenDrop.dropItemAll(key);
             }
         }
     }
