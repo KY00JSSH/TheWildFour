@@ -139,8 +139,6 @@ public class ShelterUI : MonoBehaviour {
         }
     }
 
-    //TODO: 해당 버튼이 눌리면 스킬 불빛 변경 할 것
-    //TODO: 버튼 포인트 값이 있으면 실행되게 할것
     /*
      1. 해당 버튼이 눌리면 버튼의 하위객체 3번의 이름 마지막 글자 확인 -> 스킬카운트 갯수
      2. 해당 글자의 숫자로 SkillCountImg클래스의 스프라이트 list배열 불러오기

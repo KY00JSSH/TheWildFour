@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
 
     private Menu_Controll menuControll;
     private BuildDetail currentBuildDetail;
@@ -18,7 +18,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     [SerializeField] private GameObject itemimgs;
     [SerializeField] private GameObject itemtexts;
-
+    Button btn;
     public bool isBuildAvailable = false;
     int btnIndex = 0;
     private int[] btnNum = new int[5];
@@ -31,9 +31,15 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (tooltipMain == null) tooltipMain = tooltipbox.transform.GetChild(0).GetChild(0).GetComponent<Text>();
     }
 
+    private void Update() {
+        if (currentBuildDetail != null) {
+            // Text Ç¥½Ã
+            Build_ItemText();
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
-            Button btn = eventData.pointerEnter.GetComponent<Button>();
+            btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null && IsButtonInArray(btn)) {
                 menuControll.ButtonMove(400, false);
                 tooltipbox.gameObject.SetActive(true);
@@ -51,15 +57,6 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData) {
-        if (eventData.pointerCurrentRaycast.gameObject != null) {
-            Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
-            if (btn != null) {
-                btnIndex = 0;
-                //currentBuildDetail = null;
-            }
-        }
-    }
 
     private bool IsButtonInArray(Button btn) {
         for (int i = 0; i < buttons.Length; i++) {

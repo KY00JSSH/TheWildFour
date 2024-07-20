@@ -161,12 +161,20 @@ public class TooltipInfo : MonoBehaviour {
         }
     }
 
-    protected void L_StatsActiveInit() {
-        foreach (Transform each in L_StatsTexts.transform) {
+    protected void TextImgActiveInit(GameObject texts, GameObject imgs) {
+        foreach (Transform each in texts.transform) {
             each.gameObject.SetActive(true);
         }
-        foreach (Transform each in L_StatsImgs.transform) {
+        foreach (Transform each in imgs.transform) {
             each.gameObject.SetActive(true);
+        }
+    }
+    protected void WorkshopNeedItemDisappear(int itemNum) {
+        for (int i = 0; i < L_StatsTexts.transform.childCount; i++) {
+            if (i > itemNum - 1) {
+                L_ItemTexts.transform.GetChild(i).gameObject.SetActive(false);
+                L_ItemImgs.transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 

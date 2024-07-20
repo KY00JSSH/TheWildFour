@@ -20,6 +20,8 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     private void Update() {
+        if (PlayerStatus.isDead) return;
+
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0 ) {
             CheckForItems();
         }

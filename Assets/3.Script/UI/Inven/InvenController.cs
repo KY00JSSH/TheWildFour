@@ -9,10 +9,10 @@ public class InvenController : MonoBehaviour {
     public List<Item> Inventory { get { return inventory; } }
 
     private InvenUIController invenUi;
-    public GameObject itemObject;
+    private MenuWeapon menuWeapon;
+    private PlayerStatus playerStatus;
 
-    public bool itemTest = false;
-    public ItemData testItem;
+    public GameObject itemObject;
 
     public delegate void OnInvenChanged(List<Item> inventory);
     public event OnInvenChanged InvenChanged;
@@ -20,6 +20,8 @@ public class InvenController : MonoBehaviour {
     private void Start() {
         inventory = new List<Item>();
         invenUi = FindObjectOfType<InvenUIController>();
+        menuWeapon = FindObjectOfType<MenuWeapon>();
+        playerStatus = FindObjectOfType<PlayerStatus>();
         initInven();
     }
 
@@ -63,12 +65,13 @@ public class InvenController : MonoBehaviour {
                 isInvenFull = true;
             }
         }
-
         InvenChanged?.Invoke(inventory);
     }
 
+    //아이템 추가 가능여부
     public bool canItemAdd() {
         Item item = itemObject.GetComponent<Item>();
+        //아이템을 겹쳐서 넣을 수 있는지 확인
         int checkNum = canAddThisBox(item.Key);
         if (checkNum == 16 || checkNum != 99) {
             return true;
@@ -94,13 +97,11 @@ public class InvenController : MonoBehaviour {
             var equipItem = inventory[i]?.itemData as EquipItemData;
             var medicItem = inventory[i]?.itemData as MedicItemData;
 
-            if (weaponItem != null && countableItem != null && foodItem != null && equipItem != null && medicItem != null) {
-                if (inventory[i] != null) {
-                    if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
-                        if (inventory[i] is CountableItem countItem) {
-                            if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
-                                return i;
-                            }
+            if (weaponItem != null || countableItem != null || foodItem != null || equipItem != null || medicItem != null) {
+                if (inventory[i]?.Key != null && inventory[i]?.Key == itemKey) {
+                    if (inventory[i] is CountableItem countItem) {
+                        if (countItem?.CurrStackCount < countItem?.MaxStackCount) {
+                            return i;
                         }
                     }
                 }
@@ -128,12 +129,14 @@ public class InvenController : MonoBehaviour {
         return 99;  //아예 빈 박스를 사용못할때
     }
 
+    //인벤에 절대 추가 못함 flag reset
     public void invenFullFlagReset() {
         isInvenFull = false;
     }
     //아이템 뭉텅이 인벤에서 삭제
     public void removeItem(int index) {
         inventory[index] = null;
+        invenFullFlagReset();
         InvenChanged?.Invoke(inventory);
     }
 
@@ -216,6 +219,7 @@ public class InvenController : MonoBehaviour {
         }
     }
 
+    //인벤 아이템끼리 스위칭
     public void changeInvenIndex(int currentIndex, int changeIndex) {
         if (currentIndex != changeIndex && changeIndex != 99) {
             var weaponItem = inventory[changeIndex]?.itemData as WeaponItemData;
@@ -234,11 +238,13 @@ public class InvenController : MonoBehaviour {
             else {
                 inventory[changeIndex] = inventory[currentIndex];
                 inventory[currentIndex] = null;
+                invenFullFlagReset();
                 InvenChanged?.Invoke(inventory);
             }
         }
     }
 
+    //장비창과 인벤창 아이템 스위칭
     public void changeItemIntoWeapSlot(WeaponItemData item, int index) {
         //무기가 이미 있을때 인벤창이랑 스위칭 아니면 인벤에 있는 아이템 지움
         if (item != null) {
@@ -251,10 +257,12 @@ public class InvenController : MonoBehaviour {
         }
         else {
             inventory[index] = null;
+            invenFullFlagReset();
             InvenChanged?.Invoke(inventory);
         }
     }
 
+    //특정 인덱스에 무기 아이템 있는지 확인
     public WeaponItemData getIndexItem(int index) {
         if (inventory[index]?.itemData is WeaponItemData weapItem) {
             return weapItem;
@@ -264,6 +272,49 @@ public class InvenController : MonoBehaviour {
         }
     }
 
+    //특정 인덱스에 무기 아이템 추가
+    public void addWeaponItem(WeaponItemData weapItem, int index) {
+        WeaponItem newItem = new WeaponItem();
+        newItem.WeaponItemData = weapItem;
+        newItem.equipItemData = weapItem;
+        newItem.itemData = weapItem;
+        inventory[index] = newItem;
+        InvenChanged?.Invoke(inventory);
+    }
+
+    //아이템 F로 사용
+    public void useInvenItem(int index) {
+        if (inventory[index]?.itemData is MedicItemData medicItem) {
+            //선택한 아이템이 약품이면 1개 사용
+            var countItem = inventory[index] as CountableItem;
+            countItem.useCurrStack(1);
+            MedItem eatMed = inventory[index] as MedItem;
+            playerStatus.EatMedicine(eatMed);   //플레이어 실제 아이템 섭취
+            if (countItem.CurrStackCount == 0) {
+                inventory[index] = null;
+            }
+            InvenChanged?.Invoke(inventory);
+        }
+        else if (inventory[index]?.itemData is FoodItemData foodItem) {
+            //선택한 아이템이 음식이면 1개 사용
+            var countItem = inventory[index] as CountableItem;
+            countItem.useCurrStack(1);
+            FoodItem eatFood = inventory[index] as FoodItem;
+            playerStatus.EatFood(eatFood);  //플레이어 실제 아이템 섭취
+            if (countItem.CurrStackCount == 0) {
+                inventory[index] = null;
+            }
+            InvenChanged?.Invoke(inventory);
+        }
+        else if (inventory[index]?.itemData is WeaponItemData weapItem) {
+            //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
+            menuWeapon.addSlotFromInvenWeapon(weapItem, index);
+            InvenChanged?.Invoke(inventory);
+        }
+        else {
+            return;
+        }
+    }
     //TODO: 제작시 사용하는 필요 아이템 있으면 사용
     //TODO: 제작 후 인벤 차있으면 드랍
 }
