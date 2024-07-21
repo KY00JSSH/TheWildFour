@@ -316,10 +316,9 @@ GameObject:
   - component: {fileID: 4854541277853426874}
   - component: {fileID: 4854541277853426875}
   - component: {fileID: 4854541277853426872}
-  - component: {fileID: 4854541277853426878}
-  - component: {fileID: 962832382459448185}
+  - component: {fileID: 3805462171279417641}
   m_Layer: 5
-  m_Name: BuildInvenBox
+  m_Name: InvenBoxShelter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,20 +428,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4854541277853426875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Inven_Bottom_Box, Assembly-CSharp
-        m_MethodName: ItemUse_Button
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4854541277853426878
+      m_Calls: []
+--- !u!114 &3805462171279417641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -451,22 +438,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4854541277853426876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50cb28d02b4e3b74ba4a0a420f8e8a14, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fdc63c665c34d249aee2ba2acc5a300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  tooltipbox: {fileID: 0}
-  _titleText: {fileID: 0}
-  _contentText: {fileID: 0}
---- !u!114 &962832382459448185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4854541277853426876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  itemText: {fileID: 4854541277018379628}
+  itemIcon: {fileID: 4854541277751096202}
+  isItemIn: 0
