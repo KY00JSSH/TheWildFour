@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2741,10 +2741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cb28d02b4e3b74ba4a0a420f8e8a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  tooltipbox: {fileID: 0}
-  _titleText: {fileID: 0}
-  _contentText: {fileID: 0}
 --- !u!114 &106647613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2760,7 +2756,6 @@ MonoBehaviour:
   invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
-  isItemUse: 0
   isItemIn: 0
 --- !u!114 &106647614
 MonoBehaviour:
@@ -5608,6 +5603,10 @@ MonoBehaviour:
   - type: 6
     totalTime: 0
     tickTime: 0
+    isTicked: 0
+  - type: 7
+    totalTime: 0
+    tickTime: 1
     isTicked: 0
 --- !u!4 &250215437
 Transform:
@@ -13890,10 +13889,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cb28d02b4e3b74ba4a0a420f8e8a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  tooltipbox: {fileID: 0}
-  _titleText: {fileID: 0}
-  _contentText: {fileID: 0}
 --- !u!114 &690872538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13909,7 +13904,6 @@ MonoBehaviour:
   invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
-  isItemUse: 0
   isItemIn: 0
 --- !u!114 &690872539
 MonoBehaviour:
@@ -15801,7 +15795,6 @@ MonoBehaviour:
   itemimgs: {fileID: 530665625}
   itemtexts: {fileID: 475597129}
   shelterLevelText: {fileID: 1273235916}
-  isUpgradeAvailable: 0
 --- !u!1 &762226439
 GameObject:
   m_ObjectHideFlags: 0
@@ -26813,7 +26806,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -27267,7 +27260,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -31914,7 +31907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1659951893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31986,7 +31979,6 @@ MonoBehaviour:
   itemimgs: {fileID: 1044209676}
   itemtexts: {fileID: 1003671259}
   shelterLevelText: {fileID: 509805601}
-  isUpgradeAvailable: 0
 --- !u!1 &1667335579
 GameObject:
   m_ObjectHideFlags: 0
@@ -32747,7 +32739,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -34576,10 +34568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cb28d02b4e3b74ba4a0a420f8e8a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  tooltipbox: {fileID: 0}
-  _titleText: {fileID: 0}
-  _contentText: {fileID: 0}
 --- !u!114 &1782504097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34595,7 +34583,6 @@ MonoBehaviour:
   invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
-  isItemUse: 0
   isItemIn: 0
 --- !u!114 &1782504098
 MonoBehaviour:
@@ -39967,10 +39954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50cb28d02b4e3b74ba4a0a420f8e8a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  tooltipbox: {fileID: 0}
-  _titleText: {fileID: 0}
-  _contentText: {fileID: 0}
 --- !u!114 &2012256575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39986,7 +39969,6 @@ MonoBehaviour:
   invenBox: {fileID: 0}
   itemText: {fileID: 0}
   itemIcon: {fileID: 0}
-  isItemUse: 0
   isItemIn: 0
 --- !u!114 &2012256576
 MonoBehaviour:
