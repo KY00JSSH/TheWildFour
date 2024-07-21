@@ -17,7 +17,7 @@ public class InvenController : MonoBehaviour {
     public delegate void OnInvenChanged(List<Item> inventory);
     public event OnInvenChanged InvenChanged;
 
-    private void Start() {
+    private void Awake() {
         inventory = new List<Item>();
         invenUi = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
@@ -317,4 +317,22 @@ public class InvenController : MonoBehaviour {
     }
     //TODO: 제작시 사용하는 필요 아이템 있으면 사용
     //TODO: 제작 후 인벤 차있으면 드랍
+
+    //아이템 제작시 인벤에 들어갈 수 있는지 여부
+    public bool checkCanCreateItem(int itemKey) {
+        int checkNum = canAddThisBox(itemKey);
+
+        if (checkNum != 99) {
+            return true;
+        }
+        else {
+            int existBox = isExistEmptyBox();
+            if (existBox != 99) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
 }

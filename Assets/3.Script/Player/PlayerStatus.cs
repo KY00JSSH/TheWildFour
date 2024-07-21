@@ -68,7 +68,8 @@ public class PlayerStatus : MonoBehaviour {
 
     public void EatMedicine(MedItem item) {
         if (item.HealTime == 0) {
-            PlayerHp += item.HealTime * HealRestore;
+            PlayerHp += 80;
+            if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;
             return;
         }
         StatusControl.Instance.GiveStatus(Status.Heal, this, item.HealTime);
@@ -138,6 +139,7 @@ public class PlayerStatus : MonoBehaviour {
             TakeHungerDamage();
             RestoreHpHunger();
             SatietySlow();
+            RestoreHp();
         }
     }
 }
