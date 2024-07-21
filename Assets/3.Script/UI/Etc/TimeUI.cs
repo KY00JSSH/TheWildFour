@@ -14,6 +14,8 @@ public class TimeUI : MonoBehaviour {
     private int surviveDay = 0;
     private float silderValue = 0;
 
+    [SerializeField] private Text playerDieTime;
+
     private void Awake() {
         timeManager = FindObjectOfType<TimeManager>();
     }
@@ -23,10 +25,11 @@ public class TimeUI : MonoBehaviour {
         if (worldHour > 12) { // 밤
             worldHour -= 12;
             time[0].text = string.Format("{0} PM", worldHour);
-            
+
         }
         else {// 낮
-            time[0].text = string.Format("{0} AM", worldHour);
+            if (worldHour == 0) time[0].text = "12 AM";
+            else time[0].text = string.Format("{0} AM", worldHour);
             timeIcon.sprite = timeIcons[0];
         }
         time[1].text = string.Format("{0} 일", surviveDay);
@@ -47,9 +50,12 @@ public class TimeUI : MonoBehaviour {
             timeIcon.sprite = timeIcons[1];
             timeSlider.value = silderValue / 12;
         }
-        
+
         // 메소드 변경예정
     }
 
+    public void OnPlayerDieDay() {
+        playerDieTime.text = string.Format("생존 일수 : {0}", surviveDay);
+    }
 
 }

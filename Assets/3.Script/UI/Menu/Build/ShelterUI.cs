@@ -12,7 +12,6 @@ public class SkillCountImg {
 
     [SerializeField] public List<Sprite>[] skillCnt = new List<Sprite>[8];
 
-
     public void Init(string path) {
         for (int i = 0; i < skillCnt.Length; i++) {
             skillCnt[i] = new List<Sprite>();
@@ -65,6 +64,8 @@ public class ShelterUI : MonoBehaviour {
     [SerializeField] private Text[] pointers;
 
 
+    public bool isShelterUIOpen { get { return _isShelterUIOpen; } }
+    private bool _isShelterUIOpen = false;
 
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
@@ -77,11 +78,13 @@ public class ShelterUI : MonoBehaviour {
     }
 
     private void OnEnable() {
+        _isShelterUIOpen = true;
         ShelterLevel_Alpha();
         ShelterLevel_AlphaBtns();
         menuButton.SetActive(false);
     }
     private void OnDisable() {
+        _isShelterUIOpen = false;
         menuButton.SetActive(true);
     }
 

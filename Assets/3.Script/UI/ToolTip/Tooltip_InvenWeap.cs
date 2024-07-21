@@ -21,8 +21,6 @@ public class Tooltip_InvenWeap : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public ItemDurability ItemDurability { get; private set; }
     private Image durability_Weap;
 
-    private bool isMousePoint = false;
-
     private void Awake() {
         weaponSlotControll = GetComponent<WeaponSlotControll>();
         if (Tooltip_inven == null) transform.GetChild(2);
@@ -39,11 +37,16 @@ public class Tooltip_InvenWeap : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Update() {
         // 아이템이 들어왔을 경우
-        if (isMousePoint) {
+        if(weaponSlotControll.CurrentItem?.itemData) {
+            if (weaponSlotControll.CurrentItem?.itemData is WeaponItemData weapon) {
+                currentWeap = weapon;
+            }
+        }
+        if (currentWeap != null) {
             if (weaponSlotControll.CurrentItem?.itemData) {
-
                 weapSlider.gameObject.SetActive(true);
                 InvenItemDurabilityText_Weap(currentWeap);
+
                 float value = InvenBoxItemSlider();
                 ItemDurability = InvenItemDurabilityCheck(value);
                 InvenItemDurabilityShow();
@@ -57,13 +60,13 @@ public class Tooltip_InvenWeap : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 weapSlider.gameObject.SetActive(false);
             }
         }
+      
         
         if (Input.GetKeyDown(KeyCode.Escape)) Tooltip_inven.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter == gameObject) {
-            isMousePoint = true;
             if (weaponSlotControll.CurrentItem?.itemData) {
                 if(weaponSlotControll.CurrentItem.itemData is WeaponItemData weapon) {
                     currentWeap = weapon;
@@ -80,7 +83,6 @@ public class Tooltip_InvenWeap : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerExit(PointerEventData eventData) {
         if (Tooltip_inven.activeSelf) {
             Tooltip_inven.SetActive(false);
-            isMousePoint = false;
         }
     }
 

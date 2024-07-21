@@ -21,6 +21,9 @@ public class WorkShopUI : MonoBehaviour {
 
     public Dictionary<Button, Item> BtnItem { get; private set; }
 
+    public bool isWorkshopUIOpen { get { return _isWorkshopUIOpen; } }
+    private bool _isWorkshopUIOpen = false;
+
     private void Awake() {
         workshopManager = FindObjectOfType<WorkshopManager>();
         tooltipNum = FindObjectOfType<TooltipNum>();
@@ -31,10 +34,12 @@ public class WorkShopUI : MonoBehaviour {
     }
 
     private void OnEnable() {
+        _isWorkshopUIOpen = true;
         FindButtonLevel();
         menuButton.SetActive(false);
     }
     private void OnDisable() {
+        _isWorkshopUIOpen = false;
         menuButton.SetActive(true);
     }
 
@@ -85,4 +90,8 @@ public class WorkShopUI : MonoBehaviour {
         }
     }
 
+    public int ButtonItemEach(ItemData itemData) {
+        Debug.Log(itemData.Key);
+        return itemData.Key;
+    }
 }
