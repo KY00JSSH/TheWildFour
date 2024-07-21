@@ -39,32 +39,22 @@ public class Menu_Controll : MonoBehaviour {
     // 키값 확인
     private int ButtonPress() {
         if (Input.GetKeyDown(KeyCode.B)) {
-            // 건설 열리기
-            Debug.Log("건설 열려야함");
             ButtonMove(150, true);
             GetButtonScript(0);
         }
         else if (Input.GetKeyDown(KeyCode.M)) {
-            // 맵 열리기
-            Debug.Log("맵 열려야함");
             CloseUI();
             GetButtonScript(1);
         }
         else if (Input.GetKeyDown(KeyCode.N)) {
-            // 노트 열리기
-            Debug.Log("노트 열려야함");
             CloseUI();
             GetButtonScript(2);
         }
         else if (Input.GetKeyDown(KeyCode.V)) {
-            // 가방 열리기
-            Debug.Log("가방 열려야함");
             CloseUI();
             GetButtonScript(3);
         }
         else if (Input.GetKeyDown(KeyCode.X)) {
-            // 무기 변경
-            Debug.Log("무기 변경 열려야함");
             GetButtonScript(4);
         }
         else if (Input.GetKeyDown(KeyCode.Escape)) {

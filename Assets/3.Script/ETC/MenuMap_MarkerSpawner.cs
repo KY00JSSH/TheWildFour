@@ -35,7 +35,7 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     {
         if(type < 0 || (int)type >= markerPrefabs.Length)
         {
-            Debug.LogError("건설할 오브젝트 타입이나 마커가 없습니다. 박지훈 대가리 박아");
+            Debug.LogError("건설할 오브젝트 타입이나 마커가 없습니다. 박지훈 열심히 함. 유니티가 멍청이임");
             return;
         }
 
