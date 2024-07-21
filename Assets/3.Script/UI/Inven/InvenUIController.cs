@@ -17,7 +17,7 @@ public class InvenUIController : MonoBehaviour {
     private void Awake() {
         //기본 인벤 초기화
         invenController = GetComponent<InvenController>();
-        InitInven();
+        initInven();
         //실제 인벤 데이터가 변할때마다 UI 업데이트 되도록 옵저버 패턴으로 구독 설정
         invenController.InvenChanged += UpdateUI;
     }
@@ -35,7 +35,7 @@ public class InvenUIController : MonoBehaviour {
     }
 
     //인벤토리 초기화 - 최대 활성화 개수만큼 미리 생성 후 현재 활성화 가능 개수만 active
-    private void InitInven() {
+    private void initInven() {
         currInvenCount = 8; //기본 활성화 개수 설정
         List<GameObject> invenBoxList = new List<GameObject>();
         for (int i = 0; i < invenMaxcount; i++) {
