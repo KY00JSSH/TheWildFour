@@ -4,15 +4,15 @@ using UnityEngine;
 public class WorkshopManager : MonoBehaviour { 
     public int WorkshopLevel { get; private set; }
 
-    ShelterCreate shelter;
+    WorkshopCreate workshop;
     private void Awake() {
-        shelter = GetComponent<ShelterCreate>();
+        workshop = GetComponent<WorkshopCreate>();
     }
 
     public void LevelUp() {
         //TODO: Workshop upgrade item 부족하면 return
 
-        Destroy(shelter.Building.GetComponent<Rigidbody>());
+        Destroy(workshop.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
     }
 
@@ -21,12 +21,12 @@ public class WorkshopManager : MonoBehaviour {
         while (upgradeCooltime.CoolTime > 0)
             yield return null;
 
-        Transform shelterPosition = shelter.Building.transform;
-        shelter.Building.SetActive(false);
+        Transform shelterPosition = workshop.Building.transform;
+        workshop.Building.SetActive(false);
         WorkshopLevel++;
-        shelter.Building.transform.position = shelterPosition.position;
-        shelter.Building.transform.rotation = shelterPosition.rotation;
-        shelter.Building.SetActive(true);
+        workshop.Building.transform.position = shelterPosition.position;
+        workshop.Building.transform.rotation = shelterPosition.rotation;
+        workshop.Building.SetActive(true);
     }
 
     private void Start() {

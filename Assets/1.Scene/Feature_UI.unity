@@ -24590,6 +24590,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8927614913479172264, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
+      propertyPath: m_Name
+      value: Workshop03
+      objectReference: {fileID: 0}
     - target: {fileID: 8927614913479172265, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -29913,7 +29917,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1302488899}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartUpgradeCooltime
+        m_MethodName: StartUpgradeCooltime_WS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40287,6 +40291,7 @@ GameObject:
   - component: {fileID: 1715626234}
   - component: {fileID: 1715626233}
   - component: {fileID: 1715626236}
+  - component: {fileID: 1715626237}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -40380,6 +40385,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d40702066f68b247ba4249859bb4be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1715626237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715626232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5bae6217a2a8f34fa822e252690dfbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1715751323

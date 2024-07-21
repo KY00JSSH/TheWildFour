@@ -21,7 +21,7 @@ public class TimeUI : MonoBehaviour {
     }
     private void Update() {
         worldHour = (int)timeManager.GetWorldHour();
-        surviveDay = timeManager.GetSurviveDay();
+        surviveDay = timeManager.GetTotalDay();
         if (worldHour > 12) { // นใ
             worldHour -= 12;
             time[0].text = string.Format("{0} PM", worldHour);

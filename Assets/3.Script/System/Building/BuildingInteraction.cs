@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public enum BuildingType {
@@ -12,14 +13,15 @@ public class BuildingInteraction : MonoBehaviour {
     [SerializeField] private BuildingType buildingType;
     public BuildingType Type { get { return buildingType; } }
 
+    private BuildingInteractionManager interactionManager;
     private InteractionUIMapping InteractionUI;
-
-    private ItemSelectControll selected;
     private Menu_Controll menuControl;
-
+    private ItemSelectControll selected;
     private void Awake() {
-        InteractionUI = FindObjectOfType<InteractionUIMapping>();    
-        menuControl = FindObjectOfType<Menu_Controll>();
+        interactionManager = FindObjectOfType<BuildingInteractionManager>();
+
+        InteractionUI = interactionManager.InteractionUI;
+        menuControl = interactionManager.menuControl;
     }
 
     private void OnEnable() {
@@ -43,8 +45,8 @@ public class BuildingInteraction : MonoBehaviour {
         }
     }
 
-    private void CampfireInteraction() { 
-        
+    private void CampfireInteraction() {
+
     }
 
     private void FurnaceInteraction() {
