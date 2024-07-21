@@ -17793,18 +17793,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1033926953}
-        m_TargetAssemblyTypeName: ShelterManager, Assembly-CSharp
-        m_MethodName: LevelUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1797005541}
         m_TargetAssemblyTypeName: ShelterUI, Assembly-CSharp
         m_MethodName: ShelterLevel_Alpha
@@ -17832,6 +17820,18 @@ MonoBehaviour:
       - m_Target: {fileID: 731401940}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
         m_MethodName: StartUpgradeCooltime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1033926953}
+        m_TargetAssemblyTypeName: ShelterManager, Assembly-CSharp
+        m_MethodName: LevelUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29903,9 +29903,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 725592848}
-        m_TargetAssemblyTypeName: WorkshopManager, Assembly-CSharp
-        m_MethodName: LevelUp
+      - m_Target: {fileID: 1302488899}
+        m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
+        m_MethodName: StartUpgradeCooltime_WS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29915,9 +29915,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1302488899}
-        m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartUpgradeCooltime_WS
+      - m_Target: {fileID: 725592848}
+        m_TargetAssemblyTypeName: WorkshopManager, Assembly-CSharp
+        m_MethodName: LevelUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
