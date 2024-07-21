@@ -16,18 +16,27 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     */
 
     [SerializeField] public GameObject[] markerPrefabs;
-    private List<GameObject> markers = new List<GameObject>();
+    private List<RectTransform> markers = new List<RectTransform>();
 
     public RectTransform mapRect;
 
     public float mapWidth  = 250f;
     public float mapHeight = 250f;
 
-    private MenuMapZoom zoom;
+    public MenuMapZoom zoom;
 
-    private void Awake()
+    private void Start()
     {
-        zoom = FindObjectOfType<MenuMapZoom>();        
+        zoom = FindObjectOfType<MenuMapZoom>();
+        if (zoom == null)
+        {
+            Debug.LogError("MenuMapZoom 객체가 없습니다. Zoom 객체를 찾아주세요.");
+        }
+        //mapRect = transform.Find("MenuMapSprite").GetComponent<RectTransform>();
+        //if (mapRect == null)
+        //{
+        //    Debug.LogError("RectTransform component not found on MenuMapSprite.");
+        //}
     }
 
 
@@ -35,24 +44,31 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     {
         if(type < 0 || (int)type >= markerPrefabs.Length)
         {
-            Debug.LogError("건설할 오브젝트 타입이나 마커가 없습니다. 박지훈 대가리 박아");
+            Debug.LogError("건설할 오브젝트 타입이나 마커가 없습니다.");
             return;
         }
 
-        GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], transform);
+        GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], /*transform.Find("MenuMapSprite")*/ mapRect);
+        RectTransform markerRect = markerOnMap.GetComponent<RectTransform>();
 
-        Vector3 correctedPosition = WorldToMapPosition(position); /**/
-        markerOnMap.transform.localPosition = correctedPosition;
-        markers.Add(markerOnMap);
+        Vector3 correctedPosition = WorldToMapPosition(position);
+        markerRect.anchoredPosition = correctedPosition;
+        markers.Add(markerRect);
     }
 
     public void RemoveMarker(BuildingType type, Vector3 position)
     {
-        GameObject markerToRemove = null;
+        RectTransform markerToRemove = null;
 
-        foreach(GameObject markerOnMap in markers)
+        foreach(RectTransform markerOnMap in markers)
         {
-            if(markerOnMap.transform.position == position && markerOnMap.name.Contains(type.ToString()))
+            //if(markerOnMap.transform.position == position && markerOnMap.name.Contains(type.ToString()))
+            //{
+            //    markerToRemove = markerOnMap;
+            //    break;
+            //}
+
+            if (Vector3.Distance(markerOnMap.transform.position, position) < 0.1f && markerOnMap.name.Contains(type.ToString()))
             {
                 markerToRemove = markerOnMap;
                 break;
@@ -61,7 +77,7 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
         if(markerToRemove != null)
         {
             markers.Remove(markerToRemove);
-            Destroy(markerToRemove);
+            Destroy(markerToRemove.gameObject);
         }
         else
         {
@@ -73,7 +89,12 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     {
         foreach(var each in markers)
         {
-            each.transform.localPosition = WorldToMapPosition(each.transform.position);
+            //each.transform.localPosition = WorldToMapPosition(each.transform.position);
+
+            //each.anchoredPosition = WorldToMapPosition(each.position);
+
+            Vector3 worldPos = MapToWorldPosition(each.anchoredPosition);
+            each.anchoredPosition = WorldToMapPosition(worldPos);
         }
     }
 
@@ -106,5 +127,16 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
             return Vector3.zero;
         }
         return new Vector3(markerPosX, markerPosY, 0);
+    }
+
+    private Vector3 MapToWorldPosition(Vector3 mapPosition)
+    {
+        float normalizedX = mapPosition.x / mapRect.rect.width;
+        float normalizedY = mapPosition.y / mapRect.rect.height;
+
+        float worldPosX = normalizedX * mapWidth + transform.position.x;
+        float worldPosZ = normalizedY * mapHeight + transform.position.z;
+
+        return new Vector3(worldPosX, 0, worldPosZ);
     }
 }

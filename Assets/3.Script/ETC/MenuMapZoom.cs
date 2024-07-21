@@ -78,7 +78,7 @@ public class MenuMapZoom : MonoBehaviour
 
     private void ClampCameraPosition()
     {
-        //Vector3 camPos = menuMapCamera.transform.position;
+        Vector3 camPos = menuMapCamera.transform.position;
         //
         //float vertExtent = menuMapCamera.orthographicSize;
         //float horzExtent = menuMapCamera.orthographicSize * Screen.width / Screen.height;
@@ -89,16 +89,21 @@ public class MenuMapZoom : MonoBehaviour
         //float bottomBound = menuMap.position.y - menuMap.localScale.y / 2 + vertExtent;
         //float topBound    = menuMap.position.y + menuMap.localScale.y / 2 - vertExtent;
 
-        Vector3 camPos = menuMapCamera.transform.position;
-
+       
         float vertExtent = menuMapCamera.orthographicSize;
-        float horzExtent = menuMapCamera.orthographicSize * menuMapCamera.aspect;
+        //float horzExtent = menuMapCamera.orthographicSize * menuMapCamera.aspect;
+        float horzExtent = vertExtent * menuMapCamera.aspect;
 
-        float leftBound = menuMap.anchoredPosition.x - horzExtent;
-        float rightBound = menuMap.anchoredPosition.x + horzExtent;
-        float bottomBound = menuMap.anchoredPosition.y - vertExtent;
-        float topBound = menuMap.anchoredPosition.y + vertExtent;
-        
+        //float leftBound = menuMap.anchoredPosition.x - horzExtent;
+        //float rightBound = menuMap.anchoredPosition.x + horzExtent;
+        //float bottomBound = menuMap.anchoredPosition.y - vertExtent;
+        //float topBound = menuMap.anchoredPosition.y + vertExtent;
+
+        float leftBound = menuMap.rect.xMin + horzExtent;
+        float rightBound = menuMap.rect.xMax - horzExtent;
+        float bottomBound = menuMap.rect.yMin + vertExtent;
+        float topBound = menuMap.rect.yMax - vertExtent;
+
         camPos.x = Mathf.Clamp(camPos.x, leftBound, rightBound);
         camPos.y = Mathf.Clamp(camPos.y, bottomBound, topBound);       
 
