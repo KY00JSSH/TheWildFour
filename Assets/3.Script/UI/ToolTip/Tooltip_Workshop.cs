@@ -83,7 +83,6 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                     TextImgActiveInit(L_StatsTexts, L_StatsImgs);
                     if (eventData.position.x >= 210) { // 창고 위치 막음
                         // y 위치에 따라 CurrentupgradeDetail or PackingDetal
-                        Debug.Log(eventData.position.y);
                         if (400 <= eventData.position.y && eventData.position.y < 520) {
                             WorkshopUpgradeShow();
                         }
@@ -114,6 +113,13 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     private void WorkshopNeedItemCheck(Button btn, Item btnItem) {
         if (btnItem.itemData is WeaponItemData weap) {
             WorkshopNeedItemSprite(btn, weap.MaterialKey, weap.MaterialCount);
+            if (isWSSkillAvailable) {
+                if (!invenController.checkCanCreateItem(btnItem.Key)) {
+
+                    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
+                    isWSSkillAvailable = false;
+                }
+            }
             WorkshopNeedItemDisappear(weap.MaterialKey.Length);
         }
         else if (btnItem.itemData is MedicItemData medic) {
@@ -136,20 +142,20 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
             Image image = L_ItemImgs.transform.GetChild(i).GetComponent<Image>();
             string textColor = currentItem >= needItemkeyNum ? "white" : "red";
             if (currentItem >= needItemkeyNum) {
-                Count++; 
+                Count++;
             }
             text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItemkeyNum);
-            
-            List< Item> _items = FindObjectOfType<WorkshopItemSpawner>().Materialitems;
+
+            List<Item> _items = FindObjectOfType<WorkshopItemSpawner>().Materialitems;
             for (int j = 0; j < _items.Count; j++) {
-                if(needItemkey == _items[j].itemData.Key) {
+                if (needItemkey == _items[j].itemData.Key) {
                     image.sprite = _items[j].itemData.Icon;
                 }
             }
         }
         // 인벤 개수 확인 후 버튼 클릭가능 불가능 여부 확인
         if (Count == matkeys.Length) {
-            if(L_TextResult.text =="") L_TextResult.text = "<color=White>제작 가능</color>";
+            if (L_TextResult.text == "") L_TextResult.text = "<color=White>제작 가능</color>";
             isWSSkillAvailable = true;
         }
         else {
