@@ -12,6 +12,7 @@ public class PlayerAbility : MonoBehaviour {
     private float playerAttackSpeed;
     private float playerCriticalAttack;
     private float playerCriticalChance;
+    private float playerColdResistance;
     private float playerDefense;
     private float playerGather;
     private float playerSpeed;
@@ -25,12 +26,15 @@ public class PlayerAbility : MonoBehaviour {
     private float playerAddAttackSpeed;
     private float playerAddCriticalAttack;
     private float playerAddCriticalChance;
+    private float playerAddColdResistance;
     private float playerAddDefense;
     private float playerAddGather;
     private float playerAddSpeed;
     private float playerAddDashSpeed;
     private float playerAddDecDashGage;
     private float playerAddInvenCount;
+
+
 
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
@@ -45,6 +49,7 @@ public class PlayerAbility : MonoBehaviour {
         playerAttackSpeed = 3f;
         playerCriticalAttack = 5f;
         playerCriticalChance = 0.1f;
+        playerColdResistance = 0f;
         playerDefense = 2f;
         playerGather = 2f;
         playerSpeed = 1f;
@@ -56,6 +61,7 @@ public class PlayerAbility : MonoBehaviour {
         playerAddAttackSpeed = 0;
         playerAddCriticalAttack = 0;
         playerAddCriticalChance = 0;
+        playerAddColdResistance = 0;
         playerAddDefense = 0;
         playerAddGather = 0;
         playerAddSpeed = 0;
@@ -96,5 +102,7 @@ public class PlayerAbility : MonoBehaviour {
     public float GetTotalPlayerCriticalAttack() { return playerCriticalAttack + playerAddCriticalAttack; }
     public float GetTotalPlayerCriticalChance() { return playerCriticalChance + playerAddCriticalChance; }
 
-
+    public float GetTotalPlayerColdResistance() { return playerColdResistance + playerAddColdResistance; }
+    public float GetTotalPlayerDefense() { return playerDefense + playerAddDefense; }
+    public float GetTotalPlayerSpeed() {  return playerSpeed + playerAddSpeed; }
 }
