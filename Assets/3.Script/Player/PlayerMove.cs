@@ -103,11 +103,13 @@ public class PlayerMove : MonoBehaviour {
 
         if (isMove) {
             // 상반신 회전
-            targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
-                Quaternion.Euler(playerSpine.eulerAngles.x,
-                playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
-                playerSpine.eulerAngles.z);
-            playerSpine.rotation = Quaternion.Euler(0, moveDirection, 0) * targetRotation;
+            if (!isDash) {
+                targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
+                    Quaternion.Euler(playerSpine.eulerAngles.x,
+                    playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
+                    playerSpine.eulerAngles.z);
+                playerSpine.rotation = Quaternion.Euler(0, moveDirection, 0) * targetRotation;
+            }
 
 
             // 하반신 회전
@@ -115,6 +117,11 @@ public class PlayerMove : MonoBehaviour {
             playerRigid.rotation = 
                 Quaternion.Slerp(playerRigid.rotation,
                 targetRotation, rotationSpeed * Time.deltaTime);
+            if (isDash) {
+                playerSpine.rotation = Quaternion.Slerp(playerSpine.rotation,
+                    Quaternion.Euler(playerSpine.eulerAngles.x, targetRotation.eulerAngles.y - 90f, playerSpine.eulerAngles.z),
+                    rotationSpeed * Time.deltaTime);
+            }
 
         }
         else {
@@ -134,13 +141,9 @@ public class PlayerMove : MonoBehaviour {
         Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
 
-        Vector3 pointTolook;
         Vector3 targetPosition = Vector3.zero;
         if (GroupPlane.Raycast(cameraRay, out rayLength)) {
-            if (isDash) pointTolook =
-                    Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, -moveDirection, 0) *
-                    new Vector3(InputX, 0, InputZ) * 2f + playerRigid.position;
-            else pointTolook = cameraRay.GetPoint(rayLength);
+            Vector3 pointTolook = cameraRay.GetPoint(rayLength);
             Vector3 pointPosition = new Vector3(pointTolook.x, playerRigid.position.y, pointTolook.z + 0.01f);
 
             if (isMove) {
