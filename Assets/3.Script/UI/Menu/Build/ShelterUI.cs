@@ -64,8 +64,8 @@ public class ShelterUI : MonoBehaviour {
     [SerializeField] private Text[] pointers;
 
 
-    public bool isShelterUIOpen { get { return _isShelterUIOpen; } }
-    private bool _isShelterUIOpen = false;
+    static public bool isShelterUIOpen { get { return _isShelterUIOpen; } }
+    static private bool _isShelterUIOpen = false;
 
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();

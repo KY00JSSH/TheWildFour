@@ -21,8 +21,8 @@ public class WorkShopUI : MonoBehaviour {
 
     public Dictionary<Button, Item> BtnItem { get; private set; }
 
-    public bool isWorkshopUIOpen { get { return _isWorkshopUIOpen; } }
-    private bool _isWorkshopUIOpen = false;
+    static public bool isWorkshopUIOpen { get { return _isWorkshopUIOpen; } }
+    static private bool _isWorkshopUIOpen = false;
 
     private void Awake() {
         workshopManager = FindObjectOfType<WorkshopManager>();
@@ -75,7 +75,7 @@ public class WorkShopUI : MonoBehaviour {
                     LockButtonWithLevel(childbutton, medi.Level);
                 }
                 BtnItem.Add(childbutton, nowbtnkey);
-            }           
+            }
         }
     }
 
