@@ -16,6 +16,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     private float leftTime;
     [SerializeField] private float speed = 5.0f;
     private ShelterManager shelterManager;
+    private WorkshopManager workshopManager;
     private Tooltip_Shelter tooltip_Shelter;
     private Tooltip_Workshop tooltip_Workshop;
 
@@ -32,6 +33,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
         if (tooltip_Shelter == null) tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
         if (tooltip_Workshop == null) tooltip_Workshop = FindObjectOfType<Tooltip_Workshop>();
         if (shelterManager == null) shelterManager = FindObjectOfType<ShelterManager>();
+        if (workshopManager == null) workshopManager = FindObjectOfType<WorkshopManager>();
         if (img == null) img = gameObject.transform.GetChild(0).GetComponent<Image>();
         if (btn == null) btn = gameObject.GetComponent<Button>();
     }
@@ -65,12 +67,14 @@ public class ButtonCoolTimeUI : MonoBehaviour {
         isRatioOpposite = true;
     }
     public void StartUpgradeCooltime() {
+        if (shelterManager.ShelterLevel == shelterManager.MaxShelterLevel) return;
         Debug.Log(" build 확인" + tooltip_Shelter.isUpgradeAvailable);
         if (!tooltip_Shelter.isUpgradeAvailable) return;
         StartButtonInit();
     }
 
     public void StartUpgradeCooltime_WS() {
+        if (workshopManager.WorkshopLevel == workshopManager.MaxWorkshopLevel) return;
         Debug.Log(" build 확인" + tooltip_Workshop.isWSUpgradeAvailable);
         if (!tooltip_Workshop.isWSUpgradeAvailable) return;
         StartButtonInit();
