@@ -22,6 +22,9 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     public bool isWSUpgradeAvailable { get; private set; }
     public bool isWSSkillAvailable { get; private set; }
 
+    public int ItemKeyInWS { get { return _itemkeyinWs; } }
+    public int _itemkeyinWs = 0;
+
 
     protected override void Awake() {
         base.Awake();
@@ -70,6 +73,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                     // 버튼 DICTIONARY에 아이템 값이 있다면
                     if (workShopUI.BtnItem.TryGetValue(btn, out Item btnItem)) {
                         Tooltip_L_btn = btn;
+                        _itemkeyinWs = btnItem.Key;
                         WorkshopItemShow(btn, btnItem);
                     }
                 }

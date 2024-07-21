@@ -18,7 +18,7 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
      */
     private InventoryBox inventoryBox;
     [SerializeField] private GameObject Tooltip_inven;
-    private Vector2 tooltipPos;
+    [SerializeField] private Vector2 tooltipPos;
     private Text textTitle;
     private Text textMain;
     private Image itemImg;
@@ -29,7 +29,8 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // 음식 슬라이더 쿨타임
     private float currentTime;
 
-    public ItemDurability ItemDurability { get; private set; }
+    public ItemDurability ItemDurabilitySet { get { return itemDurability; } }
+    private ItemDurability itemDurability;
     private Image durability_Food;
     private Image durability_Weap;
 
@@ -47,7 +48,7 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         durability_Weap = Tooltip_inven.transform.GetChild(4).GetComponent<Image>();
         weapSlider = itemImg.transform.GetChild(0).GetComponent<Slider>();
 
-        tooltipPos = new Vector2(550, 150);
+        tooltipPos = new Vector2(550, 170);
     }
     private void Update() {
         if (inventoryBox.isItemIn) {
@@ -76,7 +77,7 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 }
 
                 float value = InvenBoxItemSlider();
-                ItemDurability = InvenItemDurabilityCheck(value);
+                itemDurability = InvenItemDurabilityCheck(value);
                 InvenItemDurabilityShow();
             }
             else {
@@ -148,34 +149,34 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void InvenItemDurabilityShow() {
         Image fillImage = invenBoxSlider.fillRect.GetComponent<Image>();
-        if (ItemDurability == ItemDurability.high) {
+        if (itemDurability == ItemDurability.high) {
             fillImage.color = Color.green;
         }
-        else if (ItemDurability == ItemDurability.mid) {
+        else if (itemDurability == ItemDurability.mid) {
             fillImage.color = Color.yellow;
         }
-        else if (ItemDurability == ItemDurability.low) {
+        else if (itemDurability == ItemDurability.low) {
             fillImage.color = Color.red;
         }
-        else if (ItemDurability == ItemDurability.zero) {
+        else if (itemDurability == ItemDurability.zero) {
             invenBoxSlider.transform.Find("Background").GetComponent<Image>().color = Color.gray;
         }
     }
     private void InvenItemDurabilityText_Food() {
         Text text = durability_Food.GetComponentInChildren<Text>();
-        if (ItemDurability == ItemDurability.high) {
+        if (itemDurability == ItemDurability.high) {
             durability_Food.color = Color.green;
             text.text = "신선함";
         }
-        else if (ItemDurability == ItemDurability.mid) {
+        else if (itemDurability == ItemDurability.mid) {
             durability_Food.color = Color.yellow;
             text.text = "상함";
         }
-        else if (ItemDurability == ItemDurability.low) {
+        else if (itemDurability == ItemDurability.low) {
             durability_Food.color = Color.red;
             text.text = "썩음";
         }
-        else if (ItemDurability == ItemDurability.zero) {
+        else if (itemDurability == ItemDurability.zero) {
             durability_Food.color = Color.gray;
             text.text = "부패함";
         }
@@ -187,19 +188,19 @@ public class Tooltip_Inven : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Image fillImage = weapSlider.fillRect.GetComponent<Image>();
         Text slidertext = weapSlider.transform.GetChild(2).GetComponent<Text>();
         slidertext.text = string.Format("{0} - {1}", weaponItem.WeaponItemData.CurrDurability, weaponItem.WeaponItemData.TotalDurability);
-        if (ItemDurability == ItemDurability.high) {
+        if (itemDurability == ItemDurability.high) {
             fillImage.color = Color.green;
             slidertext.color = Color.green;
         }
-        else if (ItemDurability == ItemDurability.mid) {
+        else if (itemDurability == ItemDurability.mid) {
             fillImage.color = Color.yellow;
             slidertext.color = Color.yellow;
         }
-        else if (ItemDurability == ItemDurability.low) {
+        else if (itemDurability == ItemDurability.low) {
             fillImage.color = Color.red;
             slidertext.color = Color.red;
         }
-        else if (ItemDurability == ItemDurability.zero) {
+        else if (itemDurability == ItemDurability.zero) {
             weapSlider.transform.Find("Background").GetComponent<Image>().color = Color.gray;
             slidertext.transform.Find("Background").GetComponent<Image>().color = Color.gray;
         }
