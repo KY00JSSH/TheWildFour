@@ -55,10 +55,17 @@ public class PlayerMove : MonoBehaviour {
         IncDashGage = defaultIncDashGage;
     }
 
+    private void Update() {
+        playerAnimator.SetBool("isSideWalk", isSideWalk);
+        playerAnimator.SetBool("isBackWalk", isBackWalk);
+    }
+
     private void FixedUpdate() {
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") || PlayerStatus.isDead) return;
         
         if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
+            isSideWalk = false;
+            isBackWalk = false;
             Dash(true);
             Move(playerDashSpeed);
         }
@@ -107,17 +114,18 @@ public class PlayerMove : MonoBehaviour {
                     Quaternion.Euler(playerSpine.eulerAngles.x,
                     playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                     playerSpine.eulerAngles.z);
-                debugTargetRotation = playerSpine.rotation;
 
                 playerSpine.rotation = Quaternion.Euler(0, moveDirection, 0) * targetRotation;
-                playerSpine.rotation = Quaternion.Euler(playerSpine.rotation.eulerAngles.x,
-                    Mathf.Clamp((debugTargetRotation.eulerAngles.y - 90f) % 360, (debugTargetRotation.eulerAngles.y + 90f) % 360, playerSpine.rotation.eulerAngles.y),
-                    playerSpine.rotation.eulerAngles.z);
+                SetAnimationDirection(playerSpine.rotation, Quaternion.Euler(0, moveDirection, 0));
+                //playerSpine.rotation = Quaternion.Euler(playerSpine.rotation.eulerAngles.x,
+                //Mathf.Clamp(playerSpine.rotation.eulerAngles.y, (debugTargetRotation.eulerAngles.y - 90f) % 360, (debugTargetRotation.eulerAngles.y + 90f) % 360),
+                //playerSpine.rotation.eulerAngles.z);
                 //TODO: ClampAngle 필요. 기준은 debugTargetRotation +- 90 이면 앞 방향. 그 외 옆걸음과 뒷걸음 구현.
             }
 
             // 하반신 회전
-            targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, -moveDirection, 0);
+            Debug.Log(isBackWalk);
+            targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0);
             playerRigid.rotation = 
                 Quaternion.Slerp(playerRigid.rotation,
                 targetRotation, rotationSpeed * Time.deltaTime);
@@ -126,7 +134,6 @@ public class PlayerMove : MonoBehaviour {
                     Quaternion.Euler(playerSpine.eulerAngles.x, targetRotation.eulerAngles.y - 90f, playerSpine.eulerAngles.z),
                     rotationSpeed * Time.deltaTime);
             }
-
         }
         else {
             targetRotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
@@ -134,6 +141,28 @@ public class PlayerMove : MonoBehaviour {
                         playerRigid.rotation,
                         targetRotation,
                         rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    private bool isSideWalk = false, isBackWalk = false;
+    private void SetAnimationDirection(Quaternion rotation, Quaternion forward) {
+        float yFoward = forward.eulerAngles.y + 360f;
+        float yRotate = -rotation.eulerAngles.y + 360f - 90f;
+        if (yRotate < 360f) yRotate += 360f;
+        if (yRotate > 720f) yRotate -= 360f;
+
+        isSideWalk = false;
+        isBackWalk = false;
+        if ((yRotate > yFoward + 50 && yRotate <= yFoward + 100) || 
+            (yRotate < yFoward - 50 && yRotate >= yFoward - 100)) {
+            Debug.Log("SIDE");
+            isSideWalk = true;
+        }
+        else if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
+            Debug.Log("BACK");
+            isBackWalk = true;
+        }
+        else {
         }
     }
 
@@ -180,6 +209,8 @@ public class PlayerMove : MonoBehaviour {
         else {
             isMove = false;
             speed = 0;
+            isSideWalk = false;
+            isBackWalk = false;
         }
 
         currentSpeed = Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 3f);
