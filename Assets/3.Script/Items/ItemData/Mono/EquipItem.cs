@@ -4,6 +4,10 @@ public class EquipItem : Item {
     private float currDurability;           //현재 내구도
     public float CurrDurability { get { return currDurability; } }
 
+    private void Awake() {
+        currDurability = equipItemData.TotalDurability;
+    }
+
     //내구도 0이라 파괴 확인
     private void CheckDurability() {
         if (currDurability <= 0) {
