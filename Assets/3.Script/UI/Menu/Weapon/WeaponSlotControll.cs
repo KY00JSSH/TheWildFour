@@ -12,8 +12,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
 
     public int key;
 
-    private Item currentItem;
-    public Item CurrentItem { get { return currentItem; } }
+    private WeaponItemData currentItem;
+    public WeaponItemData CurrentItem { get { return currentItem; } }
 
     private MenuWeapon menuWeapon;
     private InvenUIController invenUI;
@@ -42,12 +42,12 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     //슬롯에 무기 추가
     public void setWeaponSlot(WeaponItemData item = null) {
         if (item != null) {
-            WeaponItem newItem = new WeaponItem();
-            newItem.WeaponItemData = item;
-            newItem.equipItemData = item;
-            newItem.itemData = item;
-            currentItem = newItem;
-            itemIcon.sprite = currentItem.itemData.Icon;
+            //WeaponItem newItem = new WeaponItem();
+            //newItem.WeaponItemData = item;
+            //newItem.equipItemData = item;
+            //newItem.itemData = item;
+            currentItem = item;
+            itemIcon.sprite = currentItem.Icon;
             itemIcon.enabled = true;
             //내구도 슬라이더 추가
         }
@@ -59,8 +59,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public WeaponItemData returnItem() {
-        if (currentItem?.itemData is WeaponItemData weapItem) {
-            return weapItem;
+        if (currentItem) {
+            return currentItem;
         }
         else {
             return null;
@@ -77,7 +77,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     public void OnBeginDrag(PointerEventData eventData) {
         if (PlayerStatus.isDead) return;
 
-        if (currentItem is WeaponItem) {
+        if (currentItem) {
             originalParent = itemIcon.rectTransform.parent as RectTransform;
             originalPosition = itemIcon.rectTransform.anchoredPosition;
             itemIcon.transform.SetParent(canvas.transform, true);
@@ -88,7 +88,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     public void OnDrag(PointerEventData data) {
         if (PlayerStatus.isDead) return;
 
-        if (currentItem is WeaponItem) {
+        if (currentItem) {
             Vector2 position;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
             itemIcon.rectTransform.anchoredPosition = position;
@@ -98,7 +98,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     public void OnEndDrag(PointerEventData eventData) {
         if (PlayerStatus.isDead) return;
 
-        if (currentItem is WeaponItem) {
+        if (currentItem) {
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
 
@@ -154,7 +154,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
         if (PlayerStatus.isDead) return;
 
         Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
-        Instantiate(currentItem.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
+        Instantiate(currentItem.DropItemPrefab, itemDropPosition, Quaternion.identity);
         setWeaponSlot(null);
     }
 }
