@@ -11,35 +11,37 @@ public class WorkShopUI : MonoBehaviour {
         - 레벨따라서 잠금 표시 & 버튼 막아야함
      - 아이템 레벨은 버튼이름 마지막
      */
-    private WorkshopManager workshopManager;
-    private TooltipNum tooltipNum;
 
     [Space((int)2)]
     [Header("Main Button Disapear")]
     [SerializeField] private GameObject menuButton;
-    public GameObject content;
+    private WorkshopManager workshopManager;
+    private TooltipNum tooltipNum;
 
-    public Dictionary<Button, Item> BtnItem { get; private set; }
+    public UpgradeDetail UpgradeDetail { get { return currentupgradeDetail; } }
+    public PackingDetail PackingDetail { get { return currentpackingDetail; } }
+    private UpgradeDetail currentupgradeDetail;
+    private PackingDetail currentpackingDetail;
 
     static public bool isWorkshopUIOpen { get { return _isWorkshopUIOpen; } }
     static private bool _isWorkshopUIOpen = false;
-
     private void Awake() {
-        workshopManager = FindObjectOfType<WorkshopManager>();
         tooltipNum = FindObjectOfType<TooltipNum>();
-        BtnItem = new Dictionary<Button, Item>();
+        workshopManager = FindObjectOfType<WorkshopManager>();
     }
+
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) Escape();
     }
 
     private void OnEnable() {
         _isWorkshopUIOpen = true;
-        FindButtonLevel();
+        WorkshopInit();
         menuButton.SetActive(false);
     }
     private void OnDisable() {
         _isWorkshopUIOpen = false;
+
         menuButton.SetActive(true);
     }
 
@@ -48,50 +50,10 @@ public class WorkShopUI : MonoBehaviour {
         transform.gameObject.SetActive(false);
     }
 
-
-
-    // 받은 정보로 content 안의 버튼 돌릴 것 
-    private void FindButtonLevel() {
-        foreach (Transform child in content.transform) {
-            Button childbutton = child.GetComponent<Button>();
-
-            // 버튼이 비활성화되어 있다면 건너뜀
-            if (!child.gameObject.activeSelf) {
-                Debug.Log("비활성화 이름 확인" + child.name);
-                continue;
-            }
-
-            // TooltipNum.FindButtonItemKey에서 null 체크 추가
-            Item nowbtnkey = tooltipNum.FindButtonItemKey(childbutton);
-            if (nowbtnkey == null || nowbtnkey.itemData == null) {
-                Debug.LogWarning("Item or ItemData is null");
-                continue;
-            }
-            else {
-                if (nowbtnkey.itemData is WeaponItemData weap) {
-                    LockButtonWithLevel(childbutton, weap.Level);
-                }
-                else if (nowbtnkey.itemData is MedicItemData medi) {
-                    LockButtonWithLevel(childbutton, medi.Level);
-                }
-                BtnItem.Add(childbutton, nowbtnkey);
-            }
-        }
-    }
-
-    private void LockButtonWithLevel(Button childbutton, int level) {
-        if (level <= workshopManager.WorkshopLevel) {
-            childbutton.transform.GetChild(2).gameObject.SetActive(false);
-            childbutton.enabled = true;
-        }
-        else {
-            childbutton.transform.GetChild(2).gameObject.SetActive(true);
-            childbutton.enabled = false;
-        }
-    }
-
-    public int ButtonItemEach(ItemData itemData) {
-        Debug.Log(itemData.Key);
-        return itemData.Key;
+    // 시작할 때 레벨 확인 
+    private void WorkshopInit() {
+        Debug.Log(workshopManager.WorkshopLevel);
+        currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Workshop, workshopManager.WorkshopLevel + 1);
+        currentpackingDetail = tooltipNum.PackingItemCheck();
     }
 }
