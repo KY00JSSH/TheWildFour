@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
-    [SerializeField] Collider[] fistCollider;
+    [SerializeField] private Collider[] fistCollider;
     private Animator playerAnimator;
     private PlayerMove playerMove;
 
@@ -17,6 +17,7 @@ public class PlayerAttack : MonoBehaviour {
         playerAnimator = GetComponentInParent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         moveSpeed = playerMove.GetPlayerMoveSpeed();
+        fistCollider = GetComponentsInChildren<Collider>();
     }
 
     private void Update() {
@@ -33,8 +34,14 @@ public class PlayerAttack : MonoBehaviour {
         if (Input.GetMouseButton(0)) {
             if (!EventSystem.current.IsPointerOverGameObject()) {
                 if (!isAttack) {
-                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
                         moveSpeed = playerMove.GetPlayerMoveSpeed();
+                        playerMove.SetDash();
+                    }
+                    playerMove.SetSideWalk(false);
+                    playerMove.SetBackWalk(false);
+                    playerMove.ResetDash();
+
                     isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                     isAttack = true;
 

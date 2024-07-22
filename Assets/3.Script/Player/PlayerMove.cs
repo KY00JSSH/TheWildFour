@@ -36,6 +36,9 @@ public class PlayerMove : MonoBehaviour {
     public float GetTatalDashGage() { return TotalDashGage; }
     public float GetCurrentDashGage() { return CurrentDashGage; }
 
+    public void SetSideWalk(bool flag) { isSideWalk = flag; }
+    public void SetBackWalk(bool flag) { isBackWalk = flag; }
+
     public bool isDash { get; private set; }
 
     private void Awake() {
@@ -78,7 +81,8 @@ public class PlayerMove : MonoBehaviour {
         TakeFallDamage();
     }
     private void LateUpdate() {
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") || PlayerStatus.isDead) return;
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") ||
+            PlayerStatus.isDead) return;
         LookatMouse();
     }
 
@@ -114,10 +118,9 @@ public class PlayerMove : MonoBehaviour {
                     Quaternion.Euler(playerSpine.eulerAngles.x,
                     playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                     playerSpine.eulerAngles.z);
-                if (isBackWalk) targetPosition = targetPosition;
-
                 playerSpine.rotation = Quaternion.Euler(0, isBackWalk ? 180 : 0, 0) * Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0) * targetRotation;
-                SetAnimationDirection(playerSpine.rotation, Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0));
+                if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+                    SetAnimationDirection(playerSpine.rotation, Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0));
             }
 
             // 하반신 회전
@@ -152,12 +155,10 @@ public class PlayerMove : MonoBehaviour {
         yFoward %= 360; yRotate %= 360;
 
         if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
-            Debug.Log("BACK");
             isBackWalk = true;
         }
         else if ((yRotate > yFoward + 50 && yRotate <= yFoward + 100) ||
             (yRotate < yFoward - 50 && yRotate >= yFoward - 100) ) {
-            Debug.Log("SIDE");
             isSideWalk = true;
         }
         else {
@@ -170,7 +171,7 @@ public class PlayerMove : MonoBehaviour {
     private bool isTransition;
     private IEnumerator transitionTime() {
         isTransition = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.18f);
         isTransition = false;
     }
 
