@@ -14,7 +14,7 @@ public class PlayerStatus : MonoBehaviour {
     public float PlayerMaxHp { get; set; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
-    private float HealRestore = 0.3f, HungerRestore = 0.5f;
+    private float HealRestore = 0.3f, HungerRestore = 0.5f, WarmRestore = 1.2f;
 
     public float GetHealTick() { return HealRestore; }
 
@@ -73,6 +73,13 @@ public class PlayerStatus : MonoBehaviour {
             return;
         }
         StatusControl.Instance.GiveStatus(Status.Heal, this, item.HealTime);
+    }
+
+    public void RestoreWarm() {
+        if (GetPlayerStatus(Status.Heal)) {
+            PlayerWarm += WarmRestore * Time.deltaTime;
+            if (PlayerWarm > 100) PlayerWarm = 100;
+        }
     }
 
     public void RestoreHp() {
@@ -140,6 +147,7 @@ public class PlayerStatus : MonoBehaviour {
             RestoreHpHunger();
             SatietySlow();
             RestoreHp();
+            RestoreWarm();
         }
     }
 }

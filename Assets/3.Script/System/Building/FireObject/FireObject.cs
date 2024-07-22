@@ -7,9 +7,6 @@ public class FireObject : MonoBehaviour, IFireLight {
     protected float HeatRange = 5f;
     protected bool isBurn = false;
 
-    // isPlayerNaer : 플레이어가 근처에 있을 때 true.
-    //TODO : 추후 모닥불이 Lock 되었을 때로 변경 필요. 0708
-    protected bool isPlayerNear = false;
     protected bool isBuilding = true;
 
     private Light fireLight;
@@ -29,7 +26,7 @@ public class FireObject : MonoBehaviour, IFireLight {
         fireLight.intensity = 0;
     }
 
-    protected virtual void AddWood() {
+    public virtual void AddWood() {
         IncreaseTime(10f);
     }
 

@@ -46,7 +46,9 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void CampfireInteraction() {
-
+        if(TryGetComponent(out Campfire campfire)) {
+            campfire.AddWood();
+        }
     }
 
     private void FurnaceInteraction() {
