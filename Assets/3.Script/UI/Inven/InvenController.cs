@@ -7,11 +7,18 @@ public class InvenController : CommonInven {
     private InvenUIController invenUi;
     private MenuWeapon menuWeapon;
     private PlayerStatus playerStatus;
+    private PlayerItemUseControll playerItemUse;
+
+    private WorkshopInvenControll workshopInven;
+    private ShelterInvenControll shelterInven;
 
     private void Awake() {
         invenUi = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
         playerStatus = FindObjectOfType<PlayerStatus>();
+        workshopInven = FindObjectOfType<WorkshopInvenControll>();
+        shelterInven = FindObjectOfType<ShelterInvenControll>();
+        playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         initInven();
     }
 
@@ -48,16 +55,6 @@ public class InvenController : CommonInven {
         }
     }
 
-    //특정 인덱스에 무기 아이템 추가
-    public void addWeaponItem(WeaponItemData weapItem, int index) {
-        WeaponItem newItem = new WeaponItem();
-        newItem.WeaponItemData = weapItem;
-        newItem.equipItemData = weapItem;
-        newItem.itemData = weapItem;
-        inventory[index] = newItem;
-        updateInvenInvoke();
-    }
-
     //아이템 F로 사용
     public void useInvenItem(int index) {
         if (inventory[index]?.itemData is MedicItemData medicItem) {
@@ -84,31 +81,196 @@ public class InvenController : CommonInven {
         }
         else if (inventory[index]?.itemData is WeaponItemData weapItem) {
             //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
-            menuWeapon.addSlotFromInvenWeapon(weapItem, index); 
+            menuWeapon.addSlotFromInvenWeapon(weapItem, index);
             updateInvenInvoke();
         }
         else {
             return;
         }
     }
-    //TODO: 제작시 사용하는 필요 아이템 있으면 사용
-    //TODO: 제작 후 인벤 차있으면 드랍
 
     //아이템 제작시 인벤에 들어갈 수 있는지 여부
-    public bool checkCanCreateItem(int itemKey) {
-        int checkNum = canAddThisBox(itemKey);
+    public bool createItem(ItemData item) {
+        bool isCreate = false;
+        if (item is MedicItemData medicItem) {
+            int[] matKeyArr = (int[])medicItem.MaterialKey.Clone();
+            int[] matCountArr = (int[])medicItem.MaterialCount.Clone();
+            for (int i = 0; i < medicItem.MaterialKey.Length; i++) {
+                if (isMaterials(matKeyArr[i], matCountArr[i])) {
+                    if (isAddNewItem(matKeyArr[i], matCountArr[i])) {
+                        isCreate = true;
+                        //TODO: 아이템 제작 후 인벤에 추가
+                    }
+                    else {
+                        isCreate = false;
+                    }
+                }
+                else {
+                    isCreate = false;
+                }
+            }
+        }
+        else if (item is WeaponItemData weaponItem) {
+            int[] matKeyArr = (int[])weaponItem.MaterialKey.Clone();
+            int[] matCountArr = (int[])weaponItem.MaterialCount.Clone();
+            for (int i = 0; i < weaponItem.MaterialKey.Length; i++) {
+                if (isMaterials(matKeyArr[i], matCountArr[i])) {
+                    if (isAddNewItem(matKeyArr[i], matCountArr[i])) {
+                        isCreate = true;
+                        //TODO: 아이템 제작 후 인벤에 추가
+                    }
+                    else {
+                        isCreate = false;
+                    }
+                }
+                else {
+                    isCreate = false;
+                }
+            }
+        }
+        else {
+            Debug.Log("check");
+        }
 
-        if (checkNum != 99) {
+        return isCreate;
+    }
+
+    private bool isMaterials(int key, int count) {
+        int totalCount = 0;
+        for (int i = 0; i < inventory.Count; i++) {
+            if (inventory[i] is CountableItem countItem) {
+                if (countItem?.Key == key) {
+                    totalCount += countItem.CurrStackCount;
+                }
+            }
+        }
+        if (totalCount >= count) {
             return true;
         }
         else {
-            int existBox = isExistEmptyBox();
-            if (existBox != 99) {
-                return true;
+            return false;
+        }
+    }
+
+    private bool isAddNewItem(int key, int count) {
+        if (isExistEmptyBox() != 99) {
+            //빈박스 있음
+            return true;
+        }
+        else {
+            //아이템 사용해서 빈박스가 생기는지 여부
+            for (int i = 0; i < inventory.Count; i++) {
+                if (inventory[i] is CountableItem countItem) {
+                    if (countItem?.Key == key) {
+                        if (countItem.CurrStackCount == count) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+    //거처 혹은 작업장 아이템과 아이템 스위칭
+    public void switchingInvenItem(int index, bool isWorkshop) {
+        if (isWorkshop) {
+            List<Item> workshopInv = workshopInven.Inventory;
+            ItemData item = workshopInv[index]?.itemData;
+
+            addItemBuildInven(index, isWorkshop);
+
+            if (item is FoodItemData foodItem) {
+                addIndexItem(foodItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is MedicItemData medicItem) {
+                addIndexItem(medicItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is WeaponItemData weaponItem) {
+                addIndexItem(weaponItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is EquipItemData equipItem) {
+                addIndexItem(equipItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is CountableItemData countableItem) {
+                addIndexItem(countableItem, playerItemUse.selectBoxKey);
             }
             else {
-                return false;
+                addIndexItem(inventory[playerItemUse.selectBoxKey]?.itemData, index);
+            }
+            updateInvenInvoke();
+        }
+        else {
+            List<Item> shelterInv = shelterInven.Inventory;
+            ItemData item = shelterInv[index]?.itemData;
+
+            addItemBuildInven(index, isWorkshop);
+
+            if (item is FoodItemData foodItem) {
+                addIndexItem(foodItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is MedicItemData medicItem) {
+                addIndexItem(medicItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is WeaponItemData weaponItem) {
+                addIndexItem(weaponItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is EquipItemData equipItem) {
+                addIndexItem(equipItem, playerItemUse.selectBoxKey);
+            }
+            else if (item is CountableItemData countableItem) {
+                addIndexItem(countableItem, playerItemUse.selectBoxKey);
+            }
+            else {
+                addIndexItem(inventory[playerItemUse.selectBoxKey]?.itemData, index);
+            }
+            updateInvenInvoke();
+        }
+    }
+
+    //거처 혹은 작업장에 아이템 추가
+    public void addItemBuildInven(int index, bool isWorkshop) {
+        if (isWorkshop) {
+            if (inventory[index]?.itemData is FoodItemData foodItem) {
+                workshopInven.addIndexItem(foodItem, index);
+            }
+            else if (inventory[index]?.itemData is MedicItemData medicItem) {
+                workshopInven.addIndexItem(medicItem, index);
+            }
+            else if (inventory[index]?.itemData is WeaponItemData weaponItem) {
+                workshopInven.addIndexItem(weaponItem, index);
+            }
+            else if (inventory[index]?.itemData is EquipItemData equipItem) {
+                workshopInven.addIndexItem(equipItem, index);
+            }
+            else if (inventory[index]?.itemData is CountableItemData countableItem) {
+                workshopInven.addIndexItem(countableItem, index);
+            }
+            else {
+                workshopInven.addIndexItem(inventory[index]?.itemData, index);
+            }
+        }
+        else {
+            if (inventory[index]?.itemData is FoodItemData foodItem) {
+                shelterInven.addIndexItem(foodItem, index);
+            }
+            else if (inventory[index]?.itemData is MedicItemData medicItem) {
+                shelterInven.addIndexItem(medicItem, index);
+            }
+            else if (inventory[index]?.itemData is WeaponItemData weaponItem) {
+                shelterInven.addIndexItem(weaponItem, index);
+            }
+            else if (inventory[index]?.itemData is EquipItemData equipItem) {
+                shelterInven.addIndexItem(equipItem, index);
+            }
+            else if (inventory[index]?.itemData is CountableItemData countableItem) {
+                shelterInven.addIndexItem(countableItem, index);
+            }
+            else {
+                shelterInven.addIndexItem(inventory[index]?.itemData, index);
             }
         }
     }
+
+    //TODO: 제작시 사용하는 필요 아이템 있으면 사용
 }

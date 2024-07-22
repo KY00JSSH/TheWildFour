@@ -10,7 +10,12 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     private InvenUIController invenUI;
 
     private MenuWeapon menuWeapon;                  //장비창
+
+    private WorkshopInvenUI workshopInvenUI;        //작업장
+    private WorkshopInvenControll workshopInven;
+
     private ShelterInvenUI shelterInvenUI;          //거처
+    private ShelterInvenControll shelterInven;
 
     private Canvas canvas;
     private RectTransform originalParent;
@@ -20,11 +25,15 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
         invenBox = transform.GetComponent<Button>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         invenControll = FindObjectOfType<InvenController>();
-        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
         invenUI = FindObjectOfType<InvenUIController>();
         invenDrop = FindObjectOfType<InvenDrop>();
         canvas = FindObjectOfType<Canvas>();
+
+        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
+        shelterInven = FindObjectOfType<ShelterInvenControll>();
+        workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
+        playerItemUse = FindObjectOfType<PlayerItemUseControll>();
     }
 
     //TODO: 꾹 누르는 게이지 추가하기
@@ -98,13 +107,22 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                 }
                 else if (isWorkshopOpen) {  //작업장 오픈시
                     for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
-                        RectTransform boxRectTransform = shelterInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
+                        RectTransform boxRectTransform = workshopInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
                         if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
                             targetIndex = i;
                             break;
                         }
                     }
                     //작업장 인벤에 아이템 추가
+                    if (workshopInven.checkItemType(targetIndex) != 0) {
+                        //해당 위치에 아이템 있으면 스위칭
+                        invenControll.switchingInvenItem(targetIndex, true);
+                    }
+                    else {
+                        //없으면 아이템 추가만
+                        invenControll.addItemBuildInven(targetIndex, true);
+                        invenControll.removeItem(key);
+                    }
 
                 }
                 else if (isShelterOpen) {   //거처 오픈
@@ -116,7 +134,15 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                         }
                     }
                     //거처 인벤에 아이템 추가
-
+                    if (shelterInven.checkItemType(targetIndex) != 0) {
+                        //해당 위치에 아이템 있으면 스위칭
+                        invenControll.switchingInvenItem(targetIndex, false);
+                    }
+                    else {
+                        //없으면 아이템 추가만
+                        invenControll.addItemBuildInven(targetIndex, false);
+                        invenControll.removeItem(key);
+                    }
                 }
                 else {
                     //아이템 드랍
@@ -125,4 +151,6 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
             }
         }
     }
+
+
 }

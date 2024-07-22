@@ -44,4 +44,5 @@ public class WorkshopInvenUI : MonoBehaviour
             invenTotalList[i].SetActive(true);
         }
     }
+
 }
