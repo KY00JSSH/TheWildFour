@@ -12,8 +12,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
 
     public int key;
 
-    private WeaponItemData currentItem;
-    public WeaponItemData CurrentItem { get { return currentItem; } }
+    private WeaponItem currentItem;
+    public WeaponItem CurrentItem { get { return currentItem; } }
 
     private MenuWeapon menuWeapon;
     private InvenUIController invenUI;
@@ -42,12 +42,12 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     //슬롯에 무기 추가
     public void setWeaponSlot(WeaponItemData item = null) {
         if (item != null) {
-            //WeaponItem newItem = new WeaponItem();
-            //newItem.WeaponItemData = item;
-            //newItem.equipItemData = item;
-            //newItem.itemData = item;
-            currentItem = item;
-            itemIcon.sprite = currentItem.Icon;
+            WeaponItem newItem = new WeaponItem();
+            newItem.WeaponItemData = item;
+            newItem.equipItemData = item;
+            newItem.itemData = item;
+            currentItem = newItem;
+            itemIcon.sprite = currentItem.itemData.Icon;
             itemIcon.enabled = true;
             //내구도 슬라이더 추가
         }
@@ -60,7 +60,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
 
     public WeaponItemData returnItem() {
         if (currentItem) {
-            return currentItem;
+            return currentItem.WeaponItemData;
         }
         else {
             return null;
@@ -154,7 +154,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
         if (PlayerStatus.isDead) return;
 
         Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
-        Instantiate(currentItem.DropItemPrefab, itemDropPosition, Quaternion.identity);
+        Instantiate(currentItem.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
         setWeaponSlot(null);
     }
 }
