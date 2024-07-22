@@ -86,15 +86,41 @@ public class BuildingCreate : MonoBehaviour {
         MaterialOpaque();
         playerAnimator.SetTrigger("triggerCreate");
 
-        MenuMap_MarkerSpawner markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
+        PanelMap_MarkerSpawner panelMap_MarkerSpawner = FindObjectOfType<PanelMap_MarkerSpawner>();
+        panelMap_MarkerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
 
-        markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
+        MenuMap_MarkerSpawner menuMap_markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
+        menuMap_markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
+
     }
 
-    public void DestroyBuilding() {
-        isExist = false;
-        Building.SetActive(false);
+    //public void DestroyBuilding() {
+    //    isExist = false;
+    //    Building.SetActive(false);
+    //
+    //    PanelMap_MarkerSpawner panelMap_MarkerSpawner = FindObjectOfType<PanelMap_MarkerSpawner>();
+    //    panelMap_MarkerSpawner.RemoveMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
+    //
+    //    MenuMap_MarkerSpawner menuMap_markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
+    //    menuMap_markerSpawner.RemoveMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
+    //}
+
+    public void DestroyBuilding()
+    {
+        if(isExist)
+        { 
+            isExist = false;            
+
+            PanelMap_MarkerSpawner panelMap_MarkerSpawner = FindObjectOfType<PanelMap_MarkerSpawner>();
+            panelMap_MarkerSpawner.RemoveMarker(Building.GetComponent<BuildingInteraction>().Type/*, Building.transform.position*/);
+
+            MenuMap_MarkerSpawner menuMap_markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
+            menuMap_markerSpawner.RemoveMarker(Building.GetComponent<BuildingInteraction>().Type);
+
+            Building.SetActive(false);
+        }
     }
+
 
     public void CancelBuilding() {
         isBuild = false;

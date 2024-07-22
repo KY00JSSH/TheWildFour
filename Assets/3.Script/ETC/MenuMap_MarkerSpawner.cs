@@ -16,7 +16,7 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     */
 
     [SerializeField] public GameObject[] markerPrefabs;
-    private List<RectTransform> markers = new List<RectTransform>();
+    private List<GameObject> markers = new List<GameObject>();
 
     public RectTransform mapRect;
 
@@ -25,13 +25,13 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
 
     public MenuMapZoom zoom;
 
-    private void Start()
+    private void Awake()
     {
-        zoom = FindObjectOfType<MenuMapZoom>();
-        if (zoom == null)
-        {
-            Debug.LogError("MenuMapZoom 객체가 없습니다. Zoom 객체를 찾아주세요.");
-        }
+        //zoom = FindObjectOfType<MenuMapZoom>();
+        //if (zoom == null)
+        //{
+        //    Debug.LogError("MenuMapZoom 객체가 없습니다. Zoom 객체를 찾아주세요.");
+        //}
         //mapRect = transform.Find("MenuMapSprite").GetComponent<RectTransform>();
         //if (mapRect == null)
         //{
@@ -48,40 +48,27 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
             return;
         }
 
-        GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], /*transform.Find("MenuMapSprite")*/ mapRect);
+        GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], /*transform.Find("MenuMapSprite")*/ mapRect); //오브젝트 계층구조 명시화: mapRect에 할당된 오브젝트의 자식으로 마커 생성
         RectTransform markerRect = markerOnMap.GetComponent<RectTransform>();
 
         Vector3 correctedPosition = WorldToMapPosition(position);
         markerRect.anchoredPosition = correctedPosition;
-        markers.Add(markerRect);
+        markers.Add(markerOnMap);
     }
 
-    public void RemoveMarker(BuildingType type, Vector3 position)
+    public void RemoveMarker(BuildingType type)
     {
-        RectTransform markerToRemove = null;
 
-        foreach(RectTransform markerOnMap in markers)
+        foreach(GameObject markerOnMap in markers)
         {
-            //if(markerOnMap.transform.position == position && markerOnMap.name.Contains(type.ToString()))
-            //{
-            //    markerToRemove = markerOnMap;
-            //    break;
-            //}
-
-            if (Vector3.Distance(markerOnMap.transform.position, position) < 0.1f && markerOnMap.name.Contains(type.ToString()))
+            if ((markerOnMap.name[1] == 'o' && type == BuildingType.Workshop) ||
+                 (markerOnMap.name[1] == 'h' && type == BuildingType.Shelter))
             {
-                markerToRemove = markerOnMap;
+                Destroy(markerOnMap);
+                markers.Remove(markerOnMap);
                 break;
             }
-        }
-        if(markerToRemove != null)
-        {
-            markers.Remove(markerToRemove);
-            Destroy(markerToRemove.gameObject);
-        }
-        else
-        {
-            Debug.LogWarning("제거할 마커가 없습니다.");
+
         }
     }
 
@@ -93,8 +80,10 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
 
             //each.anchoredPosition = WorldToMapPosition(each.position);
 
-            Vector3 worldPos = MapToWorldPosition(each.anchoredPosition);
-            each.anchoredPosition = WorldToMapPosition(worldPos);
+            Vector2 anchor = each.GetComponent<RectTransform>().anchoredPosition;
+
+            Vector3 worldPos = MapToWorldPosition(anchor);
+            anchor = WorldToMapPosition(worldPos);
         }
     }
 
@@ -113,6 +102,7 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
         float normalizedX = relativePosition.x / mapWidth;
         float normalizedY = relativePosition.z / mapHeight;
 
+        Debug.Log(zoom);
         //좌표 보정
         float ratio =
             Mathf.InverseLerp(zoom.maxOrthSize, zoom.minOrthSize, zoom.menuMapCamera.orthographicSize) *
