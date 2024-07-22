@@ -72,12 +72,12 @@ public class CommonInven : MonoBehaviour {
         Item item = itemObject.GetComponent<Item>();
         //아이템을 겹쳐서 넣을 수 있는지 확인
         int checkNum = canAddThisBox(item.Key);
-        if (checkNum == 16 || checkNum != 99) {
+        if ( checkNum != 99) {
             return true;
         }
         else {
             int existBox = isExistEmptyBox();
-            if (existBox == 17 || existBox != 99) {
+            if ( existBox != 99) {
                 return true;
             }
             else {
@@ -87,7 +87,7 @@ public class CommonInven : MonoBehaviour {
         }
     }
 
-    //현재 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
+    //전체 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
     protected int canAddThisBox(int itemKey) {
         for (int i = 0; i < inventory.Count; i++) {
             var weaponItem = inventory[i]?.itemData as WeaponItemData;
@@ -146,16 +146,16 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
-    //아이템 타입 체크
-    //type 1: 돌,나무 , 2: 카운트 되는 item, 3: 카운트 없는 아이템
+    //해당 인덱스의 아이템 타입 체크
+    //type 1: 돌,나무 , 2: 카운트 되는 item, 3: 카운트 없는 아이템, 0: 아이템 없음
     public int checkItemType(int index) {
-        if (index >= 0 && index < inventory.Count) {
+        if (inventory[index]?.itemData?.Key != null) {
             if (inventory[index].itemData.Key != 1 && inventory[index].itemData.Key != 2) {
                 //돌, 나무 아닐때
                 if (inventory[index] is CountableItem countItem) {
                     return 2;
                 }
-                else {
+                else{
                     return 3;
                 }
             }
@@ -230,5 +230,61 @@ public class CommonInven : MonoBehaviour {
                 updateInvenInvoke();
             }
         }
+    }
+
+    //특정 인덱스에 무기 아이템 추가
+    public void addIndexItem(WeaponItemData weapItem, int index) {
+        WeaponItem newItem = new WeaponItem();
+        newItem.WeaponItemData = weapItem;
+        newItem.equipItemData = weapItem;
+        newItem.itemData = weapItem;
+        inventory[index] = newItem;
+        updateInvenInvoke();
+    }
+
+    //특정 인덱스에 음식 아이템 추가
+    public void addIndexItem(FoodItemData foodItem, int index) {
+        FoodItem newItem = new FoodItem();
+        newItem.foodItemData = foodItem;
+        newItem.countableData = foodItem;
+        newItem.itemData = foodItem;
+        inventory[index] = newItem;
+        updateInvenInvoke();
+    }
+
+    //특정 인덱스에 의약품 아이템 추가
+    public void addIndexItem(MedicItemData medicItem, int index) {
+        MedItem newItem = new MedItem();
+        newItem.medicItemData = medicItem;
+        newItem.countableData = medicItem;
+        newItem.itemData = medicItem;
+        inventory[index] = newItem;
+        updateInvenInvoke();
+    }
+
+    //특정 인덱스에 도구 아이템 추가
+    public void addIndexItem(EquipItemData equipItem, int index) {
+        EquipItem newItem = new EquipItem();
+        newItem.equipItemData = equipItem;
+        newItem.itemData = equipItem;
+        inventory[index] = newItem;
+        updateInvenInvoke();
+    }
+
+    //특정 인덱스에 Countable 아이템 추가
+    public void addIndexItem(CountableItemData countItem, int index) {
+        CountableItem newItem = new CountableItem();
+        newItem.countableData = countItem;
+        newItem.itemData = countItem;
+        inventory[index] = newItem;
+        updateInvenInvoke();
+    }
+
+    //특정 인덱스에아이템 추가
+    public void addIndexItem(ItemData item, int index) {
+        Item newItem = new Item();
+        newItem.itemData = item;
+        inventory[index] = newItem;
+        updateInvenInvoke();
     }
 }

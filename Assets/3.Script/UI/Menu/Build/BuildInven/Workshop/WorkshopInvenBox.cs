@@ -30,6 +30,7 @@ public class WorkshopInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDrag
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (isItemIn) {
+            workshopInvenCont.setCurrSelectSlot(key);
             originalParent = itemIcon.rectTransform.parent as RectTransform;
             originalPosition = itemIcon.rectTransform.anchoredPosition;
             itemIcon.transform.SetParent(canvas.transform, true);
@@ -62,11 +63,19 @@ public class WorkshopInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDrag
                 }
             }
 
-            //인벤 position 확인
-            //해당 인벤에 아이템 있으면 스위칭
-            //없으면 현재 아이템박스 비우고 인벤 해당 위치에 추가
             if (isChangeInven) {
-
+                if (invenControll.checkItemType(targetIndex) != 0) {
+                    //해당 인벤에 아이템 있으면 스위칭
+                    workshopInvenCont.switchingInvenItem(targetIndex);
+                }
+                else {
+                    //없으면 현재 아이템박스 비우고 인벤 해당 위치에 추가
+                    workshopInvenCont.addItemPlayerInven(targetIndex);
+                    workshopInvenCont.removeItem(key);
+                }
+            }
+            else {
+                return;
             }
         }
     }

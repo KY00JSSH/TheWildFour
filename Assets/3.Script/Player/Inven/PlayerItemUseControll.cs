@@ -12,7 +12,7 @@ public class PlayerItemUseControll : MonoBehaviour {
     private InvenDrop invenDrop;
     private InvenController invenCont;
 
-    private int selectBoxKey;
+    public int selectBoxKey;
 
     private void Awake() {
         invenDrop = FindObjectOfType<InvenDrop>();

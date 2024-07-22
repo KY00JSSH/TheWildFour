@@ -123,11 +123,11 @@ public class MenuWeapon : MonoBehaviour {
         if (weaponItem) {
             //해당칸에 무기 아이템 있으면 스위칭
             if (index == 1) {
-                invenCont.addWeaponItem(firstCont.CurrentItem.itemData as WeaponItemData, target);
+                invenCont.addIndexItem(firstCont.CurrentItem.itemData as WeaponItemData, target);
                 firstCont.setWeaponSlot(weaponItem);
             }
             else {
-                invenCont.addWeaponItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
+                invenCont.addIndexItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
                 secondCont.setWeaponSlot(weaponItem);
             }
         }
@@ -138,11 +138,11 @@ public class MenuWeapon : MonoBehaviour {
         else {
             //해당칸에 아이템 추가
             if (index == 1) {
-                invenCont.addWeaponItem(firstCont.CurrentItem.itemData as WeaponItemData, target);
+                invenCont.addIndexItem(firstCont.CurrentItem.itemData as WeaponItemData, target);
                 firstCont.setWeaponSlot(null);
             }
             else {
-                invenCont.addWeaponItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
+                invenCont.addIndexItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
                 secondCont.setWeaponSlot(null);
             }
         }
@@ -153,7 +153,7 @@ public class MenuWeapon : MonoBehaviour {
             WeaponItemData firstWeapon = firstCont?.CurrentItem?.itemData as WeaponItemData;
             if (firstWeapon) {
                 firstCont.setWeaponSlot(weapItem);
-                invenCont.addWeaponItem(firstWeapon, target);
+                invenCont.addIndexItem(firstWeapon, target);
             }
             else {
                 firstCont.setWeaponSlot(weapItem);
@@ -164,7 +164,7 @@ public class MenuWeapon : MonoBehaviour {
             WeaponItemData secondWeapon = secondCont?.CurrentItem?.itemData as WeaponItemData;
             if (secondWeapon) {
                 secondCont.setWeaponSlot(weapItem);
-                invenCont.addWeaponItem(secondWeapon, target);
+                invenCont.addIndexItem(secondWeapon, target);
             }
             else {
                 secondCont.setWeaponSlot(weapItem);
