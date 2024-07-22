@@ -1,37 +1,33 @@
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class BuildInvenBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
-
-    private int key;
-
-    [SerializeField] private Text itemText;
-    [SerializeField] private Image itemIcon;
-    public bool isItemIn = false;
+public class WorkshopInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     private Canvas canvas;
     private RectTransform originalParent;
     private Vector2 originalPosition;
 
-    private InvenController invenControll;
-    private BuildInvenControll buildInvenCont;
     private InvenUIController invenUI;
+    private InvenController invenControll;
 
-    public void setKey(int key) {
-        this.key = key;
-    }
+    private PlayerItemUseControll playerItemUse;
+
+    private WorkshopInvenControll workshopInvenCont;
 
     private void Awake() {
+        invenBox = transform.GetComponent<Button>();
         invenControll = FindObjectOfType<InvenController>();
-        canvas = FindObjectOfType<Canvas>();
-        buildInvenCont = FindObjectOfType<BuildInvenControll>();
         invenUI = FindObjectOfType<InvenUIController>();
+        playerItemUse = FindObjectOfType<PlayerItemUseControll>();
+        canvas = FindObjectOfType<Canvas>();
+        workshopInvenCont = FindObjectOfType<WorkshopInvenControll>();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
-        buildInvenCont.setCurrSelectSlot(key);
+        workshopInvenCont.setCurrSelectSlot(key);
     }
+
     public void OnBeginDrag(PointerEventData eventData) {
         if (isItemIn) {
             originalParent = itemIcon.rectTransform.parent as RectTransform;
