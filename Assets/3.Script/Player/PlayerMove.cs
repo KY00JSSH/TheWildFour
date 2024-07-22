@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -99,7 +100,6 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
-
     private Vector3 pastPosition = Vector3.zero;
     private float rotationSpeed = 5f;
     Quaternion debugTargetRotation;
@@ -110,22 +110,18 @@ public class PlayerMove : MonoBehaviour {
         if (isMove) {
             // 상반신 회전
             if (!isDash) {
-                targetRotation = Quaternion.Euler(0, -cameraControl.rotationDirection, 0) *
+                targetRotation = 
                     Quaternion.Euler(playerSpine.eulerAngles.x,
                     playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                     playerSpine.eulerAngles.z);
+                if (isBackWalk) targetPosition = targetPosition;
 
-                playerSpine.rotation = Quaternion.Euler(0, moveDirection, 0) * targetRotation;
-                SetAnimationDirection(playerSpine.rotation, Quaternion.Euler(0, moveDirection, 0));
-                //playerSpine.rotation = Quaternion.Euler(playerSpine.rotation.eulerAngles.x,
-                //Mathf.Clamp(playerSpine.rotation.eulerAngles.y, (debugTargetRotation.eulerAngles.y - 90f) % 360, (debugTargetRotation.eulerAngles.y + 90f) % 360),
-                //playerSpine.rotation.eulerAngles.z);
-                //TODO: ClampAngle 필요. 기준은 debugTargetRotation +- 90 이면 앞 방향. 그 외 옆걸음과 뒷걸음 구현.
+                playerSpine.rotation = Quaternion.Euler(0, isBackWalk ? 180 : 0, 0) * Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0) * targetRotation;
+                SetAnimationDirection(playerSpine.rotation, Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0));
             }
 
             // 하반신 회전
-            Debug.Log(isBackWalk);
-            targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0);
+            targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0) * Quaternion.Euler(0, -moveDirection, 0) * (isBackWalk ? Quaternion.Euler(0, 180, 0) : Quaternion.identity);
             playerRigid.rotation = 
                 Quaternion.Slerp(playerRigid.rotation,
                 targetRotation, rotationSpeed * Time.deltaTime);
@@ -146,25 +142,38 @@ public class PlayerMove : MonoBehaviour {
 
     private bool isSideWalk = false, isBackWalk = false;
     private void SetAnimationDirection(Quaternion rotation, Quaternion forward) {
+        if (isTransition) return;
+
         float yFoward = forward.eulerAngles.y + 360f;
         float yRotate = -rotation.eulerAngles.y + 360f - 90f;
-        if (yRotate < 360f) yRotate += 360f;
-        if (yRotate > 720f) yRotate -= 360f;
+        if (yRotate < 360f - 90f) yRotate += 360f;
+        if (yRotate > 720f - 90f) yRotate -= 360f;
+        if (yFoward % 360 == 0 && yRotate % 360 > 180) yRotate = yRotate % 360 - 360;
+        yFoward %= 360; yRotate %= 360;
 
-        isSideWalk = false;
-        isBackWalk = false;
-        if ((yRotate > yFoward + 50 && yRotate <= yFoward + 100) || 
-            (yRotate < yFoward - 50 && yRotate >= yFoward - 100)) {
-            Debug.Log("SIDE");
-            isSideWalk = true;
-        }
-        else if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
+        if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
             Debug.Log("BACK");
             isBackWalk = true;
         }
-        else {
+        else if ((yRotate > yFoward + 50 && yRotate <= yFoward + 100) ||
+            (yRotate < yFoward - 50 && yRotate >= yFoward - 100) ) {
+            Debug.Log("SIDE");
+            isSideWalk = true;
         }
+        else {
+            isBackWalk = false;
+            isSideWalk = false;
+        }
+        StartCoroutine(transitionTime());
+
     }
+    private bool isTransition;
+    private IEnumerator transitionTime() {
+        isTransition = true;
+        yield return new WaitForSeconds(0.2f);
+        isTransition = false;
+    }
+
 
     private Vector3 GetLookatPoint() {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);

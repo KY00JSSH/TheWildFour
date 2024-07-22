@@ -76,7 +76,7 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     public void RestoreWarm() {
-        if (GetPlayerStatus(Status.Heal)) {
+        if (GetPlayerStatus(Status.Heat)) {
             PlayerWarm += WarmRestore * Time.deltaTime;
             if (PlayerWarm > 100) PlayerWarm = 100;
         }
@@ -109,6 +109,7 @@ public class PlayerStatus : MonoBehaviour {
             StartCoroutine(Slow());
         }
     }
+
     public IEnumerator Slow() {
         isSlowed = true;
 
