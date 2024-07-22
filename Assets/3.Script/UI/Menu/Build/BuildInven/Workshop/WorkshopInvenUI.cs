@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildInvenUiControll : MonoBehaviour {
+public class WorkshopInvenUI : MonoBehaviour
+{
     private List<GameObject> invenTotalList = new List<GameObject>();   //전체 인벤박스 리스트
     public List<GameObject> InvenTotalList { get { return invenTotalList; } }
 
@@ -17,7 +18,7 @@ public class BuildInvenUiControll : MonoBehaviour {
     }
 
     private void initInven() {
-        currInvenCount = 8;
+        currInvenCount = 4;
         List<GameObject> invenBoxList = new List<GameObject>();
         for (int i = 0; i < invenMaxcount; i++) {
             Vector3 position;
@@ -32,9 +33,9 @@ public class BuildInvenUiControll : MonoBehaviour {
             invenBoxPrefabs.transform.SetParent(transform);
             invenBoxPrefabs.name = $"inven{i}";
             invenBoxPrefabs.SetActive(false);
-            BuildInvenBox buildInvenBox = invenBoxPrefabs.GetComponent<BuildInvenBox>();
+            ShelterInvenBox shelterInvenBox = invenBoxPrefabs.GetComponent<ShelterInvenBox>();
             if (invenBoxList != null) {
-                buildInvenBox.setKey(i); // key 설정
+                shelterInvenBox.setKey(i); // key 설정
             }
             invenBoxList.Add(invenBoxPrefabs);
         }

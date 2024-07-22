@@ -2,25 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
-
-    private int key;
-    // 인벤 박스 -> 버튼
-    public Button invenBox;
-    [SerializeField] private Text itemText;
-    [SerializeField] private Image itemIcon;
-
-    // 아이템이 들어가있는지 확인
-    public bool isItemIn = false;
-
-    private Item currentItem;
-    public Item CurrentItem { get { return currentItem; } }
+public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     private PlayerItemUseControll playerItemUse;
     private InvenDrop invenDrop;
     private InvenController invenControll;
     private InvenUIController invenUI;
-    private MenuWeapon menuWeapon;
+
+    private MenuWeapon menuWeapon;                  //장비창
+    private ShelterInvenUI shelterInvenUI;          //거처
 
     private Canvas canvas;
     private RectTransform originalParent;
@@ -30,53 +20,11 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
         invenBox = transform.GetComponent<Button>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         invenControll = FindObjectOfType<InvenController>();
+        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
         invenUI = FindObjectOfType<InvenUIController>();
         invenDrop = FindObjectOfType<InvenDrop>();
         canvas = FindObjectOfType<Canvas>();
-    }
-    public void setKey(int key) {
-        this.key = key;
-    }
-
-    public void UpdateBox(Item item) {
-        currentItem = item;
-
-        if (currentItem is CountableItem countItem) {
-            itemIcon.sprite = countItem.itemData.Icon;
-            itemText.enabled = true;
-            itemText.text = countItem.CurrStackCount.ToString();
-            itemIcon.enabled = true;
-            itemIcon.gameObject.SetActive(true);
-            isItemIn = true;
-            itemText.transform.SetAsLastSibling();
-        }
-        else if (currentItem is EquipItem eqItem) {
-            itemIcon.sprite = eqItem.itemData.Icon;
-            itemText.enabled = false;
-            itemText.text = "";
-            itemIcon.enabled = true;
-            itemIcon.gameObject.SetActive(true);
-            isItemIn = true;
-        }
-        else {
-            if (currentItem != null) {
-                itemIcon.sprite = currentItem.itemData.Icon;
-                itemText.enabled = false;
-                itemText.text = "";
-                itemIcon.enabled = true;
-                itemIcon.gameObject.SetActive(true);
-                isItemIn = true;
-            }
-            else {
-                itemIcon.sprite = null;
-                itemText.text = "";
-                itemText.enabled = false;
-                itemIcon.enabled = false;
-                itemIcon.gameObject.SetActive(false);
-                isItemIn = false;
-            }
-        }
     }
 
     //TODO: 꾹 누르는 게이지 추가하기
@@ -126,25 +74,54 @@ public class InventoryBox : MonoBehaviour, IPointerClickHandler, IBeginDragHandl
                 //원래 인벤 index 랑 바꿀 인벤 체크
                 invenControll.changeInvenIndex(key, targetIndex);
             }
-            else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapFirstBoxPos, eventData.position, eventData.pressEventCamera)) {
-                //무기 1번 슬롯일때
-                WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
-                if (invenWeapItemData) {
-                    WeaponItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
-                    invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
-                }
-            }
-            else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
-                //무기 2번 슬롯일떄
-                WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
-                if (invenWeapItemData) {
-                    WeaponItemData weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItemData);
-                    invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
-                }
-            }
             else {
-                //아이템 드랍
-                invenDrop.dropItemAll(key);
+                bool isWorkshopOpen = WorkShopUI.isWorkshopUIOpen;
+                bool isShelterOpen = ShelterUI.isShelterUIOpen;
+
+                if (!isShelterOpen && !isWorkshopOpen) {    //거처, 작업장 오픈 안됬을때
+                    if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapFirstBoxPos, eventData.position, eventData.pressEventCamera)) {
+                        //무기 1번 슬롯일때
+                        WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
+                        if (invenWeapItemData) {
+                            WeaponItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
+                            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                        }
+                    }
+                    else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
+                        //무기 2번 슬롯일떄
+                        WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
+                        if (invenWeapItemData) {
+                            WeaponItemData weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItemData);
+                            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                        }
+                    }
+                }
+                else if (isWorkshopOpen) {  //작업장 오픈시
+                    for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                        RectTransform boxRectTransform = shelterInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
+                        if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
+                            targetIndex = i;
+                            break;
+                        }
+                    }
+                    //작업장 인벤에 아이템 추가
+
+                }
+                else if (isShelterOpen) {   //거처 오픈
+                    for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                        RectTransform boxRectTransform = shelterInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
+                        if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
+                            targetIndex = i;
+                            break;
+                        }
+                    }
+                    //거처 인벤에 아이템 추가
+
+                }
+                else {
+                    //아이템 드랍
+                    invenDrop.dropItemAll(key);
+                }
             }
         }
     }
