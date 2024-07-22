@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ShelterManager : MonoBehaviour {
     public int ShelterLevel { get; private set; }
+    public int MaxShelterLevel { get; private set; }
+
     private Vector3 LastPlayerPosition; //TODO: 거처 입장, 퇴장시 사용할 위치값
 
     public int MoveLevel { get; private set; }
@@ -26,6 +28,7 @@ public class ShelterManager : MonoBehaviour {
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         ShelterLevel = 1;
+        MaxShelterLevel = 5;
 
         MoveLevel = 0;
         AttackLevel = 0;
@@ -75,7 +78,7 @@ public class ShelterManager : MonoBehaviour {
     }
 
     public void LevelUp() {     // 거처 레벨업
-
+        if (ShelterLevel == MaxShelterLevel) return;
         // 24 07 18 김수주 Shelter upgrade item 부족하면 return
         Tooltip_Shelter tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
         if (!tooltip_Shelter.isUpgradeAvailable) return;
@@ -101,7 +104,6 @@ public class ShelterManager : MonoBehaviour {
     public Skill[] skillMove = new Skill[5];
     public Skill[] skillAttack = new Skill[5];
     public Skill[] skillGather = new Skill[5];
-
 
     public void OnSkillMoveButton(int index) {
         if (MovePoint <= 0) return;
