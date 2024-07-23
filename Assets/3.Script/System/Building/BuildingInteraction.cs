@@ -68,7 +68,8 @@ public class BuildingInteraction : MonoBehaviour {
         //menuControl.gameObject.SetActive(false);
     }
 
-    private void CloseAllUI() {
+    //TODO: Player OnDead에 추가하기. 0723
+    public void CloseAllUI() {
         menuControl.gameObject.SetActive(false);
         InteractionUI.ShelterUI.SetActive(false);
         InteractionUI.WorkShopUI.SetActive(false);

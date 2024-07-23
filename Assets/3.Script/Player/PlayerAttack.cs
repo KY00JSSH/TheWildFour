@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
     [SerializeField] private Collider[] fistCollider;
+    private PlayerAbility playerAbility;
     private Animator playerAnimator;
     private PlayerMove playerMove;
 
@@ -12,12 +13,18 @@ public class PlayerAttack : MonoBehaviour {
 
     private float moveSpeed;
     public float attackSpeed { get; private set; }
+    public void SetAttackSpeed(float attackspeed) { attackSpeed = attackspeed; }
 
     private void Awake() {
+        playerAbility = GetComponent<PlayerAbility>();
         playerAnimator = GetComponentInParent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         moveSpeed = playerMove.GetPlayerMoveSpeed();
         fistCollider = GetComponentsInChildren<Collider>();
+    }
+
+    private void Start() {
+        SetAttackSpeed(GetComponent<PlayerAbility>().GetTotalPlayerAttackSpeed());
     }
 
     private void Update() {
@@ -52,10 +59,19 @@ public class PlayerAttack : MonoBehaviour {
             isAttack = false;
 
     }
+
     private void SetMoveSpeedOnAttack() {
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
             playerMove.SetPlayerMoveSpeed(moveSpeed * 0.4f);
         }
         else playerMove.SetPlayerMoveSpeed(moveSpeed);
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+            //other.GetComponent<ObjAttack>().GetAttack(
+            //    playerAbility.GetTotalPlayerAttack, playerAbility.GetTotalPlayerGather());
+        }
+    }
+
 }

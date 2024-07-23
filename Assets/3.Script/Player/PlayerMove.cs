@@ -59,13 +59,15 @@ public class PlayerMove : MonoBehaviour {
         IncDashGage = defaultIncDashGage;
     }
 
+    public bool isPlayerBuilding { get; private set; }
     private void Update() {
         playerAnimator.SetBool("isSideWalk", isSideWalk);
         playerAnimator.SetBool("isBackWalk", isBackWalk);
+        isPlayerBuilding = playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create");
     }
 
     private void FixedUpdate() {
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") || PlayerStatus.isDead) return;
+        if (isPlayerBuilding || PlayerStatus.isDead) return;
         
         if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
             isSideWalk = false;
@@ -81,8 +83,7 @@ public class PlayerMove : MonoBehaviour {
         TakeFallDamage();
     }
     private void LateUpdate() {
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create") ||
-            PlayerStatus.isDead) return;
+        if (isPlayerBuilding || PlayerStatus.isDead) return;
         LookatMouse();
     }
 
@@ -106,6 +107,7 @@ public class PlayerMove : MonoBehaviour {
 
     private Vector3 pastPosition = Vector3.zero;
     private float rotationSpeed = 5f;
+
     Quaternion debugTargetRotation;
     private void LookatMouse() {
         Quaternion targetRotation =
@@ -118,9 +120,12 @@ public class PlayerMove : MonoBehaviour {
                     Quaternion.Euler(playerSpine.eulerAngles.x,
                     playerSpine.eulerAngles.y + targetRotation.eulerAngles.y,
                     playerSpine.eulerAngles.z);
-                playerSpine.rotation = Quaternion.Euler(0, isBackWalk ? 180 : 0, 0) * Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0) * targetRotation;
-                if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
-                    SetAnimationDirection(playerSpine.rotation, Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0));
+                playerSpine.rotation = 
+                    Quaternion.Euler(0, isBackWalk ? 180 : 0, 0) * Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * 
+                    Quaternion.Euler(0, moveDirection, 0) * targetRotation;
+                    SetAnimationDirection(playerSpine.rotation, 
+                        Quaternion.Euler(0, -cameraControl.rotationDirection, 0) * Quaternion.Euler(0, moveDirection, 0));
+
             }
 
             // 하반신 회전
@@ -154,18 +159,28 @@ public class PlayerMove : MonoBehaviour {
         if (yFoward % 360 == 0 && yRotate % 360 > 180) yRotate = yRotate % 360 - 360;
         yFoward %= 360; yRotate %= 360;
 
-        if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
-            isBackWalk = true;
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+            /*
+            // 공격 모션시 허리 회전 각도 조절
+            playerSpine.rotation = Quaternion.Euler(playerSpine.eulerAngles.x,
+                Mathf.Clamp(yRotate, yFoward - 140, yFoward + 140) + 360, playerSpine.eulerAngles.z);
+            */
         }
-        else if ((yRotate > yFoward + 50 && yRotate <= yFoward + 100) ||
-            (yRotate < yFoward - 50 && yRotate >= yFoward - 100) ) {
-            isSideWalk = true;
-        }
+
         else {
-            isBackWalk = false;
-            isSideWalk = false;
+            if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
+                isBackWalk = true;
+            }
+            else if ((yRotate > yFoward + 50 && yRotate <= yFoward + 100) ||
+                (yRotate < yFoward - 50 && yRotate >= yFoward - 100)) {
+                isSideWalk = true;
+            }
+            else {
+                isBackWalk = false;
+                isSideWalk = false;
+            }
+            StartCoroutine(transitionTime());
         }
-        StartCoroutine(transitionTime());
 
     }
     private bool isTransition;
@@ -230,9 +245,6 @@ public class PlayerMove : MonoBehaviour {
             Quaternion.Euler(0, cameraControl.rotationDirection, 0) * 
             new Vector3(InputX, 0, InputZ) * Time.deltaTime * constMoveSpeed * currentSpeed;
         targetPosition += playerRigid.position;
-
-        Quaternion targetRotation = Quaternion.Euler(0, cameraControl.rotationDirection, 0);
-
         playerRigid.MovePosition(targetPosition);
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);

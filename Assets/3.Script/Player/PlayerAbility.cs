@@ -46,7 +46,7 @@ public class PlayerAbility : MonoBehaviour {
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         playerAttack = 2f;
-        playerAttackSpeed = 3f;
+        playerAttackSpeed = 1f;
         playerCriticalAttack = 5f;
         playerCriticalChance = 0.1f;
         playerColdResistance = 0f;
@@ -95,7 +95,6 @@ public class PlayerAbility : MonoBehaviour {
         //TODO: Inven_Bottom_Controll.cs 에서 InvenCountUpgrade()  => 그냥 버튼 클릭에 묶어두자
 
         //TODO: Gather 스킬 ability 설정. 0715
-        
     }
 
     public float GetTotalPlayerAttack() { return playerAttack + playerAddAttack; }
@@ -105,4 +104,7 @@ public class PlayerAbility : MonoBehaviour {
     public float GetTotalPlayerColdResistance() { return playerColdResistance + playerAddColdResistance; }
     public float GetTotalPlayerDefense() { return playerDefense + playerAddDefense; }
     public float GetTotalPlayerSpeed() {  return playerSpeed + playerAddSpeed; }
+
+    public float GetTotalPlayerAttackSpeed() { return playerAttackSpeed + playerAddAttackSpeed; }
+    public float GetTotalPlayerGather() { return playerGather + playerAddGather; }
 }
