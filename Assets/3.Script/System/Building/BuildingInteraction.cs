@@ -52,8 +52,9 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void FurnaceInteraction() {
-        //menuControl.gameObject.SetActive(false);
-
+        if (TryGetComponent(out Furnace furnace)) {
+            furnace.AddWood();
+        }
     }
 
     private void ShelterInteraction() {

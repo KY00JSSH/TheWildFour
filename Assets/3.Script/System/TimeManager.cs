@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour {
-    // 1. 총 시간 (저장되어야 함)
-    // 2. 생존 시간 (죽을 때 초기화됨)
-    // 3. 낮밤 시간 (총 시간을 하루당 시간으로 나눠 계산?)
     public static TimeManager Instance = null;
     private void Awake() {
         if (Instance == null) {

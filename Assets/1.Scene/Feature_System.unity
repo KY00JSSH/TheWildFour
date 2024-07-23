@@ -7772,6 +7772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 328053536}
   - component: {fileID: 328053535}
+  - component: {fileID: 328053537}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -7855,6 +7856,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &328053537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328053534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff372413006e43e469d1980c3cbb5520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &328450058
 GameObject:
   m_ObjectHideFlags: 0
@@ -13060,9 +13073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &523128633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19484,9 +19494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &833834668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23757,9 +23764,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &991309976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29249,9 +29253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &1203572223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34474,9 +34475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &1439894920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41417,9 +41415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &1687457414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42572,9 +42567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &1760921873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45465,9 +45457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a232ebffc65a194eb35b8cc8b4778bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemText: {fileID: 0}
-  itemIcon: {fileID: 0}
-  isItemIn: 0
 --- !u!114 &1875848632
 MonoBehaviour:
   m_ObjectHideFlags: 0

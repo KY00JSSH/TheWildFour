@@ -1,10 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-
-
 public class Campfire : FireObject {
-    private ParticleSystem fireEffect;
     private CampfireUI campfireUI;
 
     protected override void OnCreated() {
@@ -15,8 +12,7 @@ public class Campfire : FireObject {
         LightOff();
     }
 
-    protected override void Awake() {
-        base.Awake();
+    private void Awake() {
         campfireUI = GetComponent<CampfireUI>();
         OnCreated();
     }
@@ -31,39 +27,8 @@ public class Campfire : FireObject {
         tickTime = 2f;
     }
 
-    private void Update() {
-        if (currentTime > 0) {
-            LightUp(Mathf.InverseLerp(0, totalTime, currentTime) * 4f);
-            Collider[] colliders = Physics.OverlapSphere(transform.position, HeatRange);
-            foreach (Collider collider in colliders) {
-                if (collider.CompareTag("Player")) {
-                    PlayerStatus playerStatus = collider.GetComponentInChildren<PlayerStatus>();
-                    StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
-                    break;
-                }
-            }
-        }
+    protected override void Update() {
+        base.Update();
+        LightUp(Mathf.InverseLerp(0, totalTime, currentTime) * 4f);
     }
-    
-    public override void AddWood() {
-        base.AddWood();
-        if (currentTime > 0 && !isBurn) {
-            StartCoroutine(Burn());
-        }
-    }
-
-    private IEnumerator Burn() {
-        isBurn = true;
-        fireEffect.Play();
-
-        while (currentTime > 0) {
-            currentTime -= tickTime;
-            yield return new WaitForSeconds(1f);
-        }
-        currentTime = 0;
-        LightOff();
-        isBurn = false;
-        fireEffect.Stop();
-    }
-
 }
