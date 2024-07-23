@@ -46,7 +46,7 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void CampfireInteraction() {
-        if(TryGetComponent(out Campfire campfire)) {
+        if (TryGetComponent(out Campfire campfire)) {
             campfire.AddWood();
         }
     }
@@ -57,16 +57,21 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void ShelterInteraction() {
-        menuControl.gameObject.SetActive(false);
-        InteractionUI.ShelterUI.SetActive(true);
+        CloseAllUI(); InteractionUI.ShelterUI.SetActive(true);
     }
 
     private void WorkshopInteraction() {
-        menuControl.gameObject.SetActive(false);
-        InteractionUI.WorkShopUI.SetActive(true);
+        CloseAllUI(); InteractionUI.WorkShopUI.SetActive(true);
     }
 
     private void ChestInteraction() {
         //menuControl.gameObject.SetActive(false);
+    }
+
+    private void CloseAllUI() {
+        menuControl.gameObject.SetActive(false);
+        InteractionUI.ShelterUI.SetActive(false);
+        InteractionUI.WorkShopUI.SetActive(false);
+
     }
 }
