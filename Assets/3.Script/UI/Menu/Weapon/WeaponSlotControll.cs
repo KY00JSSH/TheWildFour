@@ -12,8 +12,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
 
     public int key;
 
-    private Item currentItem;
-    public Item CurrentItem { get { return currentItem; } }
+    private WeaponItem currentItem;
+    public WeaponItem CurrentItem { get { return currentItem; } }
 
     private MenuWeapon menuWeapon;
     private InvenUIController invenUI;
@@ -59,8 +59,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public WeaponItemData returnItem() {
-        if (currentItem?.itemData is WeaponItemData weapItem) {
-            return weapItem;
+        if (currentItem) {
+            return currentItem.WeaponItemData;
         }
         else {
             return null;
@@ -77,7 +77,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     public void OnBeginDrag(PointerEventData eventData) {
         if (PlayerStatus.isDead) return;
 
-        if (currentItem is WeaponItem) {
+        if (currentItem) {
             originalParent = itemIcon.rectTransform.parent as RectTransform;
             originalPosition = itemIcon.rectTransform.anchoredPosition;
             itemIcon.transform.SetParent(canvas.transform, true);
@@ -88,7 +88,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     public void OnDrag(PointerEventData data) {
         if (PlayerStatus.isDead) return;
 
-        if (currentItem is WeaponItem) {
+        if (currentItem) {
             Vector2 position;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
             itemIcon.rectTransform.anchoredPosition = position;
@@ -98,7 +98,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     public void OnEndDrag(PointerEventData eventData) {
         if (PlayerStatus.isDead) return;
 
-        if (currentItem is WeaponItem) {
+        if (currentItem) {
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
 

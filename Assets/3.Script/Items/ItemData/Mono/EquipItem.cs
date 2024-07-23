@@ -1,26 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EquipItem : Item {
     public EquipItemData equipItemData;
 
+    private float currDurability;           //현재 내구도
+    public float CurrDurability { get { return currDurability; } }
+
+    private void Awake() {
+        currDurability = equipItemData.TotalDurability;
+    }
+
     //내구도 0이라 파괴 확인
     private void CheckDurability() {
-        if (equipItemData.CurrDurability <= 0) {
+        if (currDurability <= 0) {
             Destroy(gameObject);
         }
     }
 
     //도구 사용시 내구도 삭제
     public void UseItem(float amount) {
-        float thisDurab = equipItemData.CurrDurability - amount;
-        equipItemData.SetCurrDurability(thisDurab);
+        float thisDurab = currDurability - amount;
+        SetCurrDurability(thisDurab);
         CheckDurability();
     }
 
     //내구도 전체 수리
     public void ResetDurability() {
-        equipItemData.SetCurrDurability(equipItemData.TotalDurability);
+        SetCurrDurability(equipItemData.TotalDurability);
+    }
+    public void SetCurrDurability(float value) {
+        currDurability = value;
     }
 }

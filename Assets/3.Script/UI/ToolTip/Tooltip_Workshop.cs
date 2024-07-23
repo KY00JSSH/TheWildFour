@@ -15,8 +15,6 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     private WorkShopUI workShopUI;
     private WorkshopManager workshopManager;
     private TooltipNum tooltipNum;
-    private UpgradeDetail currentupgradeDetail;
-    private PackingDetail currentpackingDetail;
     private PlayerStatus playerStatus;
     private Button Tooltip_L_btn;
     public bool isWSUpgradeAvailable { get; private set; }
@@ -25,7 +23,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     public int ItemKeyInWS { get { return _itemkeyinWs; } }
     public int _itemkeyinWs = 0;
 
-
+    private WorkshopBtn btnitemData;
     protected override void Awake() {
         base.Awake();
         workShopUI = GetComponent<WorkShopUI>();
@@ -37,45 +35,42 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
 
     protected override void OnEnable() {
-        base.OnEnable();
-        WorkshopInit();
+        base.OnEnable(); 
     }
     private void Update() {
         if (Tooltip_S.activeSelf) {
             UpgradeFunc_ItemText();
         }
         else if (Tooltip_L.activeSelf) {
-            // TryGetValue를 사용하여 키가 존재하는지 확인
-            if (workShopUI.BtnItem.TryGetValue(Tooltip_L_btn, out Item btnItem)) {
-                WorkshopItemShow(Tooltip_L_btn, btnItem);
-            }
+            WorkshopItemShow();
         }
     }
-    // 시작할 때 레벨 확인 
-    private void WorkshopInit() {
-        Debug.Log(workshopManager.WorkshopLevel);
-        currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Workshop, workshopManager.WorkshopLevel + 1);
-        currentpackingDetail = tooltipNum.PackingItemCheck();
-    }
+
 
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null && !btn.name.Contains("Exit")) {
+                               
                 // 버튼 -> 위치 전체 초기화
                 LoadTextPositions_Func(S_ItemTexts, S_ItemImgs, S_itemNeedPosSave);
                 LoadTextPositions_Func(L_ItemTexts, L_ItemImgs, L_itemNeedPosSave);
                 LoadTextPositions_Func(L_StatsTexts, L_StatsImgs, StatsPosSave);
 
                 if (eventData.position.y >= 520) {
+                    btnitemData = btn.GetComponent<WorkshopBtn>();
+                    if (btnitemData.isWeap) {
+
+                        Debug.Log(btnitemData.weaponItem.name);
+                        Debug.Log(btnitemData.weaponItem.Key);
+                    }
+                    else {
+                        Debug.Log(btnitemData.medicItem.name);
+                        Debug.Log(btnitemData.medicItem.Key);
+                    }
                     Tooltip_S.SetActive(false);
                     Tooltip_L.SetActive(true);
-                    // 버튼 DICTIONARY에 아이템 값이 있다면
-                    if (workShopUI.BtnItem.TryGetValue(btn, out Item btnItem)) {
-                        Tooltip_L_btn = btn;
-                        _itemkeyinWs = btnItem.Key;
-                        WorkshopItemShow(btn, btnItem);
-                    }
+                    WorkshopItemShow();
                 }
                 else {
                     Tooltip_S.SetActive(true);
@@ -92,46 +87,53 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                     }
 
                 }
+                
+                
             }
         }
     }
 
 
-    private void WorkshopItemShow(Button btn, Item btnItem) {
+    private void WorkshopItemShow() {
         TextImgActiveInit(L_StatsTexts, L_StatsImgs);
         TextImgActiveInit(L_ItemTexts, L_ItemImgs);
-        L_TextTitle.text = btnItem.itemData.name;
-        L_TextMain.text = btnItem.itemData.Description;
-        L_ItemImg.sprite = btnItem.itemData.Icon;
+        L_TextTitle.text = btnitemData.iTemData.name;
+        L_TextMain.text = btnitemData.iTemData.Description;
+        L_ItemImg.sprite = btnitemData.iTemData.Icon;
         // 1. 스탯 
-        WorkshopStatsLevelText(btnItem);
-        //2. 필요한 아이템
-        WorkshopNeedItemCheck(btn, btnItem);
-    }
+        if (btnitemData.isWeap) {
+            WorkshopItemData_Weap();
 
-
-    private void WorkshopNeedItemCheck(Button btn, Item btnItem) {
-        if (btnItem.itemData is WeaponItemData weap) {
-            WorkshopNeedItemSprite(btn, weap.MaterialKey, weap.MaterialCount);
+            //2. 필요한 아이템
+            WorkshopNeedItemSprite( btnitemData.weaponItem.MaterialKey, btnitemData.weaponItem.MaterialCount);
             if (isWSSkillAvailable) {
-                if (!invenController.checkCanCreateItem(btnItem.Key)) {
+                if (!invenController.createItem(btnitemData.weaponItem)) {
 
                     L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
                     isWSSkillAvailable = false;
                 }
             }
-            WorkshopNeedItemDisappear(weap.MaterialKey.Length);
+            WorkshopNeedItemDisappear(btnitemData.weaponItem.MaterialKey.Length);
         }
-        else if (btnItem.itemData is MedicItemData medic) {
-            WorkshopNeedItemSprite(btn, medic.MaterialKey, medic.MaterialCount);
-            WorkshopNeedItemDisappear(medic.MaterialKey.Length);
+        else if (btnitemData.isMedic) {
+            WorkshopItemData_Medi();
+
+            WorkshopNeedItemDisappear(btnitemData.medicItem.MaterialKey.Length);
+            if (isWSSkillAvailable) {
+                if (!invenController.createItem(btnitemData.medicItem)) {
+
+                    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
+                    isWSSkillAvailable = false;
+                }
+            }
         }
-        else {
-            Debug.Log(btnItem.name);
-        }
+
+        WorkshopLevelText();
     }
 
-    private void WorkshopNeedItemSprite(Button btn, int[] matkeys, int[] matcnts) {
+
+
+    private void WorkshopNeedItemSprite(int[] matkeys, int[] matcnts) {
 
         int Count = 0;
         for (int i = 0; i < matkeys.Length; i++) {
@@ -164,15 +166,13 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         }
     }
 
-    private void WorkshopStatsLevelText(Item btnItem) {
+    private void WorkshopLevelText() {
         int btnItemLevel = 0;
-        if (btnItem.itemData is WeaponItemData weap) {
-            btnItemLevel = weap.Level;
-            WorkshopItemData(weap);
+        if (btnitemData.isWeap) {
+            btnItemLevel = btnitemData.weaponItem.Level;
         }
-        else if (btnItem.itemData is MedicItemData medi) {
-            btnItemLevel = medi.Level;
-            WorkshopItemData(medi);
+        else if (btnitemData.isMedic) {
+            btnItemLevel = btnitemData.medicItem.Level;
         }
 
         if (btnItemLevel <= workshopManager.WorkshopLevel) {
@@ -183,7 +183,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         }
     }
 
-    private void WorkshopItemData(WeaponItemData weap) {
+    private void WorkshopItemData_Weap() {
         // 공격력
         L_StatsImgs.transform.GetChild(0).GetComponent<Image>().sprite = L_StatsSprites[1];
 
@@ -192,14 +192,14 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         L_StatsImgs.transform.GetChild(2).GetComponent<Image>().sprite = L_StatsSprites[5];
 
         // 공격력
-        L_StatsTexts.transform.GetChild(0).GetComponent<Text>().text = string.Format("{0}-{1}", weap.MinPowerPoint, weap.MaxPowerPoint);
+        L_StatsTexts.transform.GetChild(0).GetComponent<Text>().text = string.Format("{0}-{1}", btnitemData.weaponItem.MinPowerPoint, btnitemData.weaponItem.MaxPowerPoint);
 
         L_StatsTexts.transform.GetChild(1).gameObject.SetActive(false);
         //내구도
-        L_StatsTexts.transform.GetChild(2).GetComponent<Text>().text = weap.TotalDurability.ToString();
+        L_StatsTexts.transform.GetChild(2).GetComponent<Text>().text = btnitemData.weaponItem.TotalDurability.ToString();
     }
 
-    private void WorkshopItemData(MedicItemData medi) {
+    private void WorkshopItemData_Medi() {
 
         L_StatsImgs.transform.GetChild(0).gameObject.SetActive(false);
         // 힐
@@ -207,7 +207,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
         L_StatsImgs.transform.GetChild(2).gameObject.SetActive(false);
 
-        int healAmount = (int)(medi.HealTime * playerStatus.GetHealTick());
+        int healAmount = (int)(btnitemData.medicItem.HealTime * playerStatus.GetHealTick());
 
         L_StatsTexts.transform.GetChild(0).gameObject.SetActive(false);
         // 힐
@@ -224,8 +224,8 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         S_ItemImgs.SetActive(true);
         S_ItemTexts.SetActive(true);
 
-        S_TextTitle.text = currentupgradeDetail.name;
-        S_TextMain.text = currentupgradeDetail.description;
+        S_TextTitle.text = workShopUI.UpgradeDetail.name;
+        S_TextMain.text = workShopUI.UpgradeDetail.description;
         S_TextAdd.text = "필요 구성품";
         LevelText.text = string.Format("<size=50>{0}</size>\n<size=30>레벨</size>", workshopManager.WorkshopLevel);
 
@@ -248,9 +248,9 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     }
     private void UpgradeFunc_ItemText() {
         int buildingCheckCount = 0;
-        for (int i = 0; i < currentupgradeDetail.needItems.Length; i++) {
-            int needItem = currentupgradeDetail.needItems[i].ItemNeedNum;
-            int currentItem = tooltipNum.InvenItemGet(currentupgradeDetail.needItems[i].ItemKey);
+        for (int i = 0; i < workShopUI.UpgradeDetail.needItems.Length; i++) {
+            int needItem = workShopUI.UpgradeDetail.needItems[i].ItemNeedNum;
+            int currentItem = tooltipNum.InvenItemGet(workShopUI.UpgradeDetail.needItems[i].ItemKey);
 
             Text text = S_ItemTexts.transform.GetChild(i).GetComponent<Text>();
             Image img = S_ItemImgs.transform.GetChild(i).GetComponent<Image>();
@@ -271,14 +271,14 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
                 List<Item> _items = FindObjectOfType<WorkshopItemSpawner>().Materialitems;
                 for (int j = 0; j < _items.Count; j++) {
-                    if (currentupgradeDetail.needItems[i].ItemKey == _items[j].itemData.Key) {
+                    if (workShopUI.UpgradeDetail.needItems[i].ItemKey == _items[j].itemData.Key) {
                         img.sprite = _items[j].itemData.Icon;
                     }
                 }
             }
         }
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
-        if (buildingCheckCount == currentupgradeDetail.needItems.Length) {
+        if (buildingCheckCount == workShopUI.UpgradeDetail.needItems.Length) {
             isWSUpgradeAvailable = true;
             S_TextResult.text = "<color=White>업그레이드 가능</color>";
         }
@@ -288,16 +288,16 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         }
     }
     private void UpgradeFunc_ItemTextPosition() {
-        if (currentupgradeDetail.needItems.All(item => item.ItemNeedNum == 0)) return;
+        if (workShopUI.UpgradeDetail.needItems.All(item => item.ItemNeedNum == 0)) return;
 
         int needzeroitemcount = 0;
-        foreach (NeedItem item in currentupgradeDetail.needItems) {
+        foreach (NeedItem item in workShopUI.UpgradeDetail.needItems) {
             if (item.ItemNeedNum != 0) {
                 needzeroitemcount++;
             }
         }
 
-        for (int i = 0; i < currentupgradeDetail.needItems.Length; i++) {
+        for (int i = 0; i < workShopUI.UpgradeDetail.needItems.Length; i++) {
             RectTransform eachTextsRe = S_ItemTexts.transform.GetChild(i).GetComponent<RectTransform>();
             RectTransform eachImgsRe = S_ItemImgs.transform.GetChild(i).GetComponent<RectTransform>();
             eachTextsRe.anchoredPosition = new Vector2(eachTextsRe.anchoredPosition.x + 40 * (3 - needzeroitemcount), eachTextsRe.anchoredPosition.y);
@@ -308,8 +308,8 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
     // 3. 짐 싸기
     private void PackingTooltipShow() {
-        S_TextTitle.text = currentpackingDetail.name;
-        S_TextMain.text = currentpackingDetail.description;
+        S_TextTitle.text = workShopUI.PackingDetail.name;
+        S_TextMain.text = workShopUI.PackingDetail.description;
         S_TextAdd.text = "";
         S_TextResult.text = "";
         S_ItemImgs.SetActive(false);
