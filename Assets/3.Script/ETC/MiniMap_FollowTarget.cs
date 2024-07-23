@@ -7,6 +7,11 @@ public class MiniMap_FollowTarget : MonoBehaviour
     public Transform target;
     public Vector3 offset;
 
+    private void Awake()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

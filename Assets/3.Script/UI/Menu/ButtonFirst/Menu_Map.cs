@@ -30,6 +30,7 @@ public class Menu_Map : MonoBehaviour, IMenuButton {
     private void TextBoxMapActive() {
         TextBox_Map.transform.parent.gameObject.SetActive(true);
         TextBox_Map.SetActive(true);
+
     }
 
     private void TextBoxMapOff() {

@@ -6,6 +6,11 @@ public class MiniMap_FollowYRotation : MonoBehaviour
 {
     public Transform target;
 
+    private void Awake()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

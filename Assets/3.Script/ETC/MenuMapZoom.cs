@@ -16,15 +16,12 @@ public class MenuMapZoom : MonoBehaviour
 
     private void Awake()
     {
-        menuMap = GameObject.Find("MenuMapSprite").GetComponent<RectTransform>();
-        menuMapCamera = GetComponent<Camera>();
-
         menuMapCamera.orthographic = true; //카메라를 orthographic으로 설정
     }
 
     private void Update()
-    {
-        if(IsMouseOverUIElement(menuMap))
+    {       
+        if (IsMouseOverUIElement(menuMap))
         {                              
             MenuMap_Zoom();
 
@@ -81,30 +78,20 @@ public class MenuMapZoom : MonoBehaviour
 
     private void ClampCameraPosition()
     {
-        //Vector3 camPos = menuMapCamera.transform.position;
-        //
-        //float vertExtent = menuMapCamera.orthographicSize;
-        //float horzExtent = menuMapCamera.orthographicSize * Screen.width / Screen.height;
-        //
-        //
-        //float leftBound   = menuMap.position.x - menuMap.localScale.x / 2 - horzExtent;
-        //float rightBound  = menuMap.position.x + menuMap.localScale.x / 2 + horzExtent;
-        //float bottomBound = menuMap.position.y - menuMap.localScale.y / 2 + vertExtent;
-        //float topBound    = menuMap.position.y + menuMap.localScale.y / 2 - vertExtent;
-
         Vector3 camPos = menuMapCamera.transform.position;
-
+               
         float vertExtent = menuMapCamera.orthographicSize;
-        float horzExtent = menuMapCamera.orthographicSize * menuMapCamera.aspect;
+        //float horzExtent = menuMapCamera.orthographicSize * menuMapCamera.aspect;
+        float horzExtent = vertExtent * menuMapCamera.aspect;
 
-        float leftBound = menuMap.anchoredPosition.x - horzExtent;
-        float rightBound = menuMap.anchoredPosition.x + horzExtent;
-        float bottomBound = menuMap.anchoredPosition.y - vertExtent;
-        float topBound = menuMap.anchoredPosition.y + vertExtent;
-        
+        float leftBound   = menuMap.rect.xMin + horzExtent;
+        float rightBound  = menuMap.rect.xMax - horzExtent;
+        float bottomBound = menuMap.rect.yMin + vertExtent;
+        float topBound    = menuMap.rect.yMax - vertExtent;
+
         camPos.x = Mathf.Clamp(camPos.x, leftBound, rightBound);
-        camPos.y = Mathf.Clamp(camPos.y, bottomBound, topBound);       
+        camPos.z = Mathf.Clamp(camPos.z, bottomBound, topBound);       
 
         menuMapCamera.transform.position = camPos;
-    }
+    }    
 }

@@ -5,14 +5,14 @@ using UnityEngine;
 public class MenuMap_MarkerSpawner : MonoBehaviour
 {
     /*
-    1. °¢ ºôµù°ú ¸ð´ÚºÒÀÇ ÇÁ¸®ÆÕÀ» ¹è¿­·Î °®°í ÀÖ±â
-    2. ¸Þ¼­µå·Î Å¸ÀÔ, À§Ä¡°ª µî ¹è°³º¯¼ö·Î ÇÏ´Â °Í ÀÛ¼ºÇØ¼­ ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ ²ø¾î´Ù ¾µ ¼ö ÀÖ°Ô ÇÏ±â
-    2-1. º¸³»ÁØ µ¥ÀÌÅÍ¸¦ ¸®½ºÆ®·Î °®°í ÀÖ±â - °Ç¹° ¿ÀºêÁ§Æ® »ý¼ºÀÌ´Ï±î
-    2-2. ¸®½ºÆ®¸¦ ¼øÈ¸ÇØ¼­ À§Ä¡°ª¿¡ ÇØ´çÇÏ´Â ¹Ì´Ï¸Ê À§Ä¡¿¡ ¾ÆÀÌÄÜ ¶ç¿ì±â
-    3. ½ÇÁ¦ À§Ä¡¸¦ ¹Ì´Ï¸ÊÀÇ À§Ä¡¶û ¸ÊÇÎÇØ¼­ ¹Ì´Ï¸Ê¿¡ ³ªÅ¸³ª°Ô ÇÏ±â
-    4. ÁÜÀÎ/¾Æ¿ôÇÒ ¶§µµ ¹Ì´Ï¸Ê ¾ÆÀÌÄÜ À§Ä¡ Á¤»óÀûÀ¸·Î ¿¬µ¿µÇ°Ô ÇÏ±â
-    5. ÆÐ³Î ¹Ì´Ï¸Ê¿¡µµ ¾ÆÀÌÄÜ ¶ß°Ô ÇÏ±â
-    5-1. ÆÐ³Î ¹Ì´Ï¸ÊÀº ¾îÂ÷ÇÇ ¸Ê ½ºÇÁ¶óÀÌÆ®¿Í Å©±â°¡ 1:1ÀÌ´Ï±î ±× À§Ä¡ ±×´ë·Î °®´Ù ³ÖÀ¸¸é µÊ    
+    1. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
+    2. ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½, ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½è°³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ø¼ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½Ï±ï¿½
+    2-1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ - ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ì´Ï±ï¿½
+    2-2. ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ø¼ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ì´Ï¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ì´Ï¸Ê¿ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ï±ï¿½
+    4. ï¿½ï¿½ï¿½ï¿½/ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì´Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ï±ï¿½
+    5. ï¿½Ð³ï¿½ ï¿½Ì´Ï¸Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½Ï±ï¿½
+    5-1. ï¿½Ð³ï¿½ ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Å©ï¿½â°¡ 1:1ï¿½Ì´Ï±ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½    
     */
 
     [SerializeField] public GameObject[] markerPrefabs;
@@ -23,11 +23,20 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     public float mapWidth  = 250f;
     public float mapHeight = 250f;
 
-    private MenuMapZoom zoom;
+    public MenuMapZoom zoom;
 
     private void Awake()
     {
-        zoom = FindObjectOfType<MenuMapZoom>();        
+        //zoom = FindObjectOfType<MenuMapZoom>();
+        //if (zoom == null)
+        //{
+        //    Debug.LogError("MenuMapZoom ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. Zoom ï¿½ï¿½Ã¼ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
+        //}
+        //mapRect = transform.Find("MenuMapSprite").GetComponent<RectTransform>();
+        //if (mapRect == null)
+        //{
+        //    Debug.LogError("RectTransform component not found on MenuMapSprite.");
+        //}
     }
 
 
@@ -35,35 +44,31 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     {
         if(type < 0 || (int)type >= markerPrefabs.Length)
         {
-            Debug.LogError("°Ç¼³ÇÒ ¿ÀºêÁ§Æ® Å¸ÀÔÀÌ³ª ¸¶Ä¿°¡ ¾ø½À´Ï´Ù. ¹ÚÁöÈÆ ¿­½ÉÈ÷ ÇÔ. À¯´ÏÆ¼°¡ ¸ÛÃ»ÀÌÀÓ");
+            Debug.LogError("ï¿½Ç¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å¸ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             return;
         }
 
-        GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], transform);
-        markerOnMap.transform.localPosition = position;
+        GameObject markerOnMap = Instantiate(markerPrefabs[(int)type], /*transform.Find("MenuMapSprite")*/ mapRect); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È­: mapRectï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½
+        RectTransform markerRect = markerOnMap.GetComponent<RectTransform>();
+
+        Vector3 correctedPosition = WorldToMapPosition(position);
+        markerRect.anchoredPosition = correctedPosition;
         markers.Add(markerOnMap);
     }
 
-    public void RemoveMarker(BuildingType type, Vector3 position)
+    public void RemoveMarker(BuildingType type)
     {
-        GameObject markerToRemove = null;
 
         foreach(GameObject markerOnMap in markers)
         {
-            if(markerOnMap.transform.localPosition == position && markerOnMap.name.Contains(type.ToString()))
+            if ((markerOnMap.name[1] == 'o' && type == BuildingType.Workshop) ||
+                 (markerOnMap.name[1] == 'h' && type == BuildingType.Shelter))
             {
-                markerToRemove = markerOnMap;
+                Destroy(markerOnMap);
+                markers.Remove(markerOnMap);
                 break;
             }
-        }
-        if(markerToRemove != null)
-        {
-            markers.Remove(markerToRemove);
-            Destroy(markerToRemove);
-        }
-        else
-        {
-            Debug.LogWarning("Á¦°ÅÇÒ ¸¶Ä¿°¡ ¾ø½À´Ï´Ù.");
+
         }
     }
 
@@ -71,27 +76,57 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
     {
         foreach(var each in markers)
         {
-            each.transform.localPosition = NewPosition(each.transform.localPosition);
+            //each.transform.localPosition = WorldToMapPosition(each.transform.position);
+
+            //each.anchoredPosition = WorldToMapPosition(each.position);
+
+            Vector2 anchor = each.GetComponent<RectTransform>().anchoredPosition;
+
+            Vector3 worldPos = MapToWorldPosition(anchor);
+            anchor = WorldToMapPosition(worldPos);
         }
     }
 
-    private Vector3 NewPosition(Vector3 LerpPosition)
+    private Vector3 WorldToMapPosition(Vector3 worldPosition) //LerpPosition = ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
     {
-        //¿ùµå ÁÂÇ¥¸¦ ¹Ì´Ï¸Ê ÁÂÇ¥·Î º¯È¯
-        Vector3 relativePosition = LerpPosition - transform.position;
+        if (mapWidth == 0 || mapHeight == 0)
+        {
+            Debug.LogError("mapWidth ï¿½Ç´ï¿½ mapHeightï¿½ï¿½ 0ï¿½Ô´Ï´ï¿½. ï¿½Ã¹Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+            return Vector3.zero;
+        }
 
-        //¹Ì´Ï¸ÊÀÇ ½ÇÁ¦ Å©±â¿¡ ¸ÂÃç ºñÀ² °è»ê
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ì´Ï¸ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯
+        Vector3 relativePosition = worldPosition - transform.position;
+
+        //ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         float normalizedX = relativePosition.x / mapWidth;
-        float normalizedZ = relativePosition.z / mapHeight;
+        float normalizedY = relativePosition.z / mapHeight;
 
-        //ÁÂÇ¥ º¸Á¤
+        Debug.Log(zoom);
+        //ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
         float ratio =
             Mathf.InverseLerp(zoom.maxOrthSize, zoom.minOrthSize, zoom.menuMapCamera.orthographicSize) *
             (zoom.maxOrthSize / zoom.minOrthSize - 1) + 1;
 
         float markerPosX = normalizedX * mapRect.rect.width * ratio;
-        float markerPosY = normalizedZ * mapRect.rect.height * ratio;
+        float markerPosY = normalizedY * mapRect.rect.height * ratio;
 
+        if (float.IsNaN(markerPosX) || float.IsInfinity(markerPosX) || float.IsNaN(markerPosY) || float.IsInfinity(markerPosY))
+        {
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½. ï¿½Ô·Â°ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+            return Vector3.zero;
+        }
         return new Vector3(markerPosX, markerPosY, 0);
+    }
+
+    private Vector3 MapToWorldPosition(Vector3 mapPosition)
+    {
+        float normalizedX = mapPosition.x / mapRect.rect.width;
+        float normalizedY = mapPosition.y / mapRect.rect.height;
+
+        float worldPosX = normalizedX * mapWidth + transform.position.x;
+        float worldPosZ = normalizedY * mapHeight + transform.position.z;
+
+        return new Vector3(worldPosX, 0, worldPosZ);
     }
 }
