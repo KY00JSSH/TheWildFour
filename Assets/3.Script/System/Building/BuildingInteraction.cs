@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public enum BuildingType {
@@ -12,14 +13,15 @@ public class BuildingInteraction : MonoBehaviour {
     [SerializeField] private BuildingType buildingType;
     public BuildingType Type { get { return buildingType; } }
 
+    private BuildingInteractionManager interactionManager;
     private InteractionUIMapping InteractionUI;
-
-    private ItemSelectControll selected;
     private Menu_Controll menuControl;
-
+    private ItemSelectControll selected;
     private void Awake() {
-        InteractionUI = FindObjectOfType<InteractionUIMapping>();    
-        menuControl = FindObjectOfType<Menu_Controll>();
+        interactionManager = FindObjectOfType<BuildingInteractionManager>();
+
+        InteractionUI = interactionManager.InteractionUI;
+        menuControl = interactionManager.menuControl;
     }
 
     private void OnEnable() {
@@ -43,8 +45,10 @@ public class BuildingInteraction : MonoBehaviour {
         }
     }
 
-    private void CampfireInteraction() { 
-        
+    private void CampfireInteraction() {
+        if (TryGetComponent(out Campfire campfire)) {
+            campfire.AddWood();
+        }
     }
 
     private void FurnaceInteraction() {
@@ -53,16 +57,22 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void ShelterInteraction() {
-        menuControl.gameObject.SetActive(false);
-        InteractionUI.ShelterUI.SetActive(true);
+        CloseAllUI(); InteractionUI.ShelterUI.SetActive(true);
     }
 
     private void WorkshopInteraction() {
-        menuControl.gameObject.SetActive(false);
-        InteractionUI.WorkShopUI.SetActive(true);
+        CloseAllUI(); InteractionUI.WorkShopUI.SetActive(true);
     }
 
     private void ChestInteraction() {
         //menuControl.gameObject.SetActive(false);
+    }
+
+    //TODO: Player OnDead에 추가하기. 0723
+    public void CloseAllUI() {
+        menuControl.gameObject.SetActive(false);
+        InteractionUI.ShelterUI.SetActive(false);
+        InteractionUI.WorkShopUI.SetActive(false);
+
     }
 }

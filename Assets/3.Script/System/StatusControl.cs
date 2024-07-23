@@ -15,12 +15,13 @@ using UnityEngine;
 
 public enum Status {
     Heat,           // 열기
-    Full,           // 포화 (회복)
+    Full,           // 포화 (HP, Hunger 회복)
     Satiety,        // 포만 (이동속도저하)
     Poison,         // 중독
     Bleeding,       // 출혈
     Blizzard,       // 눈보라
-    Indigestion     // 소화불량
+    Indigestion,    // 소화불량
+    Heal            // 치유 (Hunger 회복)
 }
 
 [System.Serializable]
@@ -77,7 +78,6 @@ public class StatusControl : MonoBehaviour {
         else
             StartCoroutine(Tick(currentStatus, player));
     }
-
 
     private IEnumerator Tick(StatusData status, PlayerStatus player) {
         status.SetRemainTime(status.totalTime);

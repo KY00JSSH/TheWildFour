@@ -14,7 +14,9 @@ public class PlayerStatus : MonoBehaviour {
     public float PlayerMaxHp { get; set; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
-    private float HealRestore = 0.3f, HungerRestore = 0.5f;
+    private float HealRestore = 0.3f, HungerRestore = 0.5f, WarmRestore = 1.2f;
+
+    public float GetHealTick() { return HealRestore; }
 
     private bool[] statusList;
     public bool GetPlayerStatus(Status status) { return statusList[(int)status]; }
@@ -61,8 +63,30 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     public void EatFood(FoodItem item) {
-        if (item.HealTime == 0) PlayerHp += PlayerMaxHp * 0.8f;
         StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
+    }
+
+    public void EatMedicine(MedItem item) {
+        if (item.HealTime == 0) {
+            PlayerHp += 80;
+            if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;
+            return;
+        }
+        StatusControl.Instance.GiveStatus(Status.Heal, this, item.HealTime);
+    }
+
+    public void RestoreWarm() {
+        if (GetPlayerStatus(Status.Heat)) {
+            PlayerWarm += WarmRestore * Time.deltaTime;
+            if (PlayerWarm > 100) PlayerWarm = 100;
+        }
+    }
+
+    public void RestoreHp() {
+        if (GetPlayerStatus(Status.Heal)) {
+            PlayerHp += HealRestore * Time.deltaTime;
+            if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;
+        }
     }
 
     public void RestoreHpHunger() {
@@ -85,6 +109,7 @@ public class PlayerStatus : MonoBehaviour {
             StartCoroutine(Slow());
         }
     }
+
     public IEnumerator Slow() {
         isSlowed = true;
 
@@ -122,6 +147,8 @@ public class PlayerStatus : MonoBehaviour {
             TakeHungerDamage();
             RestoreHpHunger();
             SatietySlow();
+            RestoreHp();
+            RestoreWarm();
         }
     }
 }

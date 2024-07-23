@@ -10,11 +10,15 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     [SerializeField] private bool isClicked = false;
 
     public float CoolTime { get { return leftTime; } } // ShelterManager에서 받아가는 용도
+    public bool isBuildComplete { get; private set; }
+    private bool isRatioOpposite = false;
 
-    private float leftTime = 10f;
+    private float leftTime;
     [SerializeField] private float speed = 5.0f;
     private ShelterManager shelterManager;
+    private WorkshopManager workshopManager;
     private Tooltip_Shelter tooltip_Shelter;
+    private Tooltip_Workshop tooltip_Workshop;
 
     public float ratio { get; private set; }
 
@@ -25,9 +29,12 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     }
 
     private void Start() {
+        leftTime = cooltime;
         if (tooltip_Shelter == null) tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
+        if (tooltip_Workshop == null) tooltip_Workshop = FindObjectOfType<Tooltip_Workshop>();
         if (shelterManager == null) shelterManager = FindObjectOfType<ShelterManager>();
-        if (img == null) img = gameObject.GetComponent<Image>();
+        if (workshopManager == null) workshopManager = FindObjectOfType<WorkshopManager>();
+        if (img == null) img = gameObject.transform.GetChild(0).GetComponent<Image>();
         if (btn == null) btn = gameObject.GetComponent<Button>();
     }
 
@@ -39,9 +46,13 @@ public class ButtonCoolTimeUI : MonoBehaviour {
                     leftTime = 0f;
                     if (btn) btn.enabled = true;
                     isClicked = false;
+                    Debug.Log("쿨타임 확인 : " + isBuildComplete);
+                    isBuildComplete = true;
+                    img.enabled = false;
                 }
 
                 ratio = 1.0f - (leftTime / cooltime);
+                if (isRatioOpposite) ratio = 1.0f - ratio;
                 if (img) img.fillAmount = ratio;
             }
         }
@@ -52,17 +63,32 @@ public class ButtonCoolTimeUI : MonoBehaviour {
         else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
         else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return;
 
-        leftTime = cooltime;
-        leftTime = 10f;
-        isClicked = true;
-        if (btn) btn.enabled = false;
+        StartButtonInit();
+        isRatioOpposite = true;
     }
     public void StartUpgradeCooltime() {
+        if (shelterManager.ShelterLevel == shelterManager.MaxShelterLevel) return;
         Debug.Log(" build 확인" + tooltip_Shelter.isUpgradeAvailable);
         if (!tooltip_Shelter.isUpgradeAvailable) return;
+        StartButtonInit();
+    }
 
+    public void StartUpgradeCooltime_WS() {
+        if (workshopManager.WorkshopLevel == workshopManager.MaxWorkshopLevel) return;
+        Debug.Log(" build 확인" + tooltip_Workshop.isWSUpgradeAvailable);
+        if (!tooltip_Workshop.isWSUpgradeAvailable) return;
+        StartButtonInit();
+    }
+    public void StartItemCooltime_WS() {
+        if (!tooltip_Workshop.isWSSkillAvailable) return;
+        StartButtonInit();
+    }
+
+
+    private void StartButtonInit() {
+        img.enabled = true;
         leftTime = cooltime;
-        leftTime = 10f;
+        isBuildComplete = false;
         isClicked = true;
         if (btn) btn.enabled = false;
     }

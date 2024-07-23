@@ -12,6 +12,7 @@ public class PlayerAbility : MonoBehaviour {
     private float playerAttackSpeed;
     private float playerCriticalAttack;
     private float playerCriticalChance;
+    private float playerColdResistance;
     private float playerDefense;
     private float playerGather;
     private float playerSpeed;
@@ -25,12 +26,15 @@ public class PlayerAbility : MonoBehaviour {
     private float playerAddAttackSpeed;
     private float playerAddCriticalAttack;
     private float playerAddCriticalChance;
+    private float playerAddColdResistance;
     private float playerAddDefense;
     private float playerAddGather;
     private float playerAddSpeed;
     private float playerAddDashSpeed;
     private float playerAddDecDashGage;
     private float playerAddInvenCount;
+
+
 
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
@@ -42,9 +46,10 @@ public class PlayerAbility : MonoBehaviour {
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         playerAttack = 2f;
-        playerAttackSpeed = 3f;
+        playerAttackSpeed = 1f;
         playerCriticalAttack = 5f;
         playerCriticalChance = 0.1f;
+        playerColdResistance = 0f;
         playerDefense = 2f;
         playerGather = 2f;
         playerSpeed = 1f;
@@ -56,6 +61,7 @@ public class PlayerAbility : MonoBehaviour {
         playerAddAttackSpeed = 0;
         playerAddCriticalAttack = 0;
         playerAddCriticalChance = 0;
+        playerAddColdResistance = 0;
         playerAddDefense = 0;
         playerAddGather = 0;
         playerAddSpeed = 0;
@@ -89,12 +95,16 @@ public class PlayerAbility : MonoBehaviour {
         //TODO: Inven_Bottom_Controll.cs 에서 InvenCountUpgrade()  => 그냥 버튼 클릭에 묶어두자
 
         //TODO: Gather 스킬 ability 설정. 0715
-        
     }
 
     public float GetTotalPlayerAttack() { return playerAttack + playerAddAttack; }
     public float GetTotalPlayerCriticalAttack() { return playerCriticalAttack + playerAddCriticalAttack; }
     public float GetTotalPlayerCriticalChance() { return playerCriticalChance + playerAddCriticalChance; }
 
+    public float GetTotalPlayerColdResistance() { return playerColdResistance + playerAddColdResistance; }
+    public float GetTotalPlayerDefense() { return playerDefense + playerAddDefense; }
+    public float GetTotalPlayerSpeed() {  return playerSpeed + playerAddSpeed; }
 
+    public float GetTotalPlayerAttackSpeed() { return playerAttackSpeed + playerAddAttackSpeed; }
+    public float GetTotalPlayerGather() { return playerGather + playerAddGather; }
 }

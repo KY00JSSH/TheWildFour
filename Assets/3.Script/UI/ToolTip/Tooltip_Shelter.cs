@@ -36,7 +36,8 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private UpgradeDetail currentupgradeDetail;
     private PackingDetail currentpackingDetail;
 
-    public bool isUpgradeAvailable = false;
+    private Button Tooltip_btn;
+    public bool isUpgradeAvailable { get; private set; }
 
     private void Awake() {
 
@@ -57,6 +58,11 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void Update() {
         if (sleepTime.value < 0) {
             SleepSliderInit();
+        }
+        if(ShelterTooltip.activeSelf) {
+            if (365 <= Tooltip_btn.transform.position.y && Tooltip_btn.transform.position.y < 440) {
+                UpgradeFunc_ItemText();
+            }
         }
     }
 
@@ -114,6 +120,7 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null && !btn.name.Contains("Exit")) {
                 ShelterTooltip.SetActive(true);
+                Tooltip_btn = btn;
                 // 선택
                 if (eventData.position.y >= 520) {
                     // 위치 초기화
@@ -131,18 +138,19 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
                     LoadTextPositions_Func();
                     FunctionTooltipInit();
-
-                    if (440 <= eventData.position.y && eventData.position.y < 520) {
-                        currentsleepDetail = tooltipNum.SleepItemCheck();
-                        SleepTooltipShow();
-                    }
-                    else if (365 <= eventData.position.y && eventData.position.y < 440) {
-                        currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Shelter, shelterManager.ShelterLevel + 1);
-                        UpgradeTooltipShow();
-                    }
-                    else {
-                        currentpackingDetail = tooltipNum.PackingItemCheck();
-                        PackingTooltipShow();
+                    if (eventData.position.x >= 210) {// 창고 위치 막음
+                        if (440 <= eventData.position.y && eventData.position.y < 520) {
+                            currentsleepDetail = tooltipNum.SleepItemCheck();
+                            SleepTooltipShow();
+                        }
+                        else if (365 <= eventData.position.y && eventData.position.y < 440) {
+                            currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Shelter, shelterManager.ShelterLevel + 1);
+                            UpgradeTooltipShow();
+                        }
+                        else {
+                            currentpackingDetail = tooltipNum.PackingItemCheck();
+                            PackingTooltipShow();
+                        }
                     }
                 }
 

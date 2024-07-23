@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ShelterPrefabUI : BuildPrefabUI {
 
-    private ShelterCreate shelterCreate;
+    public ShelterCreate shelterCreate;
     protected override void Awake() {
         base.Awake();
-        shelterCreate = FindObjectOfType<ShelterCreate>();
+        //shelterCreate = FindObjectOfType<ShelterCreate>();
     }
 
     protected override void Update() {
@@ -16,6 +16,7 @@ public class ShelterPrefabUI : BuildPrefabUI {
             base.Update();
 
         }
+
     }
 
 
@@ -25,10 +26,20 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
         if (shelterCreate.isExist) return;
         buildingObj = shelterCreate.Building;
+        StartCoroutine(FindObject());
+    }
+    protected IEnumerator FindObject()
+    {
+        while (buildingObj == null)
+        {
+            buildingObj = shelterCreate.Building;
+            yield return null;
+        }
+
+        Debug.Log("==========================" + buildingObj.name);
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }
-
 
 }
 

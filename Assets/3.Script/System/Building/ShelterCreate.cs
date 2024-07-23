@@ -8,7 +8,6 @@ public class ShelterCreate : BuildingCreate {
         base.Awake();
         shelterAnimator = GetComponent<Animator>();
         shelterManager = GetComponent<ShelterManager>();
-
     }
 
     public override GameObject Building {
@@ -18,7 +17,6 @@ public class ShelterCreate : BuildingCreate {
     public override void BuildMode() {
 
         if (!tooltip_Build.isBuildAvailable) return;
-
         buildingColliders = Building.GetComponentsInChildren<Collider>();
         base.BuildMode();
     }

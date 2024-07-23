@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
 
     private Menu_Controll menuControll;
     private BuildDetail currentBuildDetail;
@@ -18,7 +18,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     [SerializeField] private GameObject itemimgs;
     [SerializeField] private GameObject itemtexts;
-
+    Button btn;
     public bool isBuildAvailable = false;
     int btnIndex = 0;
     private int[] btnNum = new int[5];
@@ -31,10 +31,16 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (tooltipMain == null) tooltipMain = tooltipbox.transform.GetChild(0).GetChild(0).GetComponent<Text>();
     }
 
+    private void Update() {
+        if (currentBuildDetail != null) {
+            // Text 표시
+            Build_ItemText();
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
-            Button btn = eventData.pointerEnter.GetComponent<Button>();
-            if (btn != null) {
+            btn = eventData.pointerEnter.GetComponent<Button>();
+            if (btn != null && IsButtonInArray(btn)) {
                 menuControll.ButtonMove(400, false);
                 tooltipbox.gameObject.SetActive(true);
                 //buttonNum = FindDictionaryKey(btn);
@@ -51,14 +57,14 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData) {
-        if (eventData.pointerCurrentRaycast.gameObject != null) {
-            Button btn = eventData.pointerCurrentRaycast.gameObject.GetComponent<Button>();
-            if (btn != null) {
-                btnIndex = 0;
-                //currentBuildDetail = null;
+
+    private bool IsButtonInArray(Button btn) {
+        for (int i = 0; i < buttons.Length; i++) {
+            if (buttons[i] == btn) {
+                return true;
             }
         }
+        return false;
     }
 
     private void BuildTooltipShow() {
@@ -108,7 +114,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Text text = itemtexts.transform.GetChild(i).GetComponent<Text>();
                 string textColor = "white";
                 textColor = currentItem >= needItem ? "white" : "red";
-                if(currentItem >= needItem) {
+                if (currentItem >= needItem) {
                     buildingCheckCount++;
                 }
                 text.text = string.Format("<color={0}>{1} / {2}</color>", textColor, currentItem, needItem);
@@ -118,7 +124,8 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
         if (buildingCheckCount == currentBuildDetail.needItems.Length)
             isBuildAvailable = true;
-        else isBuildAvailable = false;
+        else isBuildAvailable = true;
+        //TODO: !!!!!!!!!!!!!!!인벤아이템 개수 false => true 로 임시 변경 바꿔야함
     }
 
     public void OnWorkshopButton() {

@@ -32,25 +32,20 @@ public class Campfire : FireObject {
     }
 
     private void Update() {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, HeatRange);
-
-        isPlayerNear = false;
-        foreach (Collider collider in colliders) {
-            if (collider.CompareTag("Player")) {
-                isPlayerNear = true;
-                PlayerStatus playerStatus = collider.GetComponentInChildren<PlayerStatus>();
-                StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
-                break;
+        if (currentTime > 0) {
+            LightUp(Mathf.InverseLerp(0, totalTime, currentTime) * 4f);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, HeatRange);
+            foreach (Collider collider in colliders) {
+                if (collider.CompareTag("Player")) {
+                    PlayerStatus playerStatus = collider.GetComponentInChildren<PlayerStatus>();
+                    StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
+                    break;
+                }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) && isPlayerNear) {
-            AddWood();
-        }
-        LightUp(Mathf.InverseLerp(0, totalTime, currentTime) * 4f);
     }
     
-    protected override void AddWood() {
+    public override void AddWood() {
         base.AddWood();
         if (currentTime > 0 && !isBurn) {
             StartCoroutine(Burn());

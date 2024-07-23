@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class WorkshopManager : MonoBehaviour { 
     public int WorkshopLevel { get; private set; }
+    public int MaxWorkshopLevel { get; private set; }
 
-    ShelterCreate shelter;
+    WorkshopCreate workshop;
     private void Awake() {
-        shelter = GetComponent<ShelterCreate>();
+        workshop = GetComponent<WorkshopCreate>();
     }
 
     public void LevelUp() {
         //TODO: Workshop upgrade item 부족하면 return
-
-        Destroy(shelter.Building.GetComponent<Rigidbody>());
+        if (WorkshopLevel == MaxWorkshopLevel) return;
+        Destroy(workshop.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
     }
 
@@ -21,17 +22,18 @@ public class WorkshopManager : MonoBehaviour {
         while (upgradeCooltime.CoolTime > 0)
             yield return null;
 
-        Transform shelterPosition = shelter.Building.transform;
-        shelter.Building.SetActive(false);
+        Transform shelterPosition = workshop.Building.transform;
+        workshop.Building.SetActive(false);
         WorkshopLevel++;
-        shelter.Building.transform.position = shelterPosition.position;
-        shelter.Building.transform.rotation = shelterPosition.rotation;
-        shelter.Building.SetActive(true);
+        workshop.Building.transform.position = shelterPosition.position;
+        workshop.Building.transform.rotation = shelterPosition.rotation;
+        workshop.Building.SetActive(true);
     }
 
     private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         WorkshopLevel = 1;
+        MaxWorkshopLevel = 5;
     }
 }
 //TODO: 작업장 UI 생성 이후 CoolTime 인스펙터에서 매칭시켜줘야 함

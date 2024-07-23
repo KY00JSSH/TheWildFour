@@ -2,100 +2,156 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class MCursor : MonoBehaviour {
-    private static MCursor instance;
-
-    public GameObject player;
-    //private GameObject findCol;
-    private bool isFindCol = false;
-
-    public static MCursor Instance {
-        get {
-            if (instance == null) {
-                instance = FindObjectOfType<MCursor>();
-            }
-            return instance;
-        }
-    }
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
-        else {
-            Destroy(gameObject);
-            // return => 하단에 초기화가 있을경우
-        }
-    }
-
 
 
     public RectTransform transform_cursor;
+    public RectTransform transform_icon;    
 
-    //TODO: 마우스 커서 움직임 -> 커서 스프라이트 변경 
+    // default mouse sprite
+    private Sprite defaultM;
+    public Sprite[] MouseCursorOff;
+    public Sprite[] MouseCursorOn;
+
+    // 검출대상 위 스프라이트 표시
+    public Sprite[] spaceEnter;
+    public Text spaceText;
+
+    // 검출된 아이템 캔버스 위치
+    private Vector2 itemCanvasPosition;
+    // 검출될 아이템과 마우스 거리
+    [SerializeField] private float distance;
+
+    // 마우스 스프라이트 변경여부
+    private bool isChangeSprite;
+
+    // 아이콘이 표시될 위치 보정값
+    private float iconDistance;
+
+    private void Awake() {
+        defaultM = transform_cursor.gameObject.GetComponent<Image>().sprite;
+        distance = 100f;
+        iconDistance = 50f;
+    }
+
+    private void Start() {
+        Init_Cursor();
+    }
+
     private void Update() {
-        //UpdateCursor();
-        // UpdateObject(FindGameObject());
+        Update_MousePosition();
+        if (CheckCol()) {
+            // 거리 계산
+            ItemPosition();
+            // 레이어별 거리 계산 -> 스프라이트 변경 여부 확인
+            ChangeSprite();
+            if (isChangeSprite) {
+                ChangeSprite();
+                IconPosition(iconDistance);
+            }
+            else {
+                // 멀어지면 default로 변경 + 아이콘 없애기
+                DefaultMouseSprite();
+                IconPositionOff();
+            }
 
+        }
+        else {
+            DefaultMouseSprite();
+        }
+    }
+
+    private void Init_Cursor() {
+        Cursor.visible = false;
+        transform_cursor.pivot = Vector2.up;
+        if (transform_cursor.GetComponent<Graphic>())
+            transform_cursor.GetComponent<Graphic>().raycastTarget = false;
+        if (transform_icon.GetComponent<Graphic>())
+            transform_icon.GetComponent<Graphic>().raycastTarget = false;
     }
 
 
-    private void UpdateCursor() {
+
+    // 커서 위치 변경
+    private void Update_MousePosition() {
         Vector2 mousePos = Input.mousePosition;
         transform_cursor.position = mousePos;
     }
 
-
-
-
-#if true // 마우스 위치에 따라 콜라이더 검출해서 마우스 클릭하면 이동해야하는데? 모르겠음
-    private void UpdateObject(GameObject findcol) {
-        if (isFindCol) {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.WorldToScreenPoint(findcol.transform.position).z; // Maintain the Z position
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            findcol.transform.position = worldPos;
-            Debug.Log(FindGameObject().name);
+    // 검출된 아이템 스크린상의 좌표로 변경
+    private void ItemPosition() {
+        if(PlayerItemPickControll.ClosestItem.transform.TryGetComponent(out Collider col)) {
+            // 콜라이더가 있을 경우 해당 콜라이더의 중심을 기준으로 위치 변경
+            Vector3 vector3 = col.bounds.center;
+            itemCanvasPosition = Camera.main.WorldToScreenPoint(vector3);
         }
         else {
-            return;
-        }
-    }
-    // 플레이어 주변에서 col 검출
-    private RaycastHit hit;
-    private GameObject FindGameObject() {
-        if (player != null && !isFindCol) {
-            Vector3 rayOrigin = player.transform.position + Vector3.up;
-            Vector3 rayDirection = player.transform.rotation * Vector3.forward;
-
-            if (Physics.Raycast(rayOrigin, rayDirection, out hit, 500f)) {
-                if (hit.collider.gameObject != null) {
-                    isFindCol = true;
-                    Debug.Log(hit.collider.gameObject.name);
-                    return hit.collider.gameObject;
-                }
-            }
-        }
-        return null;
+            // 몰까...콜라이더가 없을 수도 있나?
+            // Convert world position to screen position
+            itemCanvasPosition = Camera.main.WorldToScreenPoint(PlayerItemPickControll.ClosestItem.transform.position);
+        }        
     }
 
-#endif
-
-
-
-    // 씬 뷰의 player보는 위치 Debug용도
-    private void OnDrawGizmos() {
-        if (player != null) {
-            Gizmos.color = Color.red;
-            Vector3 start = player.transform.position + Vector3.up;
-            Vector3 end = start + player.transform.rotation * Vector3.forward * 5.0f; // 5.0f는 그릴 선의 길이
-
-            Gizmos.DrawLine(start, end);
-        }
+    // 커서와 아이템 멀어졌을 경우 아이콘 defualt값 변경
+    private void CursorDistanceCheck(float distance) {
+        float _distance = Vector3.Distance(itemCanvasPosition, transform_cursor.position);
+        if (_distance >= distance) isChangeSprite = false; // 멀어지면 false
+        else isChangeSprite = true;
     }
 
 
+    // 검출된 아이템 아이콘 
+    private void IconPosition(float iconDistance) {
+        transform_icon.gameObject.SetActive(true);
+        spaceText.gameObject.SetActive(true);
+        transform_icon.position = new Vector2(itemCanvasPosition.x, itemCanvasPosition.y + iconDistance);
+
+        string itemName = PlayerItemPickControll.ClosestItem.name;
+        if (itemName.Contains("(Clone)"))
+            itemName = itemName.Replace("(Clone)", "");
+        if (itemName.Contains("0")) {
+            itemName = itemName.Split('0')[0];
+        }
+
+        spaceText.text = itemName;
+    }
+    // 아이템 아이콘 off
+    private void IconPositionOff() {
+        transform_icon.gameObject.SetActive(false);
+        spaceText.gameObject.SetActive(false);
+    }
+
+
+    private void DefaultMouseSprite() {
+        transform_cursor.GetComponent<Image>().sprite = defaultM;
+    }
+
+    private bool CheckCol() {
+        if (PlayerItemPickControll.ClosestItem != null) return true;
+        else return false;
+    }
+
+    // 레이어별 아이콘 변경
+    private void ChangeSprite() {
+        switch (PlayerItemPickControll.ClosestItem.layer) {
+            case 8: // 아이템 마우스 거리 70f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[2];
+                CursorDistanceCheck(70f);
+                iconDistance = 50f;
+                break;
+            case 9:// 건축물 검출거리 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[6];
+                CursorDistanceCheck(500f);
+                //TODO: 건축물 별 아이콘 위치 안맞음
+                IconPositionOff();
+                iconDistance = -10f;
+                break;
+            default:
+                isChangeSprite = false;
+                break;
+        }
+    }
 
 
 }
