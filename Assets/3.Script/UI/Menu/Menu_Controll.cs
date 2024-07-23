@@ -39,7 +39,7 @@ public class Menu_Controll : MonoBehaviour {
     // 키값 확인
     private int ButtonPress() {
         if (Input.GetKeyDown(KeyCode.B)) {
-            ButtonMove(150, true);
+            ButtonMove(150, false);
             GetButtonScript(0);
         }
         else if (Input.GetKeyDown(KeyCode.M)) {

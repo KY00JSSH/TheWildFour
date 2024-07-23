@@ -3,50 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CampfireUI : MonoBehaviour {
+public class PrefabSliderUI : MonoBehaviour {
     private Transform playerTransform;
 
     [Space((int)2)]
-    [Header("Slider UI")]
-    [SerializeField] private GameObject fireSliderPrefab;
+    [Header("Slider Prefab")] // 슬라이더 프리펩
+    [SerializeField] protected GameObject SliderPrefab;
 
-    private GameObject parent;
-    private Canvas canvas;
+    protected GameObject parent;
+    protected Canvas canvas;
 
-    private Coroutine fadeCoroutine;
-    private Slider slider;
-    private GameObject sliderObj;
+    // 슬라이더 복제용 오브젝트 할당
+    protected GameObject sliderObj;
+    protected Coroutine fadeCoroutine;
+    protected Slider slider;
 
+    // 슬라이더 전체 값과 현재 값은 하위 스크립트에서 할당 필요함
+    protected float totalvalue;
+    protected float currentvalue;
 
-    private bool isStart = false;
-
-    private void Awake() {
+    protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         canvas = FindObjectOfType<Canvas>();
-        parent = canvas.transform.Find("Etc").GetChild(1).gameObject;
-        if (parent == null) {
-            Debug.Log("parent 없음");
-        }
+
+        // parent 는 각자 스크립트에서 찾아야함
     }
-    private void Update() {
+
+
+    protected virtual void Update() {
         if (sliderObj != null) {
-            SettingFireSliderPosition();
-            SettingFireSliderSize();
+            SettingSliderPosition();
+            SettingSliderSize();
             SliderValueCal();
         }
-
     }
 
     // 슬라이더 생성
-    public void FireSliderInit() {
+    public void SliderInit() {
         if (parent != null) {
-            sliderObj = Instantiate(fireSliderPrefab, parent.transform);
-            sliderObj.name = fireSliderPrefab.name;
+            sliderObj = Instantiate(SliderPrefab, parent.transform);
+            sliderObj.name = SliderPrefab.name;
             sliderObj.SetActive(true);
         }
     }
 
-    private void SettingFireSliderPosition() {
+    protected virtual void SettingSliderPosition() {
         RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
         Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
         if (fireObjectRenderer != null) {
@@ -60,7 +61,7 @@ public class CampfireUI : MonoBehaviour {
         }
     }
 
-    private void SettingFireSliderSize() {
+    protected virtual void SettingSliderSize() {
         RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
         Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
         if (fireObjectRenderer != null) {
@@ -75,16 +76,15 @@ public class CampfireUI : MonoBehaviour {
         }
     }
 
-    private void SliderValueCal() {
-
+    protected virtual void SliderValueCal() {
         slider = sliderObj.GetComponent<Slider>();
-        float sliderValue = GetComponent<Campfire>().GetCurrentTime() / GetComponent<Campfire>().GetTotalTime();
+        float sliderValue = currentvalue / totalvalue;
         slider.value = sliderValue;
         SliderDisappear();
     }
 
 
-    private void SliderDisappear() {
+    protected virtual void SliderDisappear() {
         if (slider.value == 0) {
             fadeCoroutine = StartCoroutine(SliderDisappear_co());
         }
@@ -97,7 +97,7 @@ public class CampfireUI : MonoBehaviour {
         }
     }
 
-    private IEnumerator SliderDisappear_co() {
+    protected virtual IEnumerator SliderDisappear_co() {
         Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill 이미지 가져오기
         Color newColor = fillImage.color;
 
@@ -109,11 +109,12 @@ public class CampfireUI : MonoBehaviour {
         slider.gameObject.SetActive(false);
     }
 
-    private void SliderAlphaInit() {
+    protected virtual void SliderAlphaInit() {
         slider.gameObject.SetActive(true);
         Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill 이미지 가져오기
         Color newColor = fillImage.color;
         newColor.a = 1;
         fillImage.color = newColor;
     }
+
 }
