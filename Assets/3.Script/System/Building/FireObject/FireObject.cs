@@ -10,12 +10,10 @@ public class FireObject : MonoBehaviour, IFireLight {
     protected bool isBuilding = true;
 
     private Light fireLight;
+    protected ParticleSystem fireEffect;
 
     public float GetTotalTime() { return totalTime; }
     public float GetCurrentTime() { return currentTime; }
-
-    protected virtual void Awake() {
-    }
 
     public void LightUp(float intensity) {
         if (!isBuilding)
@@ -27,7 +25,23 @@ public class FireObject : MonoBehaviour, IFireLight {
     }
 
     public virtual void AddWood() {
-        IncreaseTime(10f);
+        IncreaseTime(10f); 
+        if (currentTime > 0 && !isBurn) {
+            StartCoroutine(Burn());
+        }
+    }
+    private IEnumerator Burn() {
+        isBurn = true;
+        fireEffect?.Play();
+
+        while (currentTime > 0) {
+            currentTime -= tickTime;
+            yield return new WaitForSeconds(1f);
+        }
+        currentTime = 0;
+        LightOff();
+        isBurn = false;
+        fireEffect?.Stop();
     }
 
     protected void IncreaseTime(float time) {
@@ -38,5 +52,18 @@ public class FireObject : MonoBehaviour, IFireLight {
     protected virtual void OnCreated() {
         isBuilding = false;
         fireLight = GetComponentInChildren<Light>();
+    }
+
+    protected virtual void Update() {
+        if (currentTime > 0) {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, HeatRange);
+            foreach (Collider collider in colliders) {
+                if (collider.CompareTag("Player")) {
+                    PlayerStatus playerStatus = collider.GetComponentInChildren<PlayerStatus>();
+                    StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
+                    break;
+                }
+            }
+        }
     }
 }

@@ -18,8 +18,8 @@ public class CampfireChestCreate : BuildingCreate {
             newCampfireChest = Instantiate(buildingPrefabs[0], transform);
         }
 
-        if (name == "Campfire(Clone)")
-            Building.GetComponent<Campfire>().enabled = false;
+        if (TryGetComponent(out Campfire campfire)) campfire.enabled = false;
+        if (TryGetComponent(out Furnace furnace)) furnace.enabled = false;
         foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
             each.material = BuildMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
@@ -28,8 +28,8 @@ public class CampfireChestCreate : BuildingCreate {
     }
 
     public override void CreateBuilding() {
-        if (name == "Campfire(Clone)")
-            Building.GetComponent<Campfire>().enabled = true;
+        if (TryGetComponent(out Campfire campfire)) campfire.enabled = true;
+        if (TryGetComponent(out Furnace furnace)) furnace.enabled = true;
         foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
             each.material = ExistMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
