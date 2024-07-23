@@ -18,9 +18,15 @@ public class PrefabSliderUI : MonoBehaviour {
     protected Coroutine fadeCoroutine;
     protected Slider slider;
 
+    protected Renderer objectRenderer;
+
     // 슬라이더 전체 값과 현재 값은 하위 스크립트에서 할당 필요함
     protected float totalvalue;
     protected float currentvalue;
+
+    // 슬라이더 보정값
+    protected float widthDelta;
+    protected float heightDelta;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,7 +39,7 @@ public class PrefabSliderUI : MonoBehaviour {
     protected virtual void Update() {
         if (sliderObj != null) {
             SettingSliderPosition();
-            SettingSliderSize();
+            SettingSliderSize(widthDelta, heightDelta);
             SliderValueCal();
         }
     }
@@ -48,31 +54,30 @@ public class PrefabSliderUI : MonoBehaviour {
     }
 
     protected virtual void SettingSliderPosition() {
-        RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
-        Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
-        if (fireObjectRenderer != null) {
-            Vector3 size = fireObjectRenderer.bounds.size;
-            Vector3 center = fireObjectRenderer.bounds.center;
+        RectTransform SliderPosition = sliderObj.GetComponent<RectTransform>();
+        if (objectRenderer != null) {
+            Vector3 size = objectRenderer.bounds.size;
+            Vector3 center = objectRenderer.bounds.center;
             Vector3 topCenter = new Vector3(center.x, center.y + size.y / 2, center.z);
 
             Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, topCenter + new Vector3(0, 0.3f, 0));
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out Vector2 localPoint);
-            fireSliderPosition.localPosition = localPoint;
+            SliderPosition.localPosition = localPoint;
         }
+
     }
 
-    protected virtual void SettingSliderSize() {
+    protected virtual void SettingSliderSize(float widthDelta, float heightDelta) {
         RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
-        Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
-        if (fireObjectRenderer != null) {
-            Bounds bounds = fireObjectRenderer.bounds;
+        if (objectRenderer != null) {
+            Bounds bounds = objectRenderer.bounds;
             Vector3 screenMin = Camera.main.WorldToScreenPoint(bounds.min);
             Vector3 screenMax = Camera.main.WorldToScreenPoint(bounds.max);
 
             float width = Mathf.Abs(screenMax.x - screenMin.x);
             float height = Mathf.Abs(screenMax.y - screenMin.y);
 
-            fireSliderPosition.sizeDelta = new Vector2(width, height * 0.1f);
+            fireSliderPosition.sizeDelta = new Vector2(width * widthDelta, height * heightDelta);
         }
     }
 

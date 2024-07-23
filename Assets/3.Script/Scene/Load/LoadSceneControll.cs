@@ -10,7 +10,7 @@ public class LoadSceneControll : MonoBehaviour {
 
     IEnumerator LoadGameSceneAsync() {
         // 비동기적으로 GameScene 로드 시작
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Feature_MapObj");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("PlayerSelect");
 
         // 로드가 완료될 때까지 대기
         while (!asyncLoad.isDone) {
@@ -18,3 +18,4 @@ public class LoadSceneControll : MonoBehaviour {
         }
     }
 }
+
