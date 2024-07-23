@@ -100,17 +100,31 @@ public class TooltipInfo : MonoBehaviour {
     }
 
     protected virtual void Awake() {
-        S_Tooltip_Init();
-        L_Tooltip_Init();
-        L_Tooltip_Sprites_Init();
 
-        PosInit(S_ItemImgs, ref S_itemNeedPosSave);
-        PosInit(L_StatsImgs, ref StatsPosSave);
-        PosInit(L_ItemImgs, ref L_itemNeedPosSave);
+        if(Tooltip_S != null) {
+            S_Tooltip_Init();
+            PosInit(S_ItemImgs, ref S_itemNeedPosSave);
+            SaveTextPositions_Func(S_ItemTexts, S_ItemImgs, S_itemNeedPosSave);
+        }
+        else {
+            Debug.Log("Tooltip_S 미사용");
+        }
 
-        SaveTextPositions_Func(S_ItemTexts, S_ItemImgs, S_itemNeedPosSave);
-        SaveTextPositions_Func(L_ItemTexts, L_ItemImgs, L_itemNeedPosSave);
-        SaveTextPositions_Func(L_StatsTexts, L_StatsImgs, StatsPosSave);
+        if (Tooltip_L != null) {
+
+            L_Tooltip_Init();
+            L_Tooltip_Sprites_Init();
+
+            PosInit(L_StatsImgs, ref StatsPosSave);
+            PosInit(L_ItemImgs, ref L_itemNeedPosSave);
+
+            SaveTextPositions_Func(L_ItemTexts, L_ItemImgs, L_itemNeedPosSave);
+            SaveTextPositions_Func(L_StatsTexts, L_StatsImgs, StatsPosSave);
+        }
+        else {
+            Debug.Log("Tooltip_L 미사용");
+        }
+
 
     }
 
@@ -121,13 +135,19 @@ public class TooltipInfo : MonoBehaviour {
     }
 
     protected virtual void OnEnable() {
-        Tooltip_S.SetActive(false);
-        Tooltip_L.SetActive(false);
+        if (Tooltip_S != null) Tooltip_S.SetActive(false);
+        else Debug.Log("Tooltip_S 미사용");
+
+        if (Tooltip_L != null) Tooltip_L.SetActive(false);
+        else Debug.Log("Tooltip_L 미사용");
     }
 
     protected virtual void OnDisable() {
-        Tooltip_S.SetActive(false);
-        Tooltip_L.SetActive(false);
+        if (Tooltip_S != null) Tooltip_S.SetActive(false);
+        else Debug.Log("Tooltip_S 미사용");
+
+        if (Tooltip_L != null) Tooltip_L.SetActive(false);
+        else Debug.Log("Tooltip_L 미사용");
     }
 
     protected Vector2[][] S_itemNeedPosSave;

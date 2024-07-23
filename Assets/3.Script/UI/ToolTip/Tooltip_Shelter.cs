@@ -60,8 +60,10 @@ public class Tooltip_Shelter : MonoBehaviour, IPointerEnterHandler, IPointerExit
             SleepSliderInit();
         }
         if(ShelterTooltip.activeSelf) {
-            if (365 <= Tooltip_btn.transform.position.y && Tooltip_btn.transform.position.y < 440) {
-                UpgradeFunc_ItemText();
+            if (Tooltip_btn.transform.position.x >= 210) { // 창고 위치 막음
+                if (365 <= Tooltip_btn.transform.position.y && Tooltip_btn.transform.position.y < 440) {
+                    UpgradeFunc_ItemText();
+                }
             }
         }
     }

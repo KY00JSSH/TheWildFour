@@ -58,8 +58,8 @@ public class Tooltip_InvenWeap : TooltipInfo_Inven, IPointerEnterHandler, IPoint
                 InvenBoxItemInfo();
             }
             else {
-                Debug.Log("!!!!!!!!!!!!" + weaponSlotControll.CurrentItem.itemData);
-                Debug.Log("!!!!!!!!!!!!???????????" + weaponSlotControll.CurrentItem);
+                //Debug.Log("!!!!!!!!!!!!???????????" + weaponSlotControll.CurrentItem);
+                //Debug.Log("!!!!!!!!!!!!" + weaponSlotControll.CurrentItem.itemData);
                 Debug.Log("인벤토리가 null임");
             }
         }

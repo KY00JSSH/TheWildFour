@@ -40,9 +40,11 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     private void Update() {
         if (Tooltip_S.activeSelf) {
             UpgradeFunc_ItemText();
+            if (workshopManager.WorkshopLevel + 1 != workShopUI.UpgradeDetail.upgradeLevel)
+                WorkshopUpgradeShow();
         }
         else if (Tooltip_L.activeSelf) {
-            WorkshopItemShow();
+            WorkshopItemShow();       
         }
     }
 

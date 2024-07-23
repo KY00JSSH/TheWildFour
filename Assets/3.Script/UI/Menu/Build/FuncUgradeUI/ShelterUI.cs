@@ -41,7 +41,7 @@ public class SkillCountImg {
 
 
 //TODO: Inven => 스크립트 변경 끝나면 버튼 이벤트 추가 필요함
-public class ShelterUI : MonoBehaviour {
+public class ShelterUI : UIInfo {
 
     private ShelterManager shelterManager;
 
@@ -53,9 +53,6 @@ public class ShelterUI : MonoBehaviour {
     [SerializeField] private GameObject shelterLevelText; // 스킬 위 레벨 표시
     [SerializeField] private Text shelterLevel;       // shelter 레벨 표시
     [SerializeField] private GameObject shelterbuttons;
-    [Space((int)2)]
-    [Header("Main Button Disapear")]
-    [SerializeField] private GameObject menuButton;
     [Space((int)2)]
     [Header("Skill Slider")]
     [SerializeField] private Slider[] sliders;
@@ -77,22 +74,22 @@ public class ShelterUI : MonoBehaviour {
         ShelterLevel_AlphaBtns();
     }
 
-    private void OnEnable() {
+    protected override void OnEnable() {
+        base.OnEnable();
         _isShelterUIOpen = true;
         ShelterLevel_Alpha();
         ShelterLevel_AlphaBtns();
-        menuButton.SetActive(false);
     }
-    private void OnDisable() {
+    protected override void OnDisable() {
         _isShelterUIOpen = false;
-        menuButton.SetActive(true);
+        base.OnDisable();
     }
-
-    private void FixedUpdate() {
-        if (Input.GetKeyDown(KeyCode.Escape)) Escape();
+    protected override void Update() {
+        base.Update();
         SkillSliderValue();
         SkillPointerValue();
     }
+
 
     // ShelterManager 레벨받아와서 Text 알파값 조정
     public void ShelterLevel_Alpha() {
@@ -196,10 +193,7 @@ public class ShelterUI : MonoBehaviour {
         }
     }
 
-    // 짐싸기 -> escape
+    // 짐싸기 -> escape 
+    // 상속에 있음
 
-    public void Escape() {
-        menuButton.SetActive(true);
-        transform.gameObject.SetActive(false);
-    }
 }

@@ -139,4 +139,8 @@ public class Menu_Controll : MonoBehaviour {
         }
     }
 
+    private void OnDisable() {
+        Escape();
+    }
+
 }
