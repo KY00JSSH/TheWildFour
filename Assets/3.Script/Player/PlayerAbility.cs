@@ -34,8 +34,6 @@ public class PlayerAbility : MonoBehaviour {
     private float playerAddDecDashGage;
     private float playerAddInvenCount;
 
-
-
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
         cameraControl = FindObjectOfType<CameraControl>();

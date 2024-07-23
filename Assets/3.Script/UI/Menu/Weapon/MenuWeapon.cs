@@ -19,6 +19,9 @@ public class MenuWeapon : MonoBehaviour {
 
     private int currSelectSlot = 1; //현재 선택된 장비창 슬롯 기본값 1
 
+    // PlayerWeaponEquip 에서 받아가기 위한 프로퍼티입니다.
+    public int CurrentSelectSlot { get { return currSelectSlot; } }
+
     private void Update() {
         if (PlayerStatus.isDead) return;
 
