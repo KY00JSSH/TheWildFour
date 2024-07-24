@@ -44,7 +44,7 @@ public class PlayerWeaponEquip : MonoBehaviour {
                     
                     // Equipment로 등록된 child Object에서 WeaponItemData를 가져와
                     // 현재 선택된 무기슬롯의 WeaponItemData와 같으면 해당 무기를 출력합니다.
-                    if (eachWeapon.WeaponItemData == GetCurrentSlotWeapon()) {
+                    if (eachWeapon.weaponItemData == GetCurrentSlotWeapon()) {
                         SetPositionOffset(eachWeapon);  SetRotationOffset(eachWeapon);
                         eachWeaponObject.SetActive(true);
 

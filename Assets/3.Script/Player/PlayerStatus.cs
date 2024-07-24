@@ -66,7 +66,7 @@ public class PlayerStatus : MonoBehaviour {
         StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
     }
 
-    public void EatMedicine(MedItem item) {
+    public void EatMedicine(MedicItem item) {
         if (item.HealTime == 0) {
             PlayerHp += 80;
             if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;

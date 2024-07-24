@@ -92,7 +92,8 @@ public class PlayerItemPickControll : MonoBehaviour {
             invenController.itemObject = item;
             if (invenController.canItemAdd()) {
                 invenController.ItemAdd();
-                Destroy(item);
+                item.SetActive(false);
+                //Destroy(item);
             }
         }
         else {

@@ -29,10 +29,12 @@ public class ItemSpawner : MonoBehaviour
             countItem.addCurrStack(Random.Range(1, 8));
             GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity, transform);
             Item itemComponent = itemObject.GetComponent<Item>();
+            itemObject.name = itemComponent.itemData.name;
         }
         else {
             GameObject itemObject = Instantiate(itemToSpawn.itemData.DropItemPrefab, randomPosition, Quaternion.identity, transform);
             Item itemComponent = itemObject.GetComponent<Item>();
+            itemObject.name = itemComponent.itemData.name;
         }
     }
 }
