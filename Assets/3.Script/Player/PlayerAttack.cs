@@ -68,6 +68,7 @@ public class PlayerAttack : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+            Debug.Log(other.name);
             //other.GetComponent<ObjAttack>().GetAttack(
             //    playerAbility.GetTotalPlayerAttack, playerAbility.GetTotalPlayerGather());
         }

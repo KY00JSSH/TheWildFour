@@ -10,7 +10,6 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void Update() {
-        Debug.Log(buildingCreate.isBuild);
         if (buildingCreate.isBuild) {
             float xRotation = buildingCreate.Building.transform.rotation.eulerAngles.x;
             float zRotation = buildingCreate.Building.transform.rotation.eulerAngles.z;
@@ -33,7 +32,6 @@ public class BuildingValidity : MonoBehaviour {
 
     private void OnTriggerStay(Collider other) {
         if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) {
-            Debug.Log(other.name);
             buildingCreate.isValidBuild = false;
             isTriggered = true;
         }

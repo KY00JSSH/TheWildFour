@@ -30,9 +30,13 @@ public class BuildPrefabUI : MonoBehaviour {
     protected GameObject buildingObj;
     public bool isBuiltStart = false;
 
+    private Animator playerAnimator;
+
     protected virtual void Awake() {
         buildingCreate = FindObjectOfType<BuildingCreate>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
+        playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+
         buildImgs = new Image[2];
         for (int i = 0; i < BuildImg.transform.childCount; i++) {
             buildImgs[i] = BuildImg.transform.GetChild(i).GetComponent<Image>();
@@ -130,6 +134,23 @@ public class BuildPrefabUI : MonoBehaviour {
 
             buildImgRe.position = topCenter + new Vector3(0, 0.2f, 0); 
         }
+    }
+
+    public virtual void BuildAvailableMode() {
+        if (!tooltip_Build.isBuildAvailable || buildingCreate.isExist ||
+            playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
+        buildingObj = buildingCreate.Building;
+        StartCoroutine(FindObject());
+    }
+
+    protected IEnumerator FindObject() {
+        while (buildingObj == null) {
+            buildingObj = buildingCreate.Building;
+            yield return null;
+        }
+
+        isBuiltStart = true;
+        BuildImg.SetActive(true);
     }
 
 }

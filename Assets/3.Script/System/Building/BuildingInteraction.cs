@@ -36,6 +36,8 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void Interaction(BuildingType type) {
+        Debug.Log(type);
+
         switch (type) {
             case BuildingType.Campfire: CampfireInteraction(); break;
             case BuildingType.Furnace: FurnaceInteraction(); break;
@@ -69,7 +71,6 @@ public class BuildingInteraction : MonoBehaviour {
         //menuControl.gameObject.SetActive(false);
     }
 
-    //TODO: Player OnDead에 추가하기. 0723
     public void CloseAllUI() {
         menuControl.gameObject.SetActive(false);
         InteractionUI.ShelterUI.SetActive(false);
