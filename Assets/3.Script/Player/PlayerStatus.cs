@@ -7,7 +7,19 @@ public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
     public UnityEvent onDead;
     public static bool isDead { get; private set; }
-    public void SetPlayerDead () { isDead = true; }
+    public void SetPlayerDead () { 
+        isDead = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetBool("isDead", isDead);
+    }
+
+    public void PlayerRespawn() {
+        isDead = false;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<Animator>().SetBool("isDead", isDead);
+        player.transform.position = new Vector3(0, 0, 0);
+        Start();
+    }
+
 
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
@@ -138,17 +150,19 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     private void Update() {
+
         infoViewer.SetPlayerHp((int)PlayerHp);
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);
 
-        if (!isDead) {
-            TakeWarmDamage();
-            TakeHungerDamage();
-            RestoreHpHunger();
-            SatietySlow();
-            RestoreHp();
-            RestoreWarm();
-        }
+        if (isDead) return;
+
+        TakeWarmDamage();
+        TakeHungerDamage();
+        RestoreHpHunger();
+        SatietySlow();
+        RestoreHp();
+        RestoreWarm();
+
     }
 }
