@@ -23,6 +23,10 @@ public class CountableItem : Item {
         currStackCount = 1;
     }
 
+    public void setCurrStack(int num) {
+        currStackCount = num;
+    }
+
     public void useCurrStack(int num) {
         currStackCount -= num;
     }

@@ -64,16 +64,19 @@ public class TooltipInfo_Inven : MonoBehaviour
     protected virtual void InvenItemText_Weap(WeaponItem currentWeap) {
         durability_Weap.gameObject.SetActive(true);
         invenBoxSlider.gameObject.SetActive(true);
-        invenBoxSlider.value = currentWeap.CurrDurability / currentWeap.equipItemData.TotalDurability;
+        //TODO: 확인필요 (0724)
+        //invenBoxSlider.value = currentWeap.CurrDurability / currentWeap.equipItemData.TotalDurability;
 
 
         float slidervalue = invenBoxSlider.value;
         Text text = durability_Weap.GetComponentInChildren<Text>();
-        text.text = string.Format("{0} - {1}", currentWeap.WeaponItemData.MinPowerPoint, currentWeap.WeaponItemData.MaxPowerPoint);
+        //TODO: 확인필요 (0724)
+        //text.text = string.Format("{0} - {1}", currentWeap.weaponItemData.MinPowerPoint, currentWeap.weaponItemData.MaxPowerPoint);
 
         Image fillImage = weapSlider.fillRect.GetComponent<Image>();
         Text slidertext = weapSlider.transform.GetChild(2).GetComponent<Text>();
-        slidertext.text = string.Format("{0} - {1}", currentWeap.CurrDurability, currentWeap.WeaponItemData.TotalDurability);
+        //TODO: 확인필요 (0724)
+        //slidertext.text = string.Format("{0} - {1}", currentWeap.CurrDurability, currentWeap.weaponItemData.TotalDurability);
 
 
         Image fillImage_box = invenBoxSlider.fillRect.GetComponent<Image>();

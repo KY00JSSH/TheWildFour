@@ -22,7 +22,7 @@ public class BagWeap : MonoBehaviour
         CheckWeapInvenBox();
     }
     private void CheckWeapInvenBox() {
-        if (weaponSlotCtrl.CurrentItem?.itemData != null) ChangeSlotState();
+        if (weaponSlotCtrl.CurrentItem != null) ChangeSlotState();
         else DefaultSlotState();
     }
 
@@ -33,8 +33,8 @@ public class BagWeap : MonoBehaviour
     }
 
     private void ChangeSlotState() {
-        Debug.Log(weaponSlotCtrl.CurrentItem.itemData.name);
-        slotImg.sprite = weaponSlotCtrl.CurrentItem.itemData.Icon;
+        Debug.Log(weaponSlotCtrl.CurrentItem.GetComponent<WeaponItem>().itemData.name);
+        slotImg.sprite = weaponSlotCtrl.CurrentItem.GetComponent<WeaponItem>().itemData.Icon;
         slotImg.rectTransform.sizeDelta = new Vector2(65 , 65);
     }
 }

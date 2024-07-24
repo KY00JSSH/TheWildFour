@@ -24,30 +24,23 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
         if (inventoryBox.isItemIn) {
 
             // 아이템이 들어왔을 경우
-            if (inventoryBox.CurrentItem is FoodItem || inventoryBox.CurrentItem is EquipItem) {
-
-                if (inventoryBox.CurrentItem is FoodItem foodItem) {
-                    _item = foodItem;
-                    if (durability_Weap.gameObject.activeSelf) {
-                        durability_Weap.gameObject.SetActive(false);
-                        invenBoxSlider.gameObject.SetActive(false);
-                    }
-                    InvenItemText_Food(foodItem);
+            //TODO: 확인필요 (0724)
+            if (inventoryBox.CurrentItem.GetComponent<FoodItem>() != null) {
+                _item = inventoryBox.CurrentItem.GetComponent<FoodItem>();
+                if (durability_Weap.gameObject.activeSelf) {
+                    durability_Weap.gameObject.SetActive(false);
+                    invenBoxSlider.gameObject.SetActive(false);
                 }
-                else if (inventoryBox.CurrentItem is WeaponItem weaponItem) {
-                    if (invenBoxSlider.gameObject.activeSelf) {
-                        invenBoxSlider.gameObject.SetActive(false);
-                        durability_Food.gameObject.SetActive(false);
-                    }
-                    _item = weaponItem;
-                    weapSlider.gameObject.SetActive(true);
-                    InvenItemText_Weap(weaponItem);
-                }
-
+                InvenItemText_Food(inventoryBox.CurrentItem.GetComponent<FoodItem>());
             }
-            else {
-                WeapItemOff();
-                FoodItemOff();
+            else if (inventoryBox.CurrentItem.GetComponent<WeaponItem>()) {
+                if (invenBoxSlider.gameObject.activeSelf) {
+                    invenBoxSlider.gameObject.SetActive(false);
+                    durability_Food.gameObject.SetActive(false);
+                }
+                _item = inventoryBox.CurrentItem.GetComponent<WeaponItem>();
+                weapSlider.gameObject.SetActive(true);
+                InvenItemText_Weap(inventoryBox.CurrentItem.GetComponent<WeaponItem>());
             }
         }
         else {
@@ -62,9 +55,10 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter == gameObject) {
-            if (inventoryBox.CurrentItem?.itemData != null) {
+            if (inventoryBox.CurrentItem != null) {
                 Tooltip_inven.SetActive(true);
-                _item = inventoryBox.CurrentItem;
+                //TODO: 확인필요 (0724)
+                _item = inventoryBox.CurrentItem.GetComponent<Item>();
                 InvenBoxItemInfo();
             }
             else {
@@ -78,6 +72,4 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
             Tooltip_inven.SetActive(false);
         }
     }
-
-
 }

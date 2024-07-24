@@ -90,19 +90,21 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                 if (!isShelterOpen && !isWorkshopOpen) {    //거처, 작업장 오픈 안됬을때
                     if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapFirstBoxPos, eventData.position, eventData.pressEventCamera)) {
                         //무기 1번 슬롯일때
-                        WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
-                        if (invenWeapItemData) {
-                            WeaponItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
-                            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                        GameObject invenWeapItem = invenControll.getIndexItem(key);
+                        if (invenWeapItem.GetComponent<WeaponItem>() != null) {
+                            GameObject weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItem);
+                            invenControll.changeItemIntoWeapSlot(key, weapPrevItem);
                         }
+                        invenControll.updateInvenInvoke();
                     }
                     else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
                         //무기 2번 슬롯일떄
-                        WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
-                        if (invenWeapItemData) {
-                            WeaponItemData weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItemData);
-                            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                        GameObject invenWeapItem = invenControll.getIndexItem(key);
+                        if (invenWeapItem.GetComponent<WeaponItem>() != null) {
+                            GameObject weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItem);
+                            invenControll.changeItemIntoWeapSlot(key, weapPrevItem);
                         }
+                        invenControll.updateInvenInvoke();
                     }
                 }
                 else if (isWorkshopOpen) {  //작업장 오픈시

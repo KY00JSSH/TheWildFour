@@ -27,7 +27,7 @@ public class InvenUIController : MonoBehaviour {
     }
 
     //인벤토리의 데이터가 변할때마다 UI 업데이트
-    private void UpdateUI(List<Item> inventory) {
+    private void UpdateUI(List<GameObject> inventory) {
         for (int i = 0; i < inventory.Count; i++) {
             InventoryBox box = invenTotalList[i].GetComponent<InventoryBox>();
             box.UpdateBox(inventory[i]);

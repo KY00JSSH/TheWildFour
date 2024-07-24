@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class WeaponItem : EquipItem
 {
-    public WeaponItemData WeaponItemData;
+    public WeaponItemData weaponItemData;
 
     public float getPowerPoint() {
-        return Random.Range(WeaponItemData.MinPowerPoint, WeaponItemData.MaxPowerPoint);
+        return Random.Range(weaponItemData.MinPowerPoint, weaponItemData.MaxPowerPoint);
     }
 }

@@ -109,11 +109,12 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
             //2. 필요한 아이템
             WorkshopNeedItemSprite( btnitemData.weaponItem.MaterialKey, btnitemData.weaponItem.MaterialCount);
             if (isWSSkillAvailable) {
-                if (!invenController.createItem(btnitemData.weaponItem)) {
+                //TODO: 확인필요 (0724)
+                //if (!invenController.createItem(btnitemData.weaponItem)) {
 
-                    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
-                    isWSSkillAvailable = false;
-                }
+                //    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
+                //    isWSSkillAvailable = false;
+                //}
             }
             WorkshopNeedItemDisappear(btnitemData.weaponItem.MaterialKey.Length);
         }
@@ -122,11 +123,12 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
             WorkshopNeedItemDisappear(btnitemData.medicItem.MaterialKey.Length);
             if (isWSSkillAvailable) {
-                if (!invenController.createItem(btnitemData.medicItem)) {
+                //TODO: 확인필요 (0724)
+                //if (!invenController.createItem(btnitemData.medicItem)) {
 
-                    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
-                    isWSSkillAvailable = false;
-                }
+                //    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
+                //    isWSSkillAvailable = false;
+                //}
             }
         }
 

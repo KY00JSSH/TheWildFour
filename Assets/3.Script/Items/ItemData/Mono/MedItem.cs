@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedItem : CountableItem {
+public class MedicItem : CountableItem {
     public MedicItemData medicItemData;
 
     public PlayerStatus playerStatus;
