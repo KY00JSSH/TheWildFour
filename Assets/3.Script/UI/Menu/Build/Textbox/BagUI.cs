@@ -93,9 +93,5 @@ public class BagUI : MonoBehaviour {
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints.FreezePosition;
         }
-        else {
-            Debug.Log("?????????????????????");
-        }
-
     }
 }

@@ -104,11 +104,9 @@ public class MCursor : MonoBehaviour {
         transform_icon.position = new Vector2(itemCanvasPosition.x, itemCanvasPosition.y + iconDistance);
 
         string itemName = PlayerItemPickControll.ClosestItem.name;
-        if (itemName.Contains("(Clone)"))
-            itemName = itemName.Replace("(Clone)", "");
-        if (itemName.Contains("0")) {
-            itemName = itemName.Split('0')[0];
-        }
+        if (itemName.Contains("(Clone)")) itemName = itemName.Replace("(Clone)", "");
+        if (itemName.Contains("0")) itemName = itemName.Split('0')[0];
+        if (itemName.Contains("Prf")) itemName = itemName.Replace("Prf", "");
 
         spaceText.text = itemName;
     }
@@ -153,7 +151,7 @@ public class MCursor : MonoBehaviour {
                 iconDistance = 0f;
                 break;
             case 12:// 돌 마우스 거리 500f
-                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[4];
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[5];
                 CursorDistanceCheck(500f);
                 iconDistance = 30f;
                 break;

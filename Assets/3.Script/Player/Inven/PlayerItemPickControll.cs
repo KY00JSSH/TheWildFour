@@ -36,7 +36,9 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     private void CheckForItems() {
-        int layerMask = (1 << 8) + (1 << 9);
+        // 2024 07 24 김수주 나무, 돌, 커서 변경 확인용 Test
+        int layerMask = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 12);
+        //int layerMask = (1 << 8) + (1 << 9);
         Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
 
         float closestDistance = Mathf.Infinity;

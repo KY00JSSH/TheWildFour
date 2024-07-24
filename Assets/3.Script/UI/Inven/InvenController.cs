@@ -99,7 +99,8 @@ public class InvenController : CommonInven {
                 if (isMaterials(matKeyArr[i], matCountArr[i])) {
                     if (isAddNewItem(matKeyArr[i], matCountArr[i])) {
                         isCreate = true;
-                        //TODO: 아이템 제작 후 인벤에 추가
+                        //TODO: 아이템 제작 후 인벤에2
+                        //추가
                     }
                     else {
                         isCreate = false;
