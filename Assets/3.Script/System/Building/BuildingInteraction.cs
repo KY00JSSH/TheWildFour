@@ -36,7 +36,7 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void Interaction(BuildingType type) {
-        Debug.Log(type);
+        //Debug.Log(type);
 
         switch (type) {
             case BuildingType.Campfire: CampfireInteraction(); break;

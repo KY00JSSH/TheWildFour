@@ -81,7 +81,7 @@ public class CommonInven : MonoBehaviour {
                 return true;
             }
             else {
-                Debug.Log("기존 box에 추가 못함");
+                //Debug.Log("기존 box에 추가 못함");
                 return false;
             }
         }

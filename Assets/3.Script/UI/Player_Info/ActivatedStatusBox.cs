@@ -9,8 +9,13 @@ public class ActivatedStatusBox : MonoBehaviour
 
     private Status currentStatus;
     private Image sliderImg;
+    // 빈박스로 돌릴 원형
+    private Sprite defaultSprite;
+    private Vector2 defaultPos;
 
     private void Awake() {
+        defaultPos = transform.position;
+        defaultSprite = transform.GetComponent<Image>().sprite;
         actStatusCont = FindObjectOfType<ActivatedStatusControl>();
         sliderImg = transform.Find("SlideImg").GetComponent<Image>();
     }
@@ -21,22 +26,30 @@ public class ActivatedStatusBox : MonoBehaviour
         AddActivatedStatusInBox();
     }
 
+    private void Update() {
+        if (sliderImg.fillAmount <=0) {
+
+            // slider value = 0이되면 해당 인덱스 꺼져야함
+            gameObject.SetActive(false);
+        }
+    }
+
 
     // StatusControl.Instance.ActivatedStatus의 마지막 인덱스의 상태를 찾은 인덱스의 번호에 넣어야함
     private void AddActivatedStatusInBox() {
-
+        Sprite iconSprite = transform.GetComponent<Image>().sprite;
         // 이미지 변경
         switch (currentStatus) {
             case Status.Heat:
-                sliderImg.sprite = actStatusCont.ActivatedStatusSprites[1];
+                iconSprite = actStatusCont.ActivatedStatusSprites[1];
                 sliderImg.color = Color.blue;
                 break;
             case Status.Full:
-                sliderImg.sprite = actStatusCont.ActivatedStatusSprites[2];
+                iconSprite = actStatusCont.ActivatedStatusSprites[2];
                 sliderImg.color = Color.blue;
                 break;
             case Status.Satiety:
-                sliderImg.sprite = actStatusCont.ActivatedStatusSprites[3];
+                iconSprite = actStatusCont.ActivatedStatusSprites[3];
                 sliderImg.color = Color.blue;
                 break;
             case Status.Poison:
@@ -55,12 +68,17 @@ public class ActivatedStatusBox : MonoBehaviour
                 Debug.LogWarning("Status.Indigestion 제작해야함");
                 break;
             case Status.Heal:
-                sliderImg.sprite = actStatusCont.ActivatedStatusSprites[4];
+                iconSprite = actStatusCont.ActivatedStatusSprites[4];
                 sliderImg.color = Color.blue;
                 break;
             default:
                 break;
         }
+        Color newColor = sliderImg.color;  // 현재 이미지의 색상 정보를 가져옴
+        newColor.a = 0.5f;  // 알파값을 원하는 값(여기서는 0.5)으로 설정
+        sliderImg.color = newColor;  // 변경된 색상 정보를 이미지에 적용
+
+        transform.GetComponent<Image>().sprite = iconSprite;
         StartCoroutine(ActivateBoxsSliderChange_Co());
     }
 
@@ -71,10 +89,12 @@ public class ActivatedStatusBox : MonoBehaviour
             // 슬라이드가 변화되는 순간에 박스 인덱스
             yield return null;
         }
-        // slider value = 0이되면 해당 인덱스 꺼져야함
-       gameObject.SetActive(false);
     }
-
+    private void OnDisable() {
+        transform.position = defaultPos;
+        transform.GetComponent<Image>().sprite = defaultSprite;
+        sliderImg.fillAmount = 1;
+    }
 }
 /*
  1. 활성화 될때 status를 받아감
