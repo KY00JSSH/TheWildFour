@@ -54,14 +54,15 @@ public class PlayerAttack : MonoBehaviour {
         if (Input.GetMouseButton(0)) {
             if (!EventSystem.current.IsPointerOverGameObject()) {
                 if (!isAttack) {
-                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) 
+                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+                        isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                         moveSpeed = playerMove.GetPlayerMoveSpeed();
+                    }
+                    isAttack = true;
+
                     playerMove.SetSideWalk(false);
                     playerMove.SetBackWalk(false);
                     playerMove.ResetDash();
-
-                    isAttack = true;
-                    isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                 }
             }
         }
