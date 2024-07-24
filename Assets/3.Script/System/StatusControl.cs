@@ -58,6 +58,7 @@ public class StatusControl : MonoBehaviour {
         new StatusData[Enum.GetValues(typeof(Status)).Length];
 
     // UI 제공용 return 메서드
+    public List<StatusData> ActivatedStatus = new List<StatusData>();
     public float GetTotalTime(Status status) {
         return statusList[(int)status].totalTime;
     }
@@ -80,6 +81,7 @@ public class StatusControl : MonoBehaviour {
     }
 
     private IEnumerator Tick(StatusData status, PlayerStatus player) {
+        if (!ActivatedStatus.Contains(status)) ActivatedStatus.Add(status);
         status.SetRemainTime(status.totalTime);
         status.isTicked = true;
 
@@ -90,5 +92,6 @@ public class StatusControl : MonoBehaviour {
         }
         status.SetRemainTime(0f);
         player.ResetPlayerStatus(status.type);
+        ActivatedStatus.Remove(status);
     }
 }
