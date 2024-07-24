@@ -8,8 +8,10 @@ public class PlayerAttack : MonoBehaviour {
     private PlayerAbility playerAbility;
     private Animator playerAnimator;
     private PlayerMove playerMove;
+    private PlayerWeaponEquip playerWeaponEquip;
 
     private bool isAttack, isEquip, isLeftFist;
+    public void SetEquip(bool flag) { isEquip = flag; }
 
     private float moveSpeed;
     public float attackSpeed { get; private set; }
@@ -49,9 +51,8 @@ public class PlayerAttack : MonoBehaviour {
                     playerMove.SetBackWalk(false);
                     playerMove.ResetDash();
 
-                    isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                     isAttack = true;
-
+                    isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                 }
             }
         }
