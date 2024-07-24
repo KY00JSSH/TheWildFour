@@ -4,76 +4,143 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActivatedStatusControl : MonoBehaviour {
-    // 현재 활성화 되어있는 이미지 개수
-    public GameObject[] CurrentActivateBoxs;
+    // 생성시킬 프리펩
+    public GameObject CurrentActivateBoxPrf;
+    // 생성 갯수
+    [SerializeField] private int boxNum = 5;
+    // 박스 리스트
+    private List<GameObject> CurrentActivateBoxs;
     // 현재 활성화 표시할 스프라이트
     public Sprite[] ActivatedStatusSprites;
 
     // return 용 status 
     public Status AddActivatedStatus { get; private set; }
 
-    private bool isPosChangeComplete = false;
+    // 생성 갯수만큼의 default 위치 정보값
+    private Vector2[] defaultPositions;
+
+    private void Awake() {
+        defaultPositions = new Vector2[boxNum];
+        /* 프리펩으로 해서 위치를 잃어버렸을 경우
+        if(boxNum != 0) {
+            CurrentActivateBoxPrf.transform.position = new Vector2(-880, -380);
+        }
+        */
+        CurrentActivateBoxs = new List<GameObject>();
+        BoxActivatedStatusInit();
+        BoxsDefaultPositionSave();
+    }
+
 
     private void Update() {
         if (StatusControl.Instance.ActivatedStatus != null) {
             // 상태 리스트가 null이 아닐 경우 활성화 오브젝트 개수 확인
-            if (StatusControl.Instance.ActivatedStatus.Count > FindActiveBox()) {
+            int activeBoxCnt = FindActiveBox();
+            if (StatusControl.Instance.ActivatedStatus.Count > activeBoxCnt) {
                 Debug.Log("활성화 개수 : " + StatusControl.Instance.ActivatedStatus.Count);
-                BoxAddActivatedStatus();
+                BoxAddActivatedStatus(activeBoxCnt);
                 Debug.Log("박스 활성화 status : " + AddActivatedStatus);
                 Debug.Log("박스 활성화 개수 : " + FindActiveBox());
-
             }
-
+            // 비활성화 확인
+           if(BoxDelActivatedStatus()) BoxPositionSetting();
         }
-        if (StatusControl.Instance.ActivatedStatus.Count <= FindActiveBox()) BoxAddActivePositionChange();
-
     }
 
     // 활성화 되어있는 박스 오브젝트 개수 확인
     private int FindActiveBox() {
         int count = 0;
-        for (int i = 0; i < CurrentActivateBoxs.Length; i++) {
+        if (CurrentActivateBoxs.Count == 0) return count;
+
+        for (int i = 0; i < CurrentActivateBoxs.Count; i++) {
             if (CurrentActivateBoxs[i].activeSelf) count++;
         }
         return count;
     }
 
+    // 원하는 개수만큼 prefab 리스트 생성
+    private void BoxActivatedStatusInit() {
+        for (int i = 0; i < boxNum; i++) {
+            // 프리펩 생성
+            GameObject gameObject = Instantiate(CurrentActivateBoxPrf, transform);
+            gameObject.name = CurrentActivateBoxPrf.name;
+            gameObject.transform.position = CurrentActivateBoxPrf.transform.position;
+            CurrentActivateBoxs.Add(gameObject);
+            CurrentActivateBoxs[i].SetActive(false);
+        }
+    }
 
-    // 활성화 상태만큼 배열 활성화 해야함 => 상태 넘겨줘야함
-    private void BoxAddActivatedStatus() {
-        for (int i = 0; i < CurrentActivateBoxs.Length; i++) {
+    // 위치 정보 저장
+    private void BoxsDefaultPositionSave() {
+        for (int i = 0; i < boxNum; i++) {
+            defaultPositions[i] = new Vector2(CurrentActivateBoxPrf.transform.position.x + 65 * i, CurrentActivateBoxPrf.transform.position.y);
+        }
+    }
+
+
+    // 받아온 상태 리스트와 활성화되어있는 prefab 리스트 차이만큼 활성화 생성
+    private void BoxAddActivatedStatus(int activeBoxCnt) {
+        for (int i = 0; i < activeBoxCnt; i++) {
             if (!CurrentActivateBoxs[i].activeSelf) {
-                AddActivatedStatus = StatusControl.Instance.ActivatedStatus[StatusControl.Instance.ActivatedStatus.Count - 1].type;
+                //TODO: 상태 넘기기
+                AddActivatedStatus = StatusControl.Instance.ActivatedStatus[StatusControl.Instance.ActivatedStatus.Count - (activeBoxCnt - i) - 1].type;
                 CurrentActivateBoxs[i].SetActive(true);
-                int positionDelta = StatusControl.Instance.ActivatedStatus.Count - 1;
-                CurrentActivateBoxs[i].transform.position = new Vector2(CurrentActivateBoxs[i].transform.position.x + 65 * positionDelta, CurrentActivateBoxs[i].transform.position.y);
-                return;
+
+                // 생성 위치 잡기 _ 현재 상태 리스트의 갯수
+                int positionDelta = StatusControl.Instance.ActivatedStatus.Count - (activeBoxCnt - i) - 1;
+                CurrentActivateBoxs[i].transform.position = defaultPositions[positionDelta];
             }
         }
     }
 
-    // 활성화가 끝난 박스를 찾아서 그뒤에 있는 박스들의 위치를 옮겨야함
-    private void BoxAddActivePositionChange() {
+    // 생성된 box리스트 중 비활성화 된 리스트가 있다면 삭제 후 위치 맞춰야함
+    private bool BoxDelActivatedStatus() {
+        int cnt = 0;
+        for (int i = 0; i < CurrentActivateBoxs.Count; i++) {
 
-        Debug.Log(StatusControl.Instance.ActivatedStatus.Count);
-        Debug.Log("/ " + FindActiveBox());
-        Debug.Log("BoxAddActivePositionChange !!!:");
-        for (int i = 0; i < CurrentActivateBoxs.Length - 1; i++) {
             if (!CurrentActivateBoxs[i].activeSelf) {
-                Debug.Log("CurrentActivateBoxs[i] :" + CurrentActivateBoxs[i].name);
-                for (int j = i + 1; j < CurrentActivateBoxs.Length; j++) {
-                    if (CurrentActivateBoxs[j].activeSelf) {
-                        Debug.Log("CurrentActivateBoxs[j] :" + CurrentActivateBoxs[j].name);
-                        CurrentActivateBoxs[j].transform.position = new Vector2(CurrentActivateBoxs[j].transform.position.x - 65, CurrentActivateBoxs[j].transform.position.y);
-                    }
-                }
+                // 두 번째 요소를 임시 변수에 저장합니다.
+                GameObject temp = CurrentActivateBoxs[i];
 
+                // 두 번째 요소를 리스트에서 제거합니다.
+                CurrentActivateBoxs.RemoveAt(i);
+
+                // 저장한 요소를 리스트의 마지막에 추가합니다.
+                CurrentActivateBoxs.Add(temp);
+                cnt++;
+            }
+        }
+
+        if (cnt > 0) return true;
+        else return false;
+    }
+
+    // 생성된 box리스트 중 리스트의 인덱스 순서에 안맞는 위치가 있다면 변경해야함
+    private void BoxPositionSetting() {
+        for (int i = 0; i < CurrentActivateBoxs.Count; i++) {
+            if (CurrentActivateBoxs[i].transform.position.x != defaultPositions[i].x) {
+                // 코르틴으로 서서히 맞게할 것
+                StartCoroutine(BoxPositionSetting_Co(i));
             }
         }
     }
 
-    // 활성화 된 박스 포지션확인해서 원위치 찾으면 중단 메소드
+    private IEnumerator BoxPositionSetting_Co(int i) {
+        while (CurrentActivateBoxs[i].transform.position.x != defaultPositions[i].x) {
+            Vector3 currentPosition = CurrentActivateBoxs[i].transform.position;
+            float step = Time.deltaTime; // 부드럽게 이동하는 정도
+
+            // 현재 박스가 기본 위치 값보다 오른쪽에 있다면
+            if (currentPosition.x > defaultPositions[i].x) {
+                currentPosition.x = Mathf.Max(currentPosition.x - step, defaultPositions[i].x);
+            }
+            else {// 현재 박스가 기본 위치 값보다 왼쪽에 있다면
+                currentPosition.x = defaultPositions[i].x;
+            }
+            CurrentActivateBoxs[i].transform.position = currentPosition;
+            yield return null;
+        }
+    }
 
 
 }
