@@ -42,7 +42,7 @@ public class PlayerMove : MonoBehaviour {
     public bool isDash { get; private set; }
 
     private void Awake() {
-        playerRigid = GetComponentInParent<Rigidbody>();
+        playerRigid = transform.parent.GetComponent<Rigidbody>();
         playerAnimator = GetComponentInParent<Animator>();
         cameraControl = FindObjectOfType<CameraControl>();
         playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
@@ -219,7 +219,9 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
-        else if (CurrentDashGage == TotalDashGage) SetDash();
+        else if ((CurrentDashGage == TotalDashGage) &&
+            !playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) 
+            SetDash();
     }
 
     private float currentSpeed = 0f;

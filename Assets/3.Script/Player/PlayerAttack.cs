@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
-    private PlayerAbility playerAbility;
-    private Animator playerAnimator;
-    private PlayerMove playerMove;
     private PlayerWeaponEquip playerWeaponEquip;
+    [SerializeField] private Collider[] fistCollider;
+    
+    private PlayerAbility playerAbility;
+    private PlayerMove playerMove;
+    private LayerMask targetAttacklayer;
+
+    private Animator playerAnimator;
+    private AnimatorStateInfo animatorState;
+    private int currentClip = 0;
 
     private bool isAttack, isEquip, isLeftFist;
     public void SetEquip(bool flag) { isEquip = flag; }
@@ -17,14 +23,20 @@ public class PlayerAttack : MonoBehaviour {
     public void SetAttackSpeed(float attackspeed) { attackSpeed = attackspeed; }
 
     private void Awake() {
-        playerAbility = GetComponent<PlayerAbility>();
+        playerWeaponEquip = FindObjectOfType<PlayerWeaponEquip>();
         playerAnimator = GetComponentInParent<Animator>();
+        playerAbility = GetComponent<PlayerAbility>();
         playerMove = GetComponent<PlayerMove>();
+
+        fistCollider = GetComponentsInChildren<SphereCollider>();
         moveSpeed = playerMove.GetPlayerMoveSpeed();
     }
 
     private void Start() {
         SetAttackSpeed(GetComponent<PlayerAbility>().GetTotalPlayerAttackSpeed());
+        targetAttacklayer =
+            (1 << LayerMask.NameToLayer("Animal")) | (1 << LayerMask.NameToLayer("Stone")) | 
+            (1 << LayerMask.NameToLayer("Tree"));
     }
 
     private void Update() {
@@ -36,15 +48,14 @@ public class PlayerAttack : MonoBehaviour {
         CheckAttack();
     }
 
+    private bool keepReseted;
     private void CheckAttack() {
         SetMoveSpeedOnAttack();
         if (Input.GetMouseButton(0)) {
             if (!EventSystem.current.IsPointerOverGameObject()) {
                 if (!isAttack) {
-                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) 
                         moveSpeed = playerMove.GetPlayerMoveSpeed();
-                        playerMove.SetDash();
-                    }
                     playerMove.SetSideWalk(false);
                     playerMove.SetBackWalk(false);
                     playerMove.ResetDash();
@@ -54,8 +65,20 @@ public class PlayerAttack : MonoBehaviour {
                 }
             }
         }
-        else 
+        else {
             isAttack = false;
+            if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+                playerMove.ResetDash();
+                keepReseted = true;
+
+            }
+            else if(keepReseted) {
+                keepReseted = false;
+                playerMove.SetDash();
+                currentClip = 0;
+            }
+        }
+
 
     }
 
@@ -66,12 +89,22 @@ public class PlayerAttack : MonoBehaviour {
         else playerMove.SetPlayerMoveSpeed(moveSpeed);
     }
 
+
     private void OnTriggerEnter(Collider other) {
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+        animatorState = playerAnimator.GetCurrentAnimatorStateInfo(0);
+        if (animatorState.IsTag("Attack") &&
+            ((targetAttacklayer.value & (1 << other.gameObject.layer)) != 0)) {
+            //Debug.Log($"{currentClip} == {GetCurrentClip()} ? : {currentClip == GetCurrentClip()}");
+            if (currentClip == GetCurrentClip()) return;
+            currentClip = GetCurrentClip();
+
             Debug.Log(other.name);
             //other.GetComponent<ObjAttack>().GetAttack(
             //    playerAbility.GetTotalPlayerAttack, playerAbility.GetTotalPlayerGather());
         }
     }
 
+    private int GetCurrentClip() {
+        return animatorState.shortNameHash + (isLeftFist ? 1 : 2);
+    }
 }
