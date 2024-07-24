@@ -3,88 +3,93 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CampfireUI : MonoBehaviour {
+public class PrefabSliderUI : MonoBehaviour {
     private Transform playerTransform;
 
     [Space((int)2)]
-    [Header("Slider UI")]
-    [SerializeField] private GameObject fireSliderPrefab;
+    [Header("Slider Prefab")] // 슬라이더 프리펩
+    [SerializeField] protected GameObject SliderPrefab;
 
-    private GameObject parent;
-    private Canvas canvas;
+    protected GameObject parent;
+    protected Canvas canvas;
 
-    private Coroutine fadeCoroutine;
-    private Slider slider;
-    private GameObject sliderObj;
+    // 슬라이더 복제용 오브젝트 할당
+    protected GameObject sliderObj;
+    protected Coroutine fadeCoroutine;
+    protected Slider slider;
 
+    protected Renderer objectRenderer;
 
-    private bool isStart = false;
+    // 슬라이더 전체 값과 현재 값은 하위 스크립트에서 할당 필요함
+    protected float totalvalue;
+    protected float currentvalue;
 
-    private void Awake() {
+    // 슬라이더 보정값
+    protected float widthDelta;
+    protected float heightDelta;
+
+    protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         canvas = FindObjectOfType<Canvas>();
-        parent = canvas.transform.Find("Etc").GetChild(1).gameObject;
-        if (parent == null) {
-            Debug.Log("parent 없음");
-        }
+
+        // parent 는 각자 스크립트에서 찾아야함
     }
-    private void Update() {
+
+
+    protected virtual void Update() {
         if (sliderObj != null) {
-            SettingFireSliderPosition();
-            SettingFireSliderSize();
+            SettingSliderPosition();
+            SettingSliderSize(widthDelta, heightDelta);
             SliderValueCal();
         }
-
     }
 
     // 슬라이더 생성
-    public void FireSliderInit() {
+    public void SliderInit() {
         if (parent != null) {
-            sliderObj = Instantiate(fireSliderPrefab, parent.transform);
-            sliderObj.name = fireSliderPrefab.name;
+            sliderObj = Instantiate(SliderPrefab, parent.transform);
+            sliderObj.name = SliderPrefab.name;
             sliderObj.SetActive(true);
         }
     }
 
-    private void SettingFireSliderPosition() {
-        RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
-        Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
-        if (fireObjectRenderer != null) {
-            Vector3 size = fireObjectRenderer.bounds.size;
-            Vector3 center = fireObjectRenderer.bounds.center;
+    protected virtual void SettingSliderPosition() {
+        RectTransform SliderPosition = sliderObj.GetComponent<RectTransform>();
+        if (objectRenderer != null) {
+            Vector3 size = objectRenderer.bounds.size;
+            Vector3 center = objectRenderer.bounds.center;
             Vector3 topCenter = new Vector3(center.x, center.y + size.y / 2, center.z);
 
             Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, topCenter + new Vector3(0, 0.3f, 0));
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out Vector2 localPoint);
-            fireSliderPosition.localPosition = localPoint;
+            SliderPosition.localPosition = localPoint;
         }
+
     }
 
-    private void SettingFireSliderSize() {
+    protected virtual void SettingSliderSize(float widthDelta, float heightDelta) {
         RectTransform fireSliderPosition = sliderObj.GetComponent<RectTransform>();
-        Renderer fireObjectRenderer = transform.GetChild(5).GetComponent<Renderer>();
-        if (fireObjectRenderer != null) {
-            Bounds bounds = fireObjectRenderer.bounds;
+        if (objectRenderer != null) {
+            Bounds bounds = objectRenderer.bounds;
             Vector3 screenMin = Camera.main.WorldToScreenPoint(bounds.min);
             Vector3 screenMax = Camera.main.WorldToScreenPoint(bounds.max);
 
             float width = Mathf.Abs(screenMax.x - screenMin.x);
             float height = Mathf.Abs(screenMax.y - screenMin.y);
 
-            fireSliderPosition.sizeDelta = new Vector2(width, height * 0.1f);
+            fireSliderPosition.sizeDelta = new Vector2(width * widthDelta, height * heightDelta);
         }
     }
 
-    private void SliderValueCal() {
-
+    protected virtual void SliderValueCal() {
         slider = sliderObj.GetComponent<Slider>();
-        float sliderValue = GetComponent<Campfire>().GetCurrentTime() / GetComponent<Campfire>().GetTotalTime();
+        float sliderValue = currentvalue / totalvalue;
         slider.value = sliderValue;
         SliderDisappear();
     }
 
 
-    private void SliderDisappear() {
+    protected virtual void SliderDisappear() {
         if (slider.value == 0) {
             fadeCoroutine = StartCoroutine(SliderDisappear_co());
         }
@@ -97,7 +102,7 @@ public class CampfireUI : MonoBehaviour {
         }
     }
 
-    private IEnumerator SliderDisappear_co() {
+    protected virtual IEnumerator SliderDisappear_co() {
         Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill 이미지 가져오기
         Color newColor = fillImage.color;
 
@@ -109,11 +114,12 @@ public class CampfireUI : MonoBehaviour {
         slider.gameObject.SetActive(false);
     }
 
-    private void SliderAlphaInit() {
+    protected virtual void SliderAlphaInit() {
         slider.gameObject.SetActive(true);
         Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill 이미지 가져오기
         Color newColor = fillImage.color;
         newColor.a = 1;
         fillImage.color = newColor;
     }
+
 }

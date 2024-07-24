@@ -2,17 +2,17 @@
 using UnityEngine;
 
 public class Furnace : FireObject {
-    //private FurnaceUI furnaceUI;
+    private FurnaceUI furnaceUI;
     private float currentIntensity, targetIntensity;
     protected override void OnCreated() {
         base.OnCreated();
-        //furnaceUI.FireSliderInit();
+        furnaceUI.SliderInit();
         fireEffect = null;        
         LightOff();
     }
 
     private void Awake() {
-        //furnaceUI = GetComponent<CampfireUI>();
+        furnaceUI = GetComponent<FurnaceUI>();
         OnCreated();
     }
 
@@ -32,8 +32,6 @@ public class Furnace : FireObject {
     protected override void Update() {
         base.Update();
         LightUp(currentIntensity);
-        Debug.Log("CUR" + currentIntensity);
-                Debug.Log(Mathf.Abs(targetIntensity - currentIntensity));
         if (currentTime > 0) {
             if (Mathf.Abs(targetIntensity - currentIntensity) > 0.01f) {
                 currentIntensity +=

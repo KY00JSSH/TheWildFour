@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 2386497021393069742}
   - component: {fileID: 126013707708106007}
   - component: {fileID: 154653287294741766}
+  - component: {fileID: 2304164234754709033}
   m_Layer: 0
   m_Name: Furnace
   m_TagString: Untagged
@@ -272,6 +273,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7751e251f45bc3143afce621d45bac1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2304164234754709033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386497021393069743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4428cb9d7d470b74ebfc35d0f10220c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SliderPrefab: {fileID: 6683354587745199810, guid: 0780ce8a607a5b74288ee2e49478562b, type: 3}
 --- !u!1 &2386497021508703554
 GameObject:
   m_ObjectHideFlags: 0

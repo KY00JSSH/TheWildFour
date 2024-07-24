@@ -11,7 +11,6 @@ public class MCursor : MonoBehaviour {
 
     // default mouse sprite
     private Sprite defaultM;
-    public Sprite[] MouseCursorOff;
     public Sprite[] MouseCursorOn;
 
     // 검출대상 위 스프라이트 표시
@@ -20,8 +19,6 @@ public class MCursor : MonoBehaviour {
 
     // 검출된 아이템 캔버스 위치
     private Vector2 itemCanvasPosition;
-    // 검출될 아이템과 마우스 거리
-    [SerializeField] private float distance;
 
     // 마우스 스프라이트 변경여부
     private bool isChangeSprite;
@@ -31,7 +28,6 @@ public class MCursor : MonoBehaviour {
 
     private void Awake() {
         defaultM = transform_cursor.gameObject.GetComponent<Image>().sprite;
-        distance = 100f;
         iconDistance = 50f;
     }
 
@@ -132,20 +128,34 @@ public class MCursor : MonoBehaviour {
         else return false;
     }
 
+    //TODO: 10~12번 검출거리 변경해야함
     // 레이어별 아이콘 변경
     private void ChangeSprite() {
         switch (PlayerItemPickControll.ClosestItem.layer) {
             case 8: // 아이템 마우스 거리 70f
-                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[2];
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[1];
                 CursorDistanceCheck(70f);
                 iconDistance = 50f;
                 break;
-            case 9:// 건축물 검출거리 500f
-                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[6];
+            case 9:// 건축물 마우스 거리 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[2];
                 CursorDistanceCheck(500f);
-                //TODO: 건축물 별 아이콘 위치 안맞음
-                IconPositionOff();
                 iconDistance = -10f;
+                break;
+            case 10:// 동물 마우스 거리 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[3];
+                CursorDistanceCheck(500f);
+                iconDistance = 30f;
+                break;
+            case 11:// 나무 마우스 거리 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[4];
+                CursorDistanceCheck(500f);
+                iconDistance = 0f;
+                break;
+            case 12:// 돌 마우스 거리 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[4];
+                CursorDistanceCheck(500f);
+                iconDistance = 30f;
                 break;
             default:
                 isChangeSprite = false;

@@ -6,7 +6,7 @@ public class Campfire : FireObject {
 
     protected override void OnCreated() {
         base.OnCreated();
-        campfireUI.FireSliderInit();
+        campfireUI.SliderInit();
         fireEffect = GetComponentInChildren<ParticleSystem>();
         fireEffect.Stop();
         LightOff();

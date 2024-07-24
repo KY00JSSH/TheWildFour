@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WorkShopUI : MonoBehaviour {
+public class WorkShopUI : UIInfo {
     /*
      * 작업장 아이템 스크롤은 자동
      1. 작업장 - 작업장 레벨 비교 : TooltipNum
@@ -14,7 +14,6 @@ public class WorkShopUI : MonoBehaviour {
 
     [Space((int)2)]
     [Header("Main Button Disapear")]
-    [SerializeField] private GameObject menuButton;
     private WorkshopManager workshopManager;
     private TooltipNum tooltipNum;
 
@@ -30,25 +29,21 @@ public class WorkShopUI : MonoBehaviour {
         workshopManager = FindObjectOfType<WorkshopManager>();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) Escape();
+    protected override void Update() {
+        base.Update();
+        if (workshopManager.WorkshopLevel +1 != currentupgradeDetail.upgradeLevel) WorkshopInit();
     }
 
-    private void OnEnable() {
+    protected override void OnEnable() {
+        base.OnEnable();
         _isWorkshopUIOpen = true;
         WorkshopInit();
-        menuButton.SetActive(false);
     }
-    private void OnDisable() {
+    protected override void OnDisable() {
         _isWorkshopUIOpen = false;
-
-        menuButton.SetActive(true);
+        base.OnDisable();
     }
 
-    public void Escape() {
-        menuButton.SetActive(true);
-        transform.gameObject.SetActive(false);
-    }
 
     // 시작할 때 레벨 확인 
     private void WorkshopInit() {
