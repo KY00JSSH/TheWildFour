@@ -15586,7 +15586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponPoint: {fileID: 1227752055}
-  DEBUG_dummyWeapon: {fileID: 11400000, guid: 20db846aa28ba5f469727523c4547706, type: 2}
+  fistCollider: []
+  DEBUG_dummyWeapon: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
 --- !u!1 &678774674
 GameObject:
   m_ObjectHideFlags: 0
@@ -18058,7 +18059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09dc8133466c764b8e88a8eaa4cd222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fistCollider: []
 --- !u!1 &773638129
 GameObject:
   m_ObjectHideFlags: 0
@@ -29774,13 +29774,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227752054}
-  m_LocalRotation: {x: -0.11538285, y: 0.41252357, z: -0.04199592, w: 0.90263367}
-  m_LocalPosition: {x: -0.100000344, y: -0.00000014156103, z: 0.1000001}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.12, y: -0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1605477824}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -10, y: 50, z: -10}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1229608082
 GameObject:
   m_ObjectHideFlags: 0
@@ -30888,7 +30888,7 @@ GameObject:
   - component: {fileID: 1264313141}
   m_Layer: 0
   m_Name: CATRigLArmHand
-  m_TagString: Untagged
+  m_TagString: PlayerFist
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39253,7 +39253,7 @@ GameObject:
   - component: {fileID: 1605477825}
   m_Layer: 0
   m_Name: CATRigRHand
-  m_TagString: Untagged
+  m_TagString: PlayerFist
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52253,7 +52253,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141063042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -52534,7 +52534,7 @@ GameObject:
   - component: {fileID: 1324730156244368299}
   m_Layer: 0
   m_Name: Bow
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52697,7 +52697,7 @@ GameObject:
   - component: {fileID: 189675410200534014}
   m_Layer: 0
   m_Name: StonePickaxe
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52809,7 +52809,7 @@ GameObject:
   - component: {fileID: 5343534331815952051}
   m_Layer: 0
   m_Name: StoneAxe
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52948,7 +52948,7 @@ GameObject:
   - component: {fileID: 1978117727294458739}
   m_Layer: 0
   m_Name: StoneUpAxe
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53078,7 +53078,7 @@ GameObject:
   - component: {fileID: 5793215757222841467}
   m_Layer: 0
   m_Name: StoneUpPickaxe
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53156,7 +53156,7 @@ GameObject:
   - component: {fileID: 1838861805466458747}
   m_Layer: 0
   m_Name: Stick
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

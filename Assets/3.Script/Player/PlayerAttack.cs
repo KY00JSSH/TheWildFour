@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
-    [SerializeField] private Collider[] fistCollider;
     private PlayerAbility playerAbility;
     private Animator playerAnimator;
     private PlayerMove playerMove;
@@ -22,7 +21,6 @@ public class PlayerAttack : MonoBehaviour {
         playerAnimator = GetComponentInParent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         moveSpeed = playerMove.GetPlayerMoveSpeed();
-        fistCollider = GetComponentsInChildren<Collider>();
     }
 
     private void Start() {
