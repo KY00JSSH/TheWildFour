@@ -9,7 +9,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     private GameObject player;
 
     private GameObject closestItem;
-    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>().closestItem; } }
+    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>()?.closestItem; } }
 
     private GameObject mouseHoverItem;
 

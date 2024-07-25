@@ -196,4 +196,10 @@ public class ShelterUI : UIInfo {
     // ¡¸ΩŒ±‚ -> escape 
     // ªÛº”ø° ¿÷¿Ω
 
+    public override void Escape() {
+        base.Escape();
+        ShelterCreate shelterCreate = FindObjectOfType<ShelterCreate>();
+        shelterCreate.Building.GetComponent<BuildingInteraction>().PlayerExitBuilding<ShelterCreate>();
+    }
+
 }

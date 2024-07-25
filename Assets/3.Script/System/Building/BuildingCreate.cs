@@ -1,13 +1,22 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BuildingCreate : MonoBehaviour {
+public interface IBuildingCreateGeneric {
+    void SetEnterPosition(Vector3 position);
+    GameObject Building { get; }
+    Transform playerTransform { get; }
+    Vector3 LastPlayerPosition { get; }
+
+}
+
+public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     [SerializeField] protected GameObject[] buildingPrefabs;
     [SerializeField] private Material buildingMaterial;
-    private Transform playerTransform;
+    public Transform playerTransform { get; private set; }
     private Animator playerAnimator;
 
-    ItemSelectControll itemSelectControl;
+
+    private ItemSelectControll itemSelectControl;
 
     protected Collider[] buildingColliders;
 
@@ -19,6 +28,8 @@ public class BuildingCreate : MonoBehaviour {
     protected Tooltip_Build tooltip_Build;
 
     private int layerMask;
+    public Vector3 LastPlayerPosition { get; private set; }
+    public void SetEnterPosition(Vector3 position) { LastPlayerPosition = position; }
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -52,7 +63,7 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void BuildMode() {
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
+        if (PlayerMove.isPlayerBuilding) return;
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
@@ -120,6 +131,13 @@ public class BuildingCreate : MonoBehaviour {
             menuMap_markerSpawner.RemoveMarker(Building.GetComponent<BuildingInteraction>().Type);
 
             Building.SetActive(false);
+        }
+        if(!PlayerStatus.isDead) {
+            playerTransform.position = LastPlayerPosition;
+            playerTransform.gameObject.SetActive(true);
+            CameraControl cameraControl = FindObjectOfType<CameraControl>();
+            cameraControl.cinemachineFreeLook.Follow = playerTransform;
+            cameraControl.cinemachineFreeLook.LookAt = playerTransform;
         }
     }
 

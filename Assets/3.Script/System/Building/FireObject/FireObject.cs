@@ -59,7 +59,7 @@ public class FireObject : MonoBehaviour, IFireLight {
             Collider[] colliders = Physics.OverlapSphere(transform.position, HeatRange);
             foreach (Collider collider in colliders) {
                 if (collider.CompareTag("Player")) {
-                    PlayerStatus playerStatus = collider.GetComponentInChildren<PlayerStatus>();
+                    PlayerStatus playerStatus = collider.GetComponentInParent<PlayerStatus>();
                     StatusControl.Instance.GiveStatus(Status.Heat, playerStatus);
                     break;
                 }
