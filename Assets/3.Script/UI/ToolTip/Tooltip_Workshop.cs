@@ -35,7 +35,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
 
     protected override void OnEnable() {
-        base.OnEnable(); 
+        base.OnEnable();
     }
     private void Update() {
         if (Tooltip_S.activeSelf) {
@@ -44,7 +44,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                 WorkshopUpgradeShow();
         }
         else if (Tooltip_L.activeSelf) {
-            WorkshopItemShow();       
+            WorkshopItemShow();
         }
     }
 
@@ -53,7 +53,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         if (eventData.pointerEnter != null) {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null && !btn.name.Contains("Exit")) {
-                               
+
                 // 버튼 -> 위치 전체 초기화
                 LoadTextPositions_Func(S_ItemTexts, S_ItemImgs, S_itemNeedPosSave);
                 LoadTextPositions_Func(L_ItemTexts, L_ItemImgs, L_itemNeedPosSave);
@@ -89,8 +89,8 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                     }
 
                 }
-                
-                
+
+
             }
         }
     }
@@ -102,37 +102,34 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         L_TextTitle.text = btnitemData.iTemData.name;
         L_TextMain.text = btnitemData.iTemData.Description;
         L_ItemImg.sprite = btnitemData.iTemData.Icon;
+
+        WorkshopLevelText();
         // 1. 스탯 
         if (btnitemData.isWeap) {
             WorkshopItemData_Weap();
-
             //2. 필요한 아이템
-            WorkshopNeedItemSprite( btnitemData.weaponItem.MaterialKey, btnitemData.weaponItem.MaterialCount);
+            WorkshopNeedItemSprite(btnitemData.weaponItem.MaterialKey, btnitemData.weaponItem.MaterialCount);
             if (isWSSkillAvailable) {
-                //TODO: 확인필요 (0724)
-                //if (!invenController.createItem(btnitemData.weaponItem)) {
+                if (!invenController.createItem(btnitemData.weaponItem.DropItemPrefab)) {
 
-                //    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
-                //    isWSSkillAvailable = false;
-                //}
+                    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
+                    isWSSkillAvailable = false;
+                }
             }
             WorkshopNeedItemDisappear(btnitemData.weaponItem.MaterialKey.Length);
         }
         else if (btnitemData.isMedic) {
             WorkshopItemData_Medi();
-
             WorkshopNeedItemDisappear(btnitemData.medicItem.MaterialKey.Length);
             if (isWSSkillAvailable) {
-                //TODO: 확인필요 (0724)
-                //if (!invenController.createItem(btnitemData.medicItem)) {
+                if (!invenController.createItem(btnitemData.medicItem.DropItemPrefab)) {
 
-                //    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
-                //    isWSSkillAvailable = false;
-                //}
+                    L_TextResult.text = "<color=Red>인벤토리 자리 부족</color>";
+                    isWSSkillAvailable = false;
+                }
             }
         }
 
-        WorkshopLevelText();
     }
 
 
@@ -159,13 +156,16 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                 }
             }
         }
+        //TODO:  인벤 개수 확인안되고있음
         // 인벤 개수 확인 후 버튼 클릭가능 불가능 여부 확인
-        if (Count == matkeys.Length) {
-            if (L_TextResult.text == "") L_TextResult.text = "<color=White>제작 가능</color>";
+        if (Count >= matkeys.Length) {
+            if (L_TextResult.text == "")
+            L_TextResult.text = "<color=White>제작 가능</color>";
             isWSSkillAvailable = true;
         }
         else {
-            if (L_TextResult.text == "") L_TextResult.text = "<color=Red>자원 부족</color>";
+            if (L_TextResult.text == "")
+            L_TextResult.text = "<color=Red>자원 부족</color>";
             isWSSkillAvailable = false;
         }
     }
@@ -291,6 +291,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
             S_TextResult.text = "<color=Red>자원 부족</color>";
         }
     }
+
     private void UpgradeFunc_ItemTextPosition() {
         if (workShopUI.UpgradeDetail.needItems.All(item => item.ItemNeedNum == 0)) return;
 

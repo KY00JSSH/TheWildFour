@@ -97,7 +97,6 @@ public class TooltipNum : MonoBehaviour {
     public int InvenItemGet(int itemKey) {
         int cntitemnum = 0;
         for (int i = 0; i < invenController.Inventory.Count; i++) {
-            //TODO: 확인필요 (0724)
             if (invenController.Inventory[i] == null) continue;
             if (invenController.Inventory[i].GetComponent<Item>().Key == itemKey) {
                 // 키가 같음 갯수 세야하는데z`

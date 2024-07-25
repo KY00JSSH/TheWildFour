@@ -7,7 +7,7 @@ public class ActivatedStatusControl : MonoBehaviour {
     // 생성시킬 프리펩
     public GameObject CurrentActivateBoxPrf;
     // 생성 갯수
-    [SerializeField] private int boxNum = 5;
+    [SerializeField] private int boxNum = 8;
     // 박스 리스트
     private List<GameObject> CurrentActivateBoxs;
     // 현재 활성화 표시할 스프라이트
@@ -37,7 +37,9 @@ public class ActivatedStatusControl : MonoBehaviour {
             // 상태 리스트가 null이 아닐 경우 활성화 오브젝트 개수 확인
             int activeBoxCnt = FindActiveBox();
             if (StatusControl.Instance.ActivatedStatus.Count > activeBoxCnt) {
+                Debug.Log("StatusControl.Instance.ActivatedStatus.Count : " + StatusControl.Instance.ActivatedStatus.Count);
                 BoxAddActivatedStatus(StatusControl.Instance.ActivatedStatus.Count - activeBoxCnt);
+                Debug.Log("FindActiveBox : " + FindActiveBox());
             }
             // 비활성화 확인
            if(BoxDelActivatedStatus()) BoxPositionSetting();

@@ -22,9 +22,9 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
 
     private void Update() {
         if (inventoryBox.isItemIn) {
-
+            if (inventoryBox.CurrentItem == null) return;
             // 아이템이 들어왔을 경우
-            if (inventoryBox.CurrentItem.GetComponent<FoodItem>() != null) {
+            if (inventoryBox.CurrentItem.GetComponent<FoodItem>()) {
                 _item = inventoryBox.CurrentItem.GetComponent<FoodItem>();
                 if (durability_Weap.gameObject.activeSelf) {
                     durability_Weap.gameObject.SetActive(false);
