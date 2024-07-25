@@ -13,8 +13,22 @@ public class WorkshopInvenUI : MonoBehaviour
 
     public GameObject InvenBoxPrefab;       //BOX Prefab
 
+    private WorkshopInvenControll workshopInven;    //인벤토리 로직 컨트롤러
     private void Awake() {
         initInven();
+        workshopInven = GetComponent<WorkshopInvenControll>();
+        workshopInven.InvenChanged += UpdateUI;
+    }
+
+    private void OnDestroy() {
+        workshopInven.InvenChanged -= UpdateUI;
+    }
+
+    private void UpdateUI(List<GameObject> inventory) {
+        for (int i = 0; i < inventory.Count; i++) {
+            WorkshopInvenBox box = invenTotalList[i].GetComponent<WorkshopInvenBox>();
+            box.UpdateBox(inventory[i]);
+        }
     }
 
     private void initInven() {

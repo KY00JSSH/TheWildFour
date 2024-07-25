@@ -38,6 +38,27 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
+    //특정 key인 아이템 count만큼 삭제
+    public void removeItemCount(int key, int count) {
+        int leftCount = count;
+        for (int i = 0; i < inventory.Count; i++) { 
+            CountableItem countItem = inventory[i].GetComponent<CountableItem>();
+            if (countItem.itemData.Key == key) {
+                if(countItem.CurrStackCount > leftCount) {
+                    countItem.useCurrStack(leftCount);
+                    return;
+                }else if (countItem.CurrStackCount == leftCount) {
+                    inventory[i] = null;
+                    return;
+                }
+                else {
+                    leftCount -= countItem.CurrStackCount;
+                    inventory[i] = null;
+                }
+            }
+        }
+    }
+
     //if 해당 아이템이 inven에 있고,(해당 box item count < itemMaxStackCount)
     // 해당 칸에 아이템 추가
     //  else if(!full)  새박스에 아이템 add
@@ -201,5 +222,14 @@ public class CommonInven : MonoBehaviour {
     public void addIndexItem(int index, GameObject newItem) {
         inventory[index] = newItem;
         updateInvenInvoke();
+    }
+
+    public GameObject getIndexItem ( int index) {
+        if (inventory[index] != null) {
+            return inventory[index];
+        }
+        else {
+            return null;
+        }
     }
 }
