@@ -32,6 +32,7 @@ public class WorkShopUI : UIInfo {
     protected override void Update() {
         base.Update();
         if (workshopManager.WorkshopLevel +1 != currentupgradeDetail.upgradeLevel) WorkshopInit();
+
     }
 
     protected override void OnEnable() {

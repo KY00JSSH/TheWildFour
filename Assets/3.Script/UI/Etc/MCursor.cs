@@ -26,6 +26,7 @@ public class MCursor : MonoBehaviour {
     // 아이콘이 표시될 위치 보정값
     private float iconDistance;
 
+
     private void Awake() {
         defaultM = transform_cursor.gameObject.GetComponent<Image>().sprite;
         iconDistance = 50f;
@@ -37,26 +38,34 @@ public class MCursor : MonoBehaviour {
 
     private void Update() {
         Update_MousePosition();
-        if (CheckCol()) {
-            // 거리 계산
-            ItemPosition();
-            // 레이어별 거리 계산 -> 스프라이트 변경 여부 확인
-            ChangeSprite();
-            if (isChangeSprite) {
-                ChangeSprite();
-                IconPosition(iconDistance);
-            }
-            else {
-                // 멀어지면 default로 변경 + 아이콘 없애기
-                DefaultMouseSprite();
-                IconPositionOff();
-            }
-
+        // 각 Build UI Open 되면 기본값, 스페이스 아이콘 off
+        if (WorkShopUI.isWorkshopUIOpen || ShelterUI.isShelterUIOpen) {
+            DefaultMouseSprite();
+            IconPositionOff();
         }
         else {
-            DefaultMouseSprite();
+            if (CheckCol()) {
+                // 거리 계산
+                ItemPosition();
+                // 레이어별 거리 계산 -> 스프라이트 변경 여부 확인
+                ChangeCursorSprite();
+                if (isChangeSprite) {
+                    ChangeCursorSprite();
+                    IconPosition(iconDistance);
+                }
+                else {
+                    // 멀어지면 default로 변경 + 아이콘 없애기
+                    DefaultMouseSprite();
+                    IconPositionOff();
+                }
+
+            }
+            else {
+                DefaultMouseSprite();
+            }
         }
     }
+
 
     private void Init_Cursor() {
         Cursor.visible = false;
@@ -128,7 +137,7 @@ public class MCursor : MonoBehaviour {
 
     //TODO: 10~12번 검출거리 변경해야함
     // 레이어별 아이콘 변경
-    private void ChangeSprite() {
+    private void ChangeCursorSprite() {
         switch (PlayerItemPickControll.ClosestItem.layer) {
             case 8: // 아이템 마우스 거리 70f
                 transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[1];

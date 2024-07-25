@@ -16,7 +16,6 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     private WorkshopManager workshopManager;
     private TooltipNum tooltipNum;
     private PlayerStatus playerStatus;
-    private Button Tooltip_L_btn;
     public bool isWSUpgradeAvailable { get; private set; }
     public bool isWSSkillAvailable { get; private set; }
 
@@ -61,15 +60,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
                 if (eventData.position.y >= 520) {
                     btnitemData = btn.GetComponent<WorkshopBtn>();
-                    if (btnitemData.isWeap) {
 
-                        Debug.Log(btnitemData.weaponItem.name);
-                        Debug.Log(btnitemData.weaponItem.Key);
-                    }
-                    else {
-                        Debug.Log(btnitemData.medicItem.name);
-                        Debug.Log(btnitemData.medicItem.Key);
-                    }
                     Tooltip_S.SetActive(false);
                     Tooltip_L.SetActive(true);
                     WorkshopItemShow();
@@ -99,9 +90,9 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     private void WorkshopItemShow() {
         TextImgActiveInit(L_StatsTexts, L_StatsImgs);
         TextImgActiveInit(L_ItemTexts, L_ItemImgs);
-        L_TextTitle.text = btnitemData.iTemData.name;
-        L_TextMain.text = btnitemData.iTemData.Description;
-        L_ItemImg.sprite = btnitemData.iTemData.Icon;
+        L_TextTitle.text = btnitemData.itemData.name;
+        L_TextMain.text = btnitemData.itemData.Description;
+        L_ItemImg.sprite = btnitemData.itemData.Icon;
 
         WorkshopLevelText();
         // 1. Ω∫≈» 
