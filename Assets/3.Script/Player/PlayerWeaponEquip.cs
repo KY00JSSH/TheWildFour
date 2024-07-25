@@ -27,13 +27,12 @@ public class PlayerWeaponEquip : MonoBehaviour {
     private WeaponItemData GetCurrentSlotWeapon() {
         // return weaponSlot.getcurrentItem(weaponSlot.CurrentSelectSlot);
         if (isEquip) return null;
-            return DEBUG_dummyWeapon;
+        return DEBUG_dummyWeapon;
     }
 
     private void ChangeEquipWeapon() {
         foreach(Transform weapon in transform) 
             weapon.gameObject.SetActive(false);
-        
 
         if (GetCurrentSlotWeapon()) {   // 현재 무기 슬롯에 무기가 있을 경우
             for (int i = 0; i < transform.childCount; i++) {
@@ -41,9 +40,10 @@ public class PlayerWeaponEquip : MonoBehaviour {
                 eachWeaponObject.SetActive(false);
 
                 if (eachWeaponObject.TryGetComponent(out WeaponItem eachWeapon)) {
-                    
+
                     // Equipment로 등록된 child Object에서 WeaponItemData를 가져와
                     // 현재 선택된 무기슬롯의 WeaponItemData와 같으면 해당 무기를 출력합니다.
+                    Debug.Log(GetCurrentSlotWeapon());
                     if (eachWeapon.weaponItemData == GetCurrentSlotWeapon()) {
                         SetPositionOffset(eachWeapon);  SetRotationOffset(eachWeapon);
                         eachWeaponObject.SetActive(true);
