@@ -95,9 +95,4 @@ public class StatusControl : MonoBehaviour {
         ActivatedStatus.Remove(status);
         status.isTicked = false;
     }
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.F5))
-            Debug.Log(ActivatedStatus.Count);   
-    }
 }

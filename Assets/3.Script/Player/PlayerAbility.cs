@@ -39,9 +39,7 @@ public class PlayerAbility : MonoBehaviour {
         cameraControl = FindObjectOfType<CameraControl>();
         playerStatus = FindObjectOfType<PlayerStatus>();
         playerMove = FindObjectOfType<PlayerMove>();
-    }
 
-    private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         playerAttack = 2f;
         playerAttackSpeed = 1f;
@@ -67,6 +65,7 @@ public class PlayerAbility : MonoBehaviour {
         playerAddDecDashGage = 0;
         playerAddInvenCount = 0;
     }
+
 
     public void UpdateAblity() {
         playerMove.isSkilled = 

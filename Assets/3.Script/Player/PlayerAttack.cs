@@ -55,7 +55,6 @@ public class PlayerAttack : MonoBehaviour {
             if (!EventSystem.current.IsPointerOverGameObject()) {
                 if (!isAttack) {
                     if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
-                        isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                         moveSpeed = playerMove.GetPlayerMoveSpeed();
                     }
                     isAttack = true;
@@ -63,6 +62,8 @@ public class PlayerAttack : MonoBehaviour {
                     playerMove.SetSideWalk(false);
                     playerMove.SetBackWalk(false);
                     playerMove.ResetDash();
+                isLeftFist = Random.Range(0, 2) == 0 ? true : false;
+                    //TODO: isLeftFist 매 공격시마다 초기화하기. 아마 Movement BlendTree 아니면 Exit 에서?
                 }
             }
         }
