@@ -152,7 +152,6 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     private void Update() {
-
         infoViewer.SetPlayerHp((int)PlayerHp);
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);
@@ -165,6 +164,5 @@ public class PlayerStatus : MonoBehaviour {
         SatietySlow();
         RestoreHp();
         RestoreWarm();
-
     }
 }

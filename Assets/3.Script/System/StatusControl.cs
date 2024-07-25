@@ -93,5 +93,11 @@ public class StatusControl : MonoBehaviour {
         status.SetRemainTime(0f);
         player.ResetPlayerStatus(status.type);
         ActivatedStatus.Remove(status);
+        status.isTicked = false;
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.F5))
+            Debug.Log(ActivatedStatus.Count);   
     }
 }
