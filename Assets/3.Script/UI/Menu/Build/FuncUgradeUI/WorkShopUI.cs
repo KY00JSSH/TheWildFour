@@ -44,6 +44,11 @@ public class WorkShopUI : UIInfo {
         base.OnDisable();
     }
 
+    public override void Escape() {
+        base.Escape();
+        WorkshopCreate workshopCreate = FindObjectOfType<WorkshopCreate>();
+        workshopCreate.Building.GetComponent<BuildingInteraction>().PlayerExitBuilding<WorkshopCreate>();
+    }
 
     // 시작할 때 레벨 확인 
     private void WorkshopInit() {

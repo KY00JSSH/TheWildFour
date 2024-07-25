@@ -16,7 +16,7 @@ public class PlayerAttack : MonoBehaviour {
     private int currentClip = 0;
 
     private bool isAttack, isEquip, isLeftFist;
-    public void SetEquip(bool flag) { isEquip = flag; }
+    public void SetEquip(bool flag) { Debug.Log("LWOW"); isEquip = flag; }
 
     private float moveSpeed;
     public float attackSpeed { get; private set; }

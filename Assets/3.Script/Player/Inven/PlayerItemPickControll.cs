@@ -6,15 +6,18 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     [SerializeField] private float checkRadius = 2.5f;
     private InvenController invenController;
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     private GameObject closestItem;
-    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>().closestItem; } }
+    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>()?.closestItem; } }
 
     private GameObject mouseHoverItem;
 
     private GameObject previousItem = null;
 
+    private void Awake() {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     private void Start() {
         invenController = FindObjectOfType<InvenController>();
     }
@@ -97,10 +100,28 @@ public class PlayerItemPickControll : MonoBehaviour {
     private void pickupItem(GameObject item) {
         if (item != null && item.layer == 8) {
             invenController.itemObject = item;
-            if (invenController.canItemAdd()) {
-                invenController.ItemAdd();
-                item.SetActive(false);
-                //Destroy(item);
+            //겹쳐서 넣을 수 있는지 확인
+            if(item.GetComponent<CountableItem>() != null) {
+                int checkNum = invenController.canAddThisBox(item.GetComponent<Item>().Key);
+                if(checkNum != 99) {
+                        //겹쳐서 넣을수 있으면 집은 필드 아이템은 destroy
+                        invenController.ItemAdd();
+                        Destroy(item);
+                }
+                else {
+                    if (invenController.canItemAdd()) {
+                        //겹쳐서 넣을수 없으면 집은 필드의 아이템은 active-false
+                        invenController.ItemAdd();
+                        item.SetActive(false);
+                    }
+                }
+            }
+            else {
+                if (invenController.canItemAdd()) {
+                    //겹쳐서 넣을수 없으면 집은 필드의 아이템은 active-false
+                    invenController.ItemAdd();
+                    item.SetActive(false);
+                }
             }
         }
         else {

@@ -6,15 +6,16 @@ using UnityEngine.Events;
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
     public UnityEvent onDead;
+    private GameObject player;
+
     public static bool isDead { get; private set; }
     public void SetPlayerDead () { 
         isDead = true;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetBool("isDead", isDead);
+        player.GetComponent<Animator>().SetBool("isDead", isDead);
     }
 
     public void PlayerRespawn() {
         isDead = false;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<Animator>().SetBool("isDead", isDead);
         player.transform.position = new Vector3(0, 0, 0);
         Start();
@@ -41,7 +42,7 @@ public class PlayerStatus : MonoBehaviour {
         
         if(PlayerWarm <= 0) {
             PlayerWarm = 0;
-            TakeHpDotDamage(2f);
+            TakeHpDotDamage(4f);
         }
     }
 
@@ -137,6 +138,7 @@ public class PlayerStatus : MonoBehaviour {
 
     private void Awake() {
         infoViewer = FindObjectOfType<Player_InfoViewer>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start() {
@@ -150,7 +152,6 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     private void Update() {
-
         infoViewer.SetPlayerHp((int)PlayerHp);
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);
@@ -163,6 +164,5 @@ public class PlayerStatus : MonoBehaviour {
         SatietySlow();
         RestoreHp();
         RestoreWarm();
-
     }
 }

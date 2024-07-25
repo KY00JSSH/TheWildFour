@@ -62,31 +62,24 @@ public class CommonInven : MonoBehaviour {
                 isInvenFull = true;
             }
         }
+
         updateInvenInvoke();
     }
 
     //아이템 추가 가능여부
     public bool canItemAdd() {
-        Item item = itemObject.GetComponent<Item>();
-        //아이템을 겹쳐서 넣을 수 있는지 확인
-        int checkNum = canAddThisBox(item.Key);
-        if (checkNum != 99) {
+        int existBox = isExistEmptyBox();
+        if (existBox != 99) {
             return true;
         }
         else {
-            int existBox = isExistEmptyBox();
-            if (existBox != 99) {
-                return true;
-            }
-            else {
-                //Debug.Log("기존 box에 추가 못함");
-                return false;
-            }
+            //Debug.Log("기존 box에 추가 못함");
+            return false;
         }
     }
 
     //전체 박스에 해당 item이 있고, 해당 칸에 추가 가능할 때 해당 칸 num을 return, 없을때 99 return
-    protected int canAddThisBox(int itemKey) {
+    public int canAddThisBox(int itemKey) {
         for (int i = 0; i < inventory.Count; i++) {
             if (inventory[i] != null) {
                 if (inventory[i].GetComponent<Item>().Key == itemKey) {

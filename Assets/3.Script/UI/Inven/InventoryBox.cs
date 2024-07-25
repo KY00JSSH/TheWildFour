@@ -11,12 +11,6 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
 
     private MenuWeapon menuWeapon;                  //장비창
 
-    private WorkshopInvenUI workshopInvenUI;        //작업장
-    private WorkshopInvenControll workshopInven;
-
-    private ShelterInvenUI shelterInvenUI;          //거처
-    private ShelterInvenControll shelterInven;
-
     private Canvas canvas;
     private RectTransform originalParent;
     private Vector2 originalPosition;
@@ -30,9 +24,6 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
         invenDrop = FindObjectOfType<InvenDrop>();
         canvas = FindObjectOfType<Canvas>();
 
-        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
-        shelterInven = FindObjectOfType<ShelterInvenControll>();
-        workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
     }
 
@@ -106,9 +97,16 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                         }
                         invenControll.updateInvenInvoke();
                     }
+                    else {
+                        //아이템 드랍
+                        invenDrop.dropItemAll(key);
+                    }
                 }
                 else if (isWorkshopOpen) {  //작업장 오픈시
-                    for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                    WorkshopInvenControll workshopInven = FindObjectOfType<WorkshopInvenControll>();
+                    WorkshopInvenUI workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
+
+                    for (int i = 0; i < workshopInvenUI.CurrInvenCount; i++) {
                         RectTransform boxRectTransform = workshopInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
                         if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
                             targetIndex = i;
@@ -128,7 +126,10 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
 
                 }
                 else if (isShelterOpen) {   //거처 오픈
-                    for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                    ShelterInvenControll shelterInven = FindObjectOfType<ShelterInvenControll>();   
+                    ShelterInvenUI shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
+
+                    for (int i = 0; i < shelterInvenUI.CurrInvenCount; i++) {
                         RectTransform boxRectTransform = shelterInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
                         if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
                             targetIndex = i;
@@ -146,10 +147,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                         invenControll.removeItem(key);
                     }
                 }
-                else {
-                    //아이템 드랍
-                    invenDrop.dropItemAll(key);
-                }
+                
             }
         }
     }

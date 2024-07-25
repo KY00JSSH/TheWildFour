@@ -36,4 +36,3 @@ public class WorkshopManager : MonoBehaviour {
         MaxWorkshopLevel = 5;
     }
 }
-//TODO: 작업장 UI 생성 이후 CoolTime 인스펙터에서 매칭시켜줘야 함
