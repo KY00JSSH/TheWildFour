@@ -137,10 +137,12 @@ public class InvenController : CommonInven {
         WorkshopInvenControll workshopInven = FindObjectOfType<WorkshopInvenControll>();
         //플레이어 인벤 체크
         for (int i = 0; i < inventory.Count; i++) {
-            if (inventory[i].GetComponent<CountableItem>() != null) {
-                CountableItem invenCountItem = inventory[i].GetComponent<CountableItem>();
-                if (invenCountItem.itemData.Key == key) {
-                    totalCount += invenCountItem.CurrStackCount;
+            if (inventory[i] != null) {
+                if (inventory[i].GetComponent<CountableItem>() != null) {
+                    CountableItem invenCountItem = inventory[i].GetComponent<CountableItem>();
+                    if (invenCountItem.itemData.Key == key) {
+                        totalCount += invenCountItem.CurrStackCount;
+                    }
                 }
             }
         }
