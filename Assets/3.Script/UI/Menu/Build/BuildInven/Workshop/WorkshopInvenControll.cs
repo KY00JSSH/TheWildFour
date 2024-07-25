@@ -4,7 +4,6 @@ using UnityEngine;
 public class WorkshopInvenControll : CommonInven {
     private int selectBoxKey = 0;
 
-    private List<Item> shelterInven;
     private WorkshopInvenUI workshopInvenUI;
 
     private InvenController invenController;
@@ -14,7 +13,6 @@ public class WorkshopInvenControll : CommonInven {
     }
 
     private void Awake() {
-        shelterInven = new List<Item>();
         workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
         invenController = FindObjectOfType<InvenController>();
     }
@@ -24,7 +22,7 @@ public class WorkshopInvenControll : CommonInven {
 
     private void initInven() {
         for (int i = 0; i < workshopInvenUI.CurrInvenCount; i++) {
-            shelterInven.Add(null);
+            inventory.Add(null);
         }
     }
 

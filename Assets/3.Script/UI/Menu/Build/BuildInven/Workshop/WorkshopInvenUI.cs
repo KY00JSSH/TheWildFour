@@ -33,9 +33,9 @@ public class WorkshopInvenUI : MonoBehaviour
             invenBoxPrefabs.transform.SetParent(transform);
             invenBoxPrefabs.name = $"inven{i}";
             invenBoxPrefabs.SetActive(false);
-            ShelterInvenBox shelterInvenBox = invenBoxPrefabs.GetComponent<ShelterInvenBox>();
+            WorkshopInvenBox workshopInvenBox = invenBoxPrefabs.GetComponent<WorkshopInvenBox>();
             if (invenBoxList != null) {
-                shelterInvenBox.setKey(i); // key 설정
+                workshopInvenBox.setKey(i); // key 설정
             }
             invenBoxList.Add(invenBoxPrefabs);
         }
@@ -44,5 +44,4 @@ public class WorkshopInvenUI : MonoBehaviour
             invenTotalList[i].SetActive(true);
         }
     }
-
 }
