@@ -13,10 +13,14 @@ public class ActivatedStatusBox : MonoBehaviour
     private Sprite defaultSprite;
     private Vector2 defaultPos;
 
+    private Image statusImg;
+
     private void Awake() {
         defaultPos = transform.position;
-        defaultSprite = transform.GetComponent<Image>().sprite;
         actStatusCont = FindObjectOfType<ActivatedStatusControl>();
+
+        defaultSprite = transform.Find("StatusImg").GetComponent<Image>().sprite;
+        statusImg = transform.Find("StatusImg").GetComponent<Image>();
         sliderImg = transform.Find("SlideImg").GetComponent<Image>();
     }
 
@@ -37,19 +41,19 @@ public class ActivatedStatusBox : MonoBehaviour
 
     // StatusControl.Instance.ActivatedStatus의 마지막 인덱스의 상태를 찾은 인덱스의 번호에 넣어야함
     private void AddActivatedStatusInBox() {
-        Sprite iconSprite = transform.GetComponent<Image>().sprite;
+        Image iconSprite = statusImg;
         // 이미지 변경
         switch (currentStatus) {
             case Status.Heat:
-                iconSprite = actStatusCont.ActivatedStatusSprites[1];
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[1];
                 sliderImg.color = Color.blue;
                 break;
             case Status.Full:
-                iconSprite = actStatusCont.ActivatedStatusSprites[2];
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[2];
                 sliderImg.color = Color.blue;
                 break;
             case Status.Satiety:
-                iconSprite = actStatusCont.ActivatedStatusSprites[3];
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[3];
                 sliderImg.color = Color.blue;
                 break;
             case Status.Poison:
@@ -68,7 +72,7 @@ public class ActivatedStatusBox : MonoBehaviour
                 Debug.LogWarning("Status.Indigestion 제작해야함");
                 break;
             case Status.Heal:
-                iconSprite = actStatusCont.ActivatedStatusSprites[4];
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[4];
                 sliderImg.color = Color.blue;
                 break;
             default:
@@ -77,8 +81,7 @@ public class ActivatedStatusBox : MonoBehaviour
         Color newColor = sliderImg.color;  // 현재 이미지의 색상 정보를 가져옴
         newColor.a = 0.5f;  // 알파값을 원하는 값(여기서는 0.5)으로 설정
         sliderImg.color = newColor;  // 변경된 색상 정보를 이미지에 적용
-
-        transform.GetComponent<Image>().sprite = iconSprite;
+        statusImg.sprite = iconSprite.sprite;
         StartCoroutine(ActivateBoxsSliderChange_Co());
     }
 
@@ -92,7 +95,7 @@ public class ActivatedStatusBox : MonoBehaviour
     }
     private void OnDisable() {
         transform.position = defaultPos;
-        transform.GetComponent<Image>().sprite = defaultSprite;
+        statusImg.sprite = defaultSprite;
         sliderImg.fillAmount = 1;
     }
 }
