@@ -20,20 +20,13 @@ public class Tooltip_InvenWeap : TooltipInfo_Inven, IPointerEnterHandler, IPoint
         // 아이템이 들어왔을 경우
         //TODO: 확인필요 (0724)
         if (weaponSlotControll.CurrentItem) {
-            Debug.Log("?????????");
             currentWeap = weaponSlotControll.CurrentItem;
-
             _item = weaponSlotControll.GetComponent<WeaponItem>();
-            //Debug.Log(weaponSlotControll.CurrentItem);
-            //Debug.Log(weaponSlotControll.CurrentItem);
-            //Debug.Log(_item);
         }
 
         if (currentWeap != null) {
-            Debug.Log("!currentWeap!!!!!!!!!!!" + currentWeap.name);
             if (weaponSlotControll.CurrentItem != null) {
                 weapSlider.gameObject.SetActive(true);
-                // Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 InvenItemText_Weap(currentWeap.GetComponent<WeaponItem>());
             }
             else {
@@ -59,8 +52,6 @@ public class Tooltip_InvenWeap : TooltipInfo_Inven, IPointerEnterHandler, IPoint
                 InvenBoxItemInfo();
             }
             else {
-                //Debug.Log("!!!!!!!!!!!!???????????" + weaponSlotControll.CurrentItem);
-                //Debug.Log("!!!!!!!!!!!!" + weaponSlotControll.CurrentItem.itemData);
                 Debug.Log("인벤토리가 null임");
             }
         }
