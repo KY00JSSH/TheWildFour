@@ -79,9 +79,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 35, y: 35}
   m_SizeDelta: {x: 70, y: 70}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1372441213000626678
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -176,10 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c93df1d7ae0f144ebb3b789af677cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invenBox: {fileID: 1372441213000626676}
   itemText: {fileID: 1372441213775237815}
   itemIcon: {fileID: 1372441213998905448}
-  isItemUse: 0
   isItemIn: 0
 --- !u!114 &665666941372382081
 MonoBehaviour:
@@ -211,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tooltip_inven: {fileID: 1585372272368408687}
-  tooltipPos: {x: 550, y: 170}
 --- !u!1 &1372441213775237813
 GameObject:
   m_ObjectHideFlags: 0
