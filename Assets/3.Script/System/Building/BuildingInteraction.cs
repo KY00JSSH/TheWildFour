@@ -17,8 +17,14 @@ public class BuildingInteraction : MonoBehaviour {
     private InteractionUIMapping InteractionUI;
     private Menu_Controll menuControl;
     private ItemSelectControll selected;
+
+    private GameObject player;
+    private CameraControl cameraControl;
+
     private void Awake() {
         interactionManager = FindObjectOfType<BuildingInteractionManager>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        cameraControl = FindObjectOfType<CameraControl>();
 
         InteractionUI = interactionManager.InteractionUI;
         menuControl = interactionManager.menuControl;
@@ -61,10 +67,12 @@ public class BuildingInteraction : MonoBehaviour {
 
     private void ShelterInteraction() {
         CloseAllUI(); InteractionUI.ShelterUI.SetActive(true);
+        PlayerEnterBuilding<ShelterCreate>();
     }
 
     private void WorkshopInteraction() {
         CloseAllUI(); InteractionUI.WorkShopUI.SetActive(true);
+        PlayerEnterBuilding<WorkshopCreate>();
     }
 
     private void ChestInteraction() {
@@ -72,9 +80,28 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     public void CloseAllUI() {
-        menuControl.gameObject.SetActive(false);
-        InteractionUI.ShelterUI.SetActive(false);
-        InteractionUI.WorkShopUI.SetActive(false);
+        menuControl?.gameObject.SetActive(false);
+        InteractionUI?.ShelterUI.SetActive(false);
+        InteractionUI?.WorkShopUI.SetActive(false);
 
+    }
+
+    public void PlayerEnterBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric{
+        T buildingCreate = FindObjectOfType<T>();
+        buildingCreate.SetEnterPosition(player.transform.position);
+        player.SetActive(false);
+        Debug.Log("@@@" + player);
+        cameraControl.cinemachineFreeLook.Follow = buildingCreate.Building.transform;
+        cameraControl.cinemachineFreeLook.LookAt = buildingCreate.Building.transform;
+    }
+
+    public void PlayerExitBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric {
+        T buildingCreate = FindObjectOfType<T>();
+        if (player) {
+            player.transform.position = buildingCreate.LastPlayerPosition;
+            player.SetActive(true);
+            cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
+            cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
+        }
     }
 }

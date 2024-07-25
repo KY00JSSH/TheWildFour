@@ -17,6 +17,9 @@ public class PlayerMove : MonoBehaviour {
 
     public void PlayerDieAnimation() {
         playerAnimator.SetTrigger("triggerDie");
+        //PlayerStatus playerStatus = FindObjectOfType<PlayerStatus>();
+        //playerStatus.isDead = true;
+        //player.GetComponent<Animator>().SetBool("isDead", isDead);
     }
 
 
@@ -59,7 +62,7 @@ public class PlayerMove : MonoBehaviour {
         IncDashGage = defaultIncDashGage;
     }
 
-    public bool isPlayerBuilding { get; private set; }
+    public static bool isPlayerBuilding { get; private set; }
     private void Update() {
         playerAnimator.SetBool("isSideWalk", isSideWalk);
         playerAnimator.SetBool("isBackWalk", isBackWalk);
@@ -100,7 +103,7 @@ public class PlayerMove : MonoBehaviour {
                 minFallSpeed, maxFallSpeed, currentFallSpeed);
             float damage = 100 * (Mathf.Exp(fallingRate) - 1) / (Mathf.Exp(1) - 1);
 
-            GetComponent<PlayerStatus>().TakeDamage(damage);
+            GetComponentInParent<PlayerStatus>().TakeDamage(damage);
             currentFallSpeed = 0f;
         }
     }

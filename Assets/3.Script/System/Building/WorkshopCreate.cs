@@ -3,7 +3,7 @@ using UnityEngine;
 public class WorkshopCreate : BuildingCreate {
     private WorkshopManager workshopManager;
     private Animator workshopAnimator;
-
+    
     protected override void Awake() {
         base.Awake();
         workshopAnimator = GetComponent<Animator>();
