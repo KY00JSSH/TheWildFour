@@ -12,6 +12,12 @@ public class WorkshopInvenControll : CommonInven {
         selectBoxKey = keyNum;
     }
 
+    public void printInven() {
+        for (int i = 0; i < inventory.Count; i ++) {
+            Debug.Log($" inven {i} : {inventory[i]}");
+        }
+    }
+
     private void Awake() {
         workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
         invenController = FindObjectOfType<InvenController>();

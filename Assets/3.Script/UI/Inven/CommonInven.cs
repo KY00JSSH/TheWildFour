@@ -202,4 +202,13 @@ public class CommonInven : MonoBehaviour {
         inventory[index] = newItem;
         updateInvenInvoke();
     }
+
+    public GameObject getIndexItem ( int index) {
+        if (inventory[index] != null) {
+            return inventory[index];
+        }
+        else {
+            return null;
+        }
+    }
 }

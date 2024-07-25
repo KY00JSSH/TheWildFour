@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,15 +8,10 @@ public class InvenController : CommonInven {
     private PlayerStatus playerStatus;
     private PlayerItemUseControll playerItemUse;
 
-    private WorkshopInvenControll workshopInven;
-    private ShelterInvenControll shelterInven;
-
     private void Awake() {
         invenUi = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
         playerStatus = FindObjectOfType<PlayerStatus>();
-        workshopInven = FindObjectOfType<WorkshopInvenControll>();
-        shelterInven = FindObjectOfType<ShelterInvenControll>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
     }
 
@@ -175,36 +169,5 @@ public class InvenController : CommonInven {
             return false;
         }
     }
-
-    //거처 혹은 작업장 아이템과 아이템 스위칭
-    public void switchingInvenItem(int target, bool isWorkshop) {
-        if (isWorkshop) {
-            List<GameObject> workshopInv = workshopInven.Inventory;
-            GameObject item = workshopInv[target];
-
-            addItemBuildInven(target, isWorkshop);
-            addIndexItem( target , item);
-            updateInvenInvoke();
-        }
-        else {
-            List<GameObject> shelterInv = shelterInven.Inventory;
-            GameObject item = shelterInv[target];
-
-            addItemBuildInven(target, isWorkshop);
-            addIndexItem(target, item);
-            updateInvenInvoke();
-        }
-    }
-
-    //거처 혹은 작업장에 아이템 추가
-    public void addItemBuildInven(int target, bool isWorkshop) {
-        if (isWorkshop) {
-                workshopInven.addIndexItem(target, inventory[playerItemUse.selectBoxKey]);
-            }
-        else {
-                shelterInven.addIndexItem(target, inventory[playerItemUse.selectBoxKey]);
-        }
-    }
-
     //TODO: 제작시 사용하는 필요 아이템 있으면 사용
 }
