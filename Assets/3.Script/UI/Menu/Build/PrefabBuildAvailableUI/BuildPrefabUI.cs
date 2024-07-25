@@ -27,7 +27,7 @@ public class BuildPrefabUI : MonoBehaviour {
     //public float[] sizes = new float[2];
 
     // 설치될 오브젝트
-    protected GameObject buildingObj;
+    public GameObject buildingObj;
     public bool isBuiltStart = false;
 
     private Animator playerAnimator;

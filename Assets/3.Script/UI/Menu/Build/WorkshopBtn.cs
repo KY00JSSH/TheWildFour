@@ -33,7 +33,6 @@ public class WorkshopBtn : MonoBehaviour {
         // 버튼 눌리면 쿨타임 확인해서 아이템 제작 메소드 사용
         if (buttonCoolTimeUI.isBuildComplete) {
             buttonCoolTimeUI.isBuildComplete = false;
-            Debug.Log("!!!!");
             useCraftItemUseMain();
         }
 

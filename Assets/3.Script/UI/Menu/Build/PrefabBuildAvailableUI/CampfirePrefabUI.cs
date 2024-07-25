@@ -10,8 +10,10 @@ public class CampfirePrefabUI : BuildPrefabUI {
 
     protected override void Update() {
         if (buildingObj != null) {
-            isValid = campfireCreate.isValidBuild;
-            base.Update();
+            if (buildingObj.activeSelf) {
+                isValid = campfireCreate.isValidBuild;
+                base.Update();
+            }
         }
     }
 

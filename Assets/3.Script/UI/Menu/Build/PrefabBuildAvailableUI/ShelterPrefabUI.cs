@@ -12,9 +12,11 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
     protected override void Update() {
         if (buildingObj != null) {
-            isValid = shelterCreate.isValidBuild;
-            base.Update();
+            if (buildingObj.activeSelf) {
+                isValid = shelterCreate.isValidBuild;
+                base.Update();
 
+            }
         }
 
     }
