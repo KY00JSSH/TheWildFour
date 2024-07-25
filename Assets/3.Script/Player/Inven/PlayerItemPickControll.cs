@@ -6,7 +6,7 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     [SerializeField] private float checkRadius = 2.5f;
     private InvenController invenController;
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     private GameObject closestItem;
     public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>().closestItem; } }
@@ -15,6 +15,9 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     private GameObject previousItem = null;
 
+    private void Awake() {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     private void Start() {
         invenController = FindObjectOfType<InvenController>();
     }
