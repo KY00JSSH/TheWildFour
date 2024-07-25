@@ -97,10 +97,28 @@ public class PlayerItemPickControll : MonoBehaviour {
     private void pickupItem(GameObject item) {
         if (item != null && item.layer == 8) {
             invenController.itemObject = item;
-            if (invenController.canItemAdd()) {
-                invenController.ItemAdd();
-                item.SetActive(false);
-                //Destroy(item);
+            //겹쳐서 넣을 수 있는지 확인
+            if(item.GetComponent<CountableItem>() != null) {
+                int checkNum = invenController.canAddThisBox(item.GetComponent<Item>().Key);
+                if(checkNum != 99) {
+                        //겹쳐서 넣을수 있으면 집은 필드 아이템은 destroy
+                        invenController.ItemAdd();
+                        Destroy(item);
+                }
+                else {
+                    if (invenController.canItemAdd()) {
+                        //겹쳐서 넣을수 없으면 집은 필드의 아이템은 active-false
+                        invenController.ItemAdd();
+                        item.SetActive(false);
+                    }
+                }
+            }
+            else {
+                if (invenController.canItemAdd()) {
+                    //겹쳐서 넣을수 없으면 집은 필드의 아이템은 active-false
+                    invenController.ItemAdd();
+                    item.SetActive(false);
+                }
             }
         }
         else {
