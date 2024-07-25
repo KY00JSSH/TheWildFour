@@ -22,7 +22,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     private void Update() {
         if (PlayerStatus.isDead) return;
 
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0 ) {
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
             CheckForItems();
         }
 
@@ -36,7 +36,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     private void CheckForItems() {
-        int layerMask = (1 << 8) + (1 << 9);
+        int layerMask = (1 << 8) + (1 << 9) + (1 << 10) + (1 << 11) + (1 << 12);
         Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
 
         float closestDistance = Mathf.Infinity;
@@ -62,15 +62,22 @@ public class PlayerItemPickControll : MonoBehaviour {
             if (previousItem != closestItem) {
                 ShowTooltip(closestItem);
                 if (previousItem != null) {
-                    previousItem.GetComponent<ItemSelectControll>().outSelect();
+                    if (previousItem.GetComponent<ItemSelectControll>() != null) {
+                        previousItem.GetComponent<ItemSelectControll>().outSelect();
+                    }
                 }
-                closestItem.GetComponent<ItemSelectControll>().selectItem();
+
+                if (closestItem.GetComponent<ItemSelectControll>() != null) {
+                    closestItem.GetComponent<ItemSelectControll>().selectItem();
+                }
                 previousItem = closestItem;
             }
         }
         else if (previousItem != null) {
             // 선택된 아이템이 없을 때 이전 아이템의 outSelect 호출
-            previousItem.GetComponent<ItemSelectControll>().outSelect();
+            if (previousItem.GetComponent<ItemSelectControll>() != null) {
+                previousItem.GetComponent<ItemSelectControll>().outSelect();
+            }
             previousItem = null;
         }
     }

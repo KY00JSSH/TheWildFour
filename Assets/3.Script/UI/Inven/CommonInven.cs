@@ -63,10 +63,6 @@ public class CommonInven : MonoBehaviour {
             }
         }
         updateInvenInvoke();
-
-        for(int i = 0; i < inventory.Count; i++) {
-            Debug.Log($" inven { i }  : {inventory[i]}");
-        }
     }
 
     //아이템 추가 가능여부
