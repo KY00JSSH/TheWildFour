@@ -227,7 +227,6 @@ public class InvenController : CommonInven {
                     if (inventory[i].GetComponent<CountableItem>() != null) {
                         if (inventory[i].GetComponent<CountableItem>().itemData.Key == matKeys[j]) {
                             invenIndex.Add(i);
-                            invenItemCount += inventory[invenIndex[i]].GetComponent<CountableItem>().CurrStackCount;
                         }
                     }
                 }
@@ -239,24 +238,31 @@ public class InvenController : CommonInven {
                     if (inventory[i].GetComponent<CountableItem>() != null) {
                         if (inventory[i].GetComponent<CountableItem>().itemData.Key == matKeys[j]) {
                             workshopIndex.Add(i);
-                            workshopItemCount += inventory[invenIndex[i]].GetComponent<CountableItem>().CurrStackCount;
                         }
                     }
                 }
+            }
 
-                if ((invenItemCount + workshopItemCount) >= matCount[j]) {
-                    if (invenItemCount < matCount[j]) {
-                        //인벤 아이템 전부 삭제 + 작업장 아이템중 일부 삭제
-                        for (int k = 0; k < invenIndex.Count; k++) {
-                            removeItem(invenIndex[k]);
-                        }
-                        int leftItemCount = matCount[j] - invenItemCount;
-                        workshopInven.removeItemCount(matKeys[j], leftItemCount);
+            for (int i = 0; i < invenIndex.Count; i++) {
+                invenItemCount += inventory[invenIndex[i]].GetComponent<CountableItem>().CurrStackCount;
+            }
+
+            for (int i = 0; i < workshopIndex.Count; i++) {
+                workshopItemCount += inventory[invenIndex[i]].GetComponent<CountableItem>().CurrStackCount;
+            }
+
+            if ((invenItemCount + workshopItemCount) >= matCount[j]) {
+                if (invenItemCount < matCount[j]) {
+                    //인벤 아이템 전부 삭제 + 작업장 아이템중 일부 삭제
+                    for (int i = 0; i < invenIndex.Count; i++) {
+                        removeItem(invenIndex[i]);
                     }
-                    else {
-                        //인벤 아이템중 일부삭제
-                        removeItemCount(matKeys[j], matCount[j]);
-                    }
+                    int leftItemCount = matCount[j] - invenItemCount;
+                    workshopInven.removeItemCount(matKeys[j], leftItemCount);
+                }
+                else {
+                    //인벤 아이템중 일부삭제
+                    removeItemCount(matKeys[j], matCount[j]);
                 }
             }
         }
