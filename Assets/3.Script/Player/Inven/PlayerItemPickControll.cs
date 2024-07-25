@@ -97,7 +97,7 @@ public class PlayerItemPickControll : MonoBehaviour {
             }
         }
         else {
-            Debug.LogWarning("null");
+            //Debug.LogWarning("null");
         }
     }
 }

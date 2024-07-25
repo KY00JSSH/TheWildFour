@@ -15,24 +15,8 @@ public class CampfirePrefabUI : BuildPrefabUI {
         }
     }
 
-    public void BuildAvaildableMode() {
-        if (!tooltip_Build.isBuildAvailable) return;
-
-        if (campfireCreate.isExist) return;
-
-        buildingObj = campfireCreate.Building;
-        StartCoroutine(FindObject());
-    }
-    protected IEnumerator FindObject()
-    {
-        while (buildingObj == null)
-        {
-            buildingObj = campfireCreate.Building;
-            yield return null;
-        }
-
-        Debug.Log("==========================" + buildingObj.name);
-        isBuiltStart = true;
-        BuildImg.SetActive(true);
+    public override void BuildAvailableMode() {
+        buildingCreate = campfireCreate;
+        base.BuildAvailableMode();
     }
 }

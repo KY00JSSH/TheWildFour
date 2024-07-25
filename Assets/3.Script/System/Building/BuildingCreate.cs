@@ -52,6 +52,7 @@ public class BuildingCreate : MonoBehaviour {
     }
 
     public virtual void BuildMode() {
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;

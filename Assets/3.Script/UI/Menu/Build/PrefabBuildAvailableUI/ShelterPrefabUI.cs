@@ -19,27 +19,10 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
     }
 
-
     // 버튼이 눌렸을 경우 UI표시
-    public void BuildAvailableMode() {
-        if (!tooltip_Build.isBuildAvailable) return;
-
-        if (shelterCreate.isExist) return;
-        buildingObj = shelterCreate.Building;
-        StartCoroutine(FindObject());
+    public override void BuildAvailableMode() {
+        buildingCreate = shelterCreate;
+        base.BuildAvailableMode();
     }
-    protected IEnumerator FindObject()
-    {
-        while (buildingObj == null)
-        {
-            buildingObj = shelterCreate.Building;
-            yield return null;
-        }
-
-        Debug.Log("==========================" + buildingObj.name);
-        isBuiltStart = true;
-        BuildImg.SetActive(true);
-    }
-
 }
 
