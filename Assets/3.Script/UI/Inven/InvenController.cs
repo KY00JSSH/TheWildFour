@@ -56,32 +56,36 @@ public class InvenController : CommonInven {
 
     //아이템 F로 사용
     public void useInvenItem(int index) {
-        if (inventory[index].GetComponent<MedicItemData>() != null) {
-            //선택한 아이템이 약품이면 1개 사용
-            MedicItem medicItem = inventory[index].GetComponent<MedicItem>();
-            medicItem.useCurrStack(1);
-            //playerStatus.EatMedicine(medicItem);   //플레이어 실제 아이템 섭취
-            if (medicItem.CurrStackCount == 0) {
-                inventory[index] = null;
+        if(inventory[index] != null) {
+            if (inventory[index]?.GetComponent<MedicItem>() != null) {
+                //선택한 아이템이 약품이면 1개 사용
+                MedicItem medicItem = inventory[index].GetComponent<MedicItem>();
+                medicItem.useCurrStack(1);
+                //playerStatus.EatMedicine(medicItem);   //플레이어 실제 아이템 섭취
+                if (medicItem.CurrStackCount == 0) {
+                    inventory[index] = null;
+                }
+                updateInvenInvoke();
             }
-            updateInvenInvoke();
-        }
-        else if (inventory[index].GetComponent<FoodItemData>() != null) {
-            //선택한 아이템이 음식이면 1개 사용
-            FoodItem foodItem = inventory[index].GetComponent<FoodItem>();
-            foodItem.useCurrStack(1);
-            playerStatus.EatFood(foodItem);  //플레이어 실제 아이템 섭취
-            if (foodItem.CurrStackCount == 0) {
-                inventory[index] = null;
+            else if (inventory[index]?.GetComponent<FoodItem>() != null) {
+                //선택한 아이템이 음식이면 1개 사용
+                FoodItem foodItem = inventory[index].GetComponent<FoodItem>();
+                foodItem.useCurrStack(1);
+                playerStatus.EatFood(foodItem);  //플레이어 실제 아이템 섭취
+                if (foodItem.CurrStackCount == 0) {
+                    inventory[index] = null;
+                }
+                updateInvenInvoke();
             }
-            updateInvenInvoke();
-        }
-        else if (inventory[index].GetComponent<WeaponItem>() != null) {
-            //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
-            menuWeapon.addSlotFromInvenWeapon(index, inventory[index]);
-            updateInvenInvoke();
-        }
-        else {
+            else if (inventory[index]?.GetComponent<WeaponItem>() != null) {
+                //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
+                menuWeapon.addSlotFromInvenWeapon(index, inventory[index]);
+                updateInvenInvoke();
+            }
+            else {
+                return;
+            }
+        }else {
             return;
         }
     }
