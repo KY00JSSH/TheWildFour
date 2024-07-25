@@ -127,7 +127,7 @@ public class PlayerStatus : MonoBehaviour {
     public IEnumerator Slow() {
         isSlowed = true;
 
-        PlayerMove plyaerMove = GetComponent<PlayerMove>();
+        PlayerMove plyaerMove = GetComponentInChildren<PlayerMove>();
         float speed = plyaerMove.GetPlayerMoveSpeed();
         plyaerMove.SetPlayerMoveSpeed(speed * 0.8f);
         while(GetPlayerStatus(Status.Satiety)) {

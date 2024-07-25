@@ -11,9 +11,11 @@ public class WorkShopPrefabUI : BuildPrefabUI {
     }
 
     protected override void Update() {
-        if (buildingObj != null) {
-            isValid = workshopCreate.isValidBuild;
-            base.Update();
+        if(buildingObj != null) {
+            if (buildingObj.activeSelf) {
+                isValid = workshopCreate.isValidBuild;
+                base.Update();
+            }
         }
     }
 

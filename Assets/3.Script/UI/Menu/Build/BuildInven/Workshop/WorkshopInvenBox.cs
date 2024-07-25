@@ -14,6 +14,7 @@ public class WorkshopInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDrag
     private PlayerItemUseControll playerItemUse;
 
     private WorkshopInvenControll workshopInvenCont;
+    private WorkshopInvenUI workshopInvenUI;
 
     private void Awake() {
         invenBox = transform.GetComponent<Button>();
@@ -22,6 +23,7 @@ public class WorkshopInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDrag
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         canvas = FindObjectOfType<Canvas>();
         workshopInvenCont = FindObjectOfType<WorkshopInvenControll>();
+        workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
@@ -75,7 +77,20 @@ public class WorkshopInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDrag
                 }
             }
             else {
-                return;
+                for( int i = 0; i < workshopInvenUI.CurrInvenCount; i++) {
+                    RectTransform boxRectTransform = workshopInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
+                    if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
+                        targetIndex = i;
+                        break;
+                    }
+                }
+
+                if(targetIndex!=99) {
+                    workshopInvenCont.changeInvenIndex(key, targetIndex);
+                }
+                else {
+                    return;
+                }
             }
         }
     }

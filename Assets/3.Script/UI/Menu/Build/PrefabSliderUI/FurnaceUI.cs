@@ -16,11 +16,9 @@ public class FurnaceUI : PrefabSliderUI {
     }
 
     private void Start() {
-        //TODO: totalvalue 설정 해줘야함
         totalvalue = GetComponent<Furnace>().GetTotalTime();
     }
     protected override void Update() {
-        //TODO: currentvalue 설정 해줘야함
         currentvalue = GetComponent<Furnace>().GetCurrentTime();
         base.Update();
     }

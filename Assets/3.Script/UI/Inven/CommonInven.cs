@@ -38,11 +38,33 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
+    //특정 key인 아이템 count만큼 삭제
+    public void removeItemCount(int key, int count) {
+        int leftCount = count;
+        for (int i = 0; i < inventory.Count; i++) { 
+            CountableItem countItem = inventory[i].GetComponent<CountableItem>();
+            if (countItem.itemData.Key == key) {
+                if(countItem.CurrStackCount > leftCount) {
+                    countItem.useCurrStack(leftCount);
+                    return;
+                }else if (countItem.CurrStackCount == leftCount) {
+                    inventory[i] = null;
+                    return;
+                }
+                else {
+                    leftCount -= countItem.CurrStackCount;
+                    inventory[i] = null;
+                }
+            }
+        }
+    }
+
     //if 해당 아이템이 inven에 있고,(해당 box item count < itemMaxStackCount)
     // 해당 칸에 아이템 추가
     //  else if(!full)  새박스에 아이템 add
     //else isInvenFull = true
     public void ItemAdd() {
+        //item이 인벤토리 내에 있고, 있는 박스 안에 추가 가능하면 해당 inven index return, 없으면 99를 return
         int checkNum = canAddThisBox(itemObject.GetComponent<Item>().Key);
 
         if (checkNum != 99) {
@@ -53,6 +75,7 @@ public class CommonInven : MonoBehaviour {
             }
         }
         else {
+            //빈 박스 있는지 체크. 제일 작은 index부터 검사해서 있으면 해당 index return, 없으면 99 return
             int existBox = isExistEmptyBox();
             if (existBox != 99) {
                 //null로 비워둔 inventory에 추가
@@ -201,5 +224,14 @@ public class CommonInven : MonoBehaviour {
     public void addIndexItem(int index, GameObject newItem) {
         inventory[index] = newItem;
         updateInvenInvoke();
+    }
+
+    public GameObject getIndexItem ( int index) {
+        if (inventory[index] != null) {
+            return inventory[index];
+        }
+        else {
+            return null;
+        }
     }
 }

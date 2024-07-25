@@ -4182,6 +4182,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &145776425
 MonoBehaviour:
@@ -4351,7 +4352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: d89affeb2a77ace448074977e8a60dc2, type: 2}
+  itemData: {fileID: 11400000, guid: d89affeb2a77ace448074977e8a60dc2, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -4704,7 +4705,7 @@ MonoBehaviour:
   itemIcon: {fileID: 680243503}
   cursorIcon: {fileID: 862590324}
   key: 1
-  player: {fileID: 0}
+  player: {fileID: 1079297286}
 --- !u!114 &151500035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7787,7 +7788,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 0.99998116}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9231,6 +9232,7 @@ MonoBehaviour:
   btn: {fileID: 258404972}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &260186413
 GameObject:
@@ -9679,7 +9681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000076227705}
+  m_AnchoredPosition: {x: 0, y: -0.0000062218983}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &276738545
@@ -9765,7 +9767,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 223300593}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99998116
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13144,7 +13146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394145371}
   m_LocalRotation: {x: 0.5646033, y: 0.0000000382387, z: -0.000000026157835, w: 0.82536244}
-  m_LocalPosition: {x: 0, y: 4.5, z: -1.75}
+  m_LocalPosition: {x: 16.97, y: 4.5, z: -28.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 546799119}
@@ -15162,6 +15164,7 @@ MonoBehaviour:
   btn: {fileID: 449166067}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &453712075
 GameObject:
@@ -15680,6 +15683,7 @@ MonoBehaviour:
   btn: {fileID: 456581009}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &461555258
 GameObject:
@@ -16978,6 +16982,7 @@ MonoBehaviour:
   btn: {fileID: 493194593}
   cooltime: 120
   isClicked: 0
+  isBuildComplete: 0
   speed: 1
 --- !u!1 &495144926
 GameObject:
@@ -17755,6 +17760,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &543053206
 MonoBehaviour:
@@ -17924,7 +17930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 0}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -18146,6 +18152,7 @@ MonoBehaviour:
   btn: {fileID: 543861353}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &545267426
 GameObject:
@@ -18810,6 +18817,7 @@ MonoBehaviour:
   btn: {fileID: 574048765}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &574048763
 MonoBehaviour:
@@ -18979,7 +18987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
+  itemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -20531,12 +20539,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentActivateBoxPrf: {fileID: 664224741}
-  boxNum: 5
+  boxNum: 8
   ActivatedStatusSprites:
   - {fileID: 21300000, guid: 2d1d5d1e450ee5f43a939e1cd0944356, type: 3}
   - {fileID: 21300000, guid: 75f98a0ddf0498740918f8e2dc1f511e, type: 3}
   - {fileID: 21300000, guid: 60e6023fcd76b0f47a36d38e1aa8c321, type: 3}
   - {fileID: 21300000, guid: b40a4880d85803445a6e9a94471009fa, type: 3}
+  - {fileID: 21300000, guid: d829f65307f026341bc15b31c8b1f213, type: 3}
+  - {fileID: 21300000, guid: aee0768ade1fcc74496a04367b1c6444, type: 3}
+  - {fileID: 21300000, guid: f35eaabdabd5d834f817a2a041c55144, type: 3}
+  - {fileID: 21300000, guid: f82d887b711704c48b7dd3487d4622e8, type: 3}
   - {fileID: 21300000, guid: ba5969d6549c77b4d86e0030205f3a8a, type: 3}
 --- !u!1 &624317728
 GameObject:
@@ -21377,6 +21389,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &643218795
 MonoBehaviour:
@@ -21546,7 +21559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: 20db846aa28ba5f469727523c4547706, type: 2}
+  itemData: {fileID: 11400000, guid: 20db846aa28ba5f469727523c4547706, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -24362,6 +24375,7 @@ MonoBehaviour:
   btn: {fileID: 731401937}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!1 &731571702
 GameObject:
@@ -24712,6 +24726,7 @@ MonoBehaviour:
   btn: {fileID: 733183492}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &736671684
 GameObject:
@@ -25324,7 +25339,7 @@ MonoBehaviour:
   - {fileID: -7729778623438631139, guid: 7c54dfc7a9d070249b2e52919329d638, type: 3}
   - {fileID: -6346529550774818388, guid: e4cafe9b9b8775c4d8ccab17cb5da668, type: 3}
   - {fileID: 7926608735938254877, guid: 7b3f92035b34c304db87cade4708a533, type: 3}
-  spawnCount: 500
+  spawnCount: 200
   spawnArea: {x: 5, y: 0, z: 5}
 --- !u!4 &750615575
 Transform:
@@ -26774,6 +26789,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &784027681
 MonoBehaviour:
@@ -26943,7 +26959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: a71c44d28a1dec24ba0ec76371b48e94, type: 2}
+  itemData: {fileID: 11400000, guid: a71c44d28a1dec24ba0ec76371b48e94, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -30111,6 +30127,7 @@ MonoBehaviour:
   btn: {fileID: 885354741}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &885675809
 GameObject:
@@ -30710,6 +30727,7 @@ MonoBehaviour:
   btn: {fileID: 897426605}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &897426605
 MonoBehaviour:
@@ -34744,6 +34762,7 @@ MonoBehaviour:
   btn: {fileID: 1004071108}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1001 &1005308096
 PrefabInstance:
@@ -43797,6 +43816,7 @@ MonoBehaviour:
   btn: {fileID: 1299478607}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &1301955938
 GameObject:
@@ -43993,6 +44013,7 @@ MonoBehaviour:
   btn: {fileID: 1302488900}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &1302488900
 MonoBehaviour:
@@ -44245,6 +44266,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1303908176
 MonoBehaviour:
@@ -44414,7 +44436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
+  itemData: {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -44886,6 +44908,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1324558949
 MonoBehaviour:
@@ -45055,7 +45078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: a95f7d3f0c5f7d848a7241c68ac72288, type: 2}
+  itemData: {fileID: 11400000, guid: a95f7d3f0c5f7d848a7241c68ac72288, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -45398,7 +45421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648cd3c92f2033e48964004557e3b5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1079297286}
 --- !u!1 &1335527562
 GameObject:
   m_ObjectHideFlags: 0
@@ -46266,6 +46289,7 @@ MonoBehaviour:
   btn: {fileID: 1352164982}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &1358208575
 GameObject:
@@ -46522,6 +46546,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1362827964
 MonoBehaviour:
@@ -46691,7 +46716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 0}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -53546,6 +53571,7 @@ MonoBehaviour:
   btn: {fileID: 1621784112}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &1622102404
 GameObject:
@@ -53934,6 +53960,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1635684438
 MonoBehaviour:
@@ -54103,7 +54130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
+  itemData: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -55449,6 +55476,7 @@ MonoBehaviour:
   btn: {fileID: 1671967435}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &1672372115
 GameObject:
@@ -55667,6 +55695,7 @@ MonoBehaviour:
   btn: {fileID: 1672372117}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &1673953548
 GameObject:
@@ -57743,6 +57772,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1716959534
 MonoBehaviour:
@@ -57912,7 +57942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: 02d4e6c148f723042ad5ec1165e65062, type: 2}
+  itemData: {fileID: 11400000, guid: 02d4e6c148f723042ad5ec1165e65062, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -58963,7 +58993,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745526980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.5, z: -1.75}
+  m_LocalPosition: {x: 16.97, y: 4.5, z: -28.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1275281934}
@@ -59821,6 +59851,7 @@ MonoBehaviour:
   btn: {fileID: 1774904773}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &1780594691
 GameObject:
@@ -67490,7 +67521,7 @@ MonoBehaviour:
   itemIcon: {fileID: 1730897691}
   cursorIcon: {fileID: 1853600875}
   key: 2
-  player: {fileID: 0}
+  player: {fileID: 1079297286}
 --- !u!114 &2037493091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67781,7 +67812,6 @@ GameObject:
   - component: {fileID: 2047701711}
   - component: {fileID: 2047701710}
   - component: {fileID: 2047701709}
-  - component: {fileID: 2047701715}
   - component: {fileID: 2047701716}
   m_Layer: 5
   m_Name: 22
@@ -67828,6 +67858,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &2047701710
 MonoBehaviour:
@@ -67973,35 +68004,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047701707}
   m_CullTransparentMesh: 1
---- !u!114 &2047701715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047701707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: WorkshopBtn, Assembly-CSharp
-          m_MethodName: ButtonItemEach
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 11400000, guid: ace53d514600b2240ad4e901f3eae82f, type: 2}
-            m_ObjectArgumentAssemblyTypeName: ItemData, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &2047701716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68014,7 +68016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: ace53d514600b2240ad4e901f3eae82f, type: 2}
+  itemData: {fileID: 11400000, guid: ace53d514600b2240ad4e901f3eae82f, type: 2}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -68893,6 +68895,7 @@ MonoBehaviour:
   btn: {fileID: 2063295913}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &2063708323
 GameObject:
@@ -70781,6 +70784,7 @@ MonoBehaviour:
   btn: {fileID: 2144397754}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!1 &2144988986
 GameObject:

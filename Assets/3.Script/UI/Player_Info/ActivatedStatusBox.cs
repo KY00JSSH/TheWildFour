@@ -57,22 +57,22 @@ public class ActivatedStatusBox : MonoBehaviour
                 sliderImg.color = Color.blue;
                 break;
             case Status.Poison:
-                Debug.LogWarning("Status.Poison 제작해야함");
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[4];
                 sliderImg.color = Color.red;
                 break;
             case Status.Bleeding:
-                Debug.LogWarning("Status.Bleeding 제작해야함");
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[5];
                 sliderImg.color = Color.red;
                 break;
             case Status.Blizzard:
-                Debug.LogWarning("Status.Blizzard 제작해야함");
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[6];
                 sliderImg.color = Color.red;
                 break;
             case Status.Indigestion:
-                Debug.LogWarning("Status.Indigestion 제작해야함");
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[7];
                 break;
             case Status.Heal:
-                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[4];
+                iconSprite.sprite = actStatusCont.ActivatedStatusSprites[8];
                 sliderImg.color = Color.blue;
                 break;
             default:

@@ -10,7 +10,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     [SerializeField] private bool isClicked = false;
 
     public float CoolTime { get { return leftTime; } } // ShelterManager에서 받아가는 용도
-    public bool isBuildComplete { get; private set; }
+    public bool isBuildComplete = false;
     private bool isRatioOpposite = false;
 
     private float leftTime;

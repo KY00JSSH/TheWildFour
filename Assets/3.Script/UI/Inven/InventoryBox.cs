@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
@@ -116,17 +117,19 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                     //작업장 인벤에 아이템 추가
                     if (workshopInven.checkItemType(targetIndex) != 0) {
                         //해당 위치에 아이템 있으면 스위칭
-                        invenControll.switchingInvenItem(targetIndex, true);
+                        GameObject item = workshopInven.Inventory[targetIndex];
+                        workshopInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
+                        invenControll.addIndexItem(targetIndex, item);
                     }
                     else {
                         //없으면 아이템 추가만
-                        invenControll.addItemBuildInven(targetIndex, true);
+                        workshopInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
                         invenControll.removeItem(key);
                     }
-
+                    workshopInven.printInven();
                 }
                 else if (isShelterOpen) {   //거처 오픈
-                    ShelterInvenControll shelterInven = FindObjectOfType<ShelterInvenControll>();   
+                    ShelterInvenControll shelterInven = FindObjectOfType<ShelterInvenControll>();
                     ShelterInvenUI shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
 
                     for (int i = 0; i < shelterInvenUI.CurrInvenCount; i++) {
@@ -138,19 +141,17 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                     }
                     //거처 인벤에 아이템 추가
                     if (shelterInven.checkItemType(targetIndex) != 0) {
-                        //해당 위치에 아이템 있으면 스위칭
-                        invenControll.switchingInvenItem(targetIndex, false);
+                        GameObject item = shelterInven.Inventory[targetIndex];
+                        shelterInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
+                        invenControll.addIndexItem(targetIndex, item);
                     }
                     else {
                         //없으면 아이템 추가만
-                        invenControll.addItemBuildInven(targetIndex, false);
+                        shelterInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
                         invenControll.removeItem(key);
                     }
                 }
-                
             }
         }
     }
-
-
 }
