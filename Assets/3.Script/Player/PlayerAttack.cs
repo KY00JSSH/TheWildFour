@@ -99,9 +99,14 @@ public class PlayerAttack : MonoBehaviour {
             if (currentClip == GetCurrentClip()) return;
             currentClip = GetCurrentClip();
 
-            Debug.Log(other.name);
-            //other.GetComponent<ObjAttack>().GetAttack(
-            //    playerAbility.GetTotalPlayerAttack, playerAbility.GetTotalPlayerGather());
+            if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
+                // 悼拱 Attack 贸府
+            }
+            else {
+                // 唱公 倒 Attack 贸府
+            }
+
+
         }
     }
 

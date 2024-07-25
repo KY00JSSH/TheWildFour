@@ -15,14 +15,6 @@ public class PlayerMove : MonoBehaviour {
 
     private Animator playerAnimator; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
 
-    public void PlayerDieAnimation() {
-        playerAnimator.SetTrigger("triggerDie");
-        //PlayerStatus playerStatus = FindObjectOfType<PlayerStatus>();
-        //playerStatus.isDead = true;
-        //player.GetComponent<Animator>().SetBool("isDead", isDead);
-    }
-
-
     public static bool isMove { get; private set; }
 
     private bool isAvailableDash = true;

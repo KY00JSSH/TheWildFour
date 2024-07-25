@@ -102,7 +102,6 @@ public class MenuMap_MarkerSpawner : MonoBehaviour
         float normalizedX = relativePosition.x / mapWidth;
         float normalizedY = relativePosition.z / mapHeight;
 
-        Debug.Log(zoom);
         //��ǥ ����
         float ratio =
             Mathf.InverseLerp(zoom.maxOrthSize, zoom.minOrthSize, zoom.menuMapCamera.orthographicSize) *

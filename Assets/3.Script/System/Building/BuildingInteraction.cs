@@ -90,7 +90,6 @@ public class BuildingInteraction : MonoBehaviour {
         T buildingCreate = FindObjectOfType<T>();
         buildingCreate.SetEnterPosition(player.transform.position);
         player.SetActive(false);
-        Debug.Log("@@@" + player);
         cameraControl.cinemachineFreeLook.Follow = buildingCreate.Building.transform;
         cameraControl.cinemachineFreeLook.LookAt = buildingCreate.Building.transform;
     }

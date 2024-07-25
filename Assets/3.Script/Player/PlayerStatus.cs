@@ -12,6 +12,7 @@ public class PlayerStatus : MonoBehaviour {
     public void SetPlayerDead () { 
         isDead = true;
         player.GetComponent<Animator>().SetBool("isDead", isDead);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("triggerDie");
     }
 
     public void PlayerRespawn() {
