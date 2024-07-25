@@ -145,11 +145,13 @@ public class InvenController : CommonInven {
             }
         }
         //작업장 인벤 체크
-        for(int i = 0; i < workshopInven.Inventory.Count; i++) {
-            if (workshopInven.Inventory[i].GetComponent<CountableItem>() != null) {
-                CountableItem workInvenCountItem = workshopInven.Inventory[i].GetComponent<CountableItem>();
-                if (workInvenCountItem.itemData.Key == key) {
-                    totalCount += workInvenCountItem.CurrStackCount;
+        for (int i = 0; i < workshopInven.Inventory.Count; i++) {
+            if (workshopInven.Inventory[i] != null) {
+                if (workshopInven.Inventory[i].GetComponent<CountableItem>() != null) {
+                    CountableItem workInvenCountItem = workshopInven.Inventory[i].GetComponent<CountableItem>();
+                    if (workInvenCountItem.itemData.Key == key) {
+                        totalCount += workInvenCountItem.CurrStackCount;
+                    }
                 }
             }
         }
@@ -200,7 +202,7 @@ public class InvenController : CommonInven {
     }
 
     //제작시 아이템 처리 공통
-    private void craftItemUseCommon(int[] matKeys , int[] matCount) {
+    private void craftItemUseCommon(int[] matKeys, int[] matCount) {
         WorkshopInvenControll workshopInven = FindObjectOfType<WorkshopInvenControll>();
         for (int j = 0; j < matKeys.Length; j++) {
             List<int> invenIndex = new List<int>();
