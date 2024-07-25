@@ -13,11 +13,13 @@ public class ObjAttack : MonoBehaviour {
             RockController rockCont = gameObject.GetComponent<RockController>();
             rockCont.getDamage(attackPoint);
             //gatherPoint만큼 아이템 드랍
+            rockCont.dropRockItem(gatherPoint);
         }
         else if(gameObject.GetComponent<TreeBigController>() != null) {
             TreeBigController treeCont = gameObject.GetComponent<TreeBigController>();
             treeCont.getDamage(attackPoint);
             //gatherPoint만큼 아이템 드랍
+            treeCont .dropTreeItem(gatherPoint);
         }
     }
 }
