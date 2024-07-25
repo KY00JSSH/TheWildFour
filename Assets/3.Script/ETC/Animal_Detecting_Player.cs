@@ -9,12 +9,10 @@ public class Animal_Detecting_Player : MonoBehaviour
     2. 전방 시야 범위 내에 플레이어태그 오브젝트가 감지될 경우, 플레이어의 반대 방향으로 뛰어서 '일정한 거리'를 이동
     */
 
-
-
     [SerializeField] private Collider detectingCircle;
     [SerializeField] private Collider detectingSight;
 
-    private Animal_Control parentControl;
+    public Animal_Control parentControl;
 
     private void Awake()
     {

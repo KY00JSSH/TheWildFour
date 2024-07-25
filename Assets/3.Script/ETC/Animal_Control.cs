@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Animal_Control : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class Animal_Control : MonoBehaviour
     루트모션을 이용한 오브젝트 이동
     자동으로 돌아다니는 스크립트 또는 AI 
     */
+
+    private NavMeshAgent agent;
+    public Transform navMeshSurface;
+
     private Animator animator;
 
     public float idleDuration = 3f; //Idle 상태의 지속 시간
@@ -33,17 +38,24 @@ public class Animal_Control : MonoBehaviour
         animator.applyRootMotion = true;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerDetectorCollider = GetComponentInChildren<CapsuleCollider>(); //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
+        agent = GetComponent<NavMeshAgent>();
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+
+        GetComponentInChildren<Animal_Detecting_Player>().parentControl = this; /**/
     }
 
     private void Start()
     {
         idleTimer = 0;
-        moveTimer = 0;
+        moveTimer = 0;        
     }
 
     private void Update()
     {
-        if(isRunning)
+        CheckDistance();
+
+        if (isRunning)
         {
             RunFromPlayer();
         }    
@@ -51,7 +63,26 @@ public class Animal_Control : MonoBehaviour
         {
             Random_Idle_Or_Walk();
         }
+
+        //NavMeshAgent의 위치를 Animator에 동기화
+        if(agent.remainingDistance > agent.stoppingDistance)
+        {
+            animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
+        }
+        else
+        {
+            animator.SetFloat("MoveSpeed", 0);
+        }
     }    
+
+    void CheckDistance()
+    {
+        if(Vector3.Distance(this.transform.position, navMeshSurface.position) > 10f)
+        {
+            navMeshSurface.transform.position = this.transform.position;
+            navMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
+        }
+    }
 
     public void OnChildTriggerEnter(Collider other) //토끼의 플레이어감지 콜라이더에 플레이어가 감지됐을 경우
     {
@@ -60,6 +91,7 @@ public class Animal_Control : MonoBehaviour
             isRunning = true;
             moveDirection = (transform.position - player.position).normalized;
             animator.SetBool("isRunning", true);
+            Debug.Log("돔황챠!");
         }
     }
 
@@ -74,6 +106,7 @@ public class Animal_Control : MonoBehaviour
         {
             isRunning = false;
             animator.SetBool("isRunning", false);
+            Debug.Log("살았다...");
         }
     }
 
@@ -88,16 +121,34 @@ public class Animal_Control : MonoBehaviour
         else
         {
             moveTimer -= Time.deltaTime; // Idle 재생이 아닐 때는 걸어다니면서 moveTimer를 소비
+            //if (moveTimer > 0)
+            //{
+            //    animator.SetFloat("Idle_SetFloat", 7);
+            //    //transform.Translate(Vector3.forward * wander_Speed * Time.deltaTime);
+            //}
+            //else
+            //{
+            //    idleTimer = idleDuration;
+            //    moveTimer = moveDuration;
+            //    animator.SetFloat("Idle_SetFloat", Random.Range(0, 7));
+            //}
             if (moveTimer > 0)
             {
                 animator.SetFloat("Idle_SetFloat", 7);
-                //transform.Translate(Vector3.forward * wander_Speed * Time.deltaTime);
+                if (!agent.hasPath)
+                {
+                    Vector3 randomDirection = Random.insideUnitSphere * 10f;
+                    randomDirection += transform.position;
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(randomDirection, out hit, 10f, 1);
+                    agent.SetDestination(hit.position);
+                }
             }
             else
             {
                 idleTimer = idleDuration;
                 moveTimer = moveDuration;
-                animator.SetFloat("Idle_SetFloat", Random.Range(0, 7));
+                animator.SetFloat("Idle_SetFloat", Random.Range(0, 7)); 
             }
         }
     }
@@ -105,20 +156,25 @@ public class Animal_Control : MonoBehaviour
     private void RunFromPlayer() //플레이어로부터 도망
     {
         if(isRunning)
-        { 
+        {
             animator.SetBool("isRunning", true);
-            transform.forward = moveDirection;
+            //transform.forward = moveDirection;
 
             //플레이어가 계속 감지 범위 내에 있는지 확인
             float detectionRadius = playerDetectorCollider.radius; //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
             if (Vector3.Distance(transform.position, player.position) < detectionRadius)
             {
                 moveDirection = (transform.position - player.position).normalized;
+                Vector3 runTo = transform.transform.position + moveDirection * 10f; /**/
+                NavMeshHit hit;                                                     /**/
+                NavMesh.SamplePosition(runTo, out hit, 10f, 1);                     /**/
+                agent.SetDestination(hit.position);                                 /**/
             }
             else
             {
                 isRunning = false;
                 animator.SetBool("isRunning", false);
+                agent.ResetPath();
             }
         }
     }
