@@ -64,6 +64,7 @@ public class CommonInven : MonoBehaviour {
     //  else if(!full)  새박스에 아이템 add
     //else isInvenFull = true
     public void ItemAdd() {
+        //item이 인벤토리 내에 있고, 있는 박스 안에 추가 가능하면 해당 inven index return, 없으면 99를 return
         int checkNum = canAddThisBox(itemObject.GetComponent<Item>().Key);
 
         if (checkNum != 99) {
@@ -74,6 +75,7 @@ public class CommonInven : MonoBehaviour {
             }
         }
         else {
+            //빈 박스 있는지 체크. 제일 작은 index부터 검사해서 있으면 해당 index return, 없으면 99 return
             int existBox = isExistEmptyBox();
             if (existBox != 99) {
                 //null로 비워둔 inventory에 추가
