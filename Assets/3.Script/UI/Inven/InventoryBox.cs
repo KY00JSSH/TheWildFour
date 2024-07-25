@@ -106,6 +106,10 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                         }
                         invenControll.updateInvenInvoke();
                     }
+                    else {
+                        //아이템 드랍
+                        invenDrop.dropItemAll(key);
+                    }
                 }
                 else if (isWorkshopOpen) {  //작업장 오픈시
                     for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
@@ -146,10 +150,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                         invenControll.removeItem(key);
                     }
                 }
-                else {
-                    //아이템 드랍
-                    invenDrop.dropItemAll(key);
-                }
+                
             }
         }
     }
