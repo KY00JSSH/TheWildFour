@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class Tooltip_InvenWeap : TooltipInfo_Inven, IPointerEnterHandler, IPointerExitHandler {
 
     private WeaponSlotControll weaponSlotControll;
-    //TODO: 확인필요 (0724)
-    private EquipItem currentEquip;
     private GameObject currentWeap;
 
     protected override void Awake() {
@@ -18,7 +16,6 @@ public class Tooltip_InvenWeap : TooltipInfo_Inven, IPointerEnterHandler, IPoint
 
     private void Update() {
         // 아이템이 들어왔을 경우
-        //TODO: 확인필요 (0724)
         if (weaponSlotControll.CurrentItem) {
             currentWeap = weaponSlotControll.CurrentItem;
             _item = weaponSlotControll.GetComponent<WeaponItem>();

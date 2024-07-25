@@ -24,7 +24,6 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
         if (inventoryBox.isItemIn) {
 
             // 아이템이 들어왔을 경우
-            //TODO: 확인필요 (0724)
             if (inventoryBox.CurrentItem.GetComponent<FoodItem>() != null) {
                 _item = inventoryBox.CurrentItem.GetComponent<FoodItem>();
                 if (durability_Weap.gameObject.activeSelf) {
@@ -57,7 +56,6 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
         if (eventData.pointerEnter == gameObject) {
             if (inventoryBox.CurrentItem != null) {
                 Tooltip_inven.SetActive(true);
-                //TODO: 확인필요 (0724)
                 _item = inventoryBox.CurrentItem.GetComponent<Item>();
                 InvenBoxItemInfo();
             }

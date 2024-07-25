@@ -25,7 +25,8 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     private void OnDisable() {
         isClicked = false;
         ratio = 1;
-        img.fillAmount = 1;
+        if (isRatioOpposite) ratio = 1.0f - ratio;
+        img.fillAmount = ratio;
     }
 
     private void Start() {
@@ -92,4 +93,5 @@ public class ButtonCoolTimeUI : MonoBehaviour {
         isClicked = true;
         if (btn) btn.enabled = false;
     }
+
 }

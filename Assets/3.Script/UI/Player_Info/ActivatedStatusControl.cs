@@ -37,10 +37,7 @@ public class ActivatedStatusControl : MonoBehaviour {
             // 상태 리스트가 null이 아닐 경우 활성화 오브젝트 개수 확인
             int activeBoxCnt = FindActiveBox();
             if (StatusControl.Instance.ActivatedStatus.Count > activeBoxCnt) {
-                Debug.Log("활성화 개수 : " + StatusControl.Instance.ActivatedStatus.Count);
-                BoxAddActivatedStatus(activeBoxCnt);
-                Debug.Log("박스 활성화 status : " + AddActivatedStatus);
-                Debug.Log("박스 활성화 개수 : " + FindActiveBox());
+                BoxAddActivatedStatus(StatusControl.Instance.ActivatedStatus.Count - activeBoxCnt);
             }
             // 비활성화 확인
            if(BoxDelActivatedStatus()) BoxPositionSetting();
@@ -81,15 +78,19 @@ public class ActivatedStatusControl : MonoBehaviour {
     // 받아온 상태 리스트와 활성화되어있는 prefab 리스트 차이만큼 활성화 생성
     private void BoxAddActivatedStatus(int activeBoxCnt) {
         for (int i = 0; i < activeBoxCnt; i++) {
-            if (!CurrentActivateBoxs[i].activeSelf) {
-                //TODO: 상태 넘기기
-                AddActivatedStatus = StatusControl.Instance.ActivatedStatus[StatusControl.Instance.ActivatedStatus.Count - (activeBoxCnt - i) - 1].type;
-                CurrentActivateBoxs[i].SetActive(true);
+            for (int j = 0; j < CurrentActivateBoxs.Count; j++) {
+                if (!CurrentActivateBoxs[j].activeSelf) {
+                    //TODO: 상태 넘기기
+                    AddActivatedStatus = StatusControl.Instance.ActivatedStatus[StatusControl.Instance.ActivatedStatus.Count - (activeBoxCnt - i)].type;
+                    CurrentActivateBoxs[j].SetActive(true);
 
-                // 생성 위치 잡기 _ 현재 상태 리스트의 갯수
-                int positionDelta = StatusControl.Instance.ActivatedStatus.Count - (activeBoxCnt - i) - 1;
-                CurrentActivateBoxs[i].transform.position = defaultPositions[positionDelta];
+                    // 생성 위치 잡기 _ 현재 상태 리스트의 갯수
+                    int positionDelta = StatusControl.Instance.ActivatedStatus.Count - (activeBoxCnt - i);
+                    CurrentActivateBoxs[j].transform.position = defaultPositions[positionDelta];
+                    break;
+                }
             }
+
         }
     }
 
