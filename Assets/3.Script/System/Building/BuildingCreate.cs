@@ -16,8 +16,9 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     private Animator playerAnimator;
     public bool isFirst { get; private set; }
 
-
     private ItemSelectControll itemSelectControl;
+    private InvenController invenCont;
+    private TooltipNum tooltipNum;
 
     protected Collider[] buildingColliders;
 
@@ -33,9 +34,11 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     public void SetEnterPosition(Vector3 position) { LastPlayerPosition = position; }
 
     protected virtual void Awake() {
+        tooltipNum = FindObjectOfType<TooltipNum>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerAnimator = playerTransform.GetComponent<Animator>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
+        invenCont = FindObjectOfType<InvenController>();
     }
 
     private void Start() {
@@ -92,6 +95,9 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     public virtual void CreateBuilding() {
         foreach (Collider collider in buildingColliders)
             collider.isTrigger = false;
+
+        buildItemUse();
+
         isBuild = false;
         isExist = true;
         isFirst = false;
@@ -108,6 +114,30 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
 
         MenuMap_MarkerSpawner menuMap_markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
         menuMap_markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
+    }
+
+    private void buildItemUse() {
+        switch (Building.GetComponent<BuildingInteraction>().Type) {
+            case BuildingType.Campfire:
+                invenCont.buildingCreateUseItem(tooltipNum.BuildItemCheck(0, 0).needItems);
+                break;
+            case BuildingType.Furnace:
+                invenCont.buildingCreateUseItem(tooltipNum.BuildItemCheck(1, 0).needItems);
+                break;
+            case BuildingType.Shelter:
+                if (isFirst) {
+                    invenCont.buildingCreateUseItem(tooltipNum.BuildItemCheck(2, 0).needItems);
+                }
+                break;
+            case BuildingType.Workshop:
+                if (isFirst) {
+                    invenCont.buildingCreateUseItem(tooltipNum.BuildItemCheck(3, 0).needItems);
+                }
+                break;
+            case BuildingType.Chest:
+                invenCont.buildingCreateUseItem(tooltipNum.BuildItemCheck(4, 0).needItems);
+                break;
+        }
     }
 
     //public void DestroyBuilding() {

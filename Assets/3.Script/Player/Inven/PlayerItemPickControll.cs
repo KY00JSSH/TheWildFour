@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemPickControll : MonoBehaviour {
@@ -63,7 +61,6 @@ public class PlayerItemPickControll : MonoBehaviour {
 
         if (closestItem != null) {
             if (previousItem != closestItem) {
-                ShowTooltip(closestItem);
                 if (previousItem != null) {
                     if (previousItem.GetComponent<ItemSelectControll>() != null) {
                         previousItem.GetComponent<ItemSelectControll>().outSelect();
@@ -77,7 +74,7 @@ public class PlayerItemPickControll : MonoBehaviour {
             }
         }
         else if (previousItem != null) {
-            // ¼±ÅÃµÈ ¾ÆÀÌÅÛÀÌ ¾øÀ» ¶§ ÀÌÀü ¾ÆÀÌÅÛÀÇ outSelect È£Ãâ
+            // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ outSelect È£ï¿½ï¿½
             if (previousItem.GetComponent<ItemSelectControll>() != null) {
                 previousItem.GetComponent<ItemSelectControll>().outSelect();
             }
@@ -85,32 +82,27 @@ public class PlayerItemPickControll : MonoBehaviour {
         }
     }
 
-    //sphere È®ÀÎ¿ë gizmo
+    //sphere È®ï¿½Î¿ï¿½ gizmo
     //private void OnDrawGizmos() {
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(player.transform.position, checkRadius);
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(player.transform.position, checkRadius);
     //}
 
-    //tooltip º¸¿©ÁÖ´Â ½ÃÁ¡
-    private void ShowTooltip(GameObject item) {
-        // Debug.Log("Tooltip º¸¿©ÁÜ");
-    }
-
-    //¾ÆÀÌÅÛ ÁÝ±â
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý±ï¿½
     private void pickupItem(GameObject item) {
         if (item != null && item.layer == 8) {
             invenController.itemObject = item;
-            //°ãÃÄ¼­ ³ÖÀ» ¼ö ÀÖ´ÂÁö È®ÀÎ
+            //ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             if(item.GetComponent<CountableItem>() != null) {
                 int checkNum = invenController.canAddThisBox(item.GetComponent<Item>().Key);
                 if(checkNum != 99) {
-                        //°ãÃÄ¼­ ³ÖÀ»¼ö ÀÖÀ¸¸é ÁýÀº ÇÊµå ¾ÆÀÌÅÛÀº destroy
+                        //ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ destroy
                         invenController.ItemAdd();
                         Destroy(item);
                 }
                 else {
                     if (invenController.canItemAdd()) {
-                        //°ãÃÄ¼­ ³ÖÀ»¼ö ¾øÀ¸¸é ÁýÀº ÇÊµåÀÇ ¾ÆÀÌÅÛÀº active-false
+                        //ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ active-false
                         invenController.ItemAdd();
                         item.SetActive(false);
                     }
@@ -119,7 +111,7 @@ public class PlayerItemPickControll : MonoBehaviour {
             }
             else {
                 if (invenController.canItemAdd()) {
-                    //°ãÃÄ¼­ ³ÖÀ»¼ö ¾øÀ¸¸é ÁýÀº ÇÊµåÀÇ ¾ÆÀÌÅÛÀº active-false
+                    //ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ active-false
                     invenController.ItemAdd();
                     item.SetActive(false);
                     player.GetComponent<Animator>().Play("PickingUp");

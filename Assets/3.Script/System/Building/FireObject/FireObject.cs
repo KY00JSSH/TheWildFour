@@ -11,6 +11,7 @@ public class FireObject : MonoBehaviour, IFireLight {
 
     private Light fireLight;
     protected ParticleSystem fireEffect;
+    private InvenController invenCont;
 
     public float GetTotalTime() { return totalTime; }
     public float GetCurrentTime() { return currentTime; }
@@ -25,11 +26,17 @@ public class FireObject : MonoBehaviour, IFireLight {
     }
 
     public virtual void AddWood() {
-        IncreaseTime(10f); 
-        if (currentTime > 0 && !isBurn) {
-            StartCoroutine(Burn());
+        invenCont = FindObjectOfType<InvenController>();
+        if (invenCont.isInItem(1)) {
+            invenCont.removeItemCount(1, 1);
+            invenCont.updateInvenInvoke();
+            IncreaseTime(10f);
+            if (currentTime > 0 && !isBurn) {
+                StartCoroutine(Burn());
+            }
         }
     }
+
     private IEnumerator Burn() {
         isBurn = true;
         fireEffect?.Play();
