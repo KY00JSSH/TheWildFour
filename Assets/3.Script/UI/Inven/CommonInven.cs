@@ -41,19 +41,22 @@ public class CommonInven : MonoBehaviour {
     //특정 key인 아이템 count만큼 삭제
     public void removeItemCount(int key, int count) {
         int leftCount = count;
-        for (int i = 0; i < inventory.Count; i++) { 
-            CountableItem countItem = inventory[i].GetComponent<CountableItem>();
-            if (countItem.itemData.Key == key) {
-                if(countItem.CurrStackCount > leftCount) {
-                    countItem.useCurrStack(leftCount);
-                    return;
-                }else if (countItem.CurrStackCount == leftCount) {
-                    inventory[i] = null;
-                    return;
-                }
-                else {
-                    leftCount -= countItem.CurrStackCount;
-                    inventory[i] = null;
+        for (int i = 0; i < inventory.Count; i++) {
+            if (inventory[i] != null) {
+                CountableItem countItem = inventory[i].GetComponent<CountableItem>();
+                if (countItem.itemData.Key == key) {
+                    if (countItem.CurrStackCount > leftCount) {
+                        countItem.useCurrStack(leftCount);
+                        return;
+                    }
+                    else if (countItem.CurrStackCount == leftCount) {
+                        inventory[i] = null;
+                        return;
+                    }
+                    else {
+                        leftCount -= countItem.CurrStackCount;
+                        inventory[i] = null;
+                    }
                 }
             }
         }
@@ -85,7 +88,6 @@ public class CommonInven : MonoBehaviour {
                 isInvenFull = true;
             }
         }
-
         updateInvenInvoke();
     }
 
@@ -226,7 +228,7 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
-    public GameObject getIndexItem ( int index) {
+    public GameObject getIndexItem(int index) {
         if (inventory[index] != null) {
             return inventory[index];
         }

@@ -1942,7 +1942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: d89affeb2a77ace448074977e8a60dc2, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -1963,6 +1963,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &59318173
 MonoBehaviour:
@@ -2367,6 +2368,7 @@ MonoBehaviour:
   btn: {fileID: 68707618}
   cooltime: 120
   isClicked: 0
+  isBuildComplete: 0
   speed: 1
 --- !u!114 &68707618
 MonoBehaviour:
@@ -2602,6 +2604,7 @@ MonoBehaviour:
   btn: {fileID: 70476369}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &70476369
 MonoBehaviour:
@@ -5105,6 +5108,7 @@ MonoBehaviour:
   btn: {fileID: 168745326}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &168745324
 MonoBehaviour:
@@ -5505,7 +5509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: cbb281cda3503b84ba2742feb16cb525, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -5526,6 +5530,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &182330975
 MonoBehaviour:
@@ -7919,6 +7924,7 @@ MonoBehaviour:
   btn: {fileID: 267434730}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &267434728
 MonoBehaviour:
@@ -9507,6 +9513,7 @@ MonoBehaviour:
   btn: {fileID: 314624468}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &314624466
 MonoBehaviour:
@@ -10098,6 +10105,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 7649799}
   positions: 2
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   campfireCreate: {fileID: 1431327861}
 --- !u!114 &327342873
@@ -18091,6 +18099,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 7649799}
   positions: 0.5
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   workshopCreate: {fileID: 1572691185}
 --- !u!114 &553956647
@@ -19822,6 +19831,7 @@ MonoBehaviour:
   buildingPrefabs:
   - {fileID: 1919304131719118102, guid: a519ecfa62ff6e342802e8bb9cc27835, type: 3}
   buildingMaterial: {fileID: 2100000, guid: b1652e93298450c429fc68ae971a5708, type: 2}
+  needItems: []
   isExist: 0
   isBuild: 0
   isValidBuild: 1
@@ -20802,6 +20812,7 @@ MonoBehaviour:
   btn: {fileID: 659594491}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &659594489
 MonoBehaviour:
@@ -21938,6 +21949,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 7649799}
   positions: 2
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   campfireCreate: {fileID: 632507049}
 --- !u!114 &696805241
@@ -23061,7 +23073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: a71c44d28a1dec24ba0ec76371b48e94, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -23082,6 +23094,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &727371171
 MonoBehaviour:
@@ -23300,6 +23313,7 @@ MonoBehaviour:
   btn: {fileID: 728058413}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &728058411
 MonoBehaviour:
@@ -23751,7 +23765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 0}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -23772,6 +23786,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &736664998
 MonoBehaviour:
@@ -26392,7 +26407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -26413,6 +26428,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &816729065
 MonoBehaviour:
@@ -26930,7 +26946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: a95f7d3f0c5f7d848a7241c68ac72288, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -26951,6 +26967,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &825594790
 MonoBehaviour:
@@ -29422,6 +29439,7 @@ MonoBehaviour:
   btn: {fileID: 887795098}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &887795096
 MonoBehaviour:
@@ -31602,7 +31620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: ace53d514600b2240ad4e901f3eae82f, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -31652,6 +31670,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &939784470
 MonoBehaviour:
@@ -34552,6 +34571,7 @@ MonoBehaviour:
   btn: {fileID: 1030814936}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1030814934
 MonoBehaviour:
@@ -36278,7 +36298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 0}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -36299,6 +36319,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1070087967
 MonoBehaviour:
@@ -39186,6 +39207,7 @@ MonoBehaviour:
   btn: {fileID: 1191359395}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1191359393
 MonoBehaviour:
@@ -39401,6 +39423,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 7649799}
   positions: 0.5
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   shelterCreate: {fileID: 2104730778}
 --- !u!114 &1192243521
@@ -40637,6 +40660,7 @@ MonoBehaviour:
   btn: {fileID: 1239068272}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1239068270
 MonoBehaviour:
@@ -42280,6 +42304,7 @@ MonoBehaviour:
   btn: {fileID: 1272858590}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1272858588
 MonoBehaviour:
@@ -42995,7 +43020,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkRadius: 2.5
-  player: {fileID: 1610611535}
 --- !u!114 &1288203218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44406,6 +44430,7 @@ MonoBehaviour:
   btn: {fileID: 1323080573}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &1323080573
 MonoBehaviour:
@@ -45162,15 +45187,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 5144707792496740942, guid: 3132c7a918c452244b1991b9d61d165c, type: 3}
-  - {fileID: 6334625890010984769, guid: 19bbc4bbd5e749f4eb402ae10825846c, type: 3}
-  - {fileID: 6218004453208192205, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
   - {fileID: 2288768476166651280, guid: 4e0f63cd4a57c9f4eb672841c4bfd4ec, type: 3}
-  - {fileID: -5608781965460578792, guid: 1e526011e805d004aae3e33f99ff4721, type: 3}
-  - {fileID: -7423218067449370834, guid: 7e5548a444e4ce542a54060321127f67, type: 3}
-  - {fileID: -7729778623438631139, guid: 7c54dfc7a9d070249b2e52919329d638, type: 3}
-  - {fileID: -6346529550774818388, guid: e4cafe9b9b8775c4d8ccab17cb5da668, type: 3}
-  - {fileID: 7926608735938254877, guid: 7b3f92035b34c304db87cade4708a533, type: 3}
+  - {fileID: 6218004453208192205, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
   spawnCount: 500
   spawnArea: {x: 5, y: 0, z: 5}
 --- !u!4 &1336772113
@@ -47029,6 +47047,7 @@ MonoBehaviour:
   btn: {fileID: 1394149099}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1394149097
 MonoBehaviour:
@@ -48465,6 +48484,7 @@ MonoBehaviour:
   buildingPrefabs:
   - {fileID: 4337039158636050552, guid: 37ae26605b4277a4c8e9b1b8d9d207be, type: 3}
   buildingMaterial: {fileID: 2100000, guid: a4489ac67e966f24c97096ec34d92f11, type: 2}
+  needItems: []
   isExist: 0
   isBuild: 0
   isValidBuild: 1
@@ -48964,6 +48984,7 @@ MonoBehaviour:
   buildingPrefabs:
   - {fileID: 2386497021393069743, guid: 26acc360d94e4a243be27ec29cf48d0b, type: 3}
   buildingMaterial: {fileID: 2100000, guid: b1652e93298450c429fc68ae971a5708, type: 2}
+  needItems: []
   isExist: 0
   isBuild: 0
   isValidBuild: 1
@@ -50098,6 +50119,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 7649799}
   positions: 2
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   campfireCreate: {fileID: 1446817168}
 --- !u!114 &1493693560
@@ -52482,6 +52504,7 @@ MonoBehaviour:
   - {fileID: 764603081}
   - {fileID: 2109026089}
   buildingMaterial: {fileID: 2100000, guid: 3cf7f1516535f6a4ebb9cba800edaca8, type: 2}
+  needItems: []
   isExist: 0
   isBuild: 0
   isValidBuild: 0
@@ -54533,6 +54556,7 @@ MonoBehaviour:
   btn: {fileID: 1691979894}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1691979892
 MonoBehaviour:
@@ -55770,6 +55794,7 @@ MonoBehaviour:
   btn: {fileID: 1716787525}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1716787523
 MonoBehaviour:
@@ -57549,6 +57574,7 @@ MonoBehaviour:
   btn: {fileID: 1765404323}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &1765404323
 MonoBehaviour:
@@ -60103,7 +60129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: 20db846aa28ba5f469727523c4547706, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -60124,6 +60150,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1874024481
 MonoBehaviour:
@@ -60617,6 +60644,7 @@ MonoBehaviour:
   btn: {fileID: 1885462014}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1885462012
 MonoBehaviour:
@@ -61528,7 +61556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: db4c8474dcbcd154fad8e533bb9fbb66, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -61549,6 +61577,7 @@ MonoBehaviour:
   btn: {fileID: 1914069893}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &1914069891
 MonoBehaviour:
@@ -64699,7 +64728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f12a805e31e78045b2e00a7c2a965ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iTemData: {fileID: 11400000, guid: 02d4e6c148f723042ad5ec1165e65062, type: 2}
+  itemData: {fileID: 0}
   isWeap: 0
   isMedic: 0
   weaponItem: {fileID: 0}
@@ -64720,6 +64749,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 5
 --- !u!114 &2020864904
 MonoBehaviour:
@@ -66165,6 +66195,7 @@ MonoBehaviour:
   btn: {fileID: 2052341580}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &2052341578
 MonoBehaviour:
@@ -67306,6 +67337,7 @@ MonoBehaviour:
   - {fileID: 74287362}
   - {fileID: 1355242219}
   buildingMaterial: {fileID: 2100000, guid: bbf94353dc843aa458176059cdcfb0f6, type: 2}
+  needItems: []
   isExist: 0
   isBuild: 0
   isValidBuild: 0
