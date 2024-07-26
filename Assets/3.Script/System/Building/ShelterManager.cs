@@ -30,7 +30,7 @@ public class ShelterManager : MonoBehaviour {
     private InvenController invenCont;
 
     private void Start() {
-
+        playerAbility = FindObjectOfType<PlayerAbility>();
         tooltipNum = FindObjectOfType<TooltipNum>();
         invenCont = FindObjectOfType<InvenController>();
 
@@ -57,14 +57,14 @@ public class ShelterManager : MonoBehaviour {
 
     public void AddMoveExp(float exp) {
         MoveCurrentExp += exp;
-        Debug.Log(MovePoint);
-        Debug.Log(MoveTotalExp);
-        Debug.Log(MoveLevel);
         if(MoveCurrentExp > MoveTotalExp) {
             MoveCurrentExp -= MoveTotalExp;
             MovePoint++;
             MoveLevel++;
             MoveTotalExp += MoveLevel * 4;
+            Debug.Log(MovePoint);
+            Debug.Log(MoveTotalExp);
+            Debug.Log(MoveLevel);
         }
     }
 
@@ -125,7 +125,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillMove[index].LevelUp();
         MovePoint--;
-        
+        playerAbility.UpdateAblity();
     }
 
     public void OnSkillAttackButton(int index) {
@@ -133,6 +133,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillAttack[index].LevelUp();
         AttackPoint--;
+        playerAbility.UpdateAblity();
     }
 
     public void OnSkillGatherButton(int index) {
@@ -140,6 +141,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillGather[index].LevelUp();
         GatherPoint--;
+        playerAbility.UpdateAblity();
     }
 
     public Skill GetSkill(string name) {

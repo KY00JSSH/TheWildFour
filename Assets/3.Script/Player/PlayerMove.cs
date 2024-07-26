@@ -254,5 +254,6 @@ public class PlayerMove : MonoBehaviour {
 
     private void EarnMoveExp () {
         shelterManager.AddMoveExp(Time.deltaTime * currentSpeed * 30f);
+        //TODO: Release 할 때 수치 값 조정
     }
 }

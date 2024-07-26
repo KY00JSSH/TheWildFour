@@ -34,7 +34,7 @@ public class MenuWeapon : MonoBehaviour {
             }
         }
     }
-
+    //TODO: 플레이어 포지션 재설정 (아이테[ㅁ 버리기)
     private void Start() {
         firstBoxTransf = firstSlot.GetComponent<RectTransform>();
         secondBoxTransf = secondSlot.GetComponent<RectTransform>();

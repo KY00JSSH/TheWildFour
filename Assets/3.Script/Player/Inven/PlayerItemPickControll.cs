@@ -90,6 +90,7 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     //������ �ݱ�
     private void pickupItem(GameObject item) {
+        if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
         if (item != null && item.layer == 8) {
             invenController.itemObject = item;
             //���ļ� ���� �� �ִ��� Ȯ��

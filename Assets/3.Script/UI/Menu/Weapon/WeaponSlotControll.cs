@@ -22,13 +22,16 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     private RectTransform originalParent;
     private Vector2 originalPosition;
 
+    private PlayerAttack playerAttack;
+
     [SerializeField]
     private GameObject player;
 
     private void Awake() {
         invenUI = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
-        canvas = FindObjectOfType<Canvas>();
+        canvas = FindObjectOfType<Canvas>(); 
+        playerAttack = FindObjectOfType<PlayerAttack>();
     }
 
     public void enableCursor() {
@@ -82,6 +85,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnDrag(PointerEventData data) {
+        playerAttack.isNowDrag = true;
+
         if (PlayerStatus.isDead) return;
 
         if (currentItem) {
@@ -92,6 +97,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        playerAttack.isNowDrag = false;
+
         if (PlayerStatus.isDead) return;
 
         if (currentItem) {
@@ -143,6 +150,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
                 //아이템 드랍
                 DropItem();
             }
+            FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
         }
     }
 
