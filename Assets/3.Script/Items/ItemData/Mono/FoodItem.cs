@@ -50,7 +50,6 @@ public class FoodItem : CountableItem {
         spoilageStart = true;
 
         while (currDecayTime > 0) {
-            Debug.Log(currDecayTime);
             currDecayTime -= 1.0f;
             CheckStatus();
             yield return new WaitForSeconds(1f);
