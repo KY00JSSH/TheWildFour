@@ -212,4 +212,10 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
         buildingMaterial.SetShaderPassEnabled("ShadowCaster", true);
         buildingMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
     }
+
+    public void CancelAllBuilings() {
+        BuildingCreate[] buildingCreates = FindObjectsOfType<BuildingCreate>();
+        foreach (var each in buildingCreates)
+            each.CancelBuilding();
+    }
 }

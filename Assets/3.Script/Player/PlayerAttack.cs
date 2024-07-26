@@ -50,26 +50,26 @@ public class PlayerAttack : MonoBehaviour {
 
     private bool keepReseted;
     private void CheckAttack() {
+        animatorState = playerAnimator.GetCurrentAnimatorStateInfo(0);
         SetMoveSpeedOnAttack();
         if (Input.GetMouseButton(0)) {
             if (!EventSystem.current.IsPointerOverGameObject()) {
                 if (!isAttack) {
-                    if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+                    if (!animatorState.IsTag("Attack")) {
                         moveSpeed = playerMove.GetPlayerMoveSpeed();
+                        isLeftFist = Random.Range(0, 2) == 0 ? true : false;
                     }
                     isAttack = true;
 
                     playerMove.SetSideWalk(false);
                     playerMove.SetBackWalk(false);
                     playerMove.ResetDash();
-                isLeftFist = Random.Range(0, 2) == 0 ? true : false;
-                    //TODO: isLeftFist 매 공격시마다 초기화하기. 아마 Movement BlendTree 아니면 Exit 에서?
                 }
             }
         }
         else {
             isAttack = false;
-            if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+            if (animatorState.IsTag("Attack")) {
                 playerMove.ResetDash();
                 keepReseted = true;
 
@@ -81,11 +81,14 @@ public class PlayerAttack : MonoBehaviour {
             }
         }
 
-
+        if(animatorState.IsName("Punching2") && animatorState.normalizedTime >= 0.93f) {
+            Debug.Log("WOW");
+            isLeftFist = Random.Range(0, 2) == 0 ? true : false;
+        }
     }
 
     private void SetMoveSpeedOnAttack() {
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) {
+        if (animatorState.IsTag("Attack")) {
             playerMove.SetPlayerMoveSpeed(moveSpeed * 0.4f);
         }
         else playerMove.SetPlayerMoveSpeed(moveSpeed);

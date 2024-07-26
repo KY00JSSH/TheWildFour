@@ -26,7 +26,6 @@ public class Player_InfoViewer : MonoBehaviour
             if (slider != null)
             {
                 slidersList.Add(slider);
-                Debug.Log(slider.name+ "Ãß°¡");
                 Text t = child.GetComponentInChildren<Text>();
                 if (t != null)
                     slidersTextList.Add(t);

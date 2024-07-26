@@ -103,7 +103,6 @@ public class PlayerMove : MonoBehaviour {
     private Vector3 pastPosition = Vector3.zero;
     private float rotationSpeed = 5f;
 
-    Quaternion debugTargetRotation;
     private void LookatMouse() {
         Quaternion targetRotation =
             Quaternion.LookRotation(GetLookatPoint() - playerRigid.position);
@@ -163,6 +162,10 @@ public class PlayerMove : MonoBehaviour {
         }
 
         else {
+            yRotate += 0 - yFoward;
+            if (yRotate > 180) yRotate -= 360;
+            yFoward = 0;
+            Debug.Log($"{yRotate} / {yFoward}");
             if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
                 isBackWalk = true;
             }
@@ -246,11 +249,4 @@ public class PlayerMove : MonoBehaviour {
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);
     }
-
-    public Quaternion GetRigid() { return playerRigid.rotation; }
-    public Quaternion GetSpine() { return playerSpine.rotation; }
-    public Quaternion GetDirection() { return Quaternion.Euler(0, moveDirection, 0); }
-    public Quaternion GetCameraRotation () { return Quaternion.Euler(0, cameraControl.rotationDirection, 0); }
-    public Quaternion GetTargetRotation () { return debugTargetRotation; }
-    public Vector3 GetInputXZ() { return new Vector3(InputX, 0, InputZ); }
 }
