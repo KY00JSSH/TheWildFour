@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 public class PlayerAttack : MonoBehaviour {
     private PlayerWeaponEquip playerWeaponEquip;
     [SerializeField] private Collider[] fistCollider;
-    
+
+    private ShelterManager shelterManager;
     private PlayerAbility playerAbility;
     private PlayerMove playerMove;
     private LayerMask targetAttacklayer;
@@ -32,6 +33,8 @@ public class PlayerAttack : MonoBehaviour {
 
         fistCollider = GetComponentsInChildren<SphereCollider>();
         moveSpeed = playerMove.GetPlayerMoveSpeed();
+
+        shelterManager = FindObjectOfType<ShelterManager>();
     }
 
     private void Start() {
@@ -107,13 +110,25 @@ public class PlayerAttack : MonoBehaviour {
 
             if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
                 // 悼拱 Attack 贸府
+                EarnAttackExp();
             }
             else {
                 // 唱公 倒 Attack 贸府
+                EarnGatherExp();
             }
 
 
         }
+    }
+
+    private void EarnAttackExp() {
+        shelterManager.AddAttackExp(
+            playerAbility.GetTotalPlayerAttack() * Random.Range(0.1f, 0.6f) * 50f);
+    }
+
+    private void EarnGatherExp() {
+        shelterManager.AddGatherExp(
+            playerAbility.GetTotalPlayerGather() * Random.Range(0.1f, 0.4f) * 50f);
     }
 
     private int GetCurrentClip() {

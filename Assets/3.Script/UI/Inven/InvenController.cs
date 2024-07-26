@@ -75,6 +75,7 @@ public class InvenController : CommonInven {
                 //도구면 장착 - 이미 슬롯 장착 되어 있으면 스위칭
                 menuWeapon.addSlotFromInvenWeapon(index, inventory[index]);
                 updateInvenInvoke();
+                FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
             }
             else {
                 return;

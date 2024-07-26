@@ -62,9 +62,6 @@ public class ShelterManager : MonoBehaviour {
             MovePoint++;
             MoveLevel++;
             MoveTotalExp += MoveLevel * 4;
-            Debug.Log(MovePoint);
-            Debug.Log(MoveTotalExp);
-            Debug.Log(MoveLevel);
         }
     }
 
@@ -86,6 +83,7 @@ public class ShelterManager : MonoBehaviour {
             GatherLevel++;
             GatherTotalExp += GatherLevel * 4;
         }
+        Debug.Log(GatherPoint);
     }
 
     public void LevelUp() {     // 거처 레벨업
@@ -114,7 +112,6 @@ public class ShelterManager : MonoBehaviour {
         shelter.Building.transform.rotation = shelterPosition.rotation;
         shelter.Building.SetActive(true);
     }
-
 
     public Skill[] skillMove = new Skill[5];
     public Skill[] skillAttack = new Skill[5];

@@ -3348,7 +3348,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPoint: {fileID: 2134963835}
   fistCollider: []
-  DEBUG_dummyWeapon: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
 --- !u!1 &121452762
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,7 +4757,6 @@ MonoBehaviour:
   itemIcon: {fileID: 680243503}
   cursorIcon: {fileID: 862590324}
   key: 1
-  player: {fileID: 1079297286}
 --- !u!114 &151500035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9675,7 +9673,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPoint: {fileID: 1068241123}
   fistCollider: []
-  DEBUG_dummyWeapon: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
 --- !u!1 &268595078
 GameObject:
   m_ObjectHideFlags: 0
@@ -9802,7 +9799,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPoint: {fileID: 509827051737881902}
   fistCollider: []
-  DEBUG_dummyWeapon: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
 --- !u!1 &269546304
 GameObject:
   m_ObjectHideFlags: 0
@@ -11705,7 +11701,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPoint: {fileID: 228617949}
   fistCollider: []
-  DEBUG_dummyWeapon: {fileID: 11400000, guid: 198d21904f70e5143b193b9aa47f732e, type: 2}
 --- !u!1 &313163811
 GameObject:
   m_ObjectHideFlags: 0
@@ -13061,6 +13056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fistCollider: []
+  isNowDrag: 0
 --- !u!114 &380463992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17443,6 +17439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fistCollider: []
+  isNowDrag: 0
 --- !u!114 &496295722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20832,6 +20829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fistCollider: []
+  isNowDrag: 0
 --- !u!114 &609969740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23484,6 +23482,63 @@ Transform:
   m_Father: {fileID: 1169572317}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &699911672
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5576486400036242541, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_Name
+      value: TreeBig03Prf
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411245526165916945, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 18f72382de1793e4398cc6fcf4202303, type: 3}
 --- !u!1 &704104436
 GameObject:
   m_ObjectHideFlags: 0
@@ -37873,6 +37928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fistCollider: []
+  isNowDrag: 0
 --- !u!114 &1079297290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43633,7 +43689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1271772748
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46456,7 +46512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648cd3c92f2033e48964004557e3b5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1079297286}
 --- !u!1 &1335527562
 GameObject:
   m_ObjectHideFlags: 0
@@ -56419,6 +56474,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1335099512}
+        m_TargetAssemblyTypeName: InvenUIController, Assembly-CSharp
+        m_MethodName: InvenCountUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1671967436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60098,6 +60165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1752159371}
   - component: {fileID: 1752159370}
+  - component: {fileID: 1752159372}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -60181,6 +60249,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1752159372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752159369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff372413006e43e469d1980c3cbb5520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1753954941
 GameObject:
   m_ObjectHideFlags: 0
@@ -61705,7 +61785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1797005539
 RectTransform:
   m_ObjectHideFlags: 0
@@ -68796,7 +68876,6 @@ MonoBehaviour:
   itemIcon: {fileID: 1730897691}
   cursorIcon: {fileID: 1853600875}
   key: 2
-  player: {fileID: 1079297286}
 --- !u!114 &2037493091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72642,7 +72721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1107922209351540475
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -73953,7 +74032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &2646838139647530786
 CapsuleCollider:
   m_ObjectHideFlags: 0

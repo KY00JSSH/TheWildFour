@@ -3,9 +3,7 @@ using UnityEngine;
 public class PlayerWeaponEquip : MonoBehaviour {
     [SerializeField] private Transform WeaponPoint;
     [SerializeField] private Collider[] fistCollider;
-
-    [SerializeField] private WeaponItemData DEBUG_dummyWeapon;
-
+    
     private GameObject CurrentEquipWeapon;
     private PlayerAttack playerAttack;
     private MenuWeapon weaponSlot;
@@ -25,7 +23,7 @@ public class PlayerWeaponEquip : MonoBehaviour {
     }
 
     private WeaponItemData GetCurrentSlotWeapon() {
-        return weaponSlot.getcurrentItem(weaponSlot.CurrentSelectSlot).GetComponent<WeaponItem>().weaponItemData;
+        return weaponSlot.getcurrentItem(weaponSlot.CurrentSelectSlot)?.GetComponent<WeaponItem>().weaponItemData;
     }
 
     public void ChangeEquipWeapon() {

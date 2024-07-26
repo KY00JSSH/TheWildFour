@@ -24,7 +24,6 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
 
     private PlayerAttack playerAttack;
 
-    [SerializeField]
     private GameObject player;
 
     private void Awake() {
@@ -32,6 +31,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
         menuWeapon = FindObjectOfType<MenuWeapon>();
         canvas = FindObjectOfType<Canvas>(); 
         playerAttack = FindObjectOfType<PlayerAttack>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void enableCursor() {
