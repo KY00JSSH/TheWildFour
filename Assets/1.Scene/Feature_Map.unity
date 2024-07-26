@@ -3139,7 +3139,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1, z: 8}
+  m_Size: {x: 1.5, y: 3, z: 8}
   m_Center: {x: 0, y: 0, z: 4}
 --- !u!114 &132651336
 MonoBehaviour:
@@ -3153,8 +3153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2ce6781519f7346a8363b82d57d629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectingCircle: {fileID: 132651334}
-  detectingSight: {fileID: 132651335}
   parentControl: {fileID: 198105157}
 --- !u!1 &133642458
 GameObject:
@@ -5623,6 +5621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rabbit
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
       propertyPath: m_Controller
       value: 
@@ -5658,6 +5660,8 @@ MonoBehaviour:
   navMeshSurface: {fileID: 1135395997}
   idleDuration: 5
   moveDuration: 3
+  playerDetector_Capsule: {fileID: 132651334}
+  playerDetector_Box: {fileID: 132651335}
 --- !u!136 &198105158
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5671,7 +5675,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &198105159
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5680,9 +5684,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198105155}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 7
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5710,6 +5714,79 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &199608399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 199608400}
+  - component: {fileID: 199608403}
+  - component: {fileID: 199608402}
+  - component: {fileID: 199608401}
+  m_Layer: 0
+  m_Name: PlayerDetecter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &199608400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199608399}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 543450651602978032}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &199608401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199608399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2ce6781519f7346a8363b82d57d629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentControl: {fileID: 198105157}
+--- !u!65 &199608402
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199608399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 3, z: 8}
+  m_Center: {x: 0, y: 0, z: 4}
+--- !u!136 &199608403
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199608399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &201092631
 GameObject:
   m_ObjectHideFlags: 0
@@ -14111,7 +14188,7 @@ GameObject:
   - component: {fileID: 546129951}
   m_Layer: 0
   m_Name: Players
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26704,7 +26781,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 663
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -26712,7 +26789,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 4e84493bc7e32a5448f784af2e8ef460, type: 2}
 --- !u!4 &1135395997
@@ -29576,7 +29653,7 @@ GameObject:
   - component: {fileID: 1243664416}
   m_Layer: 0
   m_Name: Robin
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50596,6 +50673,8 @@ MonoBehaviour:
   navMeshSurface: {fileID: 0}
   idleDuration: 3
   moveDuration: 5
+  playerDetector_Capsule: {fileID: 0}
+  playerDetector_Box: {fileID: 0}
 --- !u!1 &2143038052
 GameObject:
   m_ObjectHideFlags: 0
@@ -50857,6 +50936,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4712283725959533367}
+  - {fileID: 199608400}
   m_Father: {fileID: 2073036540}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50990,8 +51070,10 @@ GameObject:
   m_Component:
   - component: {fileID: 543450651602978032}
   - component: {fileID: 5866666019912539786}
+  - component: {fileID: 919132147937205835}
   - component: {fileID: 2138923805}
   - component: {fileID: 2138923806}
+  - component: {fileID: 919132147937205836}
   m_Layer: 0
   m_Name: Deer
   m_TagString: Untagged
@@ -50999,6 +51081,44 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!54 &919132147937205835
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147937205834}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 7
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!195 &919132147937205836
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147937205834}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 300
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &919132148148105348
 GameObject:
   m_ObjectHideFlags: 0
