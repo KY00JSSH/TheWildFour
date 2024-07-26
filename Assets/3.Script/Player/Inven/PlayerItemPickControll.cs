@@ -86,10 +86,10 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     //sphere 확인용 gizmo
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(player.transform.position, checkRadius);
-    }
+    //private void OnDrawGizmos() {
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(player.transform.position, checkRadius);
+    //}
 
     //tooltip 보여주는 시점
     private void ShowTooltip(GameObject item) {
@@ -115,17 +115,20 @@ public class PlayerItemPickControll : MonoBehaviour {
                         item.SetActive(false);
                     }
                 }
+                player.GetComponent<Animator>().Play("PickingUp");
             }
             else {
                 if (invenController.canItemAdd()) {
                     //겹쳐서 넣을수 없으면 집은 필드의 아이템은 active-false
                     invenController.ItemAdd();
                     item.SetActive(false);
+                    player.GetComponent<Animator>().Play("PickingUp");
                 }
             }
         }
         else {
             //Debug.LogWarning("null");
         }
+
     }
 }

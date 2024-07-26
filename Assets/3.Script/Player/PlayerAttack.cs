@@ -46,6 +46,7 @@ public class PlayerAttack : MonoBehaviour {
         playerAnimator.SetFloat("AttackSpeed", attackSpeed);
 
         CheckAttack();
+        Debug.Log(isAttack);
     }
 
     private bool keepReseted;
@@ -82,13 +83,12 @@ public class PlayerAttack : MonoBehaviour {
         }
 
         if(animatorState.IsName("Punching2") && animatorState.normalizedTime >= 0.93f) {
-            Debug.Log("WOW");
             isLeftFist = Random.Range(0, 2) == 0 ? true : false;
         }
     }
 
     private void SetMoveSpeedOnAttack() {
-        if (animatorState.IsTag("Attack")) {
+        if (animatorState.IsTag("StandUp")) {
             playerMove.SetPlayerMoveSpeed(moveSpeed * 0.4f);
         }
         else playerMove.SetPlayerMoveSpeed(moveSpeed);
