@@ -268,8 +268,8 @@ public class InvenController : CommonInven {
         }
     }
 
+    //빌딩 건설시 아이템 사용
     public void buildingCreateUseItem(NeedItem[] needItems) {
-        //빌딩 건설시 아이템 사용
         for (int i = 0; i < needItems.Length; i++) {
             int needCount = needItems[i].ItemNeedNum;
             removeItemCount(needItems[i].ItemKey, needCount);

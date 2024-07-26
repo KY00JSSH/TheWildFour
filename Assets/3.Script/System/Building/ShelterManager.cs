@@ -25,7 +25,14 @@ public class ShelterManager : MonoBehaviour {
     public float AttackCurrentExp { get; private set; }
     public float GatherCurrentExp { get; private set; }
 
+    private TooltipNum tooltipNum;
+    private InvenController invenCont;
+
     private void Start() {
+
+        tooltipNum = FindObjectOfType<TooltipNum>();
+        invenCont = FindObjectOfType<InvenController>();
+
         //TODO: SAVE 구현 시 JSON에서 받아오기
         ShelterLevel = 1;
         MaxShelterLevel = 5;
@@ -80,6 +87,10 @@ public class ShelterManager : MonoBehaviour {
     public void LevelUp() {     // 거처 레벨업
         if (ShelterLevel == MaxShelterLevel) return;
         // 24 07 18 김수주 Shelter upgrade item 부족하면 return
+
+        //업그레이드시 아이템 사용
+        invenCont.buildingCreateUseItem(tooltipNum.UpgradeItemCheck(UpgradeType.Shelter, ShelterLevel + 1).needItems);
+
         Tooltip_Shelter tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
         if (!tooltip_Shelter.isUpgradeAvailable) return;
 

@@ -5,14 +5,23 @@ public class WorkshopManager : MonoBehaviour {
     public int WorkshopLevel { get; private set; }
     public int MaxWorkshopLevel { get; private set; }
 
+    private TooltipNum tooltipNum;
+    private InvenController invenCont;
+
     WorkshopCreate workshop;
     private void Awake() {
         workshop = GetComponent<WorkshopCreate>();
+        tooltipNum = FindObjectOfType<TooltipNum>();
+        invenCont = FindObjectOfType<InvenController>();
     }
 
     public void LevelUp() {
         //TODO: Workshop upgrade item 부족하면 return
         if (WorkshopLevel == MaxWorkshopLevel) return;
+
+        //업그레이드시 아이템 사용
+        invenCont.buildingCreateUseItem(tooltipNum.UpgradeItemCheck(UpgradeType.Workshop, WorkshopLevel + 1).needItems);
+
         Destroy(workshop.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
     }
