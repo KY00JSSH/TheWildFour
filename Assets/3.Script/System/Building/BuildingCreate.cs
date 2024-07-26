@@ -65,7 +65,8 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     }
 
     public virtual void BuildMode() {
-        if (PlayerMove.isPlayerBuilding) return;
+        if (PlayerMove.isPlayerBuilding || !tooltip_Build.isBuildAvailable) return;
+
         if (!isExist) {
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
