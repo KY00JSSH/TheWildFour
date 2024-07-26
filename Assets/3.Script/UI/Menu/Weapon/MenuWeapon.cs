@@ -45,7 +45,7 @@ public class MenuWeapon : MonoBehaviour {
 
     public void setCurrSelectSlot(int slotNum) {
         currSelectSlot = slotNum;
-        if(slotNum ==1) {
+        if(slotNum == 1) {
             firstCont.enableCursor();
             secondCont.disableCursor();
         }

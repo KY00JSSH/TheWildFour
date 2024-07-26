@@ -11,7 +11,7 @@ public class InvenDrop : MonoBehaviour {
         invenController = FindObjectOfType<InvenController>();
     }
 
-    //¾ÆÀÌÅÛ ÇÑ¹ø µå¶ø
+    //ì•„ì´í…œ í•œë²ˆ ë“œë
     public void dropItem(int selectBoxKey) {
         List<GameObject> inven = invenController.Inventory;
         if (inven[selectBoxKey] != null) {
@@ -20,26 +20,48 @@ public class InvenDrop : MonoBehaviour {
                 Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
 
                 if (itemComponent.GetComponent<CountableItem>() != null) {
-                    //Ä«¿îÆÃ µÇ´Â ¾ÆÀÌÅÛÀÏ¶§
+                    //ì¹´ìš´íŒ… ë˜ëŠ” ì•„ì´í…œì¼ë•Œ
                     CountableItem countItem = itemComponent.GetComponent<CountableItem>();
                     if (invenController.checkItemType(selectBoxKey) == 1) {
-                        //µ¹, ³ª¹«ÀÏ¶§
+                        //ëŒ, ë‚˜ë¬´ì¼ë•Œ
                         if (countItem.CurrStackCount > 8) {
-                            //ÀÎº¥¿¡ ÀÖ´Â µ¹, ³ª¹«°¡ 8°³º¸´Ù ¸¹À»¶§ item º¹Á¦ÇØ¼­ ¶³±¼ °³¼ö¸¸Å­ ³Ö¾îÁÖ°í ÇÊµå¿¡ ¶³±À
+                            //ì¸ë²¤ì— ìˆëŠ” ëŒ, ë‚˜ë¬´ê°€ 8ê°œë³´ë‹¤ ë§ì„ë•Œ item ë³µì œí•´ì„œ ë–¨êµ´ ê°œìˆ˜ë§Œí¼ ë„£ì–´ì£¼ê³  í•„ë“œì— ë–¨êµ¼
                             GameObject dropItem = Instantiate(itemComponent, itemDropPosition, Quaternion.identity);
                             dropItem.GetComponent<CountableItem>().setCurrStack(8);
-                            //¾ÆÀÌÅÛ ÀÎº¥ »èÁ¦´Â invencontroller¿¡¼­ ½ÇÇà
+                            //ì•„ì´í…œ ì¸ë²¤ ì‚­ì œëŠ” invencontrollerì—ì„œ ì‹¤í–‰
                             dropItem.SetActive(true);
                         }
                         else if (countItem.CurrStackCount <= 8) {
-                            //ÀÎº¥¿¡ ÀÖ´Â µ¹, ³ª¹«°¡ 8°³ ÀÌÇÏ ÀÌ¸é ±× °³¼ö ±×´ë·Î ÇöÀç ¾ÆÀÌÅÛ position¸¸ º¯°æÇÏ°í ÇÊµå¿¡ ¶³±À
+                            //ì¸ë²¤ì— ìˆëŠ” ëŒ, ë‚˜ë¬´ê°€ 8ê°œ ì´í•˜ ì´ë©´ ê·¸ ê°œìˆ˜ ê·¸ëŒ€ë¡œ í˜„ì¬ ì•„ì´í…œ positionë§Œ ë³€ê²½í•˜ê³  í•„ë“œì— ë–¨êµ¼
                             itemComponent.transform.position = itemDropPosition;
                             itemComponent.SetActive(true);
                         }
                     }
+                    else {
+                        if (countItem.CurrStackCount > 1) {
+                            GameObject dropItem = Instantiate(itemComponent, itemDropPosition, Quaternion.identity);
+                            dropItem.GetComponent<CountableItem>().setCurrStack(1);
+                            if (itemComponent.GetComponent<FoodItem>() != null) {
+                                dropItem.GetComponent<FoodItem>().setVisible();
+                            }
+                            else {
+                                itemComponent.SetActive(true);
+                            }
+                        }
+                        else {
+                            if (itemComponent.GetComponent<FoodItem>() != null) {
+                                itemComponent.GetComponent<FoodItem>().setVisible();
+                                itemComponent.transform.position = itemDropPosition;
+                            }
+                            else {
+                                itemComponent.SetActive(true);
+                                itemComponent.transform.position = itemDropPosition;
+                            }
+                        }
+                    }
                 }
                 else {
-                    //Ä«¿îÆÃ¿ë ¾ÆÀÌÅÛ ¾Æ´Ï¸é ±×³É Æ÷Áö¼Ç º¯°æÇØ¼­ active ¡æ true
+                    //ì¹´ìš´íŒ…ìš© ì•„ì´í…œ ì•„ë‹ˆë©´ ê·¸ëƒ¥ í¬ì§€ì…˜ ë³€ê²½í•´ì„œ active â†’ true
                     itemComponent.transform.position = itemDropPosition;
                     itemComponent.SetActive(true);
                 }
@@ -52,7 +74,7 @@ public class InvenDrop : MonoBehaviour {
         }
     }
 
-    //ÀÎº¥¹Ú½º ¾ÆÀÌÅÛ ¹¶ÅÖÀÌ µå¶ø
+    //ì¸ë²¤ë°•ìŠ¤ ì•„ì´í…œ ë­‰í……ì´ ë“œë
     public void dropItemAll(int selectBoxKey) {
 
         List<GameObject> inven = invenController.Inventory;
@@ -63,7 +85,13 @@ public class InvenDrop : MonoBehaviour {
                 Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
 
                 itemComponent.transform.position = itemDropPosition;
-                itemComponent.SetActive(true);
+                if (itemComponent.GetComponent<FoodItem>() != null) {
+                    itemComponent.GetComponent<FoodItem>().setVisible();
+
+                }
+                else {
+                    itemComponent.SetActive(true);
+                }
 
                 invenController.removeItem(selectBoxKey);
                 invenController.invenFullFlagReset();
@@ -74,7 +102,7 @@ public class InvenDrop : MonoBehaviour {
         }
     }
 
-    //ÇÃ·¹ÀÌ¾î Á×À»¶§ ÀÎº¥ ÀüºÎ drop
+    //í”Œë ˆì´ì–´ ì£½ì„ë•Œ ì¸ë²¤ ì „ë¶€ drop
     public void dropAllSlotItems() {
         List<GameObject> inven = invenController.Inventory;
 
@@ -85,7 +113,13 @@ public class InvenDrop : MonoBehaviour {
                 Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
 
                 itemComponent.transform.position = itemDropPosition;
-                itemComponent.SetActive(true);
+                if (itemComponent.GetComponent<FoodItem>() != null) {
+                    itemComponent.GetComponent<FoodItem>().setVisible();
+
+                }
+                else {
+                    itemComponent.SetActive(true);
+                }
 
                 invenController.removeItem(i);
             }
