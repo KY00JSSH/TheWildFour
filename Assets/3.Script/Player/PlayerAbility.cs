@@ -66,6 +66,11 @@ public class PlayerAbility : MonoBehaviour {
         playerAddInvenCount = 0;
     }
 
+    private void Update() {
+        //if(ShelterManager.)
+    }
+
+
 
     public void UpdateAblity() {
         playerMove.isSkilled = 

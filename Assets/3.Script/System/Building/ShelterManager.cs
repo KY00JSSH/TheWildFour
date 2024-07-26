@@ -4,10 +4,11 @@ using UnityEngine;
 // ############ 임의 수정 금지 ############ //
 
 public class ShelterManager : MonoBehaviour {
+    private PlayerAbility playerAbility;
     public int ShelterLevel { get; private set; }
     public int MaxShelterLevel { get; private set; }
 
-    private Vector3 LastPlayerPosition; //TODO: 거처 입장, 퇴장시 사용할 위치값
+    private Vector3 LastPlayerPosition;
 
     public int MoveLevel { get; private set; }
     public int AttackLevel { get; private set; }
@@ -49,6 +50,9 @@ public class ShelterManager : MonoBehaviour {
 
     public void AddMoveExp(float exp) {
         MoveCurrentExp += exp;
+        Debug.Log(MovePoint);
+        Debug.Log(MoveTotalExp);
+        Debug.Log(MoveLevel);
         if(MoveCurrentExp > MoveTotalExp) {
             MoveCurrentExp -= MoveTotalExp;
             MovePoint++;
@@ -110,6 +114,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillMove[index].LevelUp();
         MovePoint--;
+        
     }
 
     public void OnSkillAttackButton(int index) {

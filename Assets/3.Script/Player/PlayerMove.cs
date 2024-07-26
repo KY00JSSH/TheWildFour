@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
     private CameraControl cameraControl;
+    private ShelterManager shelterManager;
     private Rigidbody playerRigid;
     private Transform playerSpine;
 
@@ -41,6 +42,7 @@ public class PlayerMove : MonoBehaviour {
         playerAnimator = GetComponentInParent<Animator>();
         cameraControl = FindObjectOfType<CameraControl>();
         playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
+        shelterManager = FindObjectOfType<ShelterManager>();
     }
 
     private void Start() {
@@ -64,7 +66,7 @@ public class PlayerMove : MonoBehaviour {
     private void FixedUpdate() {
         if (isPlayerBuilding || PlayerStatus.isDead) return;
         
-        if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
+        if (isSkilled && isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
             isSideWalk = false;
             isBackWalk = false;
             Dash(true);
@@ -247,5 +249,10 @@ public class PlayerMove : MonoBehaviour {
         playerRigid.MovePosition(targetPosition);
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);
+        EarnMoveExp();
+    }
+
+    private void EarnMoveExp () {
+        shelterManager.AddMoveExp(Time.deltaTime * currentSpeed * 30f);
     }
 }
