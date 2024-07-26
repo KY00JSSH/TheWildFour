@@ -14,6 +14,7 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     [SerializeField] private Material buildingMaterial;
     public Transform playerTransform { get; private set; }
     private Animator playerAnimator;
+    public bool isFirst { get; private set; }
 
 
     private ItemSelectControll itemSelectControl;
@@ -39,6 +40,7 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
 
     private void Start() {
         isValidBuild = true;
+        isFirst = true;
         layerMask = 1 << LayerMask.NameToLayer("Ground");
     }
 
@@ -91,6 +93,7 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
             collider.isTrigger = false;
         isBuild = false;
         isExist = true;
+        isFirst = false;
 
         itemSelectControl = Building.GetComponentInChildren<ItemSelectControll>();
         itemSelectControl.GetComponent<Collider>().enabled = true;
@@ -104,7 +107,6 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
 
         MenuMap_MarkerSpawner menuMap_markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
         menuMap_markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
-
     }
 
     //public void DestroyBuilding() {
