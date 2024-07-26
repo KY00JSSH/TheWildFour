@@ -46,7 +46,7 @@ public class PlayerAttack : MonoBehaviour {
         playerAnimator.SetFloat("AttackSpeed", attackSpeed);
 
         CheckAttack();
-        Debug.Log(isAttack);
+        //Debug.Log(isAttack);
     }
 
     private bool keepReseted;

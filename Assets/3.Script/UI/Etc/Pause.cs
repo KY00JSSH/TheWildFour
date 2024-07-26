@@ -1,53 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pause : MonoBehaviour {
     private Canvas mainCanvas;
-    [SerializeField] private Canvas pauseCanvas;
+    [SerializeField] private Image pauseImg;
     private bool isPause = false;
 
-    public Camera mainCamera;
-    public Material blurMaterial;
 
-    private RenderTexture renderTexture;
     private void Awake() {
         mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        if (pauseCanvas != null) {
-            pauseCanvas.gameObject.SetActive(false); // Ensure pauseCanvas is inactive
-        }
-
-        blurCameraInit();
     }
-
-
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            isPause = !isPause;
-            if (isPause) {
-                mainCanvas.gameObject.SetActive(false);
-                pauseCanvas.gameObject.SetActive(true); 
-                blurMaterial.SetFloat("_BlurValue", 1.0f);
-            }
-            else {
-                mainCanvas.gameObject.SetActive(true);
-                pauseCanvas.gameObject.SetActive(false);
-                blurMaterial.SetFloat("_BlurValue", 0.0f);
+        if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                isPause = !isPause;
+                Debug.Log(isPause);
+                TogglePause(isPause);
             }
         }
     }
 
-
-
-    private void blurCameraInit() {
-        renderTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
-        if (mainCamera != null) {
-            mainCamera.targetTexture = renderTexture;
-            blurMaterial.SetTexture("_RenTex", renderTexture);
+    private void TogglePause(bool isPaused) {
+        if (isPaused) {
+            mainCanvas.gameObject.SetActive(false);
+            pauseImg.gameObject.SetActive(true);
+            StartCoroutine(pauseImgAlphaChange());
         }
         else {
-            Debug.LogError("Main Camera is not assigned.");
+            mainCanvas.gameObject.SetActive(true);
+            pauseImg.gameObject.SetActive(false);
+
+            Color color = pauseImg.color;
+            color.a = 0;
+            pauseImg.color = color;
         }
     }
+
+    private IEnumerator pauseImgAlphaChange() {
+        Color color = pauseImg.color;
+        while (color.a <= 0.55f) {
+            color.a += Time.deltaTime;
+            pauseImg.color = color;
+            yield return null;
+        }
+    }
+
 }

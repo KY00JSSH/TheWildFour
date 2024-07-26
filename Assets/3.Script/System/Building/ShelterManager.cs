@@ -57,9 +57,6 @@ public class ShelterManager : MonoBehaviour {
 
     public void AddMoveExp(float exp) {
         MoveCurrentExp += exp;
-        Debug.Log(MovePoint);
-        Debug.Log(MoveTotalExp);
-        Debug.Log(MoveLevel);
         if(MoveCurrentExp > MoveTotalExp) {
             MoveCurrentExp -= MoveTotalExp;
             MovePoint++;
