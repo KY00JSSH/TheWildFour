@@ -11,9 +11,6 @@ public class CampfireChestCreate : BuildingCreate {
     }
 
     public override void BuildMode() {
-
-        if (!tooltip_Build.isBuildAvailable) return;
-
         if (Building == null) {
             newCampfireChest = Instantiate(buildingPrefabs[0], transform);
         }

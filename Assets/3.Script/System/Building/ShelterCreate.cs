@@ -15,8 +15,6 @@ public class ShelterCreate : BuildingCreate {
     }
 
     public override void BuildMode() {
-
-        if (!tooltip_Build.isBuildAvailable) return;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
         base.BuildMode();
     }
