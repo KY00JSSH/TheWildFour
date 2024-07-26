@@ -71,7 +71,6 @@ public class PlayerAbility : MonoBehaviour {
     }
 
 
-
     public void UpdateAblity() {
         playerMove.isSkilled = 
             shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : false;

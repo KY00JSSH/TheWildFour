@@ -16,7 +16,9 @@ public class PlayerAttack : MonoBehaviour {
     private int currentClip = 0;
 
     private bool isAttack, isEquip, isLeftFist;
-    public void SetEquip(bool flag) { Debug.Log("LWOW"); isEquip = flag; }
+
+    public bool isNowDrag;
+    public void SetEquip(bool flag) { isEquip = flag; }
 
     private float moveSpeed;
     public float attackSpeed { get; private set; }
@@ -46,11 +48,11 @@ public class PlayerAttack : MonoBehaviour {
         playerAnimator.SetFloat("AttackSpeed", attackSpeed);
 
         CheckAttack();
-        //Debug.Log(isAttack);
     }
 
     private bool keepReseted;
     private void CheckAttack() {
+        if (isNowDrag) return;
         animatorState = playerAnimator.GetCurrentAnimatorStateInfo(0);
         SetMoveSpeedOnAttack();
         if (Input.GetMouseButton(0)) {
@@ -104,10 +106,10 @@ public class PlayerAttack : MonoBehaviour {
             currentClip = GetCurrentClip();
 
             if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
-                // µ¿¹° Attack Ã³¸®
+                // ï¿½ï¿½ï¿½ï¿½ Attack Ã³ï¿½ï¿½
             }
             else {
-                // ³ª¹« µ¹ Attack Ã³¸®
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Attack Ã³ï¿½ï¿½
             }
 
 

@@ -1,41 +1,81 @@
 using UnityEngine;
+using System.Collections;
 
 public enum ItemStatus {
-    Fresh,   // Ω≈º±
-    Spoiled, // ªÛ«‘
-    Rotten   // ∫Œ∆–
+    Fresh,   // Ïã†ÏÑ†
+    Spoiled, // ÏÉÅÌï®
+    Rotten   // Î∂ÄÌå®
 }
 
 public class FoodItem : CountableItem {
     public FoodItemData foodItemData;
-
     public PlayerStatus playerStatus;
 
-    private float currDecayTime;   //«ˆ¿Á ∫Œ∆– Ω√∞£
+    private Renderer objectRenderer;
+
+    public bool isMeat = false;
+
+    protected float totalTime, tickTime;
+    protected bool spoilageStart = false;
+
+    private float currDecayTime;   //ÌòÑÏû¨ Î∂ÄÌå® ÏãúÍ∞Ñ
     public float CurrDecayTime { get { return currDecayTime; } }
 
     private ItemStatus status = ItemStatus.Fresh;
     public ItemStatus Status { get { return status; } }
 
-
     public float HealTime => foodItemData.HealTime;
+
+    [SerializeField]
+    private GameObject spoilPrf;
 
     private void Awake() {
         playerStatus = FindObjectOfType<PlayerStatus>();
         currDecayTime = foodItemData.TotalDecayTime;
+        objectRenderer = GetComponent<Renderer>();
     }
 
     public float getHealAmount() {
         return playerStatus.GetHealTick() * HealTime;
     }
 
-    //∫Œ∆–Ω√∞£ √ ±‚»≠
+    //Î∂ÄÌå®ÏãúÍ∞Ñ Ï¥àÍ∏∞Ìôî
+    public void startSpoilage() {
+        if (currDecayTime > 0 && !spoilageStart) {
+            StartCoroutine(spoiling());
+        }
+    }
 
-    //∫Œ∆–Ω√∞£ ¡Ÿ¿Ã±‚
+    private IEnumerator spoiling() {
+        spoilageStart = true;
+
+        while (currDecayTime > 0) {
+            Debug.Log(currDecayTime);
+            currDecayTime -= 1.0f;
+            CheckStatus();
+            yield return new WaitForSeconds(1f);
+        }
+        currDecayTime = 0;
+        spoilageStart = false;
+    }
+
+    //Î∂ÄÌå®ÏãúÍ∞Ñ Ï§ÑÏù¥Í∏∞
     public void decayDelete(float amount) {
         float thisDecayTime = currDecayTime - amount;
         SetCurrDecayTime(thisDecayTime);
         CheckStatus();
+    }
+
+    public void setInvisible() {
+        if (objectRenderer != null) {
+            objectRenderer.enabled = false;
+        }
+    }
+
+    public void setVisible() {
+        if (objectRenderer != null) {
+            objectRenderer.enabled = true;
+        }
     }
 
     public void SetCurrDecayTime(float value) {
@@ -43,12 +83,13 @@ public class FoodItem : CountableItem {
     }
 
     public void CheckStatus() {
-        if(currDecayTime == 0 ) {
+        if (currDecayTime == 0) {
             status = ItemStatus.Rotten;
-            //foodItemData.icon = ;
-            //foodItemData.dropItemPrefab = ;
+            
+            InvenController invenController = FindObjectOfType<InvenController>();
+            invenController.updateInvenInvoke();
         }
-        else if( currDecayTime <= 0.25 * foodItemData.TotalDecayTime) {
+        else if (currDecayTime <= 0.25 * foodItemData.TotalDecayTime) {
             status = ItemStatus.Spoiled;
         }
         else {

@@ -25,12 +25,10 @@ public class PlayerWeaponEquip : MonoBehaviour {
     }
 
     private WeaponItemData GetCurrentSlotWeapon() {
-        // return weaponSlot.getcurrentItem(weaponSlot.CurrentSelectSlot);
-        if (isEquip) return null;
-        return DEBUG_dummyWeapon;
+        return weaponSlot.getcurrentItem(weaponSlot.CurrentSelectSlot).GetComponent<WeaponItem>().weaponItemData;
     }
 
-    private void ChangeEquipWeapon() {
+    public void ChangeEquipWeapon() {
         foreach(Transform weapon in transform) 
             weapon.gameObject.SetActive(false);
 
@@ -87,7 +85,7 @@ public class PlayerWeaponEquip : MonoBehaviour {
         }
     }
     
-    private void Update() {
+    private void LateUpdate() {
         SetWeaponPosition();
 
         if (Input.GetKeyDown(KeyCode.X)) {

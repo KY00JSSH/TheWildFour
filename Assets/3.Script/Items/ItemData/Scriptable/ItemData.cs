@@ -9,13 +9,13 @@ public enum ItemType {
 
 [CreateAssetMenu(fileName = "ItemData", menuName = "Items/ItemData", order = 1)]
 public class ItemData : ScriptableObject {
-    [SerializeField] private int key;                       //¾ÆÀÌÅÛ id key
-    [SerializeField] private string itemName;               //¾ÆÀÌÅÛ ÀÌ¸§
-    [TextArea(15,20)] 
-    [SerializeField] private string description;            //¾ÆÀÌÅÛ ¼³¸í(¸¶¿ì½º ¿À¹ö½Ã Ç¥½Ã¼³¸í)
-    [SerializeField] protected Sprite icon;                   //¾ÆÀÌÅÛ ÀÎº¥Ã¢ icon
-    [SerializeField] protected GameObject dropItemPrefab;     //¾ÆÀÌÅÛ µå¶ø½Ã object prefab
-    [SerializeField] private ItemType type;                 //¾ÆÀÌÅÛ type
+    [SerializeField] private int key;                       //ì•„ì´í…œ id key
+    [SerializeField] private string itemName;               //ì•„ì´í…œ ì´ë¦„
+    [TextArea(15, 20)]
+    [SerializeField] private string description;            //ì•„ì´í…œ ì„¤ëª…(ë§ˆìš°ìŠ¤ ì˜¤ë²„ì‹œ í‘œì‹œì„¤ëª…)
+    [SerializeField] protected Sprite icon;                   //ì•„ì´í…œ ì¸ë²¤ì°½ icon
+    [SerializeField] protected GameObject dropItemPrefab;     //ì•„ì´í…œ ë“œëì‹œ object prefab
+    [SerializeField] private ItemType type;                 //ì•„ì´í…œ type
 
     public int Key { get { return key; } }
     public string ItemName { get { return itemName; } }
@@ -23,4 +23,12 @@ public class ItemData : ScriptableObject {
     public Sprite Icon { get { return icon; } }
     public GameObject DropItemPrefab { get { return dropItemPrefab; } }
     public ItemType Type { get { return type; } }
+
+    public void changeIcon(Sprite newIcon) {
+        icon = newIcon;
+    }
+
+    public void changePrf(GameObject newGameObject) {
+        dropItemPrefab = newGameObject;
+    }
 }

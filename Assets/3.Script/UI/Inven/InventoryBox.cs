@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
-
     private PlayerItemUseControll playerItemUse;
     private InvenDrop invenDrop;
     private InvenController invenControll;
@@ -16,6 +15,8 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     private RectTransform originalParent;
     private Vector2 originalPosition;
 
+    private PlayerAttack playerAttack;
+
     private void Awake() {
         invenBox = transform.GetComponent<Button>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
@@ -26,6 +27,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
         canvas = FindObjectOfType<Canvas>();
 
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
+        playerAttack = FindObjectOfType<PlayerAttack>();
     }
 
     //TODO: 꾹 누르는 게이지 추가하기
@@ -46,6 +48,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     }
 
     public void OnDrag(PointerEventData data) {
+        playerAttack.isNowDrag = true;
         if (isItemIn) {
             Vector2 position;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
@@ -54,6 +57,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        playerAttack.isNowDrag = false;
         if (isItemIn) {
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
@@ -88,6 +92,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                             invenControll.changeItemIntoWeapSlot(key, weapPrevItem);
                         }
                         invenControll.updateInvenInvoke();
+                        FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
                     }
                     else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
                         //무기 2번 슬롯일떄
@@ -97,6 +102,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                             invenControll.changeItemIntoWeapSlot(key, weapPrevItem);
                         }
                         invenControll.updateInvenInvoke();
+                        FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
                     }
                     else {
                         //아이템 드랍

@@ -74,7 +74,6 @@ public class PlayerItemPickControll : MonoBehaviour {
             }
         }
         else if (previousItem != null) {
-            // ���õ� �������� ���� �� ���� �������� outSelect ȣ��
             if (previousItem.GetComponent<ItemSelectControll>() != null) {
                 previousItem.GetComponent<ItemSelectControll>().outSelect();
             }
@@ -82,45 +81,51 @@ public class PlayerItemPickControll : MonoBehaviour {
         }
     }
 
-    //sphere Ȯ�ο� gizmo
-    //private void OnDrawGizmos() {
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(player.transform.position, checkRadius);
-    //}
-
-    //������ �ݱ�
     private void pickupItem(GameObject item) {
+        if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
         if (item != null && item.layer == 8) {
             invenController.itemObject = item;
-            //���ļ� ���� �� �ִ��� Ȯ��
-            if(item.GetComponent<CountableItem>() != null) {
+            //겹쳐서 넣을 수 있는지 확인
+            if (item.GetComponent<CountableItem>() != null) {
                 int checkNum = invenController.canAddThisBox(item.GetComponent<Item>().Key);
-                if(checkNum != 99) {
-                        //���ļ� ������ ������ ���� �ʵ� �������� destroy
-                        invenController.ItemAdd();
-                        Destroy(item);
+                if (checkNum != 99) {
+                    //겹쳐서 넣을수 있으면 집은 필드 아이템은 destroy
+                    invenController.ItemAdd();
+                    Destroy(item);
                 }
                 else {
                     if (invenController.canItemAdd()) {
-                        //���ļ� ������ ������ ���� �ʵ��� �������� active-false
                         invenController.ItemAdd();
-                        item.SetActive(false);
+                        if (item.GetComponent<FoodItem>() != null) {
+                            if (!item.GetComponent<FoodItem>().isMeat) {
+                                item.GetComponent<FoodItem>().startSpoilage();
+                            }
+                                item.GetComponent<FoodItem>().setInvisible();
+                        }
+                        else {
+                            item.SetActive(false);
+                        }
                     }
                 }
-                player.GetComponent<Animator>().Play("PickingUp");
             }
             else {
                 if (invenController.canItemAdd()) {
-                    //���ļ� ������ ������ ���� �ʵ��� �������� active-false
+                    //겹쳐서 넣을수 없으면 집은 필드의 아이템은 active-false
                     invenController.ItemAdd();
-                    item.SetActive(false);
-                    player.GetComponent<Animator>().Play("PickingUp");
+                    if (item.GetComponent<FoodItem>() != null) {
+                        if (!item.GetComponent<FoodItem>().isMeat) {
+                            item.GetComponent<FoodItem>().startSpoilage();
+                        }
+                            item.GetComponent<FoodItem>().setInvisible();
+                    }
+                    else {
+                        item.SetActive(false);
+                    }
                 }
             }
         }
         else {
             //Debug.LogWarning("null");
         }
-
     }
 }
