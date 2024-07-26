@@ -131,7 +131,7 @@ public class CommonInven : MonoBehaviour {
         return 99;  //아예 빈 박스를 사용못할때
     }
 
-    //아이템 1개 사용
+    //특정 인덱스의 아이템 1개 사용
     public void useItem(int index) {
         if (index >= 0 && index < inventory.Count && inventory[index] != null) {
             if (inventory[index].GetComponent<CountableItem>() != null) {
@@ -228,6 +228,7 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
+    //특정 인덱스의 오브젝트 return
     public GameObject getIndexItem(int index) {
         if (inventory[index] != null) {
             return inventory[index];
@@ -235,5 +236,17 @@ public class CommonInven : MonoBehaviour {
         else {
             return null;
         }
+    }
+
+    //key로 아이템 있는지 확인
+    public bool isInItem(int key) {
+        for(int i = 0; i < inventory.Count; i++) {
+            if(inventory[i] != null) {
+                if(inventory[i].GetComponent<Item>().itemData.Key == key) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

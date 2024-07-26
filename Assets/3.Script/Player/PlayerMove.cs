@@ -165,7 +165,6 @@ public class PlayerMove : MonoBehaviour {
             yRotate += 0 - yFoward;
             if (yRotate > 180) yRotate -= 360;
             yFoward = 0;
-            Debug.Log($"{yRotate} / {yFoward}");
             if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
                 isBackWalk = true;
             }
