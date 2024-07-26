@@ -88,7 +88,7 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     private void SetMoveSpeedOnAttack() {
-        if (animatorState.IsTag("StandUp")) {
+        if (animatorState.IsTag("Attack")) {
             playerMove.SetPlayerMoveSpeed(moveSpeed * 0.4f);
         }
         else playerMove.SetPlayerMoveSpeed(moveSpeed);
