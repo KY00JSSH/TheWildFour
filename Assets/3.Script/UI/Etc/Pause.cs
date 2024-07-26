@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Pause : MonoBehaviour {
     private Canvas mainCanvas;
     [SerializeField] private Image pauseImg;
+    [SerializeField] private GameObject buttons;
     private bool isPause = false;
 
 
@@ -23,15 +24,26 @@ public class Pause : MonoBehaviour {
         }
     }
 
+    private void pauseChildSetActive() {
+        foreach(Transform child in transform) {
+            child.gameObject.SetActive(true);
+        }
+    }
+    private void pauseChildSetActiveOff() {
+        foreach (Transform child in transform) {
+            child.gameObject.SetActive(false);
+        }
+    }
+
     private void TogglePause(bool isPaused) {
         if (isPaused) {
             mainCanvas.gameObject.SetActive(false);
-            pauseImg.gameObject.SetActive(true);
+            pauseChildSetActive();
             StartCoroutine(pauseImgAlphaChange());
         }
         else {
             mainCanvas.gameObject.SetActive(true);
-            pauseImg.gameObject.SetActive(false);
+            pauseChildSetActiveOff();
 
             Color color = pauseImg.color;
             color.a = 0;

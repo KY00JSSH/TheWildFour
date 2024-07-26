@@ -7,13 +7,11 @@ using UnityEngine.EventSystems;
 
 public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerExitHandler {
     /*
-     inven box¿¡ ºÙÀ½
-    // weap ÀÏ °æ¿ì tooltip¿¡ ³»±¸µµ + ½½¶óÀÌ´õ ÇØ¾ßÇÔ + °ø°İ·Âµµ Æ÷ÇÔ
+     inven boxì— ë¶™ìŒ
+    // weap ì¼ ê²½ìš° tooltipì— ë‚´êµ¬ë„ + ìŠ¬ë¼ì´ë” í•´ì•¼í•¨ + ê³µê²©ë ¥ë„ í¬í•¨
      */
     private InventoryBox inventoryBox;
 
-    private WeaponItem currentWeap;
-    private FoodItem currentFood;
 
     protected override void Awake() {
         base.Awake();
@@ -23,7 +21,7 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
     private void Update() {
         if (inventoryBox.isItemIn) {
             if (inventoryBox.CurrentItem == null) return;
-            // ¾ÆÀÌÅÛÀÌ µé¾î¿ÔÀ» °æ¿ì
+            // ì•„ì´í…œì´ ë“¤ì–´ì™”ì„ ê²½ìš°
             if (inventoryBox.CurrentItem.GetComponent<FoodItem>()) {
                 _item = inventoryBox.CurrentItem.GetComponent<FoodItem>();
                 if (durability_Weap.gameObject.activeSelf) {
@@ -43,7 +41,7 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
             }
         }
         else {
-            // ¾ÆÀÌÅÛÀ» »ç¿ëÇß°Å³ª ¹ö·ÈÀ» °æ¿ì
+            // ì•„ì´í…œì„ ì‚¬ìš©í–ˆê±°ë‚˜ ë²„ë ¸ì„ ê²½ìš°
             invenBoxSlider.transform.Find("Background").GetComponent<Image>().color = Color.white;
             WeapItemOff();
             FoodItemOff();
@@ -60,7 +58,7 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
                 InvenBoxItemInfo();
             }
             else {
-                Debug.Log("ÀÎº¥Åä¸®°¡ nullÀÓ");
+                Debug.Log("ì¸ë²¤í† ë¦¬ê°€ nullì„");
             }
         }
     }
