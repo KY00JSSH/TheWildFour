@@ -14,7 +14,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
     public GameObject tooltipbox;
     private Text tooltipTitle;   // 아이템 이름 텍스트
     private Text tooltipMain; // 아이템 설명 텍스트
-
+    private WorkshopCreate workshopCreate;
 
     [SerializeField] private GameObject itemimgs;
     [SerializeField] private GameObject itemtexts;
@@ -29,13 +29,17 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         tooltipNum = FindObjectOfType<TooltipNum>();
         if (tooltipTitle == null) tooltipTitle = tooltipbox.transform.GetChild(1).GetComponent<Text>();
         if (tooltipMain == null) tooltipMain = tooltipbox.transform.GetChild(0).GetChild(0).GetComponent<Text>();
+        workshopCreate = FindObjectOfType<WorkshopCreate>();
+        isBuiltFirst = false;
     }
+    
 
     private void Update() {
         if (currentBuildDetail != null) {
             // Text 표시
             Build_ItemText();
         }
+        if (workshopCreate.isExist) isBuiltFirst = true;    
     }
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
@@ -128,7 +132,11 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         //TODO: !!!!!!!!!!!!!!!인벤아이템 개수 false => true 로 임시 변경 바꿔야함
     }
 
+    private bool isBuiltFirst = false;
+
     public void OnWorkshopButton() {
+        //TODO: 작업장 1회 설치 후 업그레이드 표시 변경 수정 날아감
+        if (!isBuiltFirst) return;
         btnNum[3] = 1;
     }
 
