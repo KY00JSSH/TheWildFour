@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Menu_Build : MonoBehaviour, IMenuButton {
 
     /*
-     * 1. 1¹øÂ° ¹öÆ° Å¬¸¯ : build ¹öÆ°¿¡ ºÒµé¾î¿È ÇÏ´Ü 6°³ ¹öÆ°ÀÌ º¸ÀÓ
+     * 1. 1ë²ˆì§¸ ë²„íŠ¼ í´ë¦­ : build ë²„íŠ¼ì— ë¶ˆë“¤ì–´ì˜´ í•˜ë‹¨ 6ê°œ ë²„íŠ¼ì´ ë³´ì„
      * 
      */
 
@@ -17,7 +17,7 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
 
-    // »óÀ§ ¹öÆ°¿¡¼­ »ç¿ëÇÔ
+    // ìƒìœ„ ë²„íŠ¼ì—ì„œ ì‚¬ìš©í•¨
     public void I_ButtonOnClick() {
         ButtonPosition();
     }
@@ -27,14 +27,14 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
         ButtonPositionOff();
     }
 
-    // ÇÏÀ§ ¹öÆ°ÀÌ Å¬¸¯µÉ¶§ ÀÚµ¿ ºÒ·¯°¡¾ßÇÔ
+    // í•˜ìœ„ ë²„íŠ¼ì´ í´ë¦­ë ë•Œ ìë™ ë¶ˆëŸ¬ê°€ì•¼í•¨
     public void ButtonOffClick() {
         TooltipOff();
         menuControll.Escape();
         ButtonPositionOff();
     }
 
-    // ¸¶¿ì½º Å¬¸¯ ½ÇÇà
+    // ë§ˆìš°ìŠ¤ í´ë¦­ ì‹¤í–‰
     public void ButtonOnClick() {
         buttonCount++;
         if (buttonCount==2) {
@@ -42,13 +42,14 @@ public class Menu_Build : MonoBehaviour, IMenuButton {
             menuControll.Escape();
         }
         else {
-            // À§Ä¡ º¯°æ -> »óÀ§ ½ºÅ©¸³Æ®ÀÇ À§Ä¡¸¦ ´õ ³»·Á¾ßÇÒ°Í°°À½
+            // ìœ„ì¹˜ ë³€ê²½ -> ìƒìœ„ ìŠ¤í¬ë¦½íŠ¸ì˜ ìœ„ì¹˜ë¥¼ ë” ë‚´ë ¤ì•¼í• ê²ƒê°™ìŒ
+            menuControll.isMenuButtonOpen = true;
             menuControll.ButtonMove(150, false);
             ButtonPosition();
         }
     }
 
-    // ¹öÆ°ÀÇ À§Ä¡ Àâ±â
+    // ë²„íŠ¼ì˜ ìœ„ì¹˜ ì¡ê¸°
     public void ButtonPosition() {
         for (int i = 0; i < Lowbuttons.Length; i++) {
             Lowbuttons[i].gameObject.SetActive(true);

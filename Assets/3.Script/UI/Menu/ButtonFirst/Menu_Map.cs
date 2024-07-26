@@ -9,7 +9,7 @@ public class Menu_Map : MonoBehaviour, IMenuButton {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
 
-    // »óÀ§ ¹öÆ°¿¡¼­ »ç¿ëÇÔ
+    // ìƒìœ„ ë²„íŠ¼ì—ì„œ ì‚¬ìš©í•¨
     public void I_ButtonOffClick() {
         TextBoxMapOff();
     }
@@ -23,6 +23,7 @@ public class Menu_Map : MonoBehaviour, IMenuButton {
     }
 
     public void ButtonOnClick() {
+        menuControll.isMenuButtonOpen = true;
         menuControll.CloseUI();
         TextBoxMapActive();
     }

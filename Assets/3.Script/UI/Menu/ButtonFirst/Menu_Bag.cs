@@ -8,7 +8,7 @@ public class Menu_Bag : MonoBehaviour, IMenuButton {
     private void Awake() {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
-    // »óÀ§ ¹öÆ°¿¡¼­ »ç¿ëÇÔ
+    // ìƒìœ„ ë²„íŠ¼ì—ì„œ ì‚¬ìš©í•¨
     public void I_ButtonOffClick() {
         TextBoxBagOff();
     }
@@ -22,6 +22,7 @@ public class Menu_Bag : MonoBehaviour, IMenuButton {
     }
 
     public void ButtonOnClick() {
+        menuControll.isMenuButtonOpen = true;
         TextBoxBagActive();
         menuControll.CloseUI();
     }
