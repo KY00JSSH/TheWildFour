@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemPickControll : MonoBehaviour {
@@ -63,7 +61,6 @@ public class PlayerItemPickControll : MonoBehaviour {
 
         if (closestItem != null) {
             if (previousItem != closestItem) {
-                ShowTooltip(closestItem);
                 if (previousItem != null) {
                     if (previousItem.GetComponent<ItemSelectControll>() != null) {
                         previousItem.GetComponent<ItemSelectControll>().outSelect();
@@ -86,15 +83,10 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     //sphere 확인용 gizmo
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(player.transform.position, checkRadius);
-    }
-
-    //tooltip 보여주는 시점
-    private void ShowTooltip(GameObject item) {
-        // Debug.Log("Tooltip 보여줌");
-    }
+    //private void OnDrawGizmos() {
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(player.transform.position, checkRadius);
+    //}
 
     //아이템 줍기
     private void pickupItem(GameObject item) {
