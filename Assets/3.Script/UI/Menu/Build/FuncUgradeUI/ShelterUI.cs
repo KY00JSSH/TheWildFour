@@ -182,6 +182,10 @@ public class ShelterUI : UIInfo {
             else if (sliders[i].name.Contains("Attack")) sliders[i].value = shelterManager.AttackCurrentExp / shelterManager.AttackTotalExp;
             else if (sliders[i].name.Contains("Gather")) sliders[i].value = shelterManager.GatherCurrentExp / shelterManager.GatherTotalExp;
         }
+
+        Debug.Log(sliders.Length + "Move" + shelterManager.MoveCurrentExp + " / " + shelterManager.MoveTotalExp);
+        Debug.Log(sliders.Length + "Attack" + shelterManager.AttackCurrentExp + " / " + shelterManager.AttackTotalExp);
+        Debug.Log(sliders.Length + "Gather" + shelterManager.GatherCurrentExp + " / " + shelterManager.GatherTotalExp);
     }
 
     // 포인터 글자 변경(update)
