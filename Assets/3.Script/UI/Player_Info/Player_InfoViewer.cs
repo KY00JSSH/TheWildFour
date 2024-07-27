@@ -36,7 +36,8 @@ public class Player_InfoViewer : MonoBehaviour {
         if (playerInfoCheck()) {
             BGImgChange.gameObject.SetActive(true);
             if (player_Infos[0].value <= 25) {
-                playerInfoBGImgChange(player_Infos[0].value, Color.red);
+               if(player_Infos[0].value != 0) playerInfoBGImgChange(player_Infos[0].value, Color.red);
+                else playerInfoBGImgChange(player_Infos[0].value, Color.gray);
             }
             else {
                 float value = Mathf.Min(player_Infos[1].value, player_Infos[2].value);
