@@ -16,11 +16,8 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     public void LevelUp() {
-        //TODO: Workshop upgrade item ºÎÁ·ÇÏ¸é return
+        //TODO: Workshop upgrade item ë¶€ì¡±í•˜ë©´ return
         if (WorkshopLevel == MaxWorkshopLevel) return;
-
-        //¾÷±×·¹ÀÌµå½Ã ¾ÆÀÌÅÛ »ç¿ë
-        invenCont.buildingCreateUseItem(tooltipNum.UpgradeItemCheck(UpgradeType.Workshop, WorkshopLevel + 1).needItems);
 
         Destroy(workshop.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
@@ -40,7 +37,7 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     private void Start() {
-        //TODO: SAVE ±¸Çö ½Ã JSON¿¡¼­ ¹Ş¾Æ¿À±â
+        //TODO: SAVE êµ¬í˜„ ì‹œ JSONì—ì„œ ë°›ì•„ì˜¤ê¸°
         WorkshopLevel = 1;
         MaxWorkshopLevel = 5;
     }

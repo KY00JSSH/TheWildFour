@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-// ############ ÀÓÀÇ ¼öÁ¤ ±İÁö ############ //
+// ############ ì„ì˜ ìˆ˜ì • ê¸ˆì§€ ############ //
 
 public class ShelterManager : MonoBehaviour {
     private PlayerAbility playerAbility;
@@ -34,7 +34,7 @@ public class ShelterManager : MonoBehaviour {
         tooltipNum = FindObjectOfType<TooltipNum>();
         invenCont = FindObjectOfType<InvenController>();
 
-        //TODO: SAVE ±¸Çö ½Ã JSON¿¡¼­ ¹Ş¾Æ¿À±â
+        //TODO: SAVE êµ¬í˜„ ì‹œ JSONì—ì„œ ë°›ì•„ì˜¤ê¸°
         ShelterLevel = 1;
         MaxShelterLevel = 5;
 
@@ -86,12 +86,9 @@ public class ShelterManager : MonoBehaviour {
         Debug.Log(GatherPoint);
     }
 
-    public void LevelUp() {     // °ÅÃ³ ·¹º§¾÷
+    public void LevelUp() {     // ê±°ì²˜ ë ˆë²¨ì—…
         if (ShelterLevel == MaxShelterLevel) return;
-        // 24 07 18 ±è¼öÁÖ Shelter upgrade item ºÎÁ·ÇÏ¸é return
-
-        //¾÷±×·¹ÀÌµå½Ã ¾ÆÀÌÅÛ »ç¿ë
-        invenCont.buildingCreateUseItem(tooltipNum.UpgradeItemCheck(UpgradeType.Shelter, ShelterLevel + 1).needItems);
+        // 24 07 18 ê¹€ìˆ˜ì£¼ Shelter upgrade item ë¶€ì¡±í•˜ë©´ return
 
         Tooltip_Shelter tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
         if (!tooltip_Shelter.isUpgradeAvailable) return;
@@ -152,4 +149,4 @@ public class ShelterManager : MonoBehaviour {
     }
 }
 
-// ############ ÀÓÀÇ ¼öÁ¤ ±İÁö ############ //
+// ############ ì„ì˜ ìˆ˜ì • ê¸ˆì§€ ############ //
