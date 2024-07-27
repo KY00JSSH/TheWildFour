@@ -119,8 +119,6 @@ public class PlayerAttack : MonoBehaviour {
                 EarnGatherExp();
                 Debug.Log(playerAbility.GetTotalPlayerGather());    // 전달해야 할 채집량
             }
-
-
         }
     }
 
