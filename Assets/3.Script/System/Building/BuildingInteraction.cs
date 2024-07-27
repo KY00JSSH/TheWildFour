@@ -104,9 +104,10 @@ public class BuildingInteraction : MonoBehaviour {
                 cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
                 cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
 
-                if(PlayerStatus.isDead) 
-                    buildingCreate.DestroyBuilding();
+
             }
         }
+        if (FindObjectOfType<PlayerStatus>().GetPlayerHp() == 0)
+            buildingCreate.DestroyBuilding();
     }
 }
