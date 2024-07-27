@@ -9,10 +9,8 @@ public class Player_InfoViewer : MonoBehaviour {
     [SerializeField] private Slider[] player_Infos;
     //slider Text 
     [SerializeField] private Text[] slider_Texts;
-
-
-    // playerÀÇ Á¤º¸¸¦ uiÂÊ¿¡¼­ update ÇÒ °æ¿ì °¢ Á¤º¸ ½ºÅ©¸³Æ® ÇÊ¿äÇÔ
-    //[SerializeField] private PlayerHP player;
+    // BGImg
+    [SerializeField] private Image BGImgChange;
 
     private void Start() {
         List<Slider> slidersList = new List<Slider>();
@@ -26,10 +24,10 @@ public class Player_InfoViewer : MonoBehaviour {
                 if (t != null)
                     slidersTextList.Add(t);
                 else
-                    Debug.Log("¸øÃ£À½?");
+                    Debug.Log("ëª»ì°¾ìŒ?");
             }
             else {
-                Debug.LogWarning($"½½¶óÀÌ´õ ¾øÀ½ {child.name}");
+                Debug.LogWarning($"ìŠ¬ë¼ì´ë” ì—†ìŒ {child.name}");
             }
         }
     }
@@ -38,14 +36,45 @@ public class Player_InfoViewer : MonoBehaviour {
         playerInfoCheck();
     }
 
+    // í”Œë ˆì´ì–´ ìƒíƒœê°’ì´ ì¼ì • ê°’ì´í•˜ë¡œ ë–¨ì–´ì¡Œì„ ê²½ìš° í…ìŠ¤íŠ¸ ì´ë¯¸ì§€ ë³€í™”
     private void playerInfoCheck() {
-        for(int i=0; i < player_Infos.Length; i++) {
-            if (player_Infos[i].value <= 25) slider_Texts[i].color = Color.red;
-            else slider_Texts[i].color = Color.white;
+        for (int i = 0; i < player_Infos.Length; i++) {
+            if (player_Infos[i].value <= 25) {
+                slider_Texts[i].color = Color.red;
+                playerInfoBGImgChange(i);
+            }
+            else {
+                BGImgChange.gameObject.SetActive(false);
+                Color color = BGImgChange.color;
+                color = Color.white;
+                color.a = 0;
+                BGImgChange.color = color;
+                slider_Texts[i].color = Color.white;
+            }
         }
     }
+    // ì´ë¯¸ì§€ 
+    private void playerInfoBGImgChange(int i) {
+        BGImgChange.gameObject.SetActive(true);
+        Color color = BGImgChange.color;
+        if (i == 0) {
+            // i = 0 : ì²´ë ¥ì¼ ê²½ìš° -> ìƒ‰ìƒ ë¶‰ì€ìƒ‰ 
+            color = Color.red;
+        }
+        else {
+            if(color == Color.red) return;
+            // i = 1,2 : í—ˆê¸°, ì˜¨ë„ì¼ ê²½ìš° -> ìƒ‰ìƒ íšŒìƒ‰ 
+            color = Color.gray;
+        }
+        // ì²´ë ¥ ê°’ì— ë”°ë¼ ì•ŒíŒŒê°’ ì¡°ì ˆ
+        //TODO: ì•ŒíŒŒê°’ í™•ì¸í•´ë´ì•¼í• ë“¯
+        float colorValue = (25 - player_Infos[i].value) * 0.03f;
+        color.a = Mathf.Min(colorValue, 0.4f);
+        BGImgChange.color = color;
 
-    // playerÀÇ Á¤º¸¸¦ Å¸ ½ºÅ©¸³Æ®¿¡¼­ µé°í°¡¼­ »ç¿ëÇÒ °æ¿ì
+    }
+
+    // playerì˜ ì •ë³´ë¥¼ íƒ€ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ë“¤ê³ ê°€ì„œ ì‚¬ìš©í•  ê²½ìš°
     public void SetPlayerHp(int value) {
         for (int i = 0; i < player_Infos.Length; i++) {
             if (player_Infos[i].name == "HP") {
