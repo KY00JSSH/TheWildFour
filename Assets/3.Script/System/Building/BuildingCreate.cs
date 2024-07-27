@@ -76,7 +76,6 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
                 if (!collider.TryGetComponent(out BuildingValidity validity)) {
                     collider.gameObject.AddComponent<BuildingValidity>();
                     collider.gameObject.AddComponent<Rigidbody>().isKinematic = true;
-                    break;
                 }
             }
             isBuild = true;

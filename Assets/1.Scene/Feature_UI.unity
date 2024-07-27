@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19841,6 +19841,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 208225059475756949, guid: aea9e051c2b4ae34bb5e586789bad91b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2914534439822206419, guid: aea9e051c2b4ae34bb5e586789bad91b, type: 3}
       propertyPath: m_Name
       value: Shelter02
@@ -24040,6 +24044,10 @@ PrefabInstance:
     - target: {fileID: 661432127875498162, guid: 55936aad4c21e0b45a101dad820e8926, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 661432127875498163, guid: 55936aad4c21e0b45a101dad820e8926, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1917769453310569936, guid: 55936aad4c21e0b45a101dad820e8926, type: 3}
       propertyPath: m_RootOrder
@@ -32367,6 +32375,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7348352990258590494, guid: ba848ae86052a3a41a230670b902b906, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7348352990258590495, guid: ba848ae86052a3a41a230670b902b906, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -36687,6 +36699,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 725592845}
     m_Modifications:
+    - target: {fileID: 162536223896149818, guid: 19586655bcc4ab84982df726372810ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3823366063396275090, guid: 19586655bcc4ab84982df726372810ce, type: 3}
       propertyPath: m_Name
       value: Workshop01
@@ -37236,6 +37252,10 @@ PrefabInstance:
     - target: {fileID: 8927614913479172264, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
       propertyPath: m_Name
       value: Workshop03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8927614913479172264, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927614913479172265, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
       propertyPath: m_RootOrder
@@ -43689,7 +43709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1271772748
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43917,6 +43937,10 @@ PrefabInstance:
       value: Workshop05
       objectReference: {fileID: 0}
     - target: {fileID: 2641388621573650117, guid: b91b3d14665d7de459bfcba891d27ae4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381573856809722567, guid: b91b3d14665d7de459bfcba891d27ae4, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -58826,7 +58850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf7198bf7e32e74d8860f420297184b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseCanvas: {fileID: 1774623031}
 --- !u!1 &1716959531
 GameObject:
   m_ObjectHideFlags: 0
@@ -61785,7 +61808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1797005539
 RectTransform:
   m_ObjectHideFlags: 0
@@ -65246,6 +65269,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1033926950}
     m_Modifications:
+    - target: {fileID: 2790610039494779352, guid: 23d238d3f99e89e4f8d7446bc3eb47fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2790610039494779359, guid: 23d238d3f99e89e4f8d7446bc3eb47fe, type: 3}
       propertyPath: m_RootOrder
       value: 4

@@ -26,12 +26,13 @@ public class BuildingInteraction : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         cameraControl = FindObjectOfType<CameraControl>();
 
-        InteractionUI = interactionManager.InteractionUI;
-        menuControl = interactionManager.menuControl;
     }
 
     private void OnEnable() {
         selected = GetComponentInChildren<ItemSelectControll>();
+
+        InteractionUI = interactionManager.InteractionUI;
+        menuControl = interactionManager.menuControl;
     }
 
     private void Update() {

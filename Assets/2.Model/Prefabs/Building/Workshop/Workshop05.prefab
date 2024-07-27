@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 3381573856651691025}
   - component: {fileID: 3381573856651691038}
   - component: {fileID: 3381573856651691039}
-  - component: {fileID: 3381573856651691024}
   m_Layer: 0
   m_Name: Workshop05-4_2
   m_TagString: Untagged
@@ -276,20 +275,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3381573856651691024
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3381573856651691026}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: f238392675783e14b8fa145dbe9619de, type: 2}
 --- !u!1 &3381573856809722567
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3381573856986472248
 Transform:
   m_ObjectHideFlags: 0
@@ -622,7 +607,6 @@ GameObject:
   - component: {fileID: 3381573857424495792}
   - component: {fileID: 3381573857424495805}
   - component: {fileID: 3381573857424495806}
-  - component: {fileID: 3381573857424495807}
   m_Layer: 0
   m_Name: Workshop05-4_1
   m_TagString: Untagged
@@ -693,20 +677,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3381573857424495807
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3381573857424495793}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 3a95cad62b1c8294bbe2d016a4cdd034, type: 2}
 --- !u!1 &3381573857782709004
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +688,7 @@ GameObject:
   - component: {fileID: 3381573857782709003}
   - component: {fileID: 3381573857782709001}
   - component: {fileID: 3381573857782709002}
+  - component: {fileID: 7429478015112046421}
   m_Layer: 0
   m_Name: Workshop05-1_0
   m_TagString: Untagged
@@ -788,6 +759,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7429478015112046421
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3381573857782709004}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 43d256240e17f104da1abee50d8650dc, type: 2}
 --- !u!1 &3381573858175807145
 GameObject:
   m_ObjectHideFlags: 0
