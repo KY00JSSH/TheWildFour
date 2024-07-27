@@ -98,10 +98,15 @@ public class BuildingInteraction : MonoBehaviour {
     public void PlayerExitBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric {
         T buildingCreate = FindObjectOfType<T>();
         if (player) {
-            player.transform.position = buildingCreate.LastPlayerPosition;
-            player.SetActive(true);
-            cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
-            cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
+            if (!player.activeSelf) {
+                player.transform.position = buildingCreate.LastPlayerPosition;
+                player.SetActive(true);
+                cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
+                cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
+
+                if(PlayerStatus.isDead) 
+                    buildingCreate.DestroyBuilding();
+            }
         }
     }
 }

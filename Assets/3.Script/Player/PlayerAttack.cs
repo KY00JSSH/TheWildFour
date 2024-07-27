@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -111,6 +112,7 @@ public class PlayerAttack : MonoBehaviour {
             if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
                 // 悼拱 Attack 贸府
                 EarnAttackExp();
+                Debug.Log(playerAbility.GetTotalPlayerAttack()) ;
             }
             else {
                 // 唱公 倒 Attack 贸府

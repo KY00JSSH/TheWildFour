@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public interface IBuildingCreateGeneric {
     void SetEnterPosition(Vector3 position);
+    void DestroyBuilding();
     GameObject Building { get; }
     Transform playerTransform { get; }
     Vector3 LastPlayerPosition { get; }
