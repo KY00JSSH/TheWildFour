@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour {
     private PlayerWeaponEquip playerWeaponEquip;
     [SerializeField] private Collider[] fistCollider;
-    
+
+    private ShelterManager shelterManager;
     private PlayerAbility playerAbility;
     private PlayerMove playerMove;
     private LayerMask targetAttacklayer;
@@ -32,6 +34,8 @@ public class PlayerAttack : MonoBehaviour {
 
         fistCollider = GetComponentsInChildren<SphereCollider>();
         moveSpeed = playerMove.GetPlayerMoveSpeed();
+
+        shelterManager = FindObjectOfType<ShelterManager>();
     }
 
     private void Start() {
@@ -106,14 +110,27 @@ public class PlayerAttack : MonoBehaviour {
             currentClip = GetCurrentClip();
 
             if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
-                // ï¿½ï¿½ï¿½ï¿½ Attack Ã³ï¿½ï¿½
+                // µ¿¹° Attack Ã³¸®
+                EarnAttackExp();
+                Debug.Log(playerAbility.GetTotalPlayerAttack()) ;
             }
             else {
-                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Attack Ã³ï¿½ï¿½
+                // ³ª¹« µ¹ Attack Ã³¸®
+                EarnGatherExp();
             }
 
 
         }
+    }
+
+    private void EarnAttackExp() {
+        shelterManager.AddAttackExp(
+            playerAbility.GetTotalPlayerAttack() * Random.Range(0.1f, 0.6f) * 50f);
+    }
+
+    private void EarnGatherExp() {
+        shelterManager.AddGatherExp(
+            playerAbility.GetTotalPlayerGather() * Random.Range(0.1f, 0.4f) * 50f);
     }
 
     private int GetCurrentClip() {

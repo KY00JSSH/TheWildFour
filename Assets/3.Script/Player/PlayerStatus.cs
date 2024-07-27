@@ -26,6 +26,7 @@ public class PlayerStatus : MonoBehaviour {
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
     public float PlayerMaxHp { get; set; }
+    public float GetPlayerHp() { return PlayerHp; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
     private float HealRestore = 0.3f, HungerRestore = 0.5f, WarmRestore = 1.2f;

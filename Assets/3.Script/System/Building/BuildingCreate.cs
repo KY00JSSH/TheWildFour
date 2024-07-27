@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public interface IBuildingCreateGeneric {
     void SetEnterPosition(Vector3 position);
+    void DestroyBuilding();
     GameObject Building { get; }
     Transform playerTransform { get; }
     Vector3 LastPlayerPosition { get; }
@@ -76,7 +77,6 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
                 if (!collider.TryGetComponent(out BuildingValidity validity)) {
                     collider.gameObject.AddComponent<BuildingValidity>();
                     collider.gameObject.AddComponent<Rigidbody>().isKinematic = true;
-                    break;
                 }
             }
             isBuild = true;

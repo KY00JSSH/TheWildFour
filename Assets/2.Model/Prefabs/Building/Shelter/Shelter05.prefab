@@ -319,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2790610039494779359
 Transform:
   m_ObjectHideFlags: 0
@@ -346,13 +346,14 @@ GameObject:
   - component: {fileID: 2790610040345629651}
   - component: {fileID: 2790610040345629661}
   - component: {fileID: 2790610040345629660}
+  - component: {fileID: 1264391600607430275}
   m_Layer: 0
   m_Name: Shelter05-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2790610040345629651
 Transform:
   m_ObjectHideFlags: 0
@@ -416,3 +417,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1264391600607430275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790610040345629650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.02966648, y: 0.015363365, z: 0.029844383}
+  m_Center: {x: 0.00034323568, y: -0.022613494, z: -0.0006993059}

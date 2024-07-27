@@ -9,7 +9,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     [SerializeField] private float cooltime = 10f;
     [SerializeField] private bool isClicked = false;
 
-    public float CoolTime { get { return leftTime; } } // ShelterManagerø°º≠ πﬁæ∆∞°¥¬ øÎµµ
+    public float CoolTime { get { return leftTime; } } // ShelterManagerÏóêÏÑú Î∞õÏïÑÍ∞ÄÎäî Ïö©ÎèÑ
     public bool isBuildComplete = false;
     private bool isRatioOpposite = false;
 
@@ -47,8 +47,9 @@ public class ButtonCoolTimeUI : MonoBehaviour {
                     leftTime = 0f;
                     if (btn) btn.enabled = true;
                     isClicked = false;
-                    Debug.Log("ƒ≈∏¿” »Æ¿Œ : " + isBuildComplete);
+                    Debug.Log("Ïø®ÌÉÄÏûÑ ÌôïÏù∏ : " + isBuildComplete);
                     isBuildComplete = true;
+                    OnCoolTimeEnd();
                     img.enabled = false;
                 }
 
@@ -58,6 +59,36 @@ public class ButtonCoolTimeUI : MonoBehaviour {
             }
         }
     }
+
+    public void OnCoolTimeEnd() {
+        if (this.name == "Ws_Upgrade" || this.name == "Shlt_Upgrade") {
+            InvenController invenController = FindObjectOfType<InvenController>();
+            TooltipNum tooltipNum = FindObjectOfType<TooltipNum>();
+            UIInfo UIinfo;
+
+            UpgradeType buildingType = UpgradeType.Workshop;
+            int buildingLevel = 0;
+
+            UIinfo = GetComponentInParent<ShelterUI>();
+            if (UIinfo != null) {
+                buildingType = UpgradeType.Shelter;
+                buildingLevel = FindObjectOfType<ShelterManager>().ShelterLevel + 1;
+            }
+            else {
+                UIinfo = GetComponentInParent<WorkShopUI>();
+                if(UIinfo!=null) {
+                    buildingType = UpgradeType.Workshop;
+                    buildingLevel = FindObjectOfType<WorkshopManager>().WorkshopLevel + 1;
+                }
+            }
+
+            if (UIinfo != null) {
+                invenController.buildingCreateUseItem(
+                    tooltipNum.UpgradeItemCheck(buildingType, buildingLevel).needItems);
+            }
+        }
+    }
+
 
     public void StartSleepCooltime() {
         if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
@@ -69,14 +100,14 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     }
     public void StartUpgradeCooltime() {
         if (shelterManager.ShelterLevel == shelterManager.MaxShelterLevel) return;
-        Debug.Log(" build »Æ¿Œ" + tooltip_Shelter.isUpgradeAvailable);
+        Debug.Log(" build ÌôïÏù∏" + tooltip_Shelter.isUpgradeAvailable);
         if (!tooltip_Shelter.isUpgradeAvailable) return;
         StartButtonInit();
     }
 
     public void StartUpgradeCooltime_WS() {
         if (workshopManager.WorkshopLevel == workshopManager.MaxWorkshopLevel) return;
-        Debug.Log(" build »Æ¿Œ" + tooltip_Workshop.isWSUpgradeAvailable);
+        Debug.Log(" build ÌôïÏù∏" + tooltip_Workshop.isWSUpgradeAvailable);
         if (!tooltip_Workshop.isWSUpgradeAvailable) return;
         StartButtonInit();
     }

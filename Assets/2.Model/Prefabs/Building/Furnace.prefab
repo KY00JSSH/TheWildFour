@@ -297,13 +297,14 @@ GameObject:
   - component: {fileID: 2386497021508703581}
   - component: {fileID: 2386497021508703582}
   - component: {fileID: 2386497021508703583}
+  - component: {fileID: 5666380301293647740}
   m_Layer: 0
   m_Name: Furnace03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2386497021508703581
 Transform:
   m_ObjectHideFlags: 0
@@ -367,6 +368,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5666380301293647740
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386497021508703554}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: ee33648f6530da04f98d86607392700f, type: 2}
 --- !u!1 &2386497022509933417
 GameObject:
   m_ObjectHideFlags: 0

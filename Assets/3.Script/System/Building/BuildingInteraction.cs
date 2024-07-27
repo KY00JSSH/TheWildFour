@@ -26,12 +26,13 @@ public class BuildingInteraction : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         cameraControl = FindObjectOfType<CameraControl>();
 
-        InteractionUI = interactionManager.InteractionUI;
-        menuControl = interactionManager.menuControl;
     }
 
     private void OnEnable() {
         selected = GetComponentInChildren<ItemSelectControll>();
+
+        InteractionUI = interactionManager.InteractionUI;
+        menuControl = interactionManager.menuControl;
     }
 
     private void Update() {
@@ -97,10 +98,16 @@ public class BuildingInteraction : MonoBehaviour {
     public void PlayerExitBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric {
         T buildingCreate = FindObjectOfType<T>();
         if (player) {
-            player.transform.position = buildingCreate.LastPlayerPosition;
-            player.SetActive(true);
-            cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
-            cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
+            if (!player.activeSelf) {
+                player.transform.position = buildingCreate.LastPlayerPosition;
+                player.SetActive(true);
+                cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
+                cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
+
+
+            }
         }
+        if (FindObjectOfType<PlayerStatus>().GetPlayerHp() == 0)
+            buildingCreate.DestroyBuilding();
     }
 }

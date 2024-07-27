@@ -40,12 +40,13 @@ public class PlayerMove : MonoBehaviour {
     private void Awake() {
         playerRigid = transform.parent.GetComponent<Rigidbody>();
         playerAnimator = GetComponentInParent<Animator>();
-        cameraControl = FindObjectOfType<CameraControl>();
         playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
         shelterManager = FindObjectOfType<ShelterManager>();
     }
 
     private void Start() {
+        cameraControl = FindObjectOfType<CameraControl>();
+
         isMove = false;
         isDash = false;
 
@@ -54,6 +55,10 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = TotalDashGage;
         DecDashGage = defaultDecDashGage;
         IncDashGage = defaultIncDashGage;
+
+        // 플레이어를 껐다 켜야지만 weaponPoint가 따라가는.. 의문의 버그
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
     public static bool isPlayerBuilding { get; private set; }

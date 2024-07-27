@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class InvenDrop : MonoBehaviour {
     private InvenController invenController;
-    [SerializeField]
     private GameObject player;
 
     private void Awake() {
         invenController = FindObjectOfType<InvenController>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     //아이템 한번 드랍
@@ -28,7 +28,6 @@ public class InvenDrop : MonoBehaviour {
                             //인벤에 있는 돌, 나무가 8개보다 많을때 item 복제해서 떨굴 개수만큼 넣어주고 필드에 떨굼
                             GameObject dropItem = Instantiate(itemComponent, itemDropPosition, Quaternion.identity);
                             dropItem.GetComponent<CountableItem>().setCurrStack(8);
-                            //아이템 인벤 삭제는 invencontroller에서 실행
                             dropItem.SetActive(true);
                         }
                         else if (countItem.CurrStackCount <= 8) {
@@ -45,17 +44,17 @@ public class InvenDrop : MonoBehaviour {
                                 dropItem.GetComponent<FoodItem>().setVisible();
                             }
                             else {
-                                itemComponent.SetActive(true);
+                                dropItem.SetActive(true);
                             }
                         }
                         else {
                             if (itemComponent.GetComponent<FoodItem>() != null) {
-                                itemComponent.GetComponent<FoodItem>().setVisible();
                                 itemComponent.transform.position = itemDropPosition;
+                                itemComponent.GetComponent<FoodItem>().setVisible();
                             }
                             else {
-                                itemComponent.SetActive(true);
                                 itemComponent.transform.position = itemDropPosition;
+                                itemComponent.SetActive(true);
                             }
                         }
                     }

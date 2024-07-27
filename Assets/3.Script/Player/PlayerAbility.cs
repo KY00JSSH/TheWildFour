@@ -36,7 +36,6 @@ public class PlayerAbility : MonoBehaviour {
 
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
-        cameraControl = FindObjectOfType<CameraControl>();
         playerStatus = FindObjectOfType<PlayerStatus>();
         playerMove = FindObjectOfType<PlayerMove>();
 
@@ -64,6 +63,10 @@ public class PlayerAbility : MonoBehaviour {
         playerAddDashSpeed = 0;
         playerAddDecDashGage = 0;
         playerAddInvenCount = 0;
+    }
+
+    private void Start() {
+        cameraControl = FindObjectOfType<CameraControl>();
     }
 
     private void Update() {
