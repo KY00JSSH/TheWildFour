@@ -23,10 +23,14 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     public float ratio { get; private set; }
 
     private void OnDisable() {
+        if (btn) btn.enabled = true;
+        img.enabled = false;
+        leftTime = cooltime;
         isClicked = false;
-        ratio = 1;
+        ratio = 1.0f - (leftTime / cooltime);
         if (isRatioOpposite) ratio = 1.0f - ratio;
         img.fillAmount = ratio;
+
     }
 
     private void Start() {

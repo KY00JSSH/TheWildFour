@@ -48,14 +48,18 @@ public class PlayerItemPickControll : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit)) {
             mousePosition = hit.point;
+            if (hit.collider.gameObject.activeSelf) {
             mouseHoverItem = hit.collider.gameObject;
+            }
         }
 
         foreach (Collider hitCol in cols) {
             float distanceToMouse = Vector3.Distance(hitCol.transform.position, mousePosition);
             if (distanceToMouse < closestDistance) {
                 closestDistance = distanceToMouse;
-                closestItem = hitCol.gameObject;
+                if (hitCol.gameObject.activeSelf) {
+                    closestItem = hitCol.gameObject;
+                }
             }
         }
 

@@ -7,18 +7,29 @@ public class CameraControl : MonoBehaviour
     private float rotationSpeed = 3f;
     public float zoomSpeed = 2f;
 
-    // ÇÃ·¹ÀÌ¾î ½ºÅ³ ½Ã¾ß¹üÀ§ È®Àå ¶§¹®¿¡
-    // newFov = Mathf.Clamp À­ÁÙ¿¡ ¼±¾ðµÈ Áö¿ªº¯¼ö¸¦ Å¬·¡½ºº¯¼ö·Î ÀÌµ¿
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Å³ ï¿½Ã¾ß¹ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // newFov = Mathf.Clamp ï¿½ï¿½ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
     public float minFOV = 70f;
     public float maxFOV = 100f;
 
     public float rotationDirection = 0f;
+
+    private MiniMap_CompassRotation miniMapCompassRotation;
 
     private void Awake() {
         cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
         cinemachineFreeLook.LookAt = player.transform;
+
+
+
+        GameObject.FindGameObjectWithTag("Player");
+        GameObject.FindObjectOfType<Renderer>();
+
+        miniMapCompassRotation = FindObjectOfType<MiniMap_CompassRotation>();
+
+     //   transform.GetComponent<>();
     }
     
     private void Update()
@@ -26,20 +37,22 @@ public class CameraControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) {
             rotationDirection -= 90f;
             if (rotationDirection < 0) rotationDirection += 360f;
+            miniMapCompassRotation.SetRotationDirection(rotationDirection);
         }
         else if(Input.GetKeyDown(KeyCode.E)) {
             rotationDirection += 90f;
             if (rotationDirection >= 360) rotationDirection -= 360f;
+            miniMapCompassRotation.SetRotationDirection(rotationDirection);
         }
         cinemachineFreeLook.m_XAxis.Value = Mathf.LerpAngle(
             cinemachineFreeLook.m_XAxis.Value, rotationDirection, Time.deltaTime * rotationSpeed) ;
 
-        // Ä«¸Þ¶ó ÁÜ
+        // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (scrollInput != 0)
         {
             float currentFOV = cinemachineFreeLook.m_Lens.FieldOfView;
-            float deltaFOV = scrollInput * 15f * -1; // -1 ¾È°öÇÏ¸é ¸¶¿ì½º ½ºÅ©·ÑÀÌ ¹Ý´ë°¡ µÊ. Á÷°ü¼ºÀ» À§ÇØ ÀÌ·¸°Ô ÇÕ´Ï´Ù.
+            float deltaFOV = scrollInput * 15f * -1; // -1 ï¿½È°ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´ë°¡ ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.
             float newFOV = currentFOV + deltaFOV;
 
             newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);

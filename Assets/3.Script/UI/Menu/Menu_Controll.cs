@@ -7,14 +7,17 @@ using System.Reflection;
 public class Menu_Controll : MonoBehaviour {
 
     /*
-     * ½ºÅ©¸³Æ® À§Ä¡ : Menu
-     * ¿ªÇÒ : Å°º¸µå ÀÔ·Â -> ¹öÆ° Å¬¸¯
-     *        ¹öÆ°ÀÇ ÇÏÀ§ ¹öÆ°ÀÌ ¿­·ÁÀÖÀ» °æ¿ì escÅ°´Â ÇÏÀ§ ¹öÆ°¿¡ ºÙ¾î¾ßÇÔ 
+     * ìŠ¤í¬ë¦½íŠ¸ ìœ„ì¹˜ : Menu
+     * ì—­í•  : í‚¤ë³´ë“œ ì…ë ¥ -> ë²„íŠ¼ í´ë¦­
+     *        ë²„íŠ¼ì˜ í•˜ìœ„ ë²„íŠ¼ì´ ì—´ë ¤ìˆì„ ê²½ìš° escí‚¤ëŠ” í•˜ìœ„ ë²„íŠ¼ì— ë¶™ì–´ì•¼í•¨ 
      */
 
     [SerializeField] private Button[] buttons;
     //public Button[] buttons;
     private Vector3[] buttonsPosition;
+
+    // ì¼ì‹œì •ì§€ì—ì„œ ë©”ë‰´ ë²„íŠ¼ì´ ì—´ë ¸ì„ ê²½ìš° ë“¤ê³ ê°
+    public bool isMenuButtonOpen = false;
 
     private int buttonIndex = -1;
 
@@ -36,8 +39,9 @@ public class Menu_Controll : MonoBehaviour {
         }
     }
 
-    // Å°°ª È®ÀÎ
+    // í‚¤ê°’ í™•ì¸
     private int ButtonPress() {
+        isMenuButtonOpen = true;
         if (Input.GetKeyDown(KeyCode.B)) {
             ButtonMove(150, false);
             GetButtonScript(0);
@@ -65,7 +69,7 @@ public class Menu_Controll : MonoBehaviour {
     }
 
 
-    // °Ç¼³¸¸ ÀÎµ¦½º·Î À§Ä¡ º¯°æ
+    // ê±´ì„¤ë§Œ ì¸ë±ìŠ¤ë¡œ ìœ„ì¹˜ ë³€ê²½
     public void ButtonMove(int moveamount, bool isBuildMove) {
         for (int i = 0; i < buttons.Length; i++) {
             if (i == (buttons.Length - 1)) {
@@ -75,19 +79,19 @@ public class Menu_Controll : MonoBehaviour {
                 RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
                 if (i == 0) {
                     if (isBuildMove) {
-                        // ¹öÆ°ÀÌ À§·Î ¿Ã¶ó°¡¾ßÇÔ
+                        // ë²„íŠ¼ì´ ìœ„ë¡œ ì˜¬ë¼ê°€ì•¼í•¨
                         buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y + 50, buttonsPosition[i].z);
                     }
                 }
                 else {
-                    // ¹öÆ°ÀÌ ¾Æ·¡·Î ³»·Á°¡¾ßÇÔ
+                    // ë²„íŠ¼ì´ ì•„ë˜ë¡œ ë‚´ë ¤ê°€ì•¼í•¨
                     buttonRectTransform.anchoredPosition = new Vector3(buttonsPosition[i].x, buttonsPosition[i].y - moveamount, buttonsPosition[i].z);
                 }
             }
         }
     }
 
-    // ¸Ê, ±â·Ï, °¡¹æ -> UI¹öÆ° ´İÈû
+    // ë§µ, ê¸°ë¡, ê°€ë°© -> UIë²„íŠ¼ ë‹«í˜
     public void CloseUI() {
         for (int i = 0; i < buttons.Length; i++) {
             buttons[i].gameObject.SetActive(false);
@@ -95,9 +99,10 @@ public class Menu_Controll : MonoBehaviour {
     }
 
 
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     public void Escape() {
-        // ¹öÆ° ³ª°¡±â
+        // ë²„íŠ¼ ë‚˜ê°€ê¸°
+        isMenuButtonOpen = false;
         for (int i = 0; i < buttons.Length; i++) {
             buttons[i].gameObject.SetActive(true);
             RectTransform buttonRectTransform = buttons[i].GetComponent<RectTransform>();
@@ -106,7 +111,7 @@ public class Menu_Controll : MonoBehaviour {
         InitButtonEvent();
     }
 
-    // ¹öÆ°ÀÌº¥Æ® ºÒ·¯¿À±â
+    // ë²„íŠ¼ì´ë²¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
     private void GetButtonScript(int buttonIndex) {
 
         IMenuButton buttonAction = buttons[buttonIndex].GetComponent<IMenuButton>();
@@ -117,24 +122,21 @@ public class Menu_Controll : MonoBehaviour {
             }
         }
         else {
-            Debug.LogWarning($"½ºÅ©¸³Æ® È¤Àº ÀÎÅÍÆäÀÌ½º ¾øÀ½");
+            Debug.LogWarning($"ìŠ¤í¬ë¦½íŠ¸ í˜¹ì€ ì¸í„°í˜ì´ìŠ¤ ì—†ìŒ");
         }
 
     }
 
-    // ¹öÆ° ÀÌº¥Æ® ÃÊ±âÈ­
+    // ë²„íŠ¼ ì´ë²¤íŠ¸ ì´ˆê¸°í™”
     private void InitButtonEvent() {
         for (int i = 0; i < buttons.Length; i++) {
 
             IMenuButton buttonAction = buttons[i].GetComponent<IMenuButton>();
             if (buttonAction != null) {
                 buttonAction.I_ButtonOffClick();
-                if (buttons[i].interactable == false) {
-                    Debug.LogWarning("Button at index " + i + " is not interactable.");
-                }
             }
             else {
-                Debug.LogWarning($"½ºÅ©¸³Æ® È¤Àº ÀÎÅÍÆäÀÌ½º ¾øÀ½");
+                Debug.LogWarning($"ìŠ¤í¬ë¦½íŠ¸ í˜¹ì€ ì¸í„°í˜ì´ìŠ¤ ì—†ìŒ");
             }
         }
     }

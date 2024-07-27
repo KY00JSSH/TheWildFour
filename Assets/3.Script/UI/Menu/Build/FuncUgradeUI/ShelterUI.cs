@@ -182,15 +182,14 @@ public class ShelterUI : UIInfo {
             else if (sliders[i].name.Contains("Attack")) sliders[i].value = shelterManager.AttackCurrentExp / shelterManager.AttackTotalExp;
             else if (sliders[i].name.Contains("Gather")) sliders[i].value = shelterManager.GatherCurrentExp / shelterManager.GatherTotalExp;
         }
+
     }
 
     // 포인터 글자 변경(update)
     public void SkillPointerValue() {
-        for (int i = 0; i < pointers.Length; i++) {
-            if (pointers[i].name.Contains("Move")) pointers[i].text = string.Format("{0} Pts", shelterManager.MovePoint);
-            else if (pointers[i].name.Contains("Attack")) pointers[i].text = string.Format("{0} Pts", shelterManager.AttackPoint);
-            else if (pointers[i].name.Contains("Gather")) pointers[i].text = string.Format("{0} Pts", shelterManager.GatherPoint);
-        }
+        pointers[0].text = string.Format("{0} Pts", shelterManager.MovePoint);
+        pointers[1].text = string.Format("{0} Pts", shelterManager.AttackPoint);
+        pointers[2].text = string.Format("{0} Pts", shelterManager.GatherPoint);
     }
 
     // 짐싸기 -> escape 
