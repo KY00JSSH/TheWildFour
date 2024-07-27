@@ -38,6 +38,8 @@ public class MCursor : MonoBehaviour {
 
     private void Update() {
         Update_MousePosition();
+    }
+    private void LateUpdate() {
         // 각 Build UI Open 되면 기본값, 스페이스 아이콘 off
         if (WorkShopUI.isWorkshopUIOpen || ShelterUI.isShelterUIOpen) {
             DefaultMouseSprite();
@@ -173,6 +175,7 @@ public class MCursor : MonoBehaviour {
     }
 
     private void FindBuildType() {
+        Debug.Log(PlayerItemPickControll.ClosestItem.name);
         BuildingType buildingType = PlayerItemPickControll.ClosestItem.GetComponentInParent<BuildingInteraction>().Type;
         switch (buildingType) {
             case BuildingType.Campfire:

@@ -10,9 +10,9 @@ public class Pause : MonoBehaviour {
     [SerializeField] private Image pauseImg;
     private bool isPause = false;
 
-    // µÚ·Î°¡±â ¹öÆ°
+    // ë’¤ë¡œê°€ê¸° ë²„íŠ¼
     private Stack<GameObject> gameObjects = new Stack<GameObject>();
-    // ¹öÆ° ÀúÀå
+    // ë²„íŠ¼ ì €ì¥
     public Button button;
 
     // menu button check
@@ -24,7 +24,7 @@ public class Pause : MonoBehaviour {
     }
     private void Start() {
         gameObjects.Push(transform.gameObject);
-        // ¹öÆ° ¸®½º³Ê Ãß°¡
+        // ë²„íŠ¼ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
         button.onClick.AddListener(() => OnButtonClick(button));
     }
 
@@ -37,14 +37,14 @@ public class Pause : MonoBehaviour {
         }
     }
 
-    // ÇöÀç °´Ã¼ÀÇ ÀÚ½ÄµéÀ» È°¼ºÈ­ ½ÃÅ´
+    // í˜„ì¬ ê°ì²´ì˜ ìì‹ë“¤ì„ í™œì„±í™” ì‹œí‚´
     private void pauseChildSetActive(GameObject gameObject) {
         foreach (Transform child in gameObject.transform) {
             child.gameObject.SetActive(true);
         }
     }
 
-    // ÇöÀç °´Ã¼ÀÇ ÀÚ½ÄµéÀ» ºñÈ°¼ºÈ­ ½ÃÅ´
+    // í˜„ì¬ ê°ì²´ì˜ ìì‹ë“¤ì„ ë¹„í™œì„±í™” ì‹œí‚´
     private void pauseChildSetActiveOff(GameObject gameObject) {
         foreach (Transform child in gameObject.transform) {
             if(child == gameObject.transform.GetChild(0)) {
@@ -55,14 +55,14 @@ public class Pause : MonoBehaviour {
         }
     }
 
-    // ÇöÀç °´Ã¼ÀÇ ºÎ¸ğÀÇ ÀÚ½ÄµéÀ» È°¼ºÈ­ ½ÃÅ´
+    // í˜„ì¬ ê°ì²´ì˜ ë¶€ëª¨ì˜ ìì‹ë“¤ì„ í™œì„±í™” ì‹œí‚´
     private void pauseSilbingSetActive(GameObject gameObject) {
         foreach (Transform Silbing in gameObject.transform.parent) {
             Silbing.gameObject.SetActive(true);
         }
     }
 
-    // ÀÏ½ÃÁ¤Áö ±â´É bool·Î È°¼ºÈ­ Á¶Àı
+    // ì¼ì‹œì •ì§€ ê¸°ëŠ¥ boolë¡œ í™œì„±í™” ì¡°ì ˆ
     private void TogglePause(bool isPaused) {
         if (isPaused) {
             StartCoroutine(pauseImgAlphaChange());
@@ -94,19 +94,19 @@ public class Pause : MonoBehaviour {
         Time.timeScale = 0;
     }
 
-    // ÀúÀå ¹× Á¾·á -> Ãë¼ÒÇÏ±â + ÀúÀå ¹× Á¾·á
+    // ì €ì¥ ë° ì¢…ë£Œ -> ì·¨ì†Œí•˜ê¸° + ì €ì¥ ë° ì¢…ë£Œ
     public void SaveEndFirst(GameObject gameObject) {
         gameObject.SetActive(true);
     }
 
-    // ÀúÀå ¹× Á¾·á ÀçÈ®ÀÎ
+    // ì €ì¥ ë° ì¢…ë£Œ ì¬í™•ì¸
     public void SaveEnd() {
-        // Á¾·á : ¸ŞÀÎ ¾ÀÀ¸·Î µ¹¾Æ°¡±â
+        // ì¢…ë£Œ : ë©”ì¸ ì”¬ìœ¼ë¡œ ëŒì•„ê°€ê¸°
         SceneManager.LoadScene("Main");
-        //TODO: ÀúÀå...
+        //TODO: ì €ì¥...
     }
 
-    // °è¼Ó
+    // ê³„ì†
     public void Continue() {
         isPause = !isPause;
         TogglePause(isPause);
@@ -117,14 +117,14 @@ public class Pause : MonoBehaviour {
     }
 
 
-    // µÚ·Î°¡±â + Ãë¼ÒÇÏ±â
+    // ë’¤ë¡œê°€ê¸° + ì·¨ì†Œí•˜ê¸°
     public void Escape() {
         Debug.Log(gameObjects.Count);
         GameObject obj = gameObjects.Pop();
         Debug.Log(obj.name);
         pauseChildSetActiveOff(obj);
 
-        // º»ÀÎ¸¸ ³²Àº°Å¾Æ´Ï¸é »óÀ§°´Ã¼ ÀçÈ°¼ºÈ­
+        // ë³¸ì¸ë§Œ ë‚¨ì€ê±°ì•„ë‹ˆë©´ ìƒìœ„ê°ì²´ ì¬í™œì„±í™”
         if (gameObjects.Count != 0) {
             pauseSilbingSetActive(obj);
         }
@@ -136,7 +136,7 @@ public class Pause : MonoBehaviour {
     }
 
 
-    // ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ¸Ş¼Òµå
+    // ë²„íŠ¼ í´ë¦­ ì‹œ í˜¸ì¶œë˜ëŠ” ë©”ì†Œë“œ
     private void OnButtonClick(Button clickedButton) {
         gameObjects.Push(clickedButton.gameObject);
         Debug.Log($"Button {clickedButton.name} added to stack. Stack size: {gameObjects.Count}");
@@ -145,9 +145,9 @@ public class Pause : MonoBehaviour {
 
 }
 /*
-µÚ·Î°¡±â + Ãë¼ÒÇÏ±â
-1. ½ºÅÃ¿¡ ÀúÀåÇØ¼­ »ç¿ëÇÒ ¹öÆ° ÁöÁ¤
-2. ¹öÆ°µé¿¡°Ô ¸®½º³Ê Ãß°¡
-3. ¸®½º³Ê·Î ¹öÆ°ÀÌ ´­¸®¸é onclick ¸Ş¼Òµå·Î ¹öÆ° µé°í¿È
-4. µÚ·Î°¡±â È¤Àº Ãë¼ÒÇÏ±â¿¡¼­ ¿ªÇà
+ë’¤ë¡œê°€ê¸° + ì·¨ì†Œí•˜ê¸°
+1. ìŠ¤íƒì— ì €ì¥í•´ì„œ ì‚¬ìš©í•  ë²„íŠ¼ ì§€ì •
+2. ë²„íŠ¼ë“¤ì—ê²Œ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
+3. ë¦¬ìŠ¤ë„ˆë¡œ ë²„íŠ¼ì´ ëˆŒë¦¬ë©´ onclick ë©”ì†Œë“œë¡œ ë²„íŠ¼ ë“¤ê³ ì˜´
+4. ë’¤ë¡œê°€ê¸° í˜¹ì€ ì·¨ì†Œí•˜ê¸°ì—ì„œ ì—­í–‰
  */
