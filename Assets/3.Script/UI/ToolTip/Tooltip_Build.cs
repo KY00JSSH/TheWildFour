@@ -12,8 +12,8 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
 
     [SerializeField] private Button[] buttons;
     public GameObject tooltipbox;
-    private Text tooltipTitle;   // ¾ÆÀÌÅÛ ÀÌ¸§ ÅØ½ºÆ®
-    private Text tooltipMain; // ¾ÆÀÌÅÛ ¼³¸í ÅØ½ºÆ®
+    private Text tooltipTitle;   // ì•„ì´í…œ ì´ë¦„ í…ìŠ¤íŠ¸
+    private Text tooltipMain; // ì•„ì´í…œ ì„¤ëª… í…ìŠ¤íŠ¸
     private WorkshopCreate workshopCreate;
 
     [SerializeField] private GameObject itemimgs;
@@ -36,7 +36,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
 
     private void Update() {
         if (currentBuildDetail != null) {
-            // Text Ç¥½Ã
+            // Text í‘œì‹œ
             Build_ItemText();
         }
         if (workshopCreate.isExist) isBuiltFirst = true;    
@@ -52,7 +52,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
                 int buttonValue = btnNum[btnIndex];
                 currentBuildDetail = tooltipNum.BuildItemCheck(btnIndex, buttonValue);
                 if (currentBuildDetail != null) {
-                    // Text Ç¥½Ã
+                    // Text í‘œì‹œ
                     BuildTooltipShow();
                     Build_ItemTextInit();
                     Build_ItemText();
@@ -88,7 +88,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         return buttonNum;
     }
 
-    // tooltip ÀÌ¹ÌÁö È°¼ºÈ­
+    // tooltip ì´ë¯¸ì§€ í™œì„±í™”
     private void Build_ItemTextInit() {
         itemimgs.gameObject.SetActive(true);
         foreach (Transform item in itemimgs.transform) {
@@ -100,7 +100,7 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         }
     }
 
-    // ¾ÆÀÌÅÛ °³¼öºñ±³
+    // ì•„ì´í…œ ê°œìˆ˜ë¹„êµ
     private void Build_ItemText() {
         int buildingCheckCount = 0;
 
@@ -125,17 +125,16 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
             }
         }
 
-        // 24 07 16 ±è¼öÁÖ °Ç¼³ ¼³Ä¡ boolÃß°¡ -> ÀÎº¥ ¾ÆÀÌÅÛ °³¼ö È®ÀÎ
+        // 24 07 16 ê¹€ìˆ˜ì£¼ ê±´ì„¤ ì„¤ì¹˜ boolì¶”ê°€ -> ì¸ë²¤ ì•„ì´í…œ ê°œìˆ˜ í™•ì¸
         if (buildingCheckCount == currentBuildDetail.needItems.Length)
             isBuildAvailable = true;
-        else isBuildAvailable = true;
-        //TODO: !!!!!!!!!!!!!!!ÀÎº¥¾ÆÀÌÅÛ °³¼ö false => true ·Î ÀÓ½Ã º¯°æ ¹Ù²ã¾ßÇÔ
+        else isBuildAvailable = false;
+        //TODO: !!!!!!!!!!!!!!!ì¸ë²¤ì•„ì´í…œ ê°œìˆ˜ false => true ë¡œ ìž„ì‹œ ë³€ê²½ ë°”ê¿”ì•¼í•¨
     }
 
     private bool isBuiltFirst = false;
 
     public void OnWorkshopButton() {
-        //TODO: ÀÛ¾÷Àå 1È¸ ¼³Ä¡ ÈÄ ¾÷±×·¹ÀÌµå Ç¥½Ã º¯°æ ¼öÁ¤ ³¯¾Æ°¨
         if (!isBuiltFirst) return;
         btnNum[3] = 1;
     }
