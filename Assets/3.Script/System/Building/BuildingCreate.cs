@@ -72,11 +72,13 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
         if (PlayerMove.isPlayerBuilding || !tooltip_Build.isBuildAvailable) return;
 
         if (!isExist) {
+            bool validityExist = false;
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
-                if (!collider.TryGetComponent(out BuildingValidity validity)) {
+                if (!collider.TryGetComponent(out BuildingValidity validity) && !validityExist) {
                     collider.gameObject.AddComponent<BuildingValidity>();
                     collider.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+                    validityExist = true;
                 }
             }
             isBuild = true;
