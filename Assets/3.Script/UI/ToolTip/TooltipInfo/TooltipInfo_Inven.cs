@@ -11,28 +11,28 @@ public class TooltipInfo_Inven : MonoBehaviour
     protected Text textMain;
     protected Image itemImg;
 
-    // ÀåºñÀÏ °æ¿ì tooltipÀÇ ½½¶óÀÌµå
+    // ì¥ë¹„ì¼ ê²½ìš° tooltipì˜ ìŠ¬ë¼ì´ë“œ
     protected Slider weapSlider;
     protected Slider invenBoxSlider;
 
     protected Image durability_Food;
     protected Image durability_Weap;
 
-    // °øÅëÀ¸·Î »ç¿ëµÉ ¾ÆÀÌÅÛ µ¥ÀÌÅÍ
+    // ê³µí†µìœ¼ë¡œ ì‚¬ìš©ë  ì•„ì´í…œ ë°ì´í„°
     protected Item _item;
 
     protected virtual void Awake() {
 
         // tooltip
         if (Tooltip_inven == null) transform.GetChild(2);
-        // ¾ÆÀÌÅÛ ÀÌ¸§, ¼³¸í
+        // ì•„ì´í…œ ì´ë¦„, ì„¤ëª…
         textTitle = Tooltip_inven.transform.GetChild(1).GetChild(0).GetComponent<Text>();
         textMain = Tooltip_inven.transform.GetChild(1).GetChild(1).GetComponent<Text>();
-        // ¾ÆÀÌÅÛ ÀÌ¹ÌÁö, ¹«±â¸é ½½¶óÀÌ´õ
+        // ì•„ì´í…œ ì´ë¯¸ì§€, ë¬´ê¸°ë©´ ìŠ¬ë¼ì´ë”
         itemImg = Tooltip_inven.transform.GetChild(2).GetComponent<Image>();
         weapSlider = itemImg.transform.GetChild(0).GetComponent<Slider>();
 
-        // ÀÎº¥Åä¸® ½½¶óÀÌ´õ
+        // ì¸ë²¤í† ë¦¬ ìŠ¬ë¼ì´ë”
         invenBoxSlider = transform.Find("Slider").GetComponent<Slider>();
 
         durability_Food = Tooltip_inven.transform.GetChild(3).GetComponent<Image>();
@@ -58,9 +58,13 @@ public class TooltipInfo_Inven : MonoBehaviour
         Tooltip_inven.transform.position = tooltipPos;
         textTitle.text = _item.itemData.name;
         textMain.text = _item.itemData.Description;
+        if (_item is FoodItem foodItem) {
+            if (foodItem.Status == ItemStatus.Rotten) textMain.text = "ë¶€íŒ¨í•œ ìŒì‹. ë¨¹ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.";
+        }
         itemImg.sprite = _item.itemData.Icon;
     }
 
+    // ì¥ë¹„ ìŠ¬ë¼ì´ë” + ìƒíƒœ í‘œì‹œ
     protected virtual void InvenItemText_Weap(WeaponItem currentWeap) {
         durability_Weap.gameObject.SetActive(true);
         invenBoxSlider.gameObject.SetActive(true);
@@ -69,11 +73,11 @@ public class TooltipInfo_Inven : MonoBehaviour
 
         float slidervalue = invenBoxSlider.value;
         Text text = durability_Weap.GetComponentInChildren<Text>();
-        text.text = string.Format("{0} - {1}", currentWeap.WeaponItemData.MinPowerPoint, currentWeap.WeaponItemData.MaxPowerPoint);
+        text.text = string.Format("{0} - {1}", currentWeap.weaponItemData.MinPowerPoint, currentWeap.weaponItemData.MaxPowerPoint);
 
         Image fillImage = weapSlider.fillRect.GetComponent<Image>();
         Text slidertext = weapSlider.transform.GetChild(2).GetComponent<Text>();
-        slidertext.text = string.Format("{0} - {1}", currentWeap.CurrDurability, currentWeap.WeaponItemData.TotalDurability);
+        slidertext.text = string.Format("{0} - {1}", currentWeap.CurrDurability, currentWeap.weaponItemData.TotalDurability);
 
 
         Image fillImage_box = invenBoxSlider.fillRect.GetComponent<Image>();
@@ -95,17 +99,16 @@ public class TooltipInfo_Inven : MonoBehaviour
         }
         else {
             weapSlider.transform.Find("Background").GetComponent<Image>().color = Color.gray;
-            //slidertext.transform.Find("Background").GetComponent<Image>().color = Color.gray;
-            //fillImage_box.transform.Find("Background").GetComponent<Image>().color = Color.gray;
         }
     }
-
+    
+    // ìŒì‹ ìŠ¬ë¼ì´ë” + ìƒíƒœ í‘œì‹œ
     protected virtual void InvenItemText_Food(FoodItem currentFood) {
         durability_Food.gameObject.SetActive(true);
         invenBoxSlider.gameObject.SetActive(true);
         invenBoxSlider.value = currentFood.CurrDecayTime / currentFood.foodItemData.TotalDecayTime;
 
-        // ½Å¼±ÇÔ Ç¥½Ã ÅØ½ºÆ® 
+        // ì‹ ì„ í•¨ í‘œì‹œ í…ìŠ¤íŠ¸ 
         Text text = durability_Food.GetComponentInChildren<Text>();
 
         Image fillImage_box = invenBoxSlider.fillRect.GetComponent<Image>();
@@ -113,23 +116,20 @@ public class TooltipInfo_Inven : MonoBehaviour
             case ItemStatus.Fresh:
                 durability_Food.color = Color.green;
                 fillImage_box.color = Color.green;
-                text.text = "½Å¼±ÇÔ";
+                text.text = "ì‹ ì„ í•¨";
                 break;
             case ItemStatus.Spoiled:
                 durability_Food.color = Color.yellow;
                 fillImage_box.color = Color.yellow;
-                text.text = "»óÇÔ";
+                text.text = "ìƒí•¨";
                 break;
             case ItemStatus.Rotten:
                 durability_Food.color = Color.gray;
                 fillImage_box.color = Color.red;
-                text.text = "ºÎÆĞÇÔ";
-                weapSlider.transform.Find("Background").GetComponent<Image>().color = Color.gray;
-                fillImage_box.transform.Find("Background").GetComponent<Image>().color = Color.gray;
+                text.text = "ë¶€íŒ¨í•¨";
                 break;
             default:
                 break;
         }
-
     }
 }

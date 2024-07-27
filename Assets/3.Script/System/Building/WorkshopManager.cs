@@ -5,14 +5,20 @@ public class WorkshopManager : MonoBehaviour {
     public int WorkshopLevel { get; private set; }
     public int MaxWorkshopLevel { get; private set; }
 
+    private TooltipNum tooltipNum;
+    private InvenController invenCont;
+
     WorkshopCreate workshop;
     private void Awake() {
         workshop = GetComponent<WorkshopCreate>();
+        tooltipNum = FindObjectOfType<TooltipNum>();
+        invenCont = FindObjectOfType<InvenController>();
     }
 
     public void LevelUp() {
-        //TODO: Workshop upgrade item ºÎÁ·ÇÏ¸é return
+        //TODO: Workshop upgrade item ë¶€ì¡±í•˜ë©´ return
         if (WorkshopLevel == MaxWorkshopLevel) return;
+
         Destroy(workshop.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
     }
@@ -31,9 +37,8 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     private void Start() {
-        //TODO: SAVE ±¸Çö ½Ã JSON¿¡¼­ ¹Ş¾Æ¿À±â
+        //TODO: SAVE êµ¬í˜„ ì‹œ JSONì—ì„œ ë°›ì•„ì˜¤ê¸°
         WorkshopLevel = 1;
         MaxWorkshopLevel = 5;
     }
 }
-//TODO: ÀÛ¾÷Àå UI »ı¼º ÀÌÈÄ CoolTime ÀÎ½ºÆåÅÍ¿¡¼­ ¸ÅÄª½ÃÄÑÁà¾ß ÇÔ

@@ -4,8 +4,7 @@ using UnityEngine;
 public class WorkshopInvenControll : CommonInven {
     private int selectBoxKey = 0;
 
-    private List<Item> shelterInven;
-    private ShelterInvenUI shelterInvenUI;
+    private WorkshopInvenUI workshopInvenUI;
 
     private InvenController invenController;
 
@@ -13,66 +12,38 @@ public class WorkshopInvenControll : CommonInven {
         selectBoxKey = keyNum;
     }
 
+    public void printInven() {
+        for (int i = 0; i < inventory.Count; i ++) {
+            Debug.Log($" inven {i} : {inventory[i]}");
+        }
+    }
+
     private void Awake() {
-        shelterInven = new List<Item>();
-        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
+        workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
         invenController = FindObjectOfType<InvenController>();
+    }
+    private void Start() {
         initInven();
     }
 
     private void initInven() {
-        for (int i = 0; i < shelterInvenUI.CurrInvenCount; i++) {
-            shelterInven.Add(null);
+        for (int i = 0; i < workshopInvenUI.CurrInvenCount; i++) {
+            inventory.Add(null);
         }
     }
 
     //플레이어 인벤과 아이템 스위칭
-    public void switchingInvenItem(int index) {
-        List<Item> playerInven = invenController.Inventory;
-        ItemData item = playerInven[index]?.itemData;
+    public void switchingInvenItem(int target) {
+        List<GameObject> playerInven = invenController.Inventory;
+        GameObject item = playerInven[target];
 
-        addItemPlayerInven(index);
-
-        if (item is FoodItemData foodItem) {
-            addIndexItem(foodItem, selectBoxKey);
-        }
-        else if (item is MedicItemData medicItem) {
-            addIndexItem(medicItem, selectBoxKey);
-        }
-        else if (item is WeaponItemData weaponItem) {
-            addIndexItem(weaponItem, selectBoxKey);
-        }
-        else if (item is EquipItemData equipItem) {
-            addIndexItem(equipItem, selectBoxKey);
-        }
-        else if (item is CountableItemData countableItem) {
-            addIndexItem(countableItem, selectBoxKey);
-        }
-        else {
-            addIndexItem(inventory[selectBoxKey]?.itemData, index);
-        }
+        addItemPlayerInven(target);
+        addIndexItem(target, item);
         updateInvenInvoke();
     }
 
     //플레이어 인벤에 아이템 추가
     public void addItemPlayerInven(int index) {
-        if (inventory[selectBoxKey]?.itemData is FoodItemData foodItem) {
-            invenController.addIndexItem(foodItem, index);
-        }
-        else if (inventory[selectBoxKey]?.itemData is MedicItemData medicItem) {
-            invenController.addIndexItem(medicItem, index);
-        }
-        else if (inventory[selectBoxKey]?.itemData is WeaponItemData weaponItem) {
-            invenController.addIndexItem(weaponItem, index);
-        }
-        else if (inventory[selectBoxKey]?.itemData is EquipItemData equipItem) {
-            invenController.addIndexItem(equipItem, index);
-        }
-        else if (inventory[selectBoxKey]?.itemData is CountableItemData countableItem) {
-            invenController.addIndexItem(countableItem, index);
-        }
-        else {
-            invenController.addIndexItem(inventory[selectBoxKey]?.itemData, index);
-        }
+        invenController.addIndexItem(index, inventory[selectBoxKey]);
     }
 }

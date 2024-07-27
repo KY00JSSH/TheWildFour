@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShelterInvenUI : MonoBehaviour
-{
+public class ShelterInvenUI : MonoBehaviour {
     private List<GameObject> invenTotalList = new List<GameObject>();   //전체 인벤박스 리스트
     public List<GameObject> InvenTotalList { get { return invenTotalList; } }
 
@@ -12,8 +11,22 @@ public class ShelterInvenUI : MonoBehaviour
 
     public GameObject InvenBoxPrefab;       //BOX Prefab
 
+    private ShelterInvenControll shelterInven;
+
     private void Awake() {
         initInven();
+        shelterInven = GetComponent<ShelterInvenControll>();
+    }
+
+    private void OnDestroy() {
+        shelterInven.InvenChanged -= UpdateUI;
+    }
+
+    private void UpdateUI(List<GameObject> inventory) {
+        for (int i = 0; i < inventory.Count; i++) {
+            ShelterInvenBox box = invenTotalList[i].GetComponent<ShelterInvenBox>();
+            box.UpdateBox(inventory[i]);
+        }
     }
 
     private void initInven() {

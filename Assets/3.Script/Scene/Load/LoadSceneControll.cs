@@ -3,18 +3,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadSceneControll : MonoBehaviour {
-    // Start ¸Ş¼­µå¿¡¼­ ºñµ¿±â ·Îµå ½ÃÀÛ
+    // Start ë©”ì„œë“œì—ì„œ ë¹„ë™ê¸° ë¡œë“œ ì‹œì‘
+
+    // start button
     void Start() {
         StartCoroutine(LoadGameSceneAsync());
     }
 
     IEnumerator LoadGameSceneAsync() {
-        // ºñµ¿±âÀûÀ¸·Î GameScene ·Îµå ½ÃÀÛ
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Feature_MapObj");
+        // ë¹„ë™ê¸°ì ìœ¼ë¡œ GameScene ë¡œë“œ ì‹œì‘
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Game");
 
-        // ·Îµå°¡ ¿Ï·áµÉ ¶§±îÁö ´ë±â
+        // ë¡œë“œê°€ ì™„ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
         while (!asyncLoad.isDone) {
             yield return null;
         }
     }
+
 }
+

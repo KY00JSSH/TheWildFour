@@ -7,13 +7,11 @@ using UnityEngine.EventSystems;
 
 public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerExitHandler {
     /*
-     inven box¿¡ ºÙÀ½
-    // weap ÀÏ °æ¿ì tooltip¿¡ ³»±¸µµ + ½½¶óÀÌ´õ ÇØ¾ßÇÔ + °ø°İ·Âµµ Æ÷ÇÔ
+     inven boxì— ë¶™ìŒ
+    // weap ì¼ ê²½ìš° tooltipì— ë‚´êµ¬ë„ + ìŠ¬ë¼ì´ë” í•´ì•¼í•¨ + ê³µê²©ë ¥ë„ í¬í•¨
      */
     private InventoryBox inventoryBox;
 
-    private WeaponItem currentWeap;
-    private FoodItem currentFood;
 
     protected override void Awake() {
         base.Awake();
@@ -22,36 +20,28 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
 
     private void Update() {
         if (inventoryBox.isItemIn) {
-
-            // ¾ÆÀÌÅÛÀÌ µé¾î¿ÔÀ» °æ¿ì
-            if (inventoryBox.CurrentItem is FoodItem || inventoryBox.CurrentItem is EquipItem) {
-
-                if (inventoryBox.CurrentItem is FoodItem foodItem) {
-                    _item = foodItem;
-                    if (durability_Weap.gameObject.activeSelf) {
-                        durability_Weap.gameObject.SetActive(false);
-                        invenBoxSlider.gameObject.SetActive(false);
-                    }
-                    InvenItemText_Food(foodItem);
+            if (inventoryBox.CurrentItem == null) return;
+            // ì•„ì´í…œì´ ë“¤ì–´ì™”ì„ ê²½ìš°
+            if (inventoryBox.CurrentItem.GetComponent<FoodItem>()) {
+                _item = inventoryBox.CurrentItem.GetComponent<FoodItem>();
+                if (durability_Weap.gameObject.activeSelf) {
+                    durability_Weap.gameObject.SetActive(false);
+                    invenBoxSlider.gameObject.SetActive(false);
                 }
-                else if (inventoryBox.CurrentItem is WeaponItem weaponItem) {
-                    if (invenBoxSlider.gameObject.activeSelf) {
-                        invenBoxSlider.gameObject.SetActive(false);
-                        durability_Food.gameObject.SetActive(false);
-                    }
-                    _item = weaponItem;
-                    weapSlider.gameObject.SetActive(true);
-                    InvenItemText_Weap(weaponItem);
-                }
-
+                InvenItemText_Food(inventoryBox.CurrentItem.GetComponent<FoodItem>());
             }
-            else {
-                WeapItemOff();
-                FoodItemOff();
+            else if (inventoryBox.CurrentItem.GetComponent<WeaponItem>()) {
+                if (invenBoxSlider.gameObject.activeSelf) {
+                    invenBoxSlider.gameObject.SetActive(false);
+                    durability_Food.gameObject.SetActive(false);
+                }
+                _item = inventoryBox.CurrentItem.GetComponent<WeaponItem>();
+                weapSlider.gameObject.SetActive(true);
+                InvenItemText_Weap(inventoryBox.CurrentItem.GetComponent<WeaponItem>());
             }
         }
         else {
-            // ¾ÆÀÌÅÛÀ» »ç¿ëÇß°Å³ª ¹ö·ÈÀ» °æ¿ì
+            // ì•„ì´í…œì„ ì‚¬ìš©í–ˆê±°ë‚˜ ë²„ë ¸ì„ ê²½ìš°
             invenBoxSlider.transform.Find("Background").GetComponent<Image>().color = Color.white;
             WeapItemOff();
             FoodItemOff();
@@ -62,13 +52,13 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter == gameObject) {
-            if (inventoryBox.CurrentItem?.itemData != null) {
+            if (inventoryBox.CurrentItem != null) {
                 Tooltip_inven.SetActive(true);
-                _item = inventoryBox.CurrentItem;
+                _item = inventoryBox.CurrentItem.GetComponent<Item>();
                 InvenBoxItemInfo();
             }
             else {
-                Debug.Log("ÀÎº¥Åä¸®°¡ nullÀÓ");
+                Debug.Log("ì¸ë²¤í† ë¦¬ê°€ nullì„");
             }
         }
     }
@@ -78,6 +68,4 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
             Tooltip_inven.SetActive(false);
         }
     }
-
-
 }

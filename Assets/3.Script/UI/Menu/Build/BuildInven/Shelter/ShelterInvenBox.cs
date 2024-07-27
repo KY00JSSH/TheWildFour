@@ -14,6 +14,7 @@ public class ShelterInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDragH
     private PlayerItemUseControll playerItemUse;
 
     private ShelterInvenControll shelterInvenCont;
+    private ShelterInvenUI shelterInvenUI;
 
     private void Awake() {
         invenBox = transform.GetComponent<Button>();
@@ -22,6 +23,7 @@ public class ShelterInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDragH
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
         canvas = FindObjectOfType<Canvas>();
         shelterInvenCont = FindObjectOfType<ShelterInvenControll>();
+        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) {
@@ -75,7 +77,20 @@ public class ShelterInvenBox : CommonInvenBox, IPointerClickHandler, IBeginDragH
                 }
             }
             else {
-                return;
+                for (int i = 0; i < shelterInvenUI.CurrInvenCount; i++) {
+                    RectTransform boxRectTransform = shelterInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
+                    if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
+                        targetIndex = i;
+                        break;
+                    }
+                }
+
+                if (targetIndex != 99) {
+                    shelterInvenCont.changeInvenIndex(key, targetIndex);
+                }
+                else {
+                    return;
+                }
             }
         }
     }

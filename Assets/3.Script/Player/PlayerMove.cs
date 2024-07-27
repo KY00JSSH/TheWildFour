@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
     private CameraControl cameraControl;
+    private ShelterManager shelterManager;
     private Rigidbody playerRigid;
     private Transform playerSpine;
 
@@ -14,11 +15,6 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField] private float playerMoveSpeed = 1f, playerDashSpeed = 2.5f;
 
     private Animator playerAnimator; //캐릭터 애니메이션을 위해 추가 - 지훈 수정 240708 10:59
-
-    public void PlayerDieAnimation() {
-        playerAnimator.SetTrigger("triggerDie");
-    }
-
 
     public static bool isMove { get; private set; }
 
@@ -42,13 +38,15 @@ public class PlayerMove : MonoBehaviour {
     public bool isDash { get; private set; }
 
     private void Awake() {
-        playerRigid = GetComponentInParent<Rigidbody>();
+        playerRigid = transform.parent.GetComponent<Rigidbody>();
         playerAnimator = GetComponentInParent<Animator>();
-        cameraControl = FindObjectOfType<CameraControl>();
         playerSpine = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
+        shelterManager = FindObjectOfType<ShelterManager>();
     }
 
     private void Start() {
+        cameraControl = FindObjectOfType<CameraControl>();
+
         isMove = false;
         isDash = false;
 
@@ -57,9 +55,13 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = TotalDashGage;
         DecDashGage = defaultDecDashGage;
         IncDashGage = defaultIncDashGage;
+
+        // 플레이어를 껐다 켜야지만 weaponPoint가 따라가는.. 의문의 버그
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
-    public bool isPlayerBuilding { get; private set; }
+    public static bool isPlayerBuilding { get; private set; }
     private void Update() {
         playerAnimator.SetBool("isSideWalk", isSideWalk);
         playerAnimator.SetBool("isBackWalk", isBackWalk);
@@ -69,7 +71,7 @@ public class PlayerMove : MonoBehaviour {
     private void FixedUpdate() {
         if (isPlayerBuilding || PlayerStatus.isDead) return;
         
-        if (isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
+        if (isSkilled && isAvailableDash && Input.GetKey(KeyCode.LeftShift)) {
             isSideWalk = false;
             isBackWalk = false;
             Dash(true);
@@ -100,7 +102,7 @@ public class PlayerMove : MonoBehaviour {
                 minFallSpeed, maxFallSpeed, currentFallSpeed);
             float damage = 100 * (Mathf.Exp(fallingRate) - 1) / (Mathf.Exp(1) - 1);
 
-            GetComponent<PlayerStatus>().TakeDamage(damage);
+            GetComponentInParent<PlayerStatus>().TakeDamage(damage);
             currentFallSpeed = 0f;
         }
     }
@@ -108,7 +110,6 @@ public class PlayerMove : MonoBehaviour {
     private Vector3 pastPosition = Vector3.zero;
     private float rotationSpeed = 5f;
 
-    Quaternion debugTargetRotation;
     private void LookatMouse() {
         Quaternion targetRotation =
             Quaternion.LookRotation(GetLookatPoint() - playerRigid.position);
@@ -168,6 +169,9 @@ public class PlayerMove : MonoBehaviour {
         }
 
         else {
+            yRotate += 0 - yFoward;
+            if (yRotate > 180) yRotate -= 360;
+            yFoward = 0;
             if (yRotate > yFoward + 100 || yRotate < yFoward - 100) {
                 isBackWalk = true;
             }
@@ -219,7 +223,9 @@ public class PlayerMove : MonoBehaviour {
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
-        else if (CurrentDashGage == TotalDashGage) SetDash();
+        else if ((CurrentDashGage == TotalDashGage) &&
+            !playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) 
+            SetDash();
     }
 
     private float currentSpeed = 0f;
@@ -248,12 +254,11 @@ public class PlayerMove : MonoBehaviour {
         playerRigid.MovePosition(targetPosition);
 
         playerAnimator.SetFloat("MoveSpeed", currentSpeed);
+        EarnMoveExp();
     }
 
-    public Quaternion GetRigid() { return playerRigid.rotation; }
-    public Quaternion GetSpine() { return playerSpine.rotation; }
-    public Quaternion GetDirection() { return Quaternion.Euler(0, moveDirection, 0); }
-    public Quaternion GetCameraRotation () { return Quaternion.Euler(0, cameraControl.rotationDirection, 0); }
-    public Quaternion GetTargetRotation () { return debugTargetRotation; }
-    public Vector3 GetInputXZ() { return new Vector3(InputX, 0, InputZ); }
+    private void EarnMoveExp () {
+        shelterManager.AddMoveExp(Time.deltaTime * currentSpeed * 30f);
+        //TODO: Release 할 때 수치 값 조정
+    }
 }

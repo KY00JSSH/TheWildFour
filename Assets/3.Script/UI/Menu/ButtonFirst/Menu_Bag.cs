@@ -5,71 +5,15 @@ using UnityEngine;
 public class Menu_Bag : MonoBehaviour, IMenuButton {
     [SerializeField] private GameObject TextBox_Bag;
     private Menu_Controll menuControll;
-
-
-    public Canvas canvas;
-    private RectTransform canvasRectTransform;
-    private GameObject player;
-    private GameObject playerClone;
-    [SerializeField] private Vector2 playerPos;
-    [SerializeField] private float scaleFactor;
     private void Awake() {
         menuControll = FindObjectOfType<Menu_Controll>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerPos = new Vector2(350, -150);
-        scaleFactor = 100f;
-        canvasRectTransform = canvas.GetComponent<RectTransform>();
-        playerCloneInit();
     }
-    private void playerCloneInit() {
-
-        // UI ø‰º“∑Œ «•Ω√«“ ∞¥√º∏¶ ª˝º∫
-        playerClone = Instantiate(player, TextBox_Bag.transform);
-        playerClone.layer = LayerMask.NameToLayer("UI");
-        // ≈¨∑–µ» «√∑π¿ÃæÓ¿« π∞∏Æ¿˚ ¡¶æ‡ º≥¡§
-        Rigidbody rb = playerClone.GetComponent<Rigidbody>();
-        if (rb != null) {
-            rb.useGravity = false;
-            rb.isKinematic = true;
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-        }
-
-        // ≈¨∑–µ» «√∑π¿ÃæÓ¿« RectTransform º≥¡§
-        RectTransform playerCloneRect = playerClone.AddComponent<RectTransform>();
-        playerCloneRect.SetParent(TextBox_Bag.transform, false);
-        playerCloneRect.anchoredPosition = playerPos;
-
-        playerCloneRect.localScale = playerCloneRect.localScale * scaleFactor;
-
-        // ≈¨∑–µ» «√∑π¿ÃæÓ∏¶ ∫Ò»∞º∫»≠
-        playerClone.SetActive(false);
-    }
-
-
-    private void PlayerRigidbodyOff() {
-        // ≈¨∑–µ» «√∑π¿ÃæÓ¿« π∞∏Æ¿˚ ¡¶æ‡ º≥¡§
-        Rigidbody rb = playerClone.GetComponent<Rigidbody>();
-        if (rb != null) {
-            rb.useGravity = false;
-            rb.isKinematic = true;
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-        }
-        else {
-            Debug.Log("?????????????????????");
-        }
-
-    }
-    private void OnEnable() {
-        PlayerRigidbodyOff();
-    }
-
-    // ªÛ¿ß πˆ∆∞ø°º≠ ªÁøÎ«‘
+    // ÏÉÅÏúÑ Î≤ÑÌäºÏóêÏÑú ÏÇ¨Ïö©Ìï®
     public void I_ButtonOffClick() {
         TextBoxBagOff();
     }
 
     public void I_ButtonOnClick() {
-        playerClone.SetActive(true);
         TextBoxBagActive();
     }
 
@@ -78,9 +22,9 @@ public class Menu_Bag : MonoBehaviour, IMenuButton {
     }
 
     public void ButtonOnClick() {
-        menuControll.CloseUI();
-        playerClone.SetActive(true);
+        menuControll.isMenuButtonOpen = true;
         TextBoxBagActive();
+        menuControll.CloseUI();
     }
 
     private void TextBoxBagActive() {

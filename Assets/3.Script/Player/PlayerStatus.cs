@@ -6,12 +6,27 @@ using UnityEngine.Events;
 public class PlayerStatus : MonoBehaviour {
     private Player_InfoViewer infoViewer;
     public UnityEvent onDead;
+    private GameObject player;
+
     public static bool isDead { get; private set; }
-    public void SetPlayerDead () { isDead = true; }
+    public void SetPlayerDead () { 
+        isDead = true;
+        player.GetComponent<Animator>().SetBool("isDead", isDead);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("triggerDie");
+    }
+
+    public void PlayerRespawn() {
+        isDead = false;
+        player.GetComponent<Animator>().SetBool("isDead", isDead);
+        player.transform.position = new Vector3(0, 0, 0);
+        Start();
+    }
+
 
     private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
     private float PlayerHp, PlayerHunger, PlayerWarm;
     public float PlayerMaxHp { get; set; }
+    public float GetPlayerHp() { return PlayerHp; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
     private float HealRestore = 0.3f, HungerRestore = 0.5f, WarmRestore = 1.2f;
@@ -29,7 +44,7 @@ public class PlayerStatus : MonoBehaviour {
         
         if(PlayerWarm <= 0) {
             PlayerWarm = 0;
-            TakeHpDotDamage(2f);
+            TakeHpDotDamage(4f);
         }
     }
 
@@ -66,7 +81,7 @@ public class PlayerStatus : MonoBehaviour {
         StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
     }
 
-    public void EatMedicine(MedItem item) {
+    public void EatMedicine(MedicItem item) {
         if (item.HealTime == 0) {
             PlayerHp += 80;
             if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;
@@ -113,7 +128,7 @@ public class PlayerStatus : MonoBehaviour {
     public IEnumerator Slow() {
         isSlowed = true;
 
-        PlayerMove plyaerMove = GetComponent<PlayerMove>();
+        PlayerMove plyaerMove = GetComponentInChildren<PlayerMove>();
         float speed = plyaerMove.GetPlayerMoveSpeed();
         plyaerMove.SetPlayerMoveSpeed(speed * 0.8f);
         while(GetPlayerStatus(Status.Satiety)) {
@@ -125,6 +140,7 @@ public class PlayerStatus : MonoBehaviour {
 
     private void Awake() {
         infoViewer = FindObjectOfType<Player_InfoViewer>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start() {
@@ -142,13 +158,13 @@ public class PlayerStatus : MonoBehaviour {
         infoViewer.SetPlayerHunger((int)PlayerHunger);
         infoViewer.SetPlayerWarm((int)PlayerWarm);
 
-        if (!isDead) {
-            TakeWarmDamage();
-            TakeHungerDamage();
-            RestoreHpHunger();
-            SatietySlow();
-            RestoreHp();
-            RestoreWarm();
-        }
+        if (isDead) return;
+
+        TakeWarmDamage();
+        TakeHungerDamage();
+        RestoreHpHunger();
+        SatietySlow();
+        RestoreHp();
+        RestoreWarm();
     }
 }

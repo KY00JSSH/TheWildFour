@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameStart : MonoBehaviour
 {
     public void StartGame() {
-        // ·Îµù ¾ÀÀ» ºÒ·¯¿È - ·Îµù¾À¿¡¼­ ºñµ¿±â·Î °ÔÀÓ¾À ºÎ¸§
-        SceneManager.LoadScene("Load");
+        // ë¡œë”© ì”¬ì„ ë¶ˆëŸ¬ì˜´ - ë¡œë”©ì”¬ì—ì„œ ë¹„ë™ê¸°ë¡œ ê²Œì„ì”¬ ë¶€ë¦„
+        SceneManager.LoadScene("PlayerSelect");
     }
 }

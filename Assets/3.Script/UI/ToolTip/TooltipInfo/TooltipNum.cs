@@ -97,10 +97,11 @@ public class TooltipNum : MonoBehaviour {
     public int InvenItemGet(int itemKey) {
         int cntitemnum = 0;
         for (int i = 0; i < invenController.Inventory.Count; i++) {
-            if(invenController.Inventory[i]?.itemData?.Key == itemKey) {
+            if (invenController.Inventory[i] == null) continue;
+            if (invenController.Inventory[i].GetComponent<Item>().Key == itemKey) {
                 // 키가 같음 갯수 세야하는데z`
-                if (invenController.Inventory[i] is CountableItem _item)
-                    cntitemnum += _item.CurrStackCount;
+                if (invenController.Inventory[i].GetComponent<CountableItem>() != null)
+                    cntitemnum += invenController.Inventory[i].GetComponent<CountableItem>().CurrStackCount;
                 else {
                     cntitemnum++;
                 }

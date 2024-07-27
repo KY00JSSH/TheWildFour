@@ -34,7 +34,7 @@ public class PanelMap_MarkerSpawner : MonoBehaviour
         markerOnMap.transform.position = pmMarkerPosition;
         markers.Add(markerOnMap); //리스트에 마커 추가
 
-        Debug.Log($"마커가 부모 오브젝트 {markerOnMap.transform.parent.name}의 하위인 {markerOnMap.transform.position} 위치에 생성됐습니다.");
+        //Debug.Log($"마커가 부모 오브젝트 {markerOnMap.transform.parent.name}의 하위인 {markerOnMap.transform.position} 위치에 생성됐습니다.");
     }
 
     //public void RemoveMarker(BuildingType type, Vector3 position)

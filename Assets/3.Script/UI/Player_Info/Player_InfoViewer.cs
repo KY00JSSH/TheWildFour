@@ -4,115 +4,98 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Player_InfoViewer : MonoBehaviour
-{
+public class Player_InfoViewer : MonoBehaviour {
     //UI -> slider
     [SerializeField] private Slider[] player_Infos;
     //slider Text 
     [SerializeField] private Text[] slider_Texts;
+    // BGImg
+    [SerializeField] private Image BGImgChange;
 
-
-    // playerÀÇ Á¤º¸¸¦ uiÂÊ¿¡¼­ update ÇÒ °æ¿ì °¢ Á¤º¸ ½ºÅ©¸³Æ® ÇÊ¿äÇÔ
-    //[SerializeField] private PlayerHP player;
-
-    private void Start()
-    {
+    private void Start() {
         List<Slider> slidersList = new List<Slider>();
         List<Text> slidersTextList = new List<Text>();
 
-        foreach (Transform child in transform)
-        {
+        foreach (Transform child in transform) {
             Slider slider = child.GetComponent<Slider>();
-            if (slider != null)
-            {
+            if (slider != null) {
                 slidersList.Add(slider);
-                Debug.Log(slider.name+ "Ãß°¡");
                 Text t = child.GetComponentInChildren<Text>();
                 if (t != null)
                     slidersTextList.Add(t);
                 else
-                    Debug.Log("¸øÃ£À½?");
+                    Debug.Log("ëª»ì°¾ìŒ?");
             }
-            else
-            {
-                Debug.LogWarning($"½½¶óÀÌ´õ ¾øÀ½ {child.name}");
-            }
-        }
-    }
-
-
-
-    // playerÀÇ Á¤º¸¸¦ uiÂÊ¿¡¼­ update ÇÒ °æ¿ì
-    /*
-    private void Update()
-    {
-        for (int i = 0; i < player_Infos.Length; i++)
-        {
-            if (player_Infos[i].name == "HP")
-            {
-                // player_Infos[i].value = player.CurrentHP / player.MaxHP; // ¿©±â¼­ °è»êÇÏ·Á±¸¿ä
-                Debug.Log("½½¶óÀÌ´õ ÀÌ¸§" + player_Infos[i].name);
-                // slider_Texts[i].text = player_Infos[i].value;
-                Debug.Log("½½¶óÀÌ´õ ÅØ½ºÆ® ÀÌ¸§" + slider_Texts[i].name);
-                Debug.Log("½½¶óÀÌ´õ ÅØ½ºÆ® °ª" + slider_Texts[i].text);
-
-            }
-            else if (player_Infos[i].name == "Hunger")
-            {
-                // player_Infos[i].value = player.CurrentHP / player.MaxHP;
-                Debug.Log("½½¶óÀÌ´õ ÀÌ¸§" + player_Infos[i].name);
-                // slider_Texts[i].text = player_Infos[i].value;
-                Debug.Log("½½¶óÀÌ´õ ÅØ½ºÆ® ÀÌ¸§" + slider_Texts[i].name);
-                Debug.Log("½½¶óÀÌ´õ ÅØ½ºÆ® °ª" + slider_Texts[i].text);
-            }
-            else if (player_Infos[i].name == "Warm")
-            {
-                // player_Infos[i].value = player.CurrentHP / player.MaxHP;
-                Debug.Log("½½¶óÀÌ´õ ÀÌ¸§" + player_Infos[i].name);
-                // slider_Texts[i].text = player_Infos[i].value;
-                Debug.Log("½½¶óÀÌ´õ ÅØ½ºÆ® ÀÌ¸§" + slider_Texts[i].name);
-                Debug.Log("½½¶óÀÌ´õ ÅØ½ºÆ® °ª" + slider_Texts[i].text);
-            }
-            else
-            {
-                Debug.Log("½½¶óÀÌ´õ ÀÌ¸§ ¾øÀ½");
-            }
-        }
-    }
-    */
-
-
-    // playerÀÇ Á¤º¸¸¦ Å¸ ½ºÅ©¸³Æ®¿¡¼­ µé°í°¡¼­ »ç¿ëÇÒ °æ¿ì
-    public void SetPlayerHp(int value)
-    {
-        for (int i = 0; i < player_Infos.Length; i++)
-        {
-            if (player_Infos[i].name == "HP")
-            {
-                player_Infos[i].value = value;
-                slider_Texts[i].text = value.ToString();                
+            else {
+                Debug.LogWarning($"ìŠ¬ë¼ì´ë” ì—†ìŒ {child.name}");
             }
         }
     }
 
-    public void SetPlayerHunger(int value)
-    {
-        for (int i = 0; i < player_Infos.Length; i++)
-        {
-            if (player_Infos[i].name == "Hunger")
-            {
+    private void FixedUpdate() {
+        playerInfoCheck();
+    }
+
+    // í”Œë ˆì´ì–´ ìƒíƒœê°’ì´ ì¼ì • ê°’ì´í•˜ë¡œ ë–¨ì–´ì¡Œì„ ê²½ìš° í…ìŠ¤íŠ¸ ì´ë¯¸ì§€ ë³€í™”
+    private void playerInfoCheck() {
+        for (int i = 0; i < player_Infos.Length; i++) {
+            if (player_Infos[i].value <= 25) {
+                slider_Texts[i].color = Color.red;
+                playerInfoBGImgChange(i);
+            }
+            else {
+                BGImgChange.gameObject.SetActive(false);
+                Color color = BGImgChange.color;
+                color = Color.white;
+                color.a = 0;
+                BGImgChange.color = color;
+                slider_Texts[i].color = Color.white;
+            }
+        }
+    }
+    // ì´ë¯¸ì§€ 
+    private void playerInfoBGImgChange(int i) {
+        BGImgChange.gameObject.SetActive(true);
+        Color color = BGImgChange.color;
+        if (i == 0) {
+            // i = 0 : ì²´ë ¥ì¼ ê²½ìš° -> ìƒ‰ìƒ ë¶‰ì€ìƒ‰ 
+            color = Color.red;
+        }
+        else {
+            if(color == Color.red) return;
+            // i = 1,2 : í—ˆê¸°, ì˜¨ë„ì¼ ê²½ìš° -> ìƒ‰ìƒ íšŒìƒ‰ 
+            color = Color.gray;
+        }
+        // ì²´ë ¥ ê°’ì— ë”°ë¼ ì•ŒíŒŒê°’ ì¡°ì ˆ
+        //TODO: ì•ŒíŒŒê°’ í™•ì¸í•´ë´ì•¼í• ë“¯
+        float colorValue = (25 - player_Infos[i].value) * 0.03f;
+        color.a = Mathf.Min(colorValue, 0.4f);
+        BGImgChange.color = color;
+
+    }
+
+    // playerì˜ ì •ë³´ë¥¼ íƒ€ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ë“¤ê³ ê°€ì„œ ì‚¬ìš©í•  ê²½ìš°
+    public void SetPlayerHp(int value) {
+        for (int i = 0; i < player_Infos.Length; i++) {
+            if (player_Infos[i].name == "HP") {
                 player_Infos[i].value = value;
                 slider_Texts[i].text = value.ToString();
             }
         }
     }
 
-    public void SetPlayerWarm(int value)
-    {
-        for (int i = 0; i < player_Infos.Length; i++)
-        {
-            if (player_Infos[i].name == "Warm")
-            {
+    public void SetPlayerHunger(int value) {
+        for (int i = 0; i < player_Infos.Length; i++) {
+            if (player_Infos[i].name == "Hunger") {
+                player_Infos[i].value = value;
+                slider_Texts[i].text = value.ToString();
+            }
+        }
+    }
+
+    public void SetPlayerWarm(int value) {
+        for (int i = 0; i < player_Infos.Length; i++) {
+            if (player_Infos[i].name == "Warm") {
                 player_Infos[i].value = value;
                 slider_Texts[i].text = value.ToString();
             }

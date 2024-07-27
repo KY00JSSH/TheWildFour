@@ -10,7 +10,7 @@ public class Menu_Note : MonoBehaviour, IMenuButton {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
 
-    // »óÀ§ ¹öÆ°¿¡¼­ »ç¿ëÇÔ
+    // ìƒìœ„ ë²„íŠ¼ì—ì„œ ì‚¬ìš©í•¨
     public void I_ButtonOffClick() {
         TextBoxNoteOff();
     }
@@ -24,6 +24,7 @@ public class Menu_Note : MonoBehaviour, IMenuButton {
     }
 
     public void ButtonOnClick() {
+        menuControll.isMenuButtonOpen = true;
         menuControll.CloseUI();
         TextBoxNoteActive();
     }

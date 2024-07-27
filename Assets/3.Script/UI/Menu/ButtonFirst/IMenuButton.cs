@@ -4,12 +4,12 @@ using UnityEngine;
 
 public interface IMenuButton {
 
-    // »óÀ§ ¹öÆ°¿¡¼­ »ç¿ëÇÔ
+    // ìƒìœ„ ë²„íŠ¼ì—ì„œ ì‚¬ìš©í•¨
     void I_ButtonOnClick();
 
     void I_ButtonOffClick();
 
-    // ÇØ´ç ¹öÆ°À» ¸¶¿ì½º Å¬¸¯ÇÒ¶§ »ç¿ëÇÔ
+    // í•´ë‹¹ ë²„íŠ¼ì„ ë§ˆìš°ìŠ¤ í´ë¦­í• ë•Œ ì‚¬ìš©í•¨
     void ButtonOnClick();
 
     void ButtonOffClick();

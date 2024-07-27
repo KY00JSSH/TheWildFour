@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-// ############ ÀÓÀÇ ¼öÁ¤ ±İÁö ############ //
+// ############ ì„ì˜ ìˆ˜ì • ê¸ˆì§€ ############ //
 
 public class ShelterManager : MonoBehaviour {
+    private PlayerAbility playerAbility;
     public int ShelterLevel { get; private set; }
     public int MaxShelterLevel { get; private set; }
 
-    private Vector3 LastPlayerPosition; //TODO: °ÅÃ³ ÀÔÀå, ÅğÀå½Ã »ç¿ëÇÒ À§Ä¡°ª
+    private Vector3 LastPlayerPosition;
 
     public int MoveLevel { get; private set; }
     public int AttackLevel { get; private set; }
@@ -25,8 +26,15 @@ public class ShelterManager : MonoBehaviour {
     public float AttackCurrentExp { get; private set; }
     public float GatherCurrentExp { get; private set; }
 
+    private TooltipNum tooltipNum;
+    private InvenController invenCont;
+
     private void Start() {
-        //TODO: SAVE ±¸Çö ½Ã JSON¿¡¼­ ¹Ş¾Æ¿À±â
+        playerAbility = FindObjectOfType<PlayerAbility>();
+        tooltipNum = FindObjectOfType<TooltipNum>();
+        invenCont = FindObjectOfType<InvenController>();
+
+        //TODO: SAVE êµ¬í˜„ ì‹œ JSONì—ì„œ ë°›ì•„ì˜¤ê¸°
         ShelterLevel = 1;
         MaxShelterLevel = 5;
 
@@ -75,11 +83,13 @@ public class ShelterManager : MonoBehaviour {
             GatherLevel++;
             GatherTotalExp += GatherLevel * 4;
         }
+        Debug.Log(GatherPoint);
     }
 
-    public void LevelUp() {     // °ÅÃ³ ·¹º§¾÷
+    public void LevelUp() {     // ê±°ì²˜ ë ˆë²¨ì—…
         if (ShelterLevel == MaxShelterLevel) return;
-        // 24 07 18 ±è¼öÁÖ Shelter upgrade item ºÎÁ·ÇÏ¸é return
+        // 24 07 18 ê¹€ìˆ˜ì£¼ Shelter upgrade item ë¶€ì¡±í•˜ë©´ return
+
         Tooltip_Shelter tooltip_Shelter = FindObjectOfType<Tooltip_Shelter>();
         if (!tooltip_Shelter.isUpgradeAvailable) return;
 
@@ -100,7 +110,6 @@ public class ShelterManager : MonoBehaviour {
         shelter.Building.SetActive(true);
     }
 
-
     public Skill[] skillMove = new Skill[5];
     public Skill[] skillAttack = new Skill[5];
     public Skill[] skillGather = new Skill[5];
@@ -110,6 +119,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillMove[index].LevelUp();
         MovePoint--;
+        playerAbility.UpdateAblity();
     }
 
     public void OnSkillAttackButton(int index) {
@@ -117,6 +127,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillAttack[index].LevelUp();
         AttackPoint--;
+        playerAbility.UpdateAblity();
     }
 
     public void OnSkillGatherButton(int index) {
@@ -124,6 +135,7 @@ public class ShelterManager : MonoBehaviour {
         if (index > ShelterLevel) return;
         skillGather[index].LevelUp();
         GatherPoint--;
+        playerAbility.UpdateAblity();
     }
 
     public Skill GetSkill(string name) {
@@ -137,4 +149,4 @@ public class ShelterManager : MonoBehaviour {
     }
 }
 
-// ############ ÀÓÀÇ ¼öÁ¤ ±İÁö ############ //
+// ############ ì„ì˜ ìˆ˜ì • ê¸ˆì§€ ############ //

@@ -11,27 +11,24 @@ public class MCursor : MonoBehaviour {
 
     // default mouse sprite
     private Sprite defaultM;
-    public Sprite[] MouseCursorOff;
     public Sprite[] MouseCursorOn;
 
-    // °ËÃâ´ë»ó À§ ½ºÇÁ¶óÀÌÆ® Ç¥½Ã
+    // ê²€ì¶œëŒ€ìƒ ìœ„ ìŠ¤í”„ë¼ì´íŠ¸ í‘œì‹œ
     public Sprite[] spaceEnter;
     public Text spaceText;
 
-    // °ËÃâµÈ ¾ÆÀÌÅÛ Äµ¹ö½º À§Ä¡
+    // ê²€ì¶œëœ ì•„ì´í…œ ìº”ë²„ìŠ¤ ìœ„ì¹˜
     private Vector2 itemCanvasPosition;
-    // °ËÃâµÉ ¾ÆÀÌÅÛ°ú ¸¶¿ì½º °Å¸®
-    [SerializeField] private float distance;
 
-    // ¸¶¿ì½º ½ºÇÁ¶óÀÌÆ® º¯°æ¿©ºÎ
+    // ë§ˆìš°ìŠ¤ ìŠ¤í”„ë¼ì´íŠ¸ ë³€ê²½ì—¬ë¶€
     private bool isChangeSprite;
 
-    // ¾ÆÀÌÄÜÀÌ Ç¥½ÃµÉ À§Ä¡ º¸Á¤°ª
+    // ì•„ì´ì½˜ì´ í‘œì‹œë  ìœ„ì¹˜ ë³´ì •ê°’
     private float iconDistance;
+
 
     private void Awake() {
         defaultM = transform_cursor.gameObject.GetComponent<Image>().sprite;
-        distance = 100f;
         iconDistance = 50f;
     }
 
@@ -41,26 +38,37 @@ public class MCursor : MonoBehaviour {
 
     private void Update() {
         Update_MousePosition();
-        if (CheckCol()) {
-            // °Å¸® °è»ê
-            ItemPosition();
-            // ·¹ÀÌ¾îº° °Å¸® °è»ê -> ½ºÇÁ¶óÀÌÆ® º¯°æ ¿©ºÎ È®ÀÎ
-            ChangeSprite();
-            if (isChangeSprite) {
-                ChangeSprite();
-                IconPosition(iconDistance);
-            }
-            else {
-                // ¸Ö¾îÁö¸é default·Î º¯°æ + ¾ÆÀÌÄÜ ¾ø¾Ö±â
-                DefaultMouseSprite();
-                IconPositionOff();
-            }
-
+    }
+    private void LateUpdate() {
+        // ê° Build UI Open ë˜ë©´ ê¸°ë³¸ê°’, ìŠ¤í˜ì´ìŠ¤ ì•„ì´ì½˜ off
+        if (WorkShopUI.isWorkshopUIOpen || ShelterUI.isShelterUIOpen) {
+            DefaultMouseSprite();
+            IconPositionOff();
         }
         else {
-            DefaultMouseSprite();
+            if (CheckCol()) {
+                // ê±°ë¦¬ ê³„ì‚°
+                ItemPosition();
+                // ë ˆì´ì–´ë³„ ê±°ë¦¬ ê³„ì‚° -> ìŠ¤í”„ë¼ì´íŠ¸ ë³€ê²½ ì—¬ë¶€ í™•ì¸
+                ChangeCursorSprite();
+                if (isChangeSprite) {
+                    ChangeCursorSprite();
+                    IconPosition(iconDistance);
+                }
+                else {
+                    // ë©€ì–´ì§€ë©´ defaultë¡œ ë³€ê²½ + ì•„ì´ì½˜ ì—†ì• ê¸°
+                    DefaultMouseSprite();
+                    IconPositionOff();
+                }
+
+            }
+            else {
+                IconPositionOff();
+                DefaultMouseSprite();
+            }
         }
     }
+
 
     private void Init_Cursor() {
         Cursor.visible = false;
@@ -73,50 +81,48 @@ public class MCursor : MonoBehaviour {
 
 
 
-    // Ä¿¼­ À§Ä¡ º¯°æ
+    // ì»¤ì„œ ìœ„ì¹˜ ë³€ê²½
     private void Update_MousePosition() {
         Vector2 mousePos = Input.mousePosition;
         transform_cursor.position = mousePos;
     }
 
-    // °ËÃâµÈ ¾ÆÀÌÅÛ ½ºÅ©¸°»óÀÇ ÁÂÇ¥·Î º¯°æ
+    // ê²€ì¶œëœ ì•„ì´í…œ ìŠ¤í¬ë¦°ìƒì˜ ì¢Œí‘œë¡œ ë³€ê²½
     private void ItemPosition() {
         if(PlayerItemPickControll.ClosestItem.transform.TryGetComponent(out Collider col)) {
-            // Äİ¶óÀÌ´õ°¡ ÀÖÀ» °æ¿ì ÇØ´ç Äİ¶óÀÌ´õÀÇ Áß½ÉÀ» ±âÁØÀ¸·Î À§Ä¡ º¯°æ
+            // ì½œë¼ì´ë”ê°€ ìˆì„ ê²½ìš° í•´ë‹¹ ì½œë¼ì´ë”ì˜ ì¤‘ì‹¬ì„ ê¸°ì¤€ìœ¼ë¡œ ìœ„ì¹˜ ë³€ê²½
             Vector3 vector3 = col.bounds.center;
             itemCanvasPosition = Camera.main.WorldToScreenPoint(vector3);
         }
         else {
-            // ¸ô±î...Äİ¶óÀÌ´õ°¡ ¾øÀ» ¼öµµ ÀÖ³ª?
+            // ëª°ê¹Œ...ì½œë¼ì´ë”ê°€ ì—†ì„ ìˆ˜ë„ ìˆë‚˜?
             // Convert world position to screen position
             itemCanvasPosition = Camera.main.WorldToScreenPoint(PlayerItemPickControll.ClosestItem.transform.position);
         }        
     }
 
-    // Ä¿¼­¿Í ¾ÆÀÌÅÛ ¸Ö¾îÁ³À» °æ¿ì ¾ÆÀÌÄÜ defualt°ª º¯°æ
+    // ì»¤ì„œì™€ ì•„ì´í…œ ë©€ì–´ì¡Œì„ ê²½ìš° ì•„ì´ì½˜ defualtê°’ ë³€ê²½
     private void CursorDistanceCheck(float distance) {
         float _distance = Vector3.Distance(itemCanvasPosition, transform_cursor.position);
-        if (_distance >= distance) isChangeSprite = false; // ¸Ö¾îÁö¸é false
+        if (_distance >= distance) isChangeSprite = false; // ë©€ì–´ì§€ë©´ false
         else isChangeSprite = true;
     }
 
 
-    // °ËÃâµÈ ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ 
+    // ê²€ì¶œëœ ì•„ì´í…œ ì•„ì´ì½˜ 
     private void IconPosition(float iconDistance) {
         transform_icon.gameObject.SetActive(true);
         spaceText.gameObject.SetActive(true);
         transform_icon.position = new Vector2(itemCanvasPosition.x, itemCanvasPosition.y + iconDistance);
 
         string itemName = PlayerItemPickControll.ClosestItem.name;
-        if (itemName.Contains("(Clone)"))
-            itemName = itemName.Replace("(Clone)", "");
-        if (itemName.Contains("0")) {
-            itemName = itemName.Split('0')[0];
-        }
+        if (itemName.Contains("(Clone)")) itemName = itemName.Replace("(Clone)", "");
+        if (itemName.Contains("0")) itemName = itemName.Split('0')[0];
+        if (itemName.Contains("Prf")) itemName = itemName.Replace("Prf", "");
 
         spaceText.text = itemName;
     }
-    // ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ off
+    // ì•„ì´í…œ ì•„ì´ì½˜ off
     private void IconPositionOff() {
         transform_icon.gameObject.SetActive(false);
         spaceText.gameObject.SetActive(false);
@@ -128,24 +134,39 @@ public class MCursor : MonoBehaviour {
     }
 
     private bool CheckCol() {
-        if (PlayerItemPickControll.ClosestItem != null) return true;
+        if (PlayerItemPickControll.ClosestItem != null) {
+            if (PlayerItemPickControll.ClosestItem.activeSelf) return true;
+            else return false;
+        }
         else return false;
     }
 
-    // ·¹ÀÌ¾îº° ¾ÆÀÌÄÜ º¯°æ
-    private void ChangeSprite() {
+    //TODO: 10~12ë²ˆ ê²€ì¶œê±°ë¦¬ ë³€ê²½í•´ì•¼í•¨
+    // ë ˆì´ì–´ë³„ ì•„ì´ì½˜ ë³€ê²½
+    private void ChangeCursorSprite() {
         switch (PlayerItemPickControll.ClosestItem.layer) {
-            case 8: // ¾ÆÀÌÅÛ ¸¶¿ì½º °Å¸® 70f
-                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[2];
+            case 8: // ì•„ì´í…œ ë§ˆìš°ìŠ¤ ê±°ë¦¬ 70f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[1];
                 CursorDistanceCheck(70f);
                 iconDistance = 50f;
                 break;
-            case 9:// °ÇÃà¹° °ËÃâ°Å¸® 500f
+            case 9:// ê±´ì¶•ë¬¼ ë§ˆìš°ìŠ¤ ê±°ë¦¬ 500f
+                FindBuildType();
+                break;
+            case 10:// ë™ë¬¼ ë§ˆìš°ìŠ¤ ê±°ë¦¬ 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[4];
+                CursorDistanceCheck(150f);
+                iconDistance = 30f;
+                break;
+            case 11:// ë‚˜ë¬´ ë§ˆìš°ìŠ¤ ê±°ë¦¬ 500f
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[5];
+                CursorDistanceCheck(150f);
+                iconDistance = 0f;
+                break;
+            case 12:// ëŒ ë§ˆìš°ìŠ¤ ê±°ë¦¬ 500f
                 transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[6];
-                CursorDistanceCheck(500f);
-                //TODO: °ÇÃà¹° º° ¾ÆÀÌÄÜ À§Ä¡ ¾È¸ÂÀ½
-                IconPositionOff();
-                iconDistance = -10f;
+                CursorDistanceCheck(100f);
+                iconDistance = 30f;
                 break;
             default:
                 isChangeSprite = false;
@@ -153,5 +174,39 @@ public class MCursor : MonoBehaviour {
         }
     }
 
+    private void FindBuildType() {
+        Debug.Log(PlayerItemPickControll.ClosestItem.name);
+        BuildingType buildingType = PlayerItemPickControll.ClosestItem.GetComponentInParent<BuildingInteraction>().Type;
+        switch (buildingType) {
+            case BuildingType.Campfire:
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[3];
+                CursorDistanceCheck(150f);
+                iconDistance = -10f;
+                break;
+            case BuildingType.Furnace:
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[3];
+                CursorDistanceCheck(150f);
+                iconDistance = -10f;
+                break;
+            case BuildingType.Shelter:
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[2];
+                CursorDistanceCheck(200f);
+                iconDistance = -5f;
+                break;
+            case BuildingType.Workshop:
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[2];
+                CursorDistanceCheck(200f);
+                iconDistance = -5f;
+                break;
+            case BuildingType.Chest:
+                transform_cursor.GetComponent<Image>().sprite = MouseCursorOn[3];
+                CursorDistanceCheck(150f);
+                iconDistance = -10f;
+                break;
+            default:
+                break;
+        }
+
+    }
 
 }

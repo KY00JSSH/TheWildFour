@@ -17,15 +17,22 @@ public class BuildingInteraction : MonoBehaviour {
     private InteractionUIMapping InteractionUI;
     private Menu_Controll menuControl;
     private ItemSelectControll selected;
+
+    private GameObject player;
+    private CameraControl cameraControl;
+
     private void Awake() {
         interactionManager = FindObjectOfType<BuildingInteractionManager>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        cameraControl = FindObjectOfType<CameraControl>();
 
-        InteractionUI = interactionManager.InteractionUI;
-        menuControl = interactionManager.menuControl;
     }
 
     private void OnEnable() {
         selected = GetComponentInChildren<ItemSelectControll>();
+
+        InteractionUI = interactionManager.InteractionUI;
+        menuControl = interactionManager.menuControl;
     }
 
     private void Update() {
@@ -36,6 +43,8 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void Interaction(BuildingType type) {
+        //Debug.Log(type);
+
         switch (type) {
             case BuildingType.Campfire: CampfireInteraction(); break;
             case BuildingType.Furnace: FurnaceInteraction(); break;
@@ -52,27 +61,53 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void FurnaceInteraction() {
-        //menuControl.gameObject.SetActive(false);
-
+        if (TryGetComponent(out Furnace furnace)) {
+            furnace.AddWood();
+        }
     }
 
     private void ShelterInteraction() {
         CloseAllUI(); InteractionUI.ShelterUI.SetActive(true);
+        PlayerEnterBuilding<ShelterCreate>();
     }
 
     private void WorkshopInteraction() {
         CloseAllUI(); InteractionUI.WorkShopUI.SetActive(true);
+        PlayerEnterBuilding<WorkshopCreate>();
     }
 
     private void ChestInteraction() {
         //menuControl.gameObject.SetActive(false);
     }
 
-    //TODO: Player OnDead에 추가하기. 0723
     public void CloseAllUI() {
-        menuControl.gameObject.SetActive(false);
-        InteractionUI.ShelterUI.SetActive(false);
-        InteractionUI.WorkShopUI.SetActive(false);
+        menuControl?.gameObject.SetActive(false);
+        InteractionUI?.ShelterUI.SetActive(false);
+        InteractionUI?.WorkShopUI.SetActive(false);
 
+    }
+
+    public void PlayerEnterBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric{
+        T buildingCreate = FindObjectOfType<T>();
+        buildingCreate.SetEnterPosition(player.transform.position);
+        player.SetActive(false);
+        cameraControl.cinemachineFreeLook.Follow = buildingCreate.Building.transform;
+        cameraControl.cinemachineFreeLook.LookAt = buildingCreate.Building.transform;
+    }
+
+    public void PlayerExitBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric {
+        T buildingCreate = FindObjectOfType<T>();
+        if (player) {
+            if (!player.activeSelf) {
+                player.transform.position = buildingCreate.LastPlayerPosition;
+                player.SetActive(true);
+                cameraControl.cinemachineFreeLook.Follow = buildingCreate.playerTransform;
+                cameraControl.cinemachineFreeLook.LookAt = buildingCreate.playerTransform;
+
+
+            }
+        }
+        if (FindObjectOfType<PlayerStatus>().GetPlayerHp() == 0)
+            buildingCreate.DestroyBuilding();
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1842767290770520288}
   - component: {fileID: 6994099715989927498}
   - component: {fileID: -6949161100153296756}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RockBigPrf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 2546352218733276438}
   - component: {fileID: 6947644871385941878}
   - component: {fileID: 4647006008714825207}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: StoneBig_low_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 6550789406204482164}
   - component: {fileID: 3176599565853264383}
   - component: {fileID: 6106339045544340326}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: StoneBig_low_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5241663573747597300}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RockBig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,6 +266,10 @@ PrefabInstance:
     - target: {fileID: 6121152472242299132, guid: 5aba2dd62bdbe6f4f9458b6feccea617, type: 3}
       propertyPath: m_Name
       value: RockBrokenPrf
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121152472242299132, guid: 5aba2dd62bdbe6f4f9458b6feccea617, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8149249348670072163, guid: 5aba2dd62bdbe6f4f9458b6feccea617, type: 3}
       propertyPath: m_RootOrder

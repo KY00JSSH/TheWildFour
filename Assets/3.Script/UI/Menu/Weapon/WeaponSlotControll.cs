@@ -12,8 +12,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
 
     public int key;
 
-    private WeaponItem currentItem;
-    public WeaponItem CurrentItem { get { return currentItem; } }
+    private GameObject currentItem;
+    public GameObject CurrentItem { get { return currentItem; } }
 
     private MenuWeapon menuWeapon;
     private InvenUIController invenUI;
@@ -22,13 +22,16 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     private RectTransform originalParent;
     private Vector2 originalPosition;
 
-    [SerializeField]
+    private PlayerAttack playerAttack;
+
     private GameObject player;
 
     private void Awake() {
         invenUI = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
-        canvas = FindObjectOfType<Canvas>();
+        canvas = FindObjectOfType<Canvas>(); 
+        playerAttack = FindObjectOfType<PlayerAttack>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void enableCursor() {
@@ -40,14 +43,10 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     //슬롯에 무기 추가
-    public void setWeaponSlot(WeaponItemData item = null) {
+    public void setWeaponSlot(GameObject item = null) {
         if (item != null) {
-            WeaponItem newItem = new WeaponItem();
-            newItem.WeaponItemData = item;
-            newItem.equipItemData = item;
-            newItem.itemData = item;
-            currentItem = newItem;
-            itemIcon.sprite = currentItem.itemData.Icon;
+            currentItem = item;
+            itemIcon.sprite = currentItem.GetComponent<Item>().itemData.Icon;
             itemIcon.enabled = true;
             //내구도 슬라이더 추가
         }
@@ -58,9 +57,9 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
         }
     }
 
-    public WeaponItemData returnItem() {
+    public GameObject returnItem() {
         if (currentItem) {
-            return currentItem.WeaponItemData;
+            return currentItem;
         }
         else {
             return null;
@@ -86,6 +85,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnDrag(PointerEventData data) {
+        playerAttack.isNowDrag = true;
+
         if (PlayerStatus.isDead) return;
 
         if (currentItem) {
@@ -96,6 +97,8 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        playerAttack.isNowDrag = false;
+
         if (PlayerStatus.isDead) return;
 
         if (currentItem) {
@@ -147,6 +150,7 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
                 //아이템 드랍
                 DropItem();
             }
+            FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
         }
     }
 
@@ -154,7 +158,9 @@ public class WeaponSlotControll : MonoBehaviour, IPointerClickHandler, IBeginDra
         if (PlayerStatus.isDead) return;
 
         Vector3 itemDropPosition = new Vector3(player.transform.position.x - 0.1f, player.transform.position.y + 1.5f, player.transform.position.z - 0.1f);
-        Instantiate(currentItem.itemData.DropItemPrefab, itemDropPosition, Quaternion.identity);
+        currentItem.transform.position = itemDropPosition;
+        currentItem.SetActive(true);
+        //Instantiate(currentItem, itemDropPosition, Quaternion.identity);
         setWeaponSlot(null);
     }
 }

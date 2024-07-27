@@ -34,16 +34,11 @@ public class PlayerAbility : MonoBehaviour {
     private float playerAddDecDashGage;
     private float playerAddInvenCount;
 
-
-
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
-        cameraControl = FindObjectOfType<CameraControl>();
         playerStatus = FindObjectOfType<PlayerStatus>();
         playerMove = FindObjectOfType<PlayerMove>();
-    }
 
-    private void Start() {
         //TODO: SAVE 구현 시 JSON에서 받아오기
         playerAttack = 2f;
         playerAttackSpeed = 1f;
@@ -69,6 +64,15 @@ public class PlayerAbility : MonoBehaviour {
         playerAddDecDashGage = 0;
         playerAddInvenCount = 0;
     }
+
+    private void Start() {
+        cameraControl = FindObjectOfType<CameraControl>();
+    }
+
+    private void Update() {
+        //if(ShelterManager.)
+    }
+
 
     public void UpdateAblity() {
         playerMove.isSkilled = 

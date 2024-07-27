@@ -9,6 +9,13 @@ public class TreeBigController : MonoBehaviour {
     private float health;
     private int type;
 
+    [SerializeField] private GameObject dropTreePrf;
+
+    [SerializeField] private bool testBroke = false;
+
+    private bool isFalling = false;
+    private TreeSpawner treeSpawner;
+
     public void InitializeObjData(BigTreeData data) {
         objectNumber = data.objectNumber;
         position = new Vector3(data.position.x, data.position.y, data.position.z);
@@ -19,12 +26,6 @@ public class TreeBigController : MonoBehaviour {
         transform.position = position;
         gameObject.SetActive(enable);
     }
-
-    [SerializeField]
-    private bool testBroke = false;
-
-    private bool isFalling = false;
-    private TreeSpawner treeSpawner;
 
     private void Awake() {
         treeSpawner = FindObjectOfType<TreeSpawner>();
@@ -56,7 +57,6 @@ public class TreeBigController : MonoBehaviour {
         StartCoroutine(treeDisableCo());
     }
 
-
     private IEnumerator treeDisableCo() {
         //나무 쓰러지고 일정시간 유지후 destroy
         isFalling = true;
@@ -75,5 +75,27 @@ public class TreeBigController : MonoBehaviour {
         float waitTime = 1.0f;
         yield return new WaitForSeconds(waitTime);
         Destroy(gameObject);
+    }
+
+    public void dropTreeItem(float gatherPoint) {
+        InvenController invenController = GetComponent<InvenController>();
+        int checkNum = invenController.canAddThisBox(1);
+        if (checkNum != 99) {
+                CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
+                invenItem.addCurrStack((int)gatherPoint * 2);
+        }
+        else {
+            int existBox = invenController.isExistEmptyBox();
+                Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
+                GameObject itemObject = Instantiate(dropTreePrf, itemDropPosition, Quaternion.identity, treeSpawner.transform);
+                itemObject.GetComponent<CountableItem>().setCurrStack((int)gatherPoint * 2);
+            if (existBox != 99) {
+                invenController.addIndexItem(existBox, itemObject);
+                itemObject.SetActive(false);
+            }
+            else {
+                itemObject.SetActive(true);
+            }
+        }
     }
 }

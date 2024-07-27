@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemPickControll : MonoBehaviour {
 
     [SerializeField] private float checkRadius = 2.5f;
     private InvenController invenController;
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     private GameObject closestItem;
-    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>().closestItem; } }
+    public static GameObject ClosestItem { get { return GameObject.FindObjectOfType<PlayerItemPickControll>()?.closestItem; } }
 
     private GameObject mouseHoverItem;
 
     private GameObject previousItem = null;
 
+    private void Awake() {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     private void Start() {
         invenController = FindObjectOfType<InvenController>();
     }
@@ -22,7 +23,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     private void Update() {
         if (PlayerStatus.isDead) return;
 
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0 ) {
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
             CheckForItems();
         }
 
@@ -36,7 +37,7 @@ public class PlayerItemPickControll : MonoBehaviour {
     }
 
     private void CheckForItems() {
-        int layerMask = (1 << 8) + (1 << 9);
+        int layerMask = (1 << 8) + (1 << 9) + (1 << 10) + (1 << 11) + (1 << 12);
         Collider[] cols = Physics.OverlapSphere(player.transform.position, checkRadius, layerMask);
 
         float closestDistance = Mathf.Infinity;
@@ -47,56 +48,88 @@ public class PlayerItemPickControll : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit)) {
             mousePosition = hit.point;
+            if (hit.collider.gameObject.activeSelf) {
             mouseHoverItem = hit.collider.gameObject;
+            }
         }
 
         foreach (Collider hitCol in cols) {
             float distanceToMouse = Vector3.Distance(hitCol.transform.position, mousePosition);
             if (distanceToMouse < closestDistance) {
                 closestDistance = distanceToMouse;
-                closestItem = hitCol.gameObject;
+                if (hitCol.gameObject.activeSelf) {
+                    closestItem = hitCol.gameObject;
+                }
             }
         }
 
         if (closestItem != null) {
             if (previousItem != closestItem) {
-                ShowTooltip(closestItem);
                 if (previousItem != null) {
-                    previousItem.GetComponent<ItemSelectControll>().outSelect();
+                    if (previousItem.GetComponent<ItemSelectControll>() != null) {
+                        previousItem.GetComponent<ItemSelectControll>().outSelect();
+                    }
                 }
-                closestItem.GetComponent<ItemSelectControll>().selectItem();
+
+                if (closestItem.GetComponent<ItemSelectControll>() != null) {
+                    closestItem.GetComponent<ItemSelectControll>().selectItem();
+                }
                 previousItem = closestItem;
             }
         }
         else if (previousItem != null) {
-            // ¼±ÅÃµÈ ¾ÆÀÌÅÛÀÌ ¾øÀ» ¶§ ÀÌÀü ¾ÆÀÌÅÛÀÇ outSelect È£Ãâ
-            previousItem.GetComponent<ItemSelectControll>().outSelect();
+            if (previousItem.GetComponent<ItemSelectControll>() != null) {
+                previousItem.GetComponent<ItemSelectControll>().outSelect();
+            }
             previousItem = null;
         }
     }
 
-    //sphere È®ÀÎ¿ë gizmo
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(player.transform.position, checkRadius);
-    }
-
-    //tooltip º¸¿©ÁÖ´Â ½ÃÁ¡
-    private void ShowTooltip(GameObject item) {
-        // Debug.Log("Tooltip º¸¿©ÁÜ");
-    }
-
-    //¾ÆÀÌÅÛ Áİ±â
     private void pickupItem(GameObject item) {
+        if (player.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
         if (item != null && item.layer == 8) {
             invenController.itemObject = item;
-            if (invenController.canItemAdd()) {
-                invenController.ItemAdd();
-                Destroy(item);
+            //ê²¹ì³ì„œ ë„£ì„ ìˆ˜ ìˆëŠ”ì§€ í™•ì¸
+            if (item.GetComponent<CountableItem>() != null) {
+                int checkNum = invenController.canAddThisBox(item.GetComponent<Item>().Key);
+                if (checkNum != 99) {
+                    //ê²¹ì³ì„œ ë„£ì„ìˆ˜ ìˆìœ¼ë©´ ì§‘ì€ í•„ë“œ ì•„ì´í…œì€ destroy
+                    invenController.ItemAdd();
+                    Destroy(item);
+                }
+                else {
+                    if (invenController.canItemAdd()) {
+                        invenController.ItemAdd();
+                        if (item.GetComponent<FoodItem>() != null) {
+                            if (!item.GetComponent<FoodItem>().isMeat) {
+                                item.GetComponent<FoodItem>().startSpoilage();
+                            }
+                                item.GetComponent<FoodItem>().setInvisible();
+                        }
+                        else {
+                            item.SetActive(false);
+                        }
+                    }
+                }
+            }
+            else {
+                if (invenController.canItemAdd()) {
+                    //ê²¹ì³ì„œ ë„£ì„ìˆ˜ ì—†ìœ¼ë©´ ì§‘ì€ í•„ë“œì˜ ì•„ì´í…œì€ active-false
+                    invenController.ItemAdd();
+                    if (item.GetComponent<FoodItem>() != null) {
+                        if (!item.GetComponent<FoodItem>().isMeat) {
+                            item.GetComponent<FoodItem>().startSpoilage();
+                        }
+                            item.GetComponent<FoodItem>().setInvisible();
+                    }
+                    else {
+                        item.SetActive(false);
+                    }
+                }
             }
         }
         else {
-            Debug.LogWarning("null");
+            //Debug.LogWarning("null");
         }
     }
 }

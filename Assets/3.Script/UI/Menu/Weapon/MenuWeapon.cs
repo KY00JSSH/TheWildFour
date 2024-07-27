@@ -19,6 +19,9 @@ public class MenuWeapon : MonoBehaviour {
 
     private int currSelectSlot = 1; //현재 선택된 장비창 슬롯 기본값 1
 
+    // PlayerWeaponEquip 에서 받아가기 위한 프로퍼티입니다.
+    public int CurrentSelectSlot { get { return currSelectSlot; } }
+
     private void Update() {
         if (PlayerStatus.isDead) return;
 
@@ -31,7 +34,7 @@ public class MenuWeapon : MonoBehaviour {
             }
         }
     }
-
+    //TODO: 플레이어 포지션 재설정 (아이테[ㅁ 버리기)
     private void Start() {
         firstBoxTransf = firstSlot.GetComponent<RectTransform>();
         secondBoxTransf = secondSlot.GetComponent<RectTransform>();
@@ -42,7 +45,7 @@ public class MenuWeapon : MonoBehaviour {
 
     public void setCurrSelectSlot(int slotNum) {
         currSelectSlot = slotNum;
-        if(slotNum ==1) {
+        if(slotNum == 1) {
             firstCont.enableCursor();
             secondCont.disableCursor();
         }
@@ -52,16 +55,16 @@ public class MenuWeapon : MonoBehaviour {
         }
     }
 
-    public WeaponItemData addItemBox(int index, WeaponItemData item) {
+    public GameObject addItemBox(int index, GameObject item) {
         if (index == 1) {
             //1번 슬롯에 아이템 추가
-            WeaponItemData reItem = getcurrentItem(index);
+            GameObject reItem = getcurrentItem(index);
             firstCont.setWeaponSlot(item);
             return reItem;
         }
         else {
             //2번 슬롯에 아이템 추가
-            WeaponItemData reItem = getcurrentItem(index);
+            GameObject reItem = getcurrentItem(index);
             secondCont.setWeaponSlot(item);
             return reItem;
         }
@@ -78,21 +81,21 @@ public class MenuWeapon : MonoBehaviour {
         }
     }
 
-    public WeaponItemData getcurrentItem(int index) {
+    public GameObject getcurrentItem(int index) {
         //선택한 필드의 item return
         if (index == 1) {
-            WeaponItemData item = firstCont.returnItem();
+            GameObject item = firstCont.returnItem();
             return item;
         }
         else {
-            WeaponItemData item = secondCont.returnItem();
+            GameObject item = secondCont.returnItem();
             return item;
         }
     }
 
     public void switchingSlot(int index) {
-        WeaponItemData firstWeapon = firstCont?.CurrentItem?.itemData as WeaponItemData;
-        WeaponItemData secondWeapon = secondCont?.CurrentItem?.itemData as WeaponItemData;
+        GameObject firstWeapon = firstCont?.CurrentItem ;
+        GameObject secondWeapon = secondCont?.CurrentItem ;
 
         if (firstWeapon && secondWeapon) {
             //둘다 아이템 있으면 서로 스위칭
@@ -114,60 +117,55 @@ public class MenuWeapon : MonoBehaviour {
     }
 
     public void addToInventory(int index, int target) {
-        var weaponItem = invenCont.Inventory[target]?.itemData as WeaponItemData;
-        var countableItem = invenCont.Inventory[target]?.itemData as CountableItemData;
-        var foodItem = invenCont.Inventory[target]?.itemData as FoodItemData;
-        var equipItem = invenCont.Inventory[target]?.itemData as EquipItemData;
-        var medicItem = invenCont.Inventory[target]?.itemData as MedicItemData;
-
-        if (weaponItem) {
+        if (invenCont?.Inventory[target] !=null) {
             //해당칸에 무기 아이템 있으면 스위칭
-            if (index == 1) {
-                invenCont.addIndexItem(firstCont.CurrentItem.itemData as WeaponItemData, target);
-                firstCont.setWeaponSlot(weaponItem);
+            if(invenCont?.Inventory[target].GetComponent<WeaponItem>() != null) {
+                if (index == 1) {
+                    invenCont.addIndexItem(target, firstCont.CurrentItem);
+                    firstCont.setWeaponSlot(invenCont?.Inventory[target]);
+                }
+                else {
+                    invenCont.addIndexItem(target, secondCont.CurrentItem);
+                    secondCont.setWeaponSlot(invenCont?.Inventory[target]);
+                }
             }
             else {
-                invenCont.addIndexItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
-                secondCont.setWeaponSlot(weaponItem);
+                return;
             }
-        }
-        else if (countableItem != null || foodItem != null || equipItem != null || medicItem != null || invenCont.Inventory[index] != null) {
-            //해당칸에 그냥 아이템 있으면 그냥 return
-            return;
         }
         else {
             //해당칸에 아이템 추가
             if (index == 1) {
-                invenCont.addIndexItem(firstCont.CurrentItem.itemData as WeaponItemData, target);
+                invenCont.addIndexItem(target, firstCont.CurrentItem);
                 firstCont.setWeaponSlot(null);
             }
             else {
-                invenCont.addIndexItem(secondCont.CurrentItem.itemData as WeaponItemData, target);
+                invenCont.addIndexItem( target, secondCont.CurrentItem);
                 secondCont.setWeaponSlot(null);
             }
         }
     }
 
-    public void addSlotFromInvenWeapon(WeaponItemData weapItem, int target) {
+    public void addSlotFromInvenWeapon(int target, GameObject item) {
         if (currSelectSlot == 1) {
-            WeaponItemData firstWeapon = firstCont?.CurrentItem?.itemData as WeaponItemData;
+            GameObject firstWeapon = firstCont?.CurrentItem;
             if (firstWeapon) {
-                firstCont.setWeaponSlot(weapItem);
-                invenCont.addIndexItem(firstWeapon, target);
+                firstCont.setWeaponSlot(item);
+                invenCont.addIndexItem( target , firstWeapon);
             }
             else {
-                firstCont.setWeaponSlot(weapItem);
+                firstCont.setWeaponSlot(item);
                 invenCont.removeItem(target);
             }
         }
         else {
-            WeaponItemData secondWeapon = secondCont?.CurrentItem?.itemData as WeaponItemData;
+            GameObject secondWeapon = secondCont?.CurrentItem;
             if (secondWeapon) {
-                secondCont.setWeaponSlot(weapItem);
-                invenCont.addIndexItem(secondWeapon, target);
+                secondCont.setWeaponSlot(item);
+                invenCont.addIndexItem(target, secondWeapon);
             }
             else {
-                secondCont.setWeaponSlot(weapItem);
+                secondCont.setWeaponSlot(item);
                 invenCont.removeItem(target);
             }
         }

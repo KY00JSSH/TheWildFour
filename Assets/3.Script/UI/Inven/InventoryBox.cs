@@ -1,25 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
-
     private PlayerItemUseControll playerItemUse;
     private InvenDrop invenDrop;
     private InvenController invenControll;
     private InvenUIController invenUI;
 
-    private MenuWeapon menuWeapon;                  //ÀåºñÃ¢
-
-    private WorkshopInvenUI workshopInvenUI;        //ÀÛ¾÷Àå
-    private WorkshopInvenControll workshopInven;
-
-    private ShelterInvenUI shelterInvenUI;          //°ÅÃ³
-    private ShelterInvenControll shelterInven;
+    private MenuWeapon menuWeapon;                  //ì¥ë¹„ì°½
 
     private Canvas canvas;
     private RectTransform originalParent;
     private Vector2 originalPosition;
+
+    private PlayerAttack playerAttack;
+    private PlayerItemPickControll playerPickCont;
 
     private void Awake() {
         invenBox = transform.GetComponent<Button>();
@@ -30,14 +27,13 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
         invenDrop = FindObjectOfType<InvenDrop>();
         canvas = FindObjectOfType<Canvas>();
 
-        shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
-        shelterInven = FindObjectOfType<ShelterInvenControll>();
-        workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
+        playerAttack = FindObjectOfType<PlayerAttack>();
+        playerPickCont = FindObjectOfType<PlayerItemPickControll>();
     }
 
-    //TODO: ²Ú ´©¸£´Â °ÔÀÌÁö Ãß°¡ÇÏ±â
-    //TODO: Á¦·Ã µ¹ 30 -> Ã¶±¤¼® 1°³
+    //TODO: ê¾¹ ëˆ„ë¥´ëŠ” ê²Œì´ì§€ ì¶”ê°€í•˜ê¸°
+    //TODO: ì œë ¨ ëŒ 30 -> ì² ê´‘ì„ 1ê°œ
 
     public void OnPointerClick(PointerEventData pointerEventData) {
         playerItemUse.SetSelectedBoxKey(key);
@@ -54,6 +50,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     }
 
     public void OnDrag(PointerEventData data) {
+        playerAttack.isNowDrag = true;
         if (isItemIn) {
             Vector2 position;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, data.position, data.pressEventCamera, out position);
@@ -62,6 +59,7 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        playerAttack.isNowDrag = false;
         if (isItemIn) {
             itemIcon.transform.SetParent(originalParent, true);
             itemIcon.rectTransform.anchoredPosition = originalPosition;
@@ -79,78 +77,104 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
             }
 
             if (isChangeInven) {
-                //ÀÎº¥ À§Ä¡ º¯°æ
-                //¿ø·¡ ÀÎº¥ index ¶û ¹Ù²Ü ÀÎº¥ Ã¼Å©
+                //ì¸ë²¤ ìœ„ì¹˜ ë³€ê²½
+                //ì›ë˜ ì¸ë²¤ index ë‘ ë°”ê¿€ ì¸ë²¤ ì²´í¬
                 invenControll.changeInvenIndex(key, targetIndex);
             }
             else {
                 bool isWorkshopOpen = WorkShopUI.isWorkshopUIOpen;
                 bool isShelterOpen = ShelterUI.isShelterUIOpen;
 
-                if (!isShelterOpen && !isWorkshopOpen) {    //°ÅÃ³, ÀÛ¾÷Àå ¿ÀÇÂ ¾È‰çÀ»¶§
+                if (!isShelterOpen && !isWorkshopOpen) {    //ê±°ì²˜, ì‘ì—…ì¥ ì˜¤í”ˆ ì•ˆë¬ì„ë•Œ
                     if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapFirstBoxPos, eventData.position, eventData.pressEventCamera)) {
-                        //¹«±â 1¹ø ½½·ÔÀÏ¶§
-                        WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
-                        if (invenWeapItemData) {
-                            WeaponItemData weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItemData);
-                            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                        //ë¬´ê¸° 1ë²ˆ ìŠ¬ë¡¯ì¼ë•Œ
+                        GameObject invenWeapItem = invenControll.getIndexItem(key);
+                        if (invenWeapItem.GetComponent<WeaponItem>() != null) {
+                            GameObject weapPrevItem = menuWeapon?.addItemBox(1, invenWeapItem);
+                            invenControll.changeItemIntoWeapSlot(key, weapPrevItem);
                         }
+                        invenControll.updateInvenInvoke();
+                        FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
                     }
                     else if (RectTransformUtility.RectangleContainsScreenPoint(menuWeapon.WeapSecondBoxPos, eventData.position, eventData.pressEventCamera)) {
-                        //¹«±â 2¹ø ½½·ÔÀÏ‹š
-                        WeaponItemData invenWeapItemData = invenControll.getIndexItem(key);
-                        if (invenWeapItemData) {
-                            WeaponItemData weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItemData);
-                            invenControll.changeItemIntoWeapSlot(weapPrevItem, key);
+                        //ë¬´ê¸° 2ë²ˆ ìŠ¬ë¡¯ì¼ë–„
+                        GameObject invenWeapItem = invenControll.getIndexItem(key);
+                        if (invenWeapItem.GetComponent<WeaponItem>() != null) {
+                            GameObject weapPrevItem = menuWeapon?.addItemBox(2, invenWeapItem);
+                            invenControll.changeItemIntoWeapSlot(key, weapPrevItem);
+                        }
+                        invenControll.updateInvenInvoke();
+                        FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
+                    }
+                    else {
+                        //ì•„ì´í…œ êµ½ê¸°
+                        if(invenControll.getIndexItem(key).GetComponent<FoodItem>()!= null) {
+                            if (invenControll.getIndexItem(key).GetComponent<FoodItem>().foodItemData.CanBake) {
+                                Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+                                RaycastHit hit;
+                                if (Physics.Raycast(ray, out hit)) {
+                                    FireObject dropZone = FindObjectOfType<FireObject>();
+                                    if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
+                                        dropZone.BakeItem(key);
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            //ì•„ì´í…œ ë“œë
+                            invenDrop.dropItemAll(key);
                         }
                     }
                 }
-                else if (isWorkshopOpen) {  //ÀÛ¾÷Àå ¿ÀÇÂ½Ã
-                    for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                else if (isWorkshopOpen) {  //ì‘ì—…ì¥ ì˜¤í”ˆì‹œ
+                    WorkshopInvenControll workshopInven = FindObjectOfType<WorkshopInvenControll>();
+                    WorkshopInvenUI workshopInvenUI = FindObjectOfType<WorkshopInvenUI>();
+
+                    for (int i = 0; i < workshopInvenUI.CurrInvenCount; i++) {
                         RectTransform boxRectTransform = workshopInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
                         if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
                             targetIndex = i;
                             break;
                         }
                     }
-                    //ÀÛ¾÷Àå ÀÎº¥¿¡ ¾ÆÀÌÅÛ Ãß°¡
+                    //ì‘ì—…ì¥ ì¸ë²¤ì— ì•„ì´í…œ ì¶”ê°€
                     if (workshopInven.checkItemType(targetIndex) != 0) {
-                        //ÇØ´ç À§Ä¡¿¡ ¾ÆÀÌÅÛ ÀÖÀ¸¸é ½ºÀ§Äª
-                        invenControll.switchingInvenItem(targetIndex, true);
+                        //í•´ë‹¹ ìœ„ì¹˜ì— ì•„ì´í…œ ìˆìœ¼ë©´ ìŠ¤ìœ„ì¹­
+                        GameObject item = workshopInven.Inventory[targetIndex];
+                        workshopInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
+                        invenControll.addIndexItem(targetIndex, item);
                     }
                     else {
-                        //¾øÀ¸¸é ¾ÆÀÌÅÛ Ãß°¡¸¸
-                        invenControll.addItemBuildInven(targetIndex, true);
+                        //ì—†ìœ¼ë©´ ì•„ì´í…œ ì¶”ê°€ë§Œ
+                        workshopInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
                         invenControll.removeItem(key);
                     }
-
+                    workshopInven.printInven();
                 }
-                else if (isShelterOpen) {   //°ÅÃ³ ¿ÀÇÂ
-                    for (int i = 0; i < invenUI.InvenTotalList.Count; i++) {
+                else if (isShelterOpen) {   //ê±°ì²˜ ì˜¤í”ˆ
+                    ShelterInvenControll shelterInven = FindObjectOfType<ShelterInvenControll>();
+                    ShelterInvenUI shelterInvenUI = FindObjectOfType<ShelterInvenUI>();
+
+                    for (int i = 0; i < shelterInvenUI.CurrInvenCount; i++) {
                         RectTransform boxRectTransform = shelterInvenUI.InvenTotalList[i].GetComponent<RectTransform>();
                         if (RectTransformUtility.RectangleContainsScreenPoint(boxRectTransform, eventData.position, eventData.pressEventCamera)) {
                             targetIndex = i;
                             break;
                         }
                     }
-                    //°ÅÃ³ ÀÎº¥¿¡ ¾ÆÀÌÅÛ Ãß°¡
+                    //ê±°ì²˜ ì¸ë²¤ì— ì•„ì´í…œ ì¶”ê°€
                     if (shelterInven.checkItemType(targetIndex) != 0) {
-                        //ÇØ´ç À§Ä¡¿¡ ¾ÆÀÌÅÛ ÀÖÀ¸¸é ½ºÀ§Äª
-                        invenControll.switchingInvenItem(targetIndex, false);
+                        GameObject item = shelterInven.Inventory[targetIndex];
+                        shelterInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
+                        invenControll.addIndexItem(targetIndex, item);
                     }
                     else {
-                        //¾øÀ¸¸é ¾ÆÀÌÅÛ Ãß°¡¸¸
-                        invenControll.addItemBuildInven(targetIndex, false);
+                        //ì—†ìœ¼ë©´ ì•„ì´í…œ ì¶”ê°€ë§Œ
+                        shelterInven.addIndexItem(targetIndex, invenControll.getIndexItem(playerItemUse.selectBoxKey));
                         invenControll.removeItem(key);
                     }
-                }
-                else {
-                    //¾ÆÀÌÅÛ µå¶ø
-                    invenDrop.dropItemAll(key);
                 }
             }
         }
     }
-
-
 }

@@ -10,11 +10,11 @@ public class RockController : MonoBehaviour
     private float health;
     private int type;
 
-    [SerializeField]
-    private GameObject thisRockObject;
-    [SerializeField]
-    private GameObject brokenObject;
+    [SerializeField] private GameObject thisRockObject;     //원래 바위
+    [SerializeField]  private GameObject brokenObject;      //부서지고 바위
+    [SerializeField] private GameObject dropRockPrf;        //때리면 드랍할 바위 prefab
     private BoxCollider coll;
+    private RockSpawner rockSpawner;
 
     public bool isBroken = false;
 
@@ -65,5 +65,27 @@ public class RockController : MonoBehaviour
         brokenObject.SetActive(true);
         thisRockObject.SetActive(false);
         coll.enabled = false;
+    }
+
+    public void dropRockItem(float gatherPoint) {
+        InvenController invenController = GetComponent<InvenController>();
+        int checkNum = invenController.canAddThisBox(1);
+        if (checkNum != 99) {
+            CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
+            invenItem.addCurrStack((int)gatherPoint * 2);
+        }
+        else {
+            int existBox = invenController.isExistEmptyBox();
+            Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
+            GameObject itemObject = Instantiate(dropRockPrf, itemDropPosition, Quaternion.identity, rockSpawner.transform);
+            itemObject.GetComponent<CountableItem>().setCurrStack((int)gatherPoint * 2);
+            if (existBox != 99) {
+                invenController.addIndexItem(existBox, itemObject);
+                itemObject.SetActive(false);
+            }
+            else {
+                itemObject.SetActive(true);
+            }
+        }
     }
 }
