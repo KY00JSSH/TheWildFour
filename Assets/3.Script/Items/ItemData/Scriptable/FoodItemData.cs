@@ -2,11 +2,12 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "FoodItemData", menuName = "Items/FoodItemData", order = 3)]
 public class FoodItemData : CountableItemData {
-    [SerializeField] private float healTime;            //È¸º¹ ½Ã°£
-    [SerializeField] private float totalDecayTime;      //ÀüÃ¼ ºÎÆĞ ½Ã°£
-    [SerializeField] private bool isRoasted;            //±¸¿î À½½ÄÀÎÁö ¿©ºÎ. ±ÁÁö ¾Ê°í ¸ÔÀ»¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÌ¾îµµ true
-
+    [SerializeField] private float healTime;            //íšŒë³µ ì‹œê°„
+    [SerializeField] private float totalDecayTime;      //ì „ì²´ ë¶€íŒ¨ ì‹œê°„
+    [SerializeField] private bool isRoasted;            //êµ¬ìš´ ìŒì‹ì¸ì§€ ì—¬ë¶€. êµ½ì§€ ì•Šê³  ë¨¹ì„ìˆ˜ ìˆëŠ” ì•„ì´í…œì´ì–´ë„ true
+    [SerializeField] private bool canBake;
     public float HealTime { get { return healTime; } }
     public float TotalDecayTime { get { return totalDecayTime; } }
     public bool IsRoasted { get { return isRoasted; } }
+    public bool CanBake { get { return canBake; } }
 }
