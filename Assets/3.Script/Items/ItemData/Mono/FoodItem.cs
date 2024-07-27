@@ -24,10 +24,10 @@ public class FoodItem : CountableItem {
     private ItemStatus status = ItemStatus.Fresh;
     public ItemStatus Status { get { return status; } }
 
-    public float HealTime => foodItemData.HealTime;
+    [SerializeField] private GameObject bakeItemPrf;
+    public GameObject BakeItemPrf { get { return bakeItemPrf; } }
 
-    [SerializeField]
-    private GameObject spoilPrf;
+    public float HealTime => foodItemData.HealTime;
 
     private void Awake() {
         playerStatus = FindObjectOfType<PlayerStatus>();
@@ -50,7 +50,7 @@ public class FoodItem : CountableItem {
         spoilageStart = true;
 
         while (currDecayTime > 0) {
-            currDecayTime -= 1.0f;
+            currDecayTime -= 0.2f;
             CheckStatus();
             yield return new WaitForSeconds(1f);
         }
