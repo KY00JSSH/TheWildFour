@@ -25,9 +25,9 @@ public class InvenController : CommonInven {
         }
     }
 
-    //ÀåºñÃ¢°ú ÀÎº¥Ã¢ ¾ÆÀÌÅÛ ½ºÀ§Äª
+    //ì¥ë¹„ì°½ê³¼ ì¸ë²¤ì°½ ì•„ì´í…œ ìŠ¤ìœ„ì¹­
     public void changeItemIntoWeapSlot(int index, GameObject item) {
-        //¹«±â°¡ ÀÌ¹Ì ÀÖÀ»¶§ ÀÎº¥Ã¢ÀÌ¶û ½ºÀ§Äª ¾Æ´Ï¸é ÀÎº¥¿¡ ÀÖ´Â ¾ÆÀÌÅÛ Áö¿ò
+        //ë¬´ê¸°ê°€ ì´ë¯¸ ìˆì„ë•Œ ì¸ë²¤ì°½ì´ë‘ ìŠ¤ìœ„ì¹­ ì•„ë‹ˆë©´ ì¸ë²¤ì— ìˆëŠ” ì•„ì´í…œ ì§€ì›€
         if (item != null) {
             inventory[index] = item;
             updateInvenInvoke();
@@ -38,41 +38,31 @@ public class InvenController : CommonInven {
         }
     }
 
-    //Æ¯Á¤ ÀÎµ¦½º¿¡ ¾ÆÀÌÅÛ ÀÖ´ÂÁö È®ÀÎ
-    public GameObject getIndexItem(int index) {
-        if (inventory[index] != null) {
-            return inventory[index];
-        }
-        else {
-            return null;
-        }
-    }
-
-    //¾ÆÀÌÅÛ F·Î »ç¿ë
+    //ì•„ì´í…œ Fë¡œ ì‚¬ìš©
     public void useInvenItem(int index) {
         if (inventory[index] != null) {
             if (inventory[index]?.GetComponent<MedicItem>() != null) {
-                //¼±ÅÃÇÑ ¾ÆÀÌÅÛÀÌ ¾àÇ°ÀÌ¸é 1°³ »ç¿ë
+                //ì„ íƒí•œ ì•„ì´í…œì´ ì•½í’ˆì´ë©´ 1ê°œ ì‚¬ìš©
                 MedicItem medicItem = inventory[index].GetComponent<MedicItem>();
                 medicItem.useCurrStack(1);
-                //playerStatus.EatMedicine(medicItem);   //ÇÃ·¹ÀÌ¾î ½ÇÁ¦ ¾ÆÀÌÅÛ ¼·Ãë
+                //playerStatus.EatMedicine(medicItem);   //í”Œë ˆì´ì–´ ì‹¤ì œ ì•„ì´í…œ ì„­ì·¨
                 if (medicItem.CurrStackCount == 0) {
                     inventory[index] = null;
                 }
                 updateInvenInvoke();
             }
             else if (inventory[index]?.GetComponent<FoodItem>() != null) {
-                //¼±ÅÃÇÑ ¾ÆÀÌÅÛÀÌ À½½ÄÀÌ¸é 1°³ »ç¿ë
+                //ì„ íƒí•œ ì•„ì´í…œì´ ìŒì‹ì´ë©´ 1ê°œ ì‚¬ìš©
                 FoodItem foodItem = inventory[index].GetComponent<FoodItem>();
                 foodItem.useCurrStack(1);
-                playerStatus.EatFood(foodItem);  //ÇÃ·¹ÀÌ¾î ½ÇÁ¦ ¾ÆÀÌÅÛ ¼·Ãë
+                playerStatus.EatFood(foodItem);  //í”Œë ˆì´ì–´ ì‹¤ì œ ì•„ì´í…œ ì„­ì·¨
                 if (foodItem.CurrStackCount == 0) {
                     inventory[index] = null;
                 }
                 updateInvenInvoke();
             }
             else if (inventory[index]?.GetComponent<WeaponItem>() != null) {
-                //µµ±¸¸é ÀåÂø - ÀÌ¹Ì ½½·Ô ÀåÂø µÇ¾î ÀÖÀ¸¸é ½ºÀ§Äª
+                //ë„êµ¬ë©´ ì¥ì°© - ì´ë¯¸ ìŠ¬ë¡¯ ì¥ì°© ë˜ì–´ ìˆìœ¼ë©´ ìŠ¤ìœ„ì¹­
                 menuWeapon.addSlotFromInvenWeapon(index, inventory[index]);
                 updateInvenInvoke();
                 FindObjectOfType<PlayerWeaponEquip>().ChangeEquipWeapon();
@@ -86,8 +76,8 @@ public class InvenController : CommonInven {
         }
     }
 
-    //¾ÆÀÌÅÛ Á¦ÀÛ½Ã ÀÎº¥¿¡ µé¾î°¥ ¼ö ÀÖ´ÂÁö ¿©ºÎ
-    //TODO: ¼¼ºÎ Å×½ºÆ® ÇÊ¿ä
+    //ì•„ì´í…œ ì œì‘ì‹œ ì¸ë²¤ì— ë“¤ì–´ê°ˆ ìˆ˜ ìˆëŠ”ì§€ ì—¬ë¶€
+    //TODO: ì„¸ë¶€ í…ŒìŠ¤íŠ¸ í•„ìš”
     public bool createItem(GameObject item) {
         bool isCreate = false;
         if (item.GetComponent<MedicItem>() != null) {
@@ -98,7 +88,7 @@ public class InvenController : CommonInven {
                 if (isMaterials(matKeyArr[i], matCountArr[i])) {
                     if (isAddNewItem(matKeyArr[i], matCountArr[i])) {
                         isCreate = true;
-                        //Ãß°¡
+                        //ì¶”ê°€
                     }
                     else {
                         isCreate = false;
@@ -136,7 +126,7 @@ public class InvenController : CommonInven {
     private bool isMaterials(int key, int count) {
         int totalCount = 0;
         WorkshopInvenControll workshopInven = FindObjectOfType<WorkshopInvenControll>();
-        //ÇÃ·¹ÀÌ¾î ÀÎº¥ Ã¼Å©
+        //í”Œë ˆì´ì–´ ì¸ë²¤ ì²´í¬
         for (int i = 0; i < inventory.Count; i++) {
             if (inventory[i] != null) {
                 if (inventory[i].GetComponent<CountableItem>() != null) {
@@ -147,7 +137,7 @@ public class InvenController : CommonInven {
                 }
             }
         }
-        //ÀÛ¾÷Àå ÀÎº¥ Ã¼Å©
+        //ì‘ì—…ì¥ ì¸ë²¤ ì²´í¬
         for (int i = 0; i < workshopInven.Inventory.Count; i++) {
             if (workshopInven.Inventory[i] != null) {
                 if (workshopInven.Inventory[i].GetComponent<CountableItem>() != null) {
@@ -169,11 +159,11 @@ public class InvenController : CommonInven {
 
     private bool isAddNewItem(int key, int count) {
         if (isExistEmptyBox() != 99) {
-            //ºó¹Ú½º ÀÖÀ½
+            //ë¹ˆë°•ìŠ¤ ìˆìŒ
             return true;
         }
         else {
-            //¾ÆÀÌÅÛ »ç¿ëÇØ¼­ ºó¹Ú½º°¡ »ı±â´ÂÁö ¿©ºÎ
+            //ì•„ì´í…œ ì‚¬ìš©í•´ì„œ ë¹ˆë°•ìŠ¤ê°€ ìƒê¸°ëŠ”ì§€ ì—¬ë¶€
             for (int i = 0; i < inventory.Count; i++) {
                 if (inventory[i].GetComponent<CountableItem>() != null) {
                     if (inventory[i].GetComponent<CountableItem>().Key == key) {
@@ -187,7 +177,7 @@ public class InvenController : CommonInven {
         }
     }
 
-    //ÀÛ¾÷Àå¿¡ ¾ÆÀÌÅÛ ÀÖ´ÂÁö + ÀÎº¥¿¡ ÀÖ´ÂÁö È®ÀÎÇØ¼­ ¾ÆÀÌÅÛ »ç¿ë
+    //ì‘ì—…ì¥ì— ì•„ì´í…œ ìˆëŠ”ì§€ + ì¸ë²¤ì— ìˆëŠ”ì§€ í™•ì¸í•´ì„œ ì•„ì´í…œ ì‚¬ìš©
     public void craftItemUseMain(ItemData itemData) {
         if (itemData is MedicItemData medicItemData) {
             int[] matKeys = (int[])medicItemData.MaterialKey.Clone();
@@ -212,7 +202,7 @@ public class InvenController : CommonInven {
         }
     }
 
-    //Á¦ÀÛ½Ã ¾ÆÀÌÅÛ Ã³¸® °øÅë
+    //ì œì‘ì‹œ ì•„ì´í…œ ì²˜ë¦¬ ê³µí†µ
     private void craftItemUseCommon(int[] matKeys, int[] matCount) {
         WorkshopInvenControll workshopInven = FindObjectOfType<WorkshopInvenControll>();
         for (int j = 0; j < matKeys.Length; j++) {
@@ -222,7 +212,7 @@ public class InvenController : CommonInven {
             int invenItemCount = 0;
             int workshopItemCount = 0;
 
-            //ÇÃ·¹ÀÌ¾î ÀÎº¥ Ã¼Å©
+            //í”Œë ˆì´ì–´ ì¸ë²¤ ì²´í¬
             for (int i = 0; i < inventory.Count; i++) {
                 if (inventory[i] != null) {
                     if (inventory[i].GetComponent<CountableItem>() != null) {
@@ -233,7 +223,7 @@ public class InvenController : CommonInven {
                 }
             }
 
-            //ÀÛ¾÷Àå ÀÎº¥ Ã¼Å©
+            //ì‘ì—…ì¥ ì¸ë²¤ ì²´í¬
             for (int i = 0; i < workshopInven.Inventory.Count; i++) {
                 if (inventory[i] != null) {
                     if (inventory[i].GetComponent<CountableItem>() != null) {
@@ -254,7 +244,7 @@ public class InvenController : CommonInven {
 
             if ((invenItemCount + workshopItemCount) >= matCount[j]) {
                 if (invenItemCount < matCount[j]) {
-                    //ÀÎº¥ ¾ÆÀÌÅÛ ÀüºÎ »èÁ¦ + ÀÛ¾÷Àå ¾ÆÀÌÅÛÁß ÀÏºÎ »èÁ¦
+                    //ì¸ë²¤ ì•„ì´í…œ ì „ë¶€ ì‚­ì œ + ì‘ì—…ì¥ ì•„ì´í…œì¤‘ ì¼ë¶€ ì‚­ì œ
                     for (int i = 0; i < invenIndex.Count; i++) {
                         removeItem(invenIndex[i]);
                     }
@@ -262,14 +252,14 @@ public class InvenController : CommonInven {
                     workshopInven.removeItemCount(matKeys[j], leftItemCount);
                 }
                 else {
-                    //ÀÎº¥ ¾ÆÀÌÅÛÁß ÀÏºÎ»èÁ¦
+                    //ì¸ë²¤ ì•„ì´í…œì¤‘ ì¼ë¶€ì‚­ì œ
                     removeItemCount(matKeys[j], matCount[j]);
                 }
             }
         }
     }
 
-    //ºôµù °Ç¼³½Ã ¾ÆÀÌÅÛ »ç¿ë
+    //ë¹Œë”© ê±´ì„¤ì‹œ ì•„ì´í…œ ì‚¬ìš©
     public void buildingCreateUseItem(NeedItem[] needItems) {
         for (int i = 0; i < needItems.Length; i++) {
             int needCount = needItems[i].ItemNeedNum;

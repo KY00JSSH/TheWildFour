@@ -11,7 +11,7 @@ public class Pause : MonoBehaviour
     private void Awake() {
         isPause = false;
         mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        pauseCanvas = GameObject.Find("PauseCanvas").GetComponent<Canvas>();
+      //  pauseCanvas = GameObject.Find("PauseCanvas").GetComponent<Canvas>();
         if (pauseCanvas != null) {
             pauseCanvas.gameObject.SetActive(false); // Ensure pauseCanvas is inactive
         }
