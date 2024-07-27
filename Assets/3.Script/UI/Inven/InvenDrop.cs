@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class InvenDrop : MonoBehaviour {
     private InvenController invenController;
-    [SerializeField]
     private GameObject player;
 
     private void Awake() {
         invenController = FindObjectOfType<InvenController>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     //아이템 한번 드랍

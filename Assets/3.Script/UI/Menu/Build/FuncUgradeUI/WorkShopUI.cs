@@ -53,7 +53,6 @@ public class WorkShopUI : UIInfo {
 
     // 시작할 때 레벨 확인 
     private void WorkshopInit() {
-        Debug.Log(workshopManager.WorkshopLevel);
         currentupgradeDetail = tooltipNum.UpgradeItemCheck(UpgradeType.Workshop, workshopManager.WorkshopLevel + 1);
         currentpackingDetail = tooltipNum.PackingItemCheck();
     }
