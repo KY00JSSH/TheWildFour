@@ -40,7 +40,7 @@ public class Animal_Control : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = false;
-        agent.updateRotation = false;
+        //agent.updateRotation = false;
 
         playerDetector_Capsule = GetComponentInChildren<CapsuleCollider>(); //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
         playerDetector_Box = GetComponentInChildren<BoxCollider>(); //자식오브젝트의 플레이어 감지를 위한 박스콜라이더

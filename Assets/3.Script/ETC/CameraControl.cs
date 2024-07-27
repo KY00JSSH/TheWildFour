@@ -14,6 +14,8 @@ public class CameraControl : MonoBehaviour
 
     public float rotationDirection = 0f;
 
+    private MiniMap_CompassRotation miniMapCompassRotation;
+
     private void Awake() {
         cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -25,6 +27,8 @@ public class CameraControl : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player");
         GameObject.FindObjectOfType<Renderer>();
 
+        miniMapCompassRotation = FindObjectOfType<MiniMap_CompassRotation>();
+
      //   transform.GetComponent<>();
     }
     
@@ -33,10 +37,12 @@ public class CameraControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) {
             rotationDirection -= 90f;
             if (rotationDirection < 0) rotationDirection += 360f;
+            miniMapCompassRotation.SetRotationDirection(rotationDirection);
         }
         else if(Input.GetKeyDown(KeyCode.E)) {
             rotationDirection += 90f;
             if (rotationDirection >= 360) rotationDirection -= 360f;
+            miniMapCompassRotation.SetRotationDirection(rotationDirection);
         }
         cinemachineFreeLook.m_XAxis.Value = Mathf.LerpAngle(
             cinemachineFreeLook.m_XAxis.Value, rotationDirection, Time.deltaTime * rotationSpeed) ;
