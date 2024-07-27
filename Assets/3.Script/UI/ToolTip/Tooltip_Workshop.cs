@@ -8,8 +8,8 @@ using System.Linq;
 
 public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     /*
-     1.CurrentupgradeDetailÀº WorkshopManager¿¡¼­ È®ÀÎ
-     2. ¾ÆÀÌÅÛ
+     1.CurrentupgradeDetailì€ WorkshopManagerì—ì„œ í™•ì¸
+     2. ì•„ì´í…œ
      */
     private InvenController invenController;
     private WorkShopUI workShopUI;
@@ -53,7 +53,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
             Button btn = eventData.pointerEnter.GetComponent<Button>();
             if (btn != null && !btn.name.Contains("Exit")) {
 
-                // ¹öÆ° -> À§Ä¡ ÀüÃ¼ ÃÊ±âÈ­
+                // ë²„íŠ¼ -> ìœ„ì¹˜ ì „ì²´ ì´ˆê¸°í™”
                 LoadTextPositions_Func(S_ItemTexts, S_ItemImgs, S_itemNeedPosSave);
                 LoadTextPositions_Func(L_ItemTexts, L_ItemImgs, L_itemNeedPosSave);
                 LoadTextPositions_Func(L_StatsTexts, L_StatsImgs, StatsPosSave);
@@ -69,8 +69,8 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                     Tooltip_S.SetActive(true);
                     Tooltip_L.SetActive(false);
                     TextImgActiveInit(L_StatsTexts, L_StatsImgs);
-                    if (eventData.position.x >= 210) { // Ã¢°í À§Ä¡ ¸·À½
-                        // y À§Ä¡¿¡ µû¶ó CurrentupgradeDetail or PackingDetal
+                    if (eventData.position.x >= 210) { // ì°½ê³  ìœ„ì¹˜ ë§‰ìŒ
+                        // y ìœ„ì¹˜ì— ë”°ë¼ CurrentupgradeDetail or PackingDetal
                         if (400 <= eventData.position.y && eventData.position.y < 520) {
                             WorkshopUpgradeShow();
                         }
@@ -95,15 +95,15 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         L_ItemImg.sprite = btnitemData.itemData.Icon;
 
         WorkshopLevelText();
-        // 1. ½ºÅÈ 
+        // 1. ìŠ¤íƒ¯ 
         if (btnitemData.isWeap) {
             WorkshopItemData_Weap();
-            //2. ÇÊ¿äÇÑ ¾ÆÀÌÅÛ
+            //2. í•„ìš”í•œ ì•„ì´í…œ
             WorkshopNeedItemSprite(btnitemData.weaponItem.MaterialKey, btnitemData.weaponItem.MaterialCount);
             if (isWSSkillAvailable) {
                 if (!invenController.createItem(btnitemData.weaponItem.DropItemPrefab)) {
 
-                    L_TextResult.text = "<color=Red>ÀÎº¥Åä¸® ÀÚ¸® ºÎÁ·</color>";
+                    L_TextResult.text = "<color=Red>ì¸ë²¤í† ë¦¬ ìë¦¬ ë¶€ì¡±</color>";
                     isWSSkillAvailable = false;
                 }
             }
@@ -115,7 +115,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
             if (isWSSkillAvailable) {
                 if (!invenController.createItem(btnitemData.medicItem.DropItemPrefab)) {
 
-                    L_TextResult.text = "<color=Red>ÀÎº¥Åä¸® ÀÚ¸® ºÎÁ·</color>";
+                    L_TextResult.text = "<color=Red>ì¸ë²¤í† ë¦¬ ìë¦¬ ë¶€ì¡±</color>";
                     isWSSkillAvailable = false;
                 }
             }
@@ -147,16 +147,15 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                 }
             }
         }
-        //TODO:  ÀÎº¥ °³¼ö È®ÀÎ¾ÈµÇ°íÀÖÀ½
-        // ÀÎº¥ °³¼ö È®ÀÎ ÈÄ ¹öÆ° Å¬¸¯°¡´É ºÒ°¡´É ¿©ºÎ È®ÀÎ
+        // ì¸ë²¤ ê°œìˆ˜ í™•ì¸ í›„ ë²„íŠ¼ í´ë¦­ê°€ëŠ¥ ë¶ˆê°€ëŠ¥ ì—¬ë¶€ í™•ì¸
         if (Count >= matkeys.Length) {
             if (L_TextResult.text == "")
-            L_TextResult.text = "<color=White>Á¦ÀÛ °¡´É</color>";
+            L_TextResult.text = "<color=White>ì œì‘ ê°€ëŠ¥</color>";
             isWSSkillAvailable = true;
         }
         else {
             if (L_TextResult.text == "")
-            L_TextResult.text = "<color=Red>ÀÚ¿ø ºÎÁ·</color>";
+            L_TextResult.text = "<color=Red>ìì› ë¶€ì¡±</color>";
             isWSSkillAvailable = false;
         }
     }
@@ -174,30 +173,30 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
             L_TextResult.text = null;
         }
         else {
-            L_TextResult.text = string.Format("<color=Red>ÇÊ¿ä ÀÛ¾÷Àå ·¹º§:{0}</color>", btnItemLevel);
+            L_TextResult.text = string.Format("<color=Red>í•„ìš” ì‘ì—…ì¥ ë ˆë²¨:{0}</color>", btnItemLevel);
         }
     }
 
     private void WorkshopItemData_Weap() {
-        // °ø°İ·Â
+        // ê³µê²©ë ¥
         L_StatsImgs.transform.GetChild(0).GetComponent<Image>().sprite = L_StatsSprites[1];
 
         L_StatsImgs.transform.GetChild(1).gameObject.SetActive(false);
-        //³»±¸µµ
+        //ë‚´êµ¬ë„
         L_StatsImgs.transform.GetChild(2).GetComponent<Image>().sprite = L_StatsSprites[5];
 
-        // °ø°İ·Â
+        // ê³µê²©ë ¥
         L_StatsTexts.transform.GetChild(0).GetComponent<Text>().text = string.Format("{0}-{1}", btnitemData.weaponItem.MinPowerPoint, btnitemData.weaponItem.MaxPowerPoint);
 
         L_StatsTexts.transform.GetChild(1).gameObject.SetActive(false);
-        //³»±¸µµ
+        //ë‚´êµ¬ë„
         L_StatsTexts.transform.GetChild(2).GetComponent<Text>().text = btnitemData.weaponItem.TotalDurability.ToString();
     }
 
     private void WorkshopItemData_Medi() {
 
         L_StatsImgs.transform.GetChild(0).gameObject.SetActive(false);
-        // Èú
+        // í
         L_StatsImgs.transform.GetChild(1).GetComponent<Image>().sprite = L_StatsSprites[3];
 
         L_StatsImgs.transform.GetChild(2).gameObject.SetActive(false);
@@ -205,7 +204,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
         int healAmount = (int)(btnitemData.medicItem.HealTime * playerStatus.GetHealTick());
 
         L_StatsTexts.transform.GetChild(0).gameObject.SetActive(false);
-        // Èú
+        // í
         L_StatsTexts.transform.GetChild(1).GetComponent<Text>().text = healAmount.ToString();
 
         L_StatsTexts.transform.GetChild(2).gameObject.SetActive(false);
@@ -213,7 +212,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     }
     //============== Func
 
-    // 2. ¾÷±×·¹ÀÌµå
+    // 2. ì—…ê·¸ë ˆì´ë“œ
     private void WorkshopUpgradeShow() {
 
         S_ItemImgs.SetActive(true);
@@ -221,14 +220,14 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
 
         S_TextTitle.text = workShopUI.UpgradeDetail.name;
         S_TextMain.text = workShopUI.UpgradeDetail.description;
-        S_TextAdd.text = "ÇÊ¿ä ±¸¼ºÇ°";
-        LevelText.text = string.Format("<size=50>{0}</size>\n<size=30>·¹º§</size>", workshopManager.WorkshopLevel);
+        S_TextAdd.text = "í•„ìš” êµ¬ì„±í’ˆ";
+        LevelText.text = string.Format("<size=50>{0}</size>\n<size=30>ë ˆë²¨</size>", workshopManager.WorkshopLevel);
 
-        // ¾ÆÀÌÅÛ ÀÌ¹ÌÁö È°¼ºÈ­
+        // ì•„ì´í…œ ì´ë¯¸ì§€ í™œì„±í™”
         UpgradeFunc_ItemTextInit();
-        // ¾ÆÀÌÅÛ ÅØ½ºÆ® º¯°æ
+        // ì•„ì´í…œ í…ìŠ¤íŠ¸ ë³€ê²½
         UpgradeFunc_ItemText();
-        // ¾ÆÀÌÅÛ ÅØ½ºÆ® ÀÌ¹ÌÁö À§Ä¡ º¯°æ
+        // ì•„ì´í…œ í…ìŠ¤íŠ¸ ì´ë¯¸ì§€ ìœ„ì¹˜ ë³€ê²½
         //UpgradeFunc_ItemTextPosition();
     }
     private void UpgradeFunc_ItemTextInit() {
@@ -272,14 +271,14 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
                 }
             }
         }
-        // 24 07 16 ±è¼öÁÖ °Ç¼³ ¼³Ä¡ boolÃß°¡ -> ÀÎº¥ ¾ÆÀÌÅÛ °³¼ö È®ÀÎ
+        // 24 07 16 ê¹€ìˆ˜ì£¼ ê±´ì„¤ ì„¤ì¹˜ boolì¶”ê°€ -> ì¸ë²¤ ì•„ì´í…œ ê°œìˆ˜ í™•ì¸
         if (buildingCheckCount == workShopUI.UpgradeDetail.needItems.Length) {
             isWSUpgradeAvailable = true;
-            S_TextResult.text = "<color=White>¾÷±×·¹ÀÌµå °¡´É</color>";
+            S_TextResult.text = "<color=White>ì—…ê·¸ë ˆì´ë“œ ê°€ëŠ¥</color>";
         }
         else {
             isWSUpgradeAvailable = false;
-            S_TextResult.text = "<color=Red>ÀÚ¿ø ºÎÁ·</color>";
+            S_TextResult.text = "<color=Red>ìì› ë¶€ì¡±</color>";
         }
     }
 
@@ -302,7 +301,7 @@ public class Tooltip_Workshop : TooltipInfo, IPointerEnterHandler {
     }
 
 
-    // 3. Áü ½Î±â
+    // 3. ì§ ì‹¸ê¸°
     private void PackingTooltipShow() {
         S_TextTitle.text = workShopUI.PackingDetail.name;
         S_TextMain.text = workShopUI.PackingDetail.description;

@@ -175,7 +175,7 @@ public class MCursor : MonoBehaviour {
     }
 
     private void FindBuildType() {
-        Debug.Log(PlayerItemPickControll.ClosestItem.name);
+        if (PlayerItemPickControll.ClosestItem.GetComponentInParent<BuildingInteraction>() == null) return;
         BuildingType buildingType = PlayerItemPickControll.ClosestItem.GetComponentInParent<BuildingInteraction>().Type;
         switch (buildingType) {
             case BuildingType.Campfire:
