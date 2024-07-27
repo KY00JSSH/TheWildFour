@@ -6,8 +6,8 @@ public class PlayerAbility : MonoBehaviour {
     private PlayerStatus playerStatus;
     private PlayerMove playerMove;
 
-    // ÇÃ·¹ÀÌ¾î ±âº» ´É·ÂÄ¡
-    // ÇÃ·¹ÀÌ¾î ¼±ÅÃ ½Ã¿¡¸¸ º¯°æµÊ
+    // í”Œë ˆì´ì–´ ê¸°ë³¸ ëŠ¥ë ¥ì¹˜
+    // í”Œë ˆì´ì–´ ì„ íƒ ì‹œì—ë§Œ ë³€ê²½ë¨
     private float playerAttack;
     private float playerAttackSpeed;
     private float playerCriticalAttack;
@@ -20,8 +20,8 @@ public class PlayerAbility : MonoBehaviour {
     private float playerDecDashGage;
     private float playerInvenCount;
 
-    // ÇÃ·¹ÀÌ¾î Ãß°¡ ´É·ÂÄ¡
-    // ÇÃ·¹ÀÌ¾î ½ºÅ³ ¶Ç´Â Àåºñ¿¡ µû¶ó º¯°æµÊ
+    // í”Œë ˆì´ì–´ ì¶”ê°€ ëŠ¥ë ¥ì¹˜
+    // í”Œë ˆì´ì–´ ìŠ¤í‚¬ ë˜ëŠ” ì¥ë¹„ì— ë”°ë¼ ë³€ê²½ë¨
     private float playerAddAttack;
     private float playerAddAttackSpeed;
     private float playerAddCriticalAttack;
@@ -39,7 +39,7 @@ public class PlayerAbility : MonoBehaviour {
         playerStatus = FindObjectOfType<PlayerStatus>();
         playerMove = FindObjectOfType<PlayerMove>();
 
-        //TODO: SAVE ±¸Çö ½Ã JSON¿¡¼­ ¹Ş¾Æ¿À±â
+        //TODO: SAVE êµ¬í˜„ ì‹œ JSONì—ì„œ ë°›ì•„ì˜¤ê¸°
         playerAttack = 2f;
         playerAttackSpeed = 1f;
         playerCriticalAttack = 5f;
@@ -76,29 +76,38 @@ public class PlayerAbility : MonoBehaviour {
 
     public void UpdateAblity() {
         playerMove.isSkilled = 
-            shelterManager.GetSkill("Àü·Â ÁúÁÖ").nowSkillLevel == 1 ? true : false;
-        playerAddSpeed = shelterManager.GetSkill("¼Óµµ").GetValue();
+            shelterManager.GetSkill("ì „ë ¥ ì§ˆì£¼").nowSkillLevel == 1 ? true : false;
+        playerAddSpeed = shelterManager.GetSkill("ì†ë„").GetValue();
         playerMove.SetPlayerMoveSpeed(playerSpeed + playerAddSpeed);
         cameraControl.maxFOV =
-            shelterManager.GetSkill("½Ã¾ß ¹İ°æ").nowSkillLevel == 1 ? 110f : 100f;
+            shelterManager.GetSkill("ì‹œì•¼ ë°˜ê²½").nowSkillLevel == 1 ? 110f : 100f;
         playerAddDecDashGage =
-            shelterManager.GetSkill("Àü·Â ÁúÁÖ ½Ã°£").GetValue();
+            shelterManager.GetSkill("ì „ë ¥ ì§ˆì£¼ ì‹œê°„").GetValue();
         playerMove.DecDashGage = playerDecDashGage - playerAddDecDashGage;
         playerStatus.PlayerMaxHp =
-            playerStatus.PlayerMaxHp + shelterManager.GetSkill("¿îµ¿").GetValue();
+            playerStatus.PlayerMaxHp + shelterManager.GetSkill("ìš´ë™").GetValue();
 
-        playerAddAttack =       //TODO: ÀåÂø ÀåºñÀÇ °ø°İ·Âµµ °¡Á®¿À±â
-            shelterManager.GetSkill("±ÙÁ¢ °ø°İ·Â").GetValue() +
-            shelterManager.GetSkill("¿ø°Å¸® °ø°İ·Â").GetValue();
-        //TODO: ÇÃ·¹ÀÌ¾î °ø°İ ±¸Çö ÈÄ °ø°İ¼Óµµ Àû¿ë
-        playerAddAttackSpeed = shelterManager.GetSkill("°ø°İ ¼Óµµ").GetValue();
-        playerAddCriticalAttack = shelterManager.GetSkill("Ä¡¸íÅ¸ °ø°İ·Â").GetValue();
-        playerAddCriticalChance = shelterManager.GetSkill("Ä¡¸íÅ¸ °ø°İ È®·ü").GetValue();
+        playerAddAttack =
+            shelterManager.GetSkill("ê·¼ì ‘ ê³µê²©ë ¥").GetValue() +
+            shelterManager.GetSkill("ì›ê±°ë¦¬ ê³µê²©ë ¥").GetValue() +
+            PlayerWeaponEquip.CurrentEquipWeaponAttackPoint;
+        //TODO: í”Œë ˆì´ì–´ ê³µê²© êµ¬í˜„ í›„ ê³µê²©ì†ë„ ì ìš©
+        playerAddAttackSpeed = shelterManager.GetSkill("ê³µê²© ì†ë„").GetValue();
+        FindObjectOfType<PlayerAttack>().SetAttackSpeed(GetTotalPlayerAttackSpeed());
 
-        playerAddInvenCount = shelterManager.GetSkill("°­È­ ¹è³¶").GetValue();
-        //TODO: Inven_Bottom_Controll.cs ¿¡¼­ InvenCountUpgrade()  => ±×³É ¹öÆ° Å¬¸¯¿¡ ¹­¾îµÎÀÚ
+        playerAddCriticalAttack = shelterManager.GetSkill("ì¹˜ëª…íƒ€ ê³µê²©ë ¥").GetValue();
+        playerAddCriticalChance = shelterManager.GetSkill("ì¹˜ëª…íƒ€ ê³µê²© í™•ë¥ ").GetValue();
 
-        //TODO: Gather ½ºÅ³ ability ¼³Á¤. 0715
+        playerAddInvenCount = shelterManager.GetSkill("ê°•í™” ë°°ë‚­").GetValue();
+        if(playerInvenCount != playerAddInvenCount) {
+            InvenUIController invenUIController = FindObjectOfType<InvenUIController>();
+            for (int i = 0; i < playerInvenCount - playerAddInvenCount; i++)
+                invenUIController.InvenCountUpgrade();
+            playerInvenCount = playerAddInvenCount;
+        }
+        playerAddGather = 
+            shelterManager.GetSkill("ë„ë¼ì˜ ë‹¬ì¸").GetValue() +
+            shelterManager.GetSkill("ê³¡ê´­ì´ì˜ ë‹¬ì¸").GetValue();
     }
 
     public float GetTotalPlayerAttack() { return playerAttack + playerAddAttack; }
