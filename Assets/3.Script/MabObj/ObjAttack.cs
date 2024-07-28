@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class ObjAttack : MonoBehaviour {
 
-    //µ¹, ³ª¹«ÀÏ¶§
+    //ëŒ, ë‚˜ë¬´ì¼ë•Œ
     public void GetAttack(float attackPoint, float gatherPoint) {
-        //attackPoint ¸¸Å­ ³ª¹«, µ¹¿¡ µ¥¹ÌÁö ÁÜ
-        //gatherPoint¸¸Å­ ³ª¹«, µ¹ ¶³±À
+        //attackPoint ë§Œí¼ ë‚˜ë¬´, ëŒì— ë°ë¯¸ì§€ ì¤Œ
+        //gatherPointë§Œí¼ ë‚˜ë¬´, ëŒ ë–¨êµ¼
 
-        if(gameObject.GetComponent<RockController>() != null){
+        if (gameObject.GetComponent<RockController>() != null) {
             RockController rockCont = gameObject.GetComponent<RockController>();
             rockCont.getDamage(attackPoint);
-            //gatherPoint¸¸Å­ ¾ÆÀÌÅÛ µå¶ø
+            //gatherPointë§Œí¼ ì•„ì´í…œ ë“œë
             rockCont.dropRockItem(gatherPoint);
         }
-        else if(gameObject.GetComponent<TreeBigController>() != null) {
+        else if (gameObject.GetComponent<TreeBigController>() != null) {
             TreeBigController treeCont = gameObject.GetComponent<TreeBigController>();
             treeCont.getDamage(attackPoint);
-            //gatherPoint¸¸Å­ ¾ÆÀÌÅÛ µå¶ø
-            treeCont .dropTreeItem(gatherPoint);
+            //gatherPointë§Œí¼ ì•„ì´í…œ ë“œë
+            treeCont.dropTreeItem(gatherPoint);
         }
     }
 }

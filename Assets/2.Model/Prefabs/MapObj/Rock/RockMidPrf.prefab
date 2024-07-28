@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 6156379806950513593}
   - component: {fileID: 7791673495664424441}
   - component: {fileID: 1309016345650187897}
+  - component: {fileID: 3014559189227100126}
   m_Layer: 12
   m_Name: RockMidPrf
   m_TagString: Untagged
@@ -242,6 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisRockObject: {fileID: 3114326364646432104}
   brokenObject: {fileID: 727670657643927275}
+  dropRockPrf: {fileID: 369517064854149524, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
   isBroken: 0
 --- !u!65 &1309016345650187897
 BoxCollider:
@@ -256,6 +258,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.7, z: 2}
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &3014559189227100126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6783558473349857539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96ed2a2c91dbb74b98b7302d14871b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6839709054530942487
 PrefabInstance:
   m_ObjectHideFlags: 0
