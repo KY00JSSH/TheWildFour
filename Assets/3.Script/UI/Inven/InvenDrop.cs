@@ -86,14 +86,12 @@ public class InvenDrop : MonoBehaviour {
                 itemComponent.transform.position = itemDropPosition;
                 if (itemComponent.GetComponent<FoodItem>() != null) {
                     itemComponent.GetComponent<FoodItem>().setVisible();
-
                 }
                 else {
                     itemComponent.SetActive(true);
                 }
 
                 invenController.removeItem(selectBoxKey);
-                invenController.invenFullFlagReset();
             }
             else {
                 Debug.Log("Invalid selectBoxKey");
