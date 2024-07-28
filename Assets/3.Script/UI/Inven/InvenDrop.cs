@@ -42,6 +42,8 @@ public class InvenDrop : MonoBehaviour {
                             dropItem.GetComponent<CountableItem>().setCurrStack(1);
                             if (itemComponent.GetComponent<FoodItem>() != null) {
                                 dropItem.GetComponent<FoodItem>().setVisible();
+                                itemComponent.GetComponent<Rigidbody>().useGravity = true;
+                                itemComponent.GetComponent<Rigidbody>().isKinematic = false;
                             }
                             else {
                                 dropItem.SetActive(true);
@@ -51,6 +53,8 @@ public class InvenDrop : MonoBehaviour {
                             if (itemComponent.GetComponent<FoodItem>() != null) {
                                 itemComponent.transform.position = itemDropPosition;
                                 itemComponent.GetComponent<FoodItem>().setVisible();
+                                itemComponent.GetComponent<Rigidbody>().useGravity = true;
+                                itemComponent.GetComponent<Rigidbody>().isKinematic = false;
                             }
                             else {
                                 itemComponent.transform.position = itemDropPosition;
@@ -86,6 +90,8 @@ public class InvenDrop : MonoBehaviour {
                 itemComponent.transform.position = itemDropPosition;
                 if (itemComponent.GetComponent<FoodItem>() != null) {
                     itemComponent.GetComponent<FoodItem>().setVisible();
+                    itemComponent.GetComponent<Rigidbody>().useGravity = true;
+                    itemComponent.GetComponent<Rigidbody>().isKinematic = false;
                 }
                 else {
                     itemComponent.SetActive(true);
