@@ -23,6 +23,7 @@ public class CampfirePrefabUI : BuildPrefabUI {
     public override void BuildAvailableMode() {
         buildingCreate = campfireCreate;
         isBuildAniComplete = false;
+        playTime = 0;
         base.BuildAvailableMode();
     }
 }
