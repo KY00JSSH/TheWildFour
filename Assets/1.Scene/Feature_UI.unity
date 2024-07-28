@@ -1844,7 +1844,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &71064960
 Transform:
@@ -6909,7 +6909,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 4e84493bc7e32a5448f784af2e8ef460, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0a923a07e9dc39645a123490161757aa, type: 2}
 --- !u!4 &190364511
 Transform:
   m_ObjectHideFlags: 0
@@ -6922,7 +6922,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &191960213
 GameObject:
@@ -9118,7 +9118,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &241997658
 Transform:
@@ -25518,6 +25518,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1033926950}
     m_Modifications:
+    - target: {fileID: 2502722550740974552, guid: 3a4efb9af6ec3984abf0707cc7e13b08, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2659999669912191407, guid: 3a4efb9af6ec3984abf0707cc7e13b08, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -31091,7 +31095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2582065002477715337, guid: ee2a4e06725a53d4aac8b1c5d8c87fe0, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee2a4e06725a53d4aac8b1c5d8c87fe0, type: 3}
       propertyPath: m_Name
@@ -50505,7 +50509,7 @@ GameObject:
   - component: {fileID: 1380694544}
   m_Layer: 10
   m_Name: Deer
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58682,7 +58686,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1651179492
 Transform:
@@ -64473,7 +64477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9176331119954031763, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_RootOrder
@@ -64525,7 +64529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8610615825263545412, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_Name
@@ -68171,7 +68175,7 @@ Transform:
   - {fileID: 1675999218}
   - {fileID: 625462410}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1900548605
 GameObject:
@@ -74423,7 +74427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1226623511609081640, guid: 29f0a6c1bf104384a9e8921c9478f57e, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 29f0a6c1bf104384a9e8921c9478f57e, type: 3}
       propertyPath: m_Name
@@ -75333,7 +75337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9176331119954031763, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_RootOrder
@@ -75385,7 +75389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8610615825263545412, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9e2c1462e212bc4db6db155f0672130, type: 3}
       propertyPath: m_Name
@@ -75558,6 +75562,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137679278}
   m_CullTransparentMesh: 1
+--- !u!1 &2138459571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2502722549870807480, guid: 3a4efb9af6ec3984abf0707cc7e13b08, type: 3}
+  m_PrefabInstance: {fileID: 719527600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &2138459576
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138459571}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.018000001, y: 0.007, z: 0.016}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.006, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2140481439
 GameObject:
   m_ObjectHideFlags: 0
@@ -76440,7 +76465,7 @@ GameObject:
   - component: {fileID: 442080828}
   m_Layer: 10
   m_Name: Rabbit
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

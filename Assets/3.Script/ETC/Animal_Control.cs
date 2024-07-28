@@ -24,7 +24,7 @@ public class Animal_Control : MonoBehaviour
     private bool isRunning = false; //플레이어가 감지되었는지 여부
     private float idleTimer; //Idle 상태의 타이머
     private float moveTimer; //이동 상태의 타이머
-    private float runTimer; //이동 상태의 타이머
+    private float runTimer; //달리기 상태의 타이머
     
 
     private Transform player; //플레이어 위치 저장, 동물이 플레이어를 감지하고 도망치게 하기 위함
@@ -73,10 +73,33 @@ public class Animal_Control : MonoBehaviour
 
     void CheckDistance() //네비메쉬 동적 베이크를 위한 거리계산 메서드
     {
-        if(Vector3.Distance(this.transform.position, navMeshSurface.position) > 10f)
+        //if(Vector3.Distance(this.transform.position, navMeshSurface.position) > 10f)
+        //{
+        //    navMeshSurface.transform.position = this.transform.position;
+        //    navMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
+        //}
+
+        float distance = Vector3.Distance(this.transform.position, navMeshSurface.position);
+        if (distance > 10f)
         {
             navMeshSurface.transform.position = this.transform.position;
-           // navMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
+            NavMeshSurface navMeshSurfaceComponent = navMeshSurface.GetComponent<NavMeshSurface>();
+            //if (navMeshSurfaceComponent != null)
+            //{
+            //    navMeshSurfaceComponent.BuildNavMesh();
+            //}
+
+            if(navMeshSurfaceComponent != null)
+            {
+                try
+                {
+                    navMeshSurfaceComponent.BuildNavMesh();
+                }
+                catch(System.Exception e)
+                {
+                    Debug.LogError("네비메쉬 빌드에 실패했습니다." + e.Message);
+                }
+            }
         }
     }      
     

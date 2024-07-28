@@ -413,11 +413,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7c9667f46c6ac4dbf262c8c3c8cb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuButton: {fileID: 772739207}
   spritesPath: SkillCount
   shelterLevelText: {fileID: 990325471}
   shelterLevel: {fileID: 1478626276}
   shelterbuttons: {fileID: 0}
-  menuButton: {fileID: 772739207}
   sliders:
   - {fileID: 0}
   - {fileID: 0}
@@ -1394,6 +1394,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
   positions: 0.5
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   workshopCreate: {fileID: 0}
 --- !u!114 &46973198
@@ -1644,6 +1645,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
   positions: 0.5
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   shelterCreate: {fileID: 0}
 --- !u!114 &52305532
@@ -3223,6 +3225,7 @@ MonoBehaviour:
   btn: {fileID: 133642463}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &133642461
 MonoBehaviour:
@@ -3675,6 +3678,7 @@ MonoBehaviour:
   btn: {fileID: 141430351}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &141430349
 MonoBehaviour:
@@ -4107,6 +4111,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
   positions: 2
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   campfireCreate: {fileID: 1496688573}
 --- !u!114 &150311636
@@ -4399,6 +4404,7 @@ MonoBehaviour:
   btn: {fileID: 161985557}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &161985555
 MonoBehaviour:
@@ -5087,6 +5093,7 @@ MonoBehaviour:
   btn: {fileID: 173812880}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &173812878
 MonoBehaviour:
@@ -5632,6 +5639,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
+      propertyPath: m_TagString
+      value: Animal
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
       propertyPath: m_Controller
@@ -7042,6 +7053,7 @@ MonoBehaviour:
     totalTime: 0
     tickTime: 0
     isTicked: 0
+  ActivatedStatus: []
 --- !u!4 &252318029
 Transform:
   m_ObjectHideFlags: 0
@@ -8929,6 +8941,7 @@ MonoBehaviour:
   btn: {fileID: 317816494}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &317816492
 MonoBehaviour:
@@ -9144,6 +9157,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
   positions: 2
+  buildingObj: {fileID: 0}
   isBuiltStart: 0
   campfireCreate: {fileID: 2064438840}
 --- !u!114 &326430233
@@ -11853,6 +11867,7 @@ MonoBehaviour:
   btn: {fileID: 442270811}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &442270809
 MonoBehaviour:
@@ -12550,6 +12565,7 @@ RectTransform:
   m_Children:
   - {fileID: 602923625}
   - {fileID: 838934895}
+  - {fileID: 818033037}
   m_Father: {fileID: 251613390}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12935,6 +12951,7 @@ MonoBehaviour:
   btn: {fileID: 493682247}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &493682245
 MonoBehaviour:
@@ -13497,6 +13514,7 @@ MonoBehaviour:
   btn: {fileID: 519732855}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &519732853
 MonoBehaviour:
@@ -14275,7 +14293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkRadius: 2.5
-  player: {fileID: 591243059}
 --- !u!114 &546129953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14625,6 +14642,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shelter05
       objectReference: {fileID: 0}
+    - target: {fileID: 2790610039494779352, guid: 23d238d3f99e89e4f8d7446bc3eb47fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2790610039494779359, guid: 23d238d3f99e89e4f8d7446bc3eb47fe, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -14867,6 +14888,7 @@ MonoBehaviour:
   btn: {fileID: 571078833}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &571078831
 MonoBehaviour:
@@ -15295,6 +15317,8 @@ GameObject:
   - component: {fileID: 591243062}
   - component: {fileID: 591243061}
   - component: {fileID: 591243060}
+  - component: {fileID: 591243065}
+  - component: {fileID: 591243064}
   m_Layer: 0
   m_Name: Robin
   m_TagString: Player
@@ -15366,6 +15390,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &591243064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591243059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766193f6983d02b40a190876228651c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistanceFromPlayer: 10
+  maxDistanceFromPlayer: 25
+--- !u!135 &591243065
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591243059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &594789577
 GameObject:
   m_ObjectHideFlags: 0
@@ -16497,6 +16548,7 @@ MonoBehaviour:
   btn: {fileID: 667205421}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &667205419
 MonoBehaviour:
@@ -17483,6 +17535,7 @@ MonoBehaviour:
   btn: {fileID: 705330488}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &705330486
 MonoBehaviour:
@@ -18987,6 +19040,7 @@ MonoBehaviour:
   btn: {fileID: 768333418}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &768333416
 MonoBehaviour:
@@ -19279,6 +19333,7 @@ MonoBehaviour:
   - {fileID: 743357153}
   - {fileID: 2023244705}
   - {fileID: 277663670}
+  isMenuButtonOpen: 0
 --- !u!1 &785795394
 GameObject:
   m_ObjectHideFlags: 0
@@ -19770,6 +19825,7 @@ MonoBehaviour:
   btn: {fileID: 806468451}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &806468449
 MonoBehaviour:
@@ -20195,6 +20251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workshop03
       objectReference: {fileID: 0}
+    - target: {fileID: 8927614913479172264, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8927614913479172265, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -20253,6 +20313,81 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77b43954a4f14d24ca6726133fe2925d, type: 3}
+--- !u!1 &818033036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 818033037}
+  - component: {fileID: 818033039}
+  - component: {fileID: 818033038}
+  m_Layer: 5
+  m_Name: BGImgChange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &818033037
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818033036}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 478218557}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1820, y: 980}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &818033038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818033036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 4a05d3bdf6b64e54184990ece23e637d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &818033039
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818033036}
+  m_CullTransparentMesh: 1
 --- !u!1 &820479056
 GameObject:
   m_ObjectHideFlags: 0
@@ -22944,6 +23079,7 @@ MonoBehaviour:
   - {fileID: 2073350995}
   - {fileID: 1242859985}
   - {fileID: 1932586886}
+  BGImgChange: {fileID: 818033038}
 --- !u!1 &956794479
 GameObject:
   m_ObjectHideFlags: 0
@@ -24141,6 +24277,10 @@ PrefabInstance:
     - target: {fileID: 162536223896149818, guid: 19586655bcc4ab84982df726372810ce, type: 3}
       propertyPath: m_Name
       value: Workshop01
+      objectReference: {fileID: 0}
+    - target: {fileID: 162536223896149818, guid: 19586655bcc4ab84982df726372810ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 162536223896149819, guid: 19586655bcc4ab84982df726372810ce, type: 3}
       propertyPath: m_RootOrder
@@ -26210,6 +26350,7 @@ MonoBehaviour:
   btn: {fileID: 1114346911}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1114346909
 MonoBehaviour:
@@ -26933,7 +27074,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 4e84493bc7e32a5448f784af2e8ef460, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 8aac4b3964c973f4e93d7c132c70f1ec, type: 2}
 --- !u!4 &1135395997
 Transform:
   m_ObjectHideFlags: 0
@@ -28327,6 +28468,7 @@ MonoBehaviour:
   btn: {fileID: 1195688577}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1195688575
 MonoBehaviour:
@@ -29963,6 +30105,7 @@ MonoBehaviour:
   btn: {fileID: 1247557405}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1247557403
 MonoBehaviour:
@@ -30653,6 +30796,7 @@ MonoBehaviour:
   btn: {fileID: 1266998680}
   cooltime: 120
   isClicked: 0
+  isBuildComplete: 0
   speed: 1
 --- !u!114 &1266998680
 MonoBehaviour:
@@ -31514,6 +31658,7 @@ MonoBehaviour:
   btn: {fileID: 1320326857}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1320326855
 MonoBehaviour:
@@ -31857,6 +32002,7 @@ MonoBehaviour:
   btn: {fileID: 1333490191}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &1333490191
 MonoBehaviour:
@@ -33833,6 +33979,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workshop02
       objectReference: {fileID: 0}
+    - target: {fileID: 661432127875498163, guid: 55936aad4c21e0b45a101dad820e8926, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 661432128913783128, guid: 55936aad4c21e0b45a101dad820e8926, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -33986,6 +34136,7 @@ MonoBehaviour:
   btn: {fileID: 1426220975}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1426220973
 MonoBehaviour:
@@ -35549,6 +35700,7 @@ MonoBehaviour:
   btn: {fileID: 1477530318}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1477530316
 MonoBehaviour:
@@ -35954,6 +36106,7 @@ MonoBehaviour:
   btn: {fileID: 1487006988}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1487006986
 MonoBehaviour:
@@ -37413,6 +37566,7 @@ MonoBehaviour:
   btn: {fileID: 1563448400}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1563448398
 MonoBehaviour:
@@ -39126,6 +39280,7 @@ MonoBehaviour:
   btn: {fileID: 1655434263}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1655434261
 MonoBehaviour:
@@ -39913,6 +40068,7 @@ MonoBehaviour:
   btn: {fileID: 1664058132}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1664058130
 MonoBehaviour:
@@ -40209,6 +40365,7 @@ MonoBehaviour:
   btn: {fileID: 1664613267}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1664613265
 MonoBehaviour:
@@ -41023,6 +41180,7 @@ MonoBehaviour:
   btn: {fileID: 1692624332}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1692624330
 MonoBehaviour:
@@ -43634,6 +43792,7 @@ MonoBehaviour:
   btn: {fileID: 1807970086}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1807970084
 MonoBehaviour:
@@ -44384,6 +44543,7 @@ MonoBehaviour:
   btn: {fileID: 1828491857}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1828491855
 MonoBehaviour:
@@ -44712,6 +44872,7 @@ MonoBehaviour:
   btn: {fileID: 1832348114}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &1832348112
 MonoBehaviour:
@@ -45523,6 +45684,10 @@ PrefabInstance:
     - target: {fileID: 7348352990258590494, guid: ba848ae86052a3a41a230670b902b906, type: 3}
       propertyPath: m_Name
       value: Workshop04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348352990258590494, guid: ba848ae86052a3a41a230670b902b906, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7348352990258590495, guid: ba848ae86052a3a41a230670b902b906, type: 3}
       propertyPath: m_RootOrder
@@ -47186,11 +47351,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7c9667f46c6ac4dbf262c8c3c8cb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuButton: {fileID: 772739207}
   spritesPath: SkillCount
   shelterLevelText: {fileID: 482631502}
   shelterLevel: {fileID: 940317710}
   shelterbuttons: {fileID: 36720048}
-  menuButton: {fileID: 772739207}
   sliders:
   - {fileID: 908655213}
   - {fileID: 201092633}
@@ -47713,6 +47878,7 @@ MonoBehaviour:
   btn: {fileID: 1979652275}
   cooltime: 2
   isClicked: 0
+  isBuildComplete: 0
   speed: 20
 --- !u!114 &1979652275
 MonoBehaviour:
@@ -48451,6 +48617,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shelter02
       objectReference: {fileID: 0}
+    - target: {fileID: 208225059475756949, guid: aea9e051c2b4ae34bb5e586789bad91b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 208225060160188615, guid: aea9e051c2b4ae34bb5e586789bad91b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
@@ -48594,9 +48764,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextBox_Bag: {fileID: 0}
-  canvas: {fileID: 0}
-  playerPos: {x: 0, y: 0}
-  scaleFactor: 0
 --- !u!114 &2023244705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49790,6 +49957,7 @@ MonoBehaviour:
   btn: {fileID: 2098272621}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &2098272619
 MonoBehaviour:
@@ -50509,6 +50677,7 @@ MonoBehaviour:
   btn: {fileID: 2124231523}
   cooltime: 10
   isClicked: 0
+  isBuildComplete: 0
   speed: 10
 --- !u!114 &2124231521
 MonoBehaviour:
@@ -51006,11 +51175,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MAXHP: 0
   currentHP: 0
-  navMeshSurface: {fileID: 0}
+  navMeshSurface: {fileID: 1135395997}
   idleDuration: 3
   moveDuration: 5
-  playerDetector_Capsule: {fileID: 0}
-  playerDetector_Box: {fileID: 0}
+  playerDetector_Capsule: {fileID: 199608403}
+  playerDetector_Box: {fileID: 199608402}
 --- !u!1 &2143038052
 GameObject:
   m_ObjectHideFlags: 0
@@ -51412,7 +51581,7 @@ GameObject:
   - component: {fileID: 919132147937205836}
   m_Layer: 0
   m_Name: Deer
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
