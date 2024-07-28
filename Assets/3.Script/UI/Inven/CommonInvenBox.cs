@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class CommonInvenBox : MonoBehaviour {
     protected int key;
-    // ÀÎº¥ ¹Ú½º -> ¹öÆ°
+    // ì¸ë²¤ ë°•ìŠ¤ -> ë²„íŠ¼
     protected Button invenBox;
     [SerializeField] protected Text itemText;
     [SerializeField] protected Image itemIcon;
 
-    // ¾ÆÀÌÅÛÀÌ µé¾î°¡ÀÖ´ÂÁö È®ÀÎ
+    // ì•„ì´í…œì´ ë“¤ì–´ê°€ìˆëŠ”ì§€ í™•ì¸
     public bool isItemIn = false;
 
     private GameObject currentItem;
