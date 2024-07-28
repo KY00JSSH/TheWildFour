@@ -18,6 +18,9 @@ public class Animal_Control : MonoBehaviour
 
     private Animator animator;
 
+    [SerializeField]
+    private GameObject[] dropItems;
+
     public float idleDuration = 3f; //Idle 상태의 지속 시간
     public float moveDuration = 3f; //이동 상태의 지속 시간
 
@@ -168,5 +171,27 @@ public class Animal_Control : MonoBehaviour
         isRunning = false;
         animator.SetBool("isRunning", false);
         agent.ResetPath();
-    }   
+    }
+
+    public void getDamage(float damage) {
+        currentHP -= damage;
+        if (currentHP <= 0) {
+            currentHP = 0;
+            animalDie();
+        }
+    }
+
+    private void animalDie() {
+        //TODO: 죽었을때 해야하는 것 추가
+        itemDrop();
+    }
+
+    private void itemDrop() {
+        int itemsToDrop = Random.Range(1, 4);
+        for (int i = 0; i < itemsToDrop; i++) {
+            GameObject itemToDrop = dropItems[Random.Range(0, dropItems.Length)];
+            Vector3 dropPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
+            Instantiate(itemToDrop, dropPosition, Quaternion.identity);
+        }
+    }
 }
