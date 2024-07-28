@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Progress;
 
 public class Animal_Control : MonoBehaviour
 {
@@ -191,7 +192,10 @@ public class Animal_Control : MonoBehaviour
         for (int i = 0; i < itemsToDrop; i++) {
             GameObject itemToDrop = dropItems[Random.Range(0, dropItems.Length)];
             Vector3 dropPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
-            Instantiate(itemToDrop, dropPosition, Quaternion.identity);
+            GameObject newDropItem  = Instantiate(itemToDrop, dropPosition, Quaternion.identity);
+            if (newDropItem.GetComponent<FoodItem>() != null) {
+                newDropItem.GetComponent<FoodItem>().startSpoilage();
+            }
         }
     }
 }
