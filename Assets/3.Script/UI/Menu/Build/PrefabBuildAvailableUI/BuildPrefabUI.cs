@@ -72,10 +72,11 @@ public class BuildPrefabUI : MonoBehaviour {
             BuildPrefabUISize();
             BuildPrefabUIPosition_Vertical();
         }
-
-        // 애니메이션의 타이밍을 알 수 없음
-        if (buildingObj != null) if(buildingObj.activeSelf) 
+        
+        //TODO: 애니메이션의 타이밍을 알 수 없음 -> 애니메이션 시작 끝 알아야할것같음!
+        if (isValid) if (!BuildImg.activeSelf) 
                 if(!isBuildAniComplete) BuildDustPrefabEffectStart();
+        
     }
 
     protected virtual void OnDisable() {
@@ -97,8 +98,13 @@ public class BuildPrefabUI : MonoBehaviour {
         float width = size.x;
         float height = size.z;
 
+        // 파티클 -> 도넛 형태
+        float diameter = Mathf.Max(width, height);
+        float radius = diameter * 0.35f;
+
+        // 파티클의 형태 중 radius 
         var shape = dustPrefab.shape;
-        shape.scale = new Vector3(width, shape.scale.y, height);
+        shape.radius = radius; 
     }
 
     private void BuildDustPrefabEffectStart() {
@@ -118,7 +124,6 @@ public class BuildPrefabUI : MonoBehaviour {
             dustPrefab.gameObject.SetActive(true);
             dustPrefab.Play();
             playTime += Time.deltaTime;
-            Debug.Log(playTime);
             yield return null;
         }
         BuildDustPrefabEffectOff();
@@ -207,6 +212,8 @@ public class BuildPrefabUI : MonoBehaviour {
 
         buildingObj = buildingCreate.Building;
         StartCoroutine(FindObject());
+        isBuildAniComplete = false;
+        playTime = 0;
     }
 
     protected IEnumerator FindObject() {

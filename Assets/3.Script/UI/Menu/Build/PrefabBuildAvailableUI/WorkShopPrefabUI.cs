@@ -23,8 +23,6 @@ public class WorkShopPrefabUI : BuildPrefabUI {
 
     public override void BuildAvailableMode() {
         buildingCreate = workshopCreate;
-        isBuildAniComplete = false;
-        playTime = 0;
         base.BuildAvailableMode();
     }
 }

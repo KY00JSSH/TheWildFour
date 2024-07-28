@@ -26,8 +26,6 @@ public class ShelterPrefabUI : BuildPrefabUI {
     // 버튼이 눌렸을 경우 UI표시
     public override void BuildAvailableMode() {
         buildingCreate = shelterCreate;
-        isBuildAniComplete = false;
-        playTime = 0;
         base.BuildAvailableMode();
     }
 }
