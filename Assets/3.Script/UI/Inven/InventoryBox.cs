@@ -108,16 +108,21 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                     }
                     else {
                         //아이템 굽기
-                        if(invenControll.getIndexItem(key).GetComponent<FoodItem>()!= null) {
-                            if (invenControll.getIndexItem(key).GetComponent<FoodItem>().foodItemData.CanBake) {
-                                Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-                                RaycastHit hit;
-                                if (Physics.Raycast(ray, out hit)) {
-                                    FireObject dropZone = FindObjectOfType<FireObject>();
-                                    if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
-                                        dropZone.BakeItem(key);
+                        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+                        RaycastHit hit;
+                        if (Physics.Raycast(ray, out hit)) {
+                            FireObject dropZone = hit.transform.GetComponent<FireObject>();
+                            if (dropZone != null) {
+                                if (invenControll.getIndexItem(key).GetComponent<FoodItem>() != null) {
+                                    if (invenControll.getIndexItem(key).GetComponent<FoodItem>().foodItemData.CanBake) {
+                                        if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
+                                            dropZone.BakeItem(key);
+                                        }
                                     }
                                 }
+                            }
+                            else {
+                                invenDrop.dropItemAll(key);
                             }
                         }
                         else {
