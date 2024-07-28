@@ -10,6 +10,9 @@ public class PlayerWeaponEquip : MonoBehaviour {
     private Vector3 positionOffset;
     private Quaternion rotationOffset;
 
+    public static float CurrentEquipWeaponAttackPoint {
+        get { return FindObjectOfType<PlayerWeaponEquip>().CurrentEquipWeapon.GetComponent<WeaponItem>().weaponItemData.MinPowerPoint; }
+    }
     public bool isEquip { get { return CurrentEquipWeapon ? true : false; } }
 
     private void Awake() {
@@ -30,28 +33,28 @@ public class PlayerWeaponEquip : MonoBehaviour {
         foreach(Transform weapon in transform) 
             weapon.gameObject.SetActive(false);
 
-        if (GetCurrentSlotWeapon()) {   // ÇöÀç ¹«±â ½½·Ô¿¡ ¹«±â°¡ ÀÖÀ» °æ¿ì
+        if (GetCurrentSlotWeapon()) {   // í˜„ì¬ ë¬´ê¸° ìŠ¬ë¡¯ì— ë¬´ê¸°ê°€ ìˆì„ ê²½ìš°
             for (int i = 0; i < transform.childCount; i++) {
                 GameObject eachWeaponObject = transform.GetChild(i).gameObject;
                 eachWeaponObject.SetActive(false);
 
                 if (eachWeaponObject.TryGetComponent(out WeaponItem eachWeapon)) {
 
-                    // Equipment·Î µî·ÏµÈ child Object¿¡¼­ WeaponItemData¸¦ °¡Á®¿Í
-                    // ÇöÀç ¼±ÅÃµÈ ¹«±â½½·ÔÀÇ WeaponItemData¿Í °°À¸¸é ÇØ´ç ¹«±â¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+                    // Equipmentë¡œ ë“±ë¡ëœ child Objectì—ì„œ WeaponItemDataë¥¼ ê°€ì ¸ì™€
+                    // í˜„ì¬ ì„ íƒëœ ë¬´ê¸°ìŠ¬ë¡¯ì˜ WeaponItemDataì™€ ê°™ìœ¼ë©´ í•´ë‹¹ ë¬´ê¸°ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
                     Debug.Log(GetCurrentSlotWeapon());
                     if (eachWeapon.weaponItemData == GetCurrentSlotWeapon()) {
                         SetPositionOffset(eachWeapon);  SetRotationOffset(eachWeapon);
                         eachWeaponObject.SetActive(true);
 
-                        CurrentEquipWeapon = eachWeaponObject;  // ÇöÀç ÀåÂø ¹«±â ¼³Á¤
+                        CurrentEquipWeapon = eachWeaponObject;  // í˜„ì¬ ì¥ì°© ë¬´ê¸° ì„¤ì •
                     }
                 }
             }
         }
-        else CurrentEquipWeapon = null;         // ½½·ÔÀÌ ºñ¾úÀ¸¸é ÇöÀç ÀåÂø ¹«±â ¾øÀ½À¸·Î ¼³Á¤
+        else CurrentEquipWeapon = null;         // ìŠ¬ë¡¯ì´ ë¹„ì—ˆìœ¼ë©´ í˜„ì¬ ì¥ì°© ë¬´ê¸° ì—†ìŒìœ¼ë¡œ ì„¤ì •
 
-        foreach (var fist in fistCollider)      // ¹«±â ÀåÂø½Ã ÁÖ¸Ô ºñÈ°¼ºÈ­
+        foreach (var fist in fistCollider)      // ë¬´ê¸° ì¥ì°©ì‹œ ì£¼ë¨¹ ë¹„í™œì„±í™”
             fist.enabled = !isEquip;
         playerAttack.SetEquip(isEquip);
     }

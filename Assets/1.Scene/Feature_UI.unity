@@ -37653,7 +37653,7 @@ MonoBehaviour:
   - skillName: "\uC18D\uB3C4"
     maxSkillLevel: 4
     nowSkillLevel: 0
-    skillValue: 0.1
+    skillValue: 0.3
   - skillName: "\uC2DC\uC57C \uBC18\uACBD"
     maxSkillLevel: 1
     nowSkillLevel: 0
@@ -37678,7 +37678,7 @@ MonoBehaviour:
   - skillName: "\uACF5\uACA9 \uC18D\uB3C4"
     maxSkillLevel: 4
     nowSkillLevel: 0
-    skillValue: -0.3
+    skillValue: 0.2
   - skillName: "\uCE58\uBA85\uD0C0 \uACF5\uACA9\uB825"
     maxSkillLevel: 4
     nowSkillLevel: 0
@@ -61894,8 +61894,12 @@ MonoBehaviour:
     tickTime: 0
     isTicked: 0
   - type: 6
+    totalTime: 8
+    tickTime: 1
+    isTicked: 0
+  - type: 7
     totalTime: 0
-    tickTime: 0
+    tickTime: 1
     isTicked: 0
   ActivatedStatus: []
 --- !u!4 &1715626235

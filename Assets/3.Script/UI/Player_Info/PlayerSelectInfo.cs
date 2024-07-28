@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerSelectInfo : MonoBehaviour, IPointerExitHandler {
+public class PlayerSelectInfo : MonoBehaviour {
     private GameObject playerTexts;
+    public bool isSelected;
+
     private void Awake() {
         playerTexts = transform.GetChild(0).gameObject;
         playerTexts.SetActive(false);
@@ -15,9 +17,5 @@ public class PlayerSelectInfo : MonoBehaviour, IPointerExitHandler {
 
     public void TooltipHide() {
         playerTexts.SetActive(false);
-    }
-
-    public void OnPointerExit(PointerEventData eventData) {
-        TooltipHide();
     }
 }

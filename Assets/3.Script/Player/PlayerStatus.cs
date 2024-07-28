@@ -9,7 +9,7 @@ public class PlayerStatus : MonoBehaviour {
     private GameObject player;
 
     public static bool isDead { get; private set; }
-    public void SetPlayerDead () { 
+    public void SetPlayerDead() {
         isDead = true;
         player.GetComponent<Animator>().SetBool("isDead", isDead);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("triggerDie");
@@ -41,8 +41,8 @@ public class PlayerStatus : MonoBehaviour {
     public void TakeWarmDamage() {
         if (GetPlayerStatus(Status.Heat)) return;
         PlayerWarm -= WarmDamage * Time.deltaTime;
-        
-        if(PlayerWarm <= 0) {
+
+        if (PlayerWarm <= 0) {
             PlayerWarm = 0;
             TakeHpDotDamage(4f);
         }
@@ -63,7 +63,7 @@ public class PlayerStatus : MonoBehaviour {
 
     public void TakeHpDotDamage(float damage = 1f) {
         PlayerHp -= damage * Time.deltaTime;
-        if(PlayerHp <= 0) {
+        if (PlayerHp <= 0) {
             PlayerHp = 0;
             onDead?.Invoke();
         }
@@ -78,7 +78,11 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     public void EatFood(FoodItem item) {
-        StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
+        if (item.Status == ItemStatus.Rotten) return;
+        else if (item.Status == ItemStatus.Spoiled)
+            StatusControl.Instance.GiveStatus(Status.Indigestion, this);
+        else
+            StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
     }
 
     public void EatMedicine(MedicItem item) {
@@ -105,13 +109,13 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     public void RestoreHpHunger() {
-        if(GetPlayerStatus(Status.Full)) {
+        if (GetPlayerStatus(Status.Full)) {
             PlayerHp += HealRestore * Time.deltaTime;
             PlayerHunger += HungerRestore * Time.deltaTime;
             if (PlayerHp > PlayerMaxHp) PlayerHp = PlayerMaxHp;
             if (PlayerHunger > 100) {
                 PlayerHunger = 100;
-                if(!GetPlayerStatus(Status.Satiety)) {
+                if (!GetPlayerStatus(Status.Satiety)) {
                     StatusControl.Instance.GiveStatus(Status.Satiety, this);
                 }
             }
@@ -125,13 +129,21 @@ public class PlayerStatus : MonoBehaviour {
         }
     }
 
+    public void TakeIndigestion() {
+        if (GetPlayerStatus(Status.Indigestion)) {
+            if (!isSlowed) StartCoroutine(Slow());
+            TakeHpDotDamage(1f);
+        }
+    }
+
     public IEnumerator Slow() {
         isSlowed = true;
 
+        // 공격모션 속도느리게 충돌 예상지점
         PlayerMove plyaerMove = GetComponentInChildren<PlayerMove>();
         float speed = plyaerMove.GetPlayerMoveSpeed();
         plyaerMove.SetPlayerMoveSpeed(speed * 0.8f);
-        while(GetPlayerStatus(Status.Satiety)) {
+        while (GetPlayerStatus(Status.Satiety) || GetPlayerStatus(Status.Indigestion)) {
             yield return null;
         }
         plyaerMove.SetPlayerMoveSpeed(speed);
@@ -149,7 +161,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHunger = defaultHunger;
         PlayerWarm = defaultWarm;
         statusList = new bool[Enum.GetValues(typeof(Status)).Length];
-        
+
         isDead = false;
     }
 
@@ -166,5 +178,6 @@ public class PlayerStatus : MonoBehaviour {
         SatietySlow();
         RestoreHp();
         RestoreWarm();
+        TakeIndigestion();
     }
 }
