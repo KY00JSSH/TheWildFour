@@ -5640,6 +5640,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
+      propertyPath: m_TagString
+      value: Animal
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 1c8ccf07d5ae52248ae73874729a29b1, type: 3}
       propertyPath: m_Controller
       value: 
@@ -15313,6 +15317,8 @@ GameObject:
   - component: {fileID: 591243062}
   - component: {fileID: 591243061}
   - component: {fileID: 591243060}
+  - component: {fileID: 591243065}
+  - component: {fileID: 591243064}
   m_Layer: 0
   m_Name: Robin
   m_TagString: Player
@@ -15384,6 +15390,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &591243064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591243059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766193f6983d02b40a190876228651c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistanceFromPlayer: 10
+  maxDistanceFromPlayer: 25
+--- !u!135 &591243065
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591243059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &594789577
 GameObject:
   m_ObjectHideFlags: 0
@@ -27041,7 +27074,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 4e84493bc7e32a5448f784af2e8ef460, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 8aac4b3964c973f4e93d7c132c70f1ec, type: 2}
 --- !u!4 &1135395997
 Transform:
   m_ObjectHideFlags: 0
@@ -51548,7 +51581,7 @@ GameObject:
   - component: {fileID: 919132147937205836}
   m_Layer: 0
   m_Name: Deer
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
