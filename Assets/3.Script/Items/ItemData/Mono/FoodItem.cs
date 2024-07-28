@@ -84,9 +84,8 @@ public class FoodItem : CountableItem {
     public void CheckStatus() {
         if (currDecayTime == 0) {
             status = ItemStatus.Rotten;
-            
             InvenController invenController = FindObjectOfType<InvenController>();
-            invenController.updateInvenInvoke();
+            invenController.checkRottenItem();
         }
         else if (currDecayTime <= 0.25 * foodItemData.TotalDecayTime) {
             status = ItemStatus.Spoiled;

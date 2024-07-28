@@ -11,8 +11,11 @@ public class CommonInven : MonoBehaviour {
     public delegate void OnInvenChanged(List<GameObject> inventory);
     public event OnInvenChanged InvenChanged;
 
-    private bool isInvenFull = false;               //ÀÎº¥Åä¸® ÀüÃ¼ Â÷ÀÖ°í ±âÁ¸¿¡µµ Ãß°¡ ¸øÇÔ ¿©ºÎ
+    private bool isInvenFull = false;               //ì¸ë²¤í† ë¦¬ ì „ì²´ ì°¨ìˆê³  ê¸°ì¡´ì—ë„ ì¶”ê°€ ëª»í•¨ ì—¬ë¶€
     public bool IsInvenFull { get { return isInvenFull; } }
+
+    [SerializeField]
+    public GameObject sackItem;
 
     public void updateInvenInvoke() {
         InvenChanged?.Invoke(inventory);
@@ -26,19 +29,19 @@ public class CommonInven : MonoBehaviour {
         isInvenFull = false;
     }
 
-    //ÀÎº¥¿¡ Ãß°¡ ¸øÇÔ flag reset
+    //ì¸ë²¤ì— ì¶”ê°€ ëª»í•¨ flag reset
     public void invenFullFlagReset() {
         isInvenFull = false;
     }
 
-    //¾ÆÀÌÅÛ ¹¶ÅÖÀÌ ÀÎº¥¿¡¼­ »èÁ¦
+    //ì•„ì´í…œ ë­‰í……ì´ ì¸ë²¤ì—ì„œ ì‚­ì œ
     public void removeItem(int index) {
         inventory[index] = null;
         invenFullFlagReset();
         updateInvenInvoke();
     }
 
-    //Æ¯Á¤ keyÀÎ ¾ÆÀÌÅÛ count¸¸Å­ »èÁ¦
+    //íŠ¹ì • keyì¸ ì•„ì´í…œ countë§Œí¼ ì‚­ì œ
     public void removeItemCount(int key, int count) {
         int leftCount = count;
         for (int i = 0; i < inventory.Count; i++) {
@@ -62,26 +65,26 @@ public class CommonInven : MonoBehaviour {
         }
     }
 
-    //if ÇØ´ç ¾ÆÀÌÅÛÀÌ inven¿¡ ÀÖ°í,(ÇØ´ç box item count < itemMaxStackCount)
-    // ÇØ´ç Ä­¿¡ ¾ÆÀÌÅÛ Ãß°¡
-    //  else if(!full)  »õ¹Ú½º¿¡ ¾ÆÀÌÅÛ add
+    //if í•´ë‹¹ ì•„ì´í…œì´ invenì— ìˆê³ ,(í•´ë‹¹ box item count < itemMaxStackCount)
+    // í•´ë‹¹ ì¹¸ì— ì•„ì´í…œ ì¶”ê°€
+    //  else if(!full)  ìƒˆë°•ìŠ¤ì— ì•„ì´í…œ add
     //else isInvenFull = true
     public void ItemAdd() {
-        //itemÀÌ ÀÎº¥Åä¸® ³»¿¡ ÀÖ°í, ÀÖ´Â ¹Ú½º ¾È¿¡ Ãß°¡ °¡´ÉÇÏ¸é ÇØ´ç inven index return, ¾øÀ¸¸é 99¸¦ return
+        //itemì´ ì¸ë²¤í† ë¦¬ ë‚´ì— ìˆê³ , ìˆëŠ” ë°•ìŠ¤ ì•ˆì— ì¶”ê°€ ê°€ëŠ¥í•˜ë©´ í•´ë‹¹ inven index return, ì—†ìœ¼ë©´ 99ë¥¼ return
         int checkNum = canAddThisBox(itemObject.GetComponent<Item>().Key);
 
         if (checkNum != 99) {
-            //ÇØ´çÄ­¿¡ ¾ÆÀÌÅÛ Ãß°¡
+            //í•´ë‹¹ì¹¸ì— ì•„ì´í…œ ì¶”ê°€
             if (itemObject.GetComponent<CountableItem>() != null && inventory[checkNum] != null) {
                 CountableItem invenItem = inventory[checkNum].GetComponent<CountableItem>();
                 invenItem.addCurrStack(itemObject.GetComponent<CountableItem>().CurrStackCount);
             }
         }
         else {
-            //ºó ¹Ú½º ÀÖ´ÂÁö Ã¼Å©. Á¦ÀÏ ÀÛÀº indexºÎÅÍ °Ë»çÇØ¼­ ÀÖÀ¸¸é ÇØ´ç index return, ¾øÀ¸¸é 99 return
+            //ë¹ˆ ë°•ìŠ¤ ìˆëŠ”ì§€ ì²´í¬. ì œì¼ ì‘ì€ indexë¶€í„° ê²€ì‚¬í•´ì„œ ìˆìœ¼ë©´ í•´ë‹¹ index return, ì—†ìœ¼ë©´ 99 return
             int existBox = isExistEmptyBox();
             if (existBox != 99) {
-                //null·Î ºñ¿öµĞ inventory¿¡ Ãß°¡
+                //nullë¡œ ë¹„ì›Œë‘” inventoryì— ì¶”ê°€
                 inventory[existBox] = itemObject;
             }
             else {
@@ -91,19 +94,19 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
-    //¾ÆÀÌÅÛ Ãß°¡ °¡´É¿©ºÎ
+    //ì•„ì´í…œ ì¶”ê°€ ê°€ëŠ¥ì—¬ë¶€
     public bool canItemAdd() {
         int existBox = isExistEmptyBox();
         if (existBox != 99) {
             return true;
         }
         else {
-            //Debug.Log("±âÁ¸ box¿¡ Ãß°¡ ¸øÇÔ");
+            //Debug.Log("ê¸°ì¡´ boxì— ì¶”ê°€ ëª»í•¨");
             return false;
         }
     }
 
-    //ÀüÃ¼ ¹Ú½º¿¡ ÇØ´ç itemÀÌ ÀÖ°í, ÇØ´ç Ä­¿¡ Ãß°¡ °¡´ÉÇÒ ¶§ ÇØ´ç Ä­ numÀ» return, ¾øÀ»¶§ 99 return
+    //ì „ì²´ ë°•ìŠ¤ì— í•´ë‹¹ itemì´ ìˆê³ , í•´ë‹¹ ì¹¸ì— ì¶”ê°€ ê°€ëŠ¥í•  ë•Œ í•´ë‹¹ ì¹¸ numì„ return, ì—†ì„ë•Œ 99 return
     public int canAddThisBox(int itemKey) {
         for (int i = 0; i < inventory.Count; i++) {
             if (inventory[i] != null) {
@@ -120,18 +123,18 @@ public class CommonInven : MonoBehaviour {
         return 99;
     }
 
-    //ºó inven box°¡ ÀÖ´ÂÁö ¿©ºÎ
+    //ë¹ˆ inven boxê°€ ìˆëŠ”ì§€ ì—¬ë¶€
     public int isExistEmptyBox() {
         for (int i = 0; i < inventory.Count; i++) {
             if (inventory[i] == null) {
-                //±âÁ¸¿¡ »ı¼ºÇßÁö¸¸ null·Î ÃÊ±âÈ­ ÇÑ inventoryÀÏ¶§´Â ÇØ´ç index return
+                //ê¸°ì¡´ì— ìƒì„±í–ˆì§€ë§Œ nullë¡œ ì´ˆê¸°í™” í•œ inventoryì¼ë•ŒëŠ” í•´ë‹¹ index return
                 return i;
             }
         }
-        return 99;  //¾Æ¿¹ ºó ¹Ú½º¸¦ »ç¿ë¸øÇÒ¶§
+        return 99;  //ì•„ì˜ˆ ë¹ˆ ë°•ìŠ¤ë¥¼ ì‚¬ìš©ëª»í• ë•Œ
     }
 
-    //Æ¯Á¤ ÀÎµ¦½ºÀÇ ¾ÆÀÌÅÛ 1°³ »ç¿ë
+    //íŠ¹ì • ì¸ë±ìŠ¤ì˜ ì•„ì´í…œ 1ê°œ ì‚¬ìš©
     public void useItem(int index) {
         if (index >= 0 && index < inventory.Count && inventory[index] != null) {
             if (inventory[index].GetComponent<CountableItem>() != null) {
@@ -149,8 +152,8 @@ public class CommonInven : MonoBehaviour {
         updateInvenInvoke();
     }
 
-    //ÇØ´ç ÀÎµ¦½ºÀÇ ¾ÆÀÌÅÛ Å¸ÀÔ Ã¼Å©
-    //type 1: µ¹,³ª¹« , 2: Ä«¿îÆ® µÇ´Â item, 3: Ä«¿îÆ® ¾ø´Â ¾ÆÀÌÅÛ, 0: ¾ÆÀÌÅÛ ¾øÀ½
+    //í•´ë‹¹ ì¸ë±ìŠ¤ì˜ ì•„ì´í…œ íƒ€ì… ì²´í¬
+    //type 1: ëŒ,ë‚˜ë¬´ , 2: ì¹´ìš´íŠ¸ ë˜ëŠ” item, 3: ì¹´ìš´íŠ¸ ì—†ëŠ” ì•„ì´í…œ, 0: ì•„ì´í…œ ì—†ìŒ
     public int checkItemType(int index) {
         if (inventory[index] != null) {
             CountableItem countItem = inventory[index].GetComponent<CountableItem>();
@@ -167,11 +170,11 @@ public class CommonInven : MonoBehaviour {
             }
         }
         else {
-            return 0;   //¾ÆÀÌÅÛ ¾øÀ»¶§
+            return 0;   //ì•„ì´í…œ ì—†ì„ë•Œ
         }
     }
 
-    //¾ÆÀÌÅÛ µå¶ø½Ã ¾ÆÀÌÅÛ »èÁ¦
+    //ì•„ì´í…œ ë“œëì‹œ ì•„ì´í…œ ì‚­ì œ
     public void dropItem(int index) {
         int itemType = checkItemType(index);
         if (itemType > 0 && itemType < 3) {
@@ -204,7 +207,7 @@ public class CommonInven : MonoBehaviour {
         }
     }
 
-    //ÀÎº¥ ¾ÆÀÌÅÛ³¢¸® ½ºÀ§Äª
+    //ì¸ë²¤ ì•„ì´í…œë¼ë¦¬ ìŠ¤ìœ„ì¹­
     public void changeInvenIndex(int currentIndex, int changeIndex) {
         if (currentIndex != changeIndex && changeIndex != 99) {
             if (inventory[changeIndex] != null) {
@@ -222,13 +225,13 @@ public class CommonInven : MonoBehaviour {
         }
     }
 
-    //Æ¯Á¤ ÀÎµ¦½º¿¡ ¾ÆÀÌÅÛ Ãß°¡
+    //íŠ¹ì • ì¸ë±ìŠ¤ì— ì•„ì´í…œ ì¶”ê°€
     public void addIndexItem(int index, GameObject newItem) {
         inventory[index] = newItem;
         updateInvenInvoke();
     }
 
-    //Æ¯Á¤ ÀÎµ¦½ºÀÇ ¿ÀºêÁ§Æ® return
+    //íŠ¹ì • ì¸ë±ìŠ¤ì˜ ì˜¤ë¸Œì íŠ¸ return
     public GameObject getIndexItem(int index) {
         if (inventory[index] != null) {
             return inventory[index];
@@ -238,7 +241,7 @@ public class CommonInven : MonoBehaviour {
         }
     }
 
-    //key·Î ¾ÆÀÌÅÛ ÀÖ´ÂÁö È®ÀÎ
+    //keyë¡œ ì•„ì´í…œ ìˆëŠ”ì§€ í™•ì¸
     public bool isInItem(int key) {
         for(int i = 0; i < inventory.Count; i++) {
             if(inventory[i] != null) {
@@ -248,5 +251,26 @@ public class CommonInven : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public void checkRottenItem() {
+        for (int i = 0; i < inventory.Count; i++) {
+            if (inventory[i] != null) {
+                if (inventory[i].GetComponent<FoodItem>() != null) {
+                    FoodItem foodItem = inventory[i].GetComponent<FoodItem>();
+                    if(foodItem.Status != ItemStatus.Rotten) {
+                        return;
+                    }
+                    else {
+                        GameObject newSackItem = Instantiate(sackItem);
+                        newSackItem.GetComponent<CountableItem>().setCurrStack(foodItem.CurrStackCount);
+                        newSackItem.SetActive(false);
+                        inventory[i] = newSackItem;
+                        updateInvenInvoke();
+                        Destroy(foodItem);
+                    }
+                }
+            }
+        }
     }
 }
