@@ -8,12 +8,14 @@ public class WorkShopPrefabUI : BuildPrefabUI {
     protected override void Awake() {
         base.Awake();
         workshopCreate = FindObjectOfType<WorkshopCreate>();
+        buildAnimationName = "WorkshopCreate";
     }
 
     protected override void Update() {
         if(buildingObj != null) {
             if (buildingObj.activeSelf) {
                 isValid = workshopCreate.isValidBuild;
+                buildAnimator = buildingObj.GetComponentInParent<Animator>();
                 base.Update();
             }
         }
@@ -21,6 +23,8 @@ public class WorkShopPrefabUI : BuildPrefabUI {
 
     public override void BuildAvailableMode() {
         buildingCreate = workshopCreate;
+        isBuildAniComplete = false;
+        playTime = 0;
         base.BuildAvailableMode();
     }
 }

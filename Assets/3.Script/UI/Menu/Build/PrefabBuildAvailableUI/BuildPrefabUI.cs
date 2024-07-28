@@ -5,38 +5,46 @@ using UnityEngine.UI;
 
 public class BuildPrefabUI : MonoBehaviour {
     /*
-     °Ç¼³¿¡ ÇØ´çÇÏ´Â ¸ğµç ½ºÅ©¸³Æ®¿¡ µé¾î°¡¾ßÇÏ´Â ³»¿ë
-    => build ¹öÆ° Å¬¸¯½Ã ÇØ´çÇÏ´Â ³»¿ë
-    1. ±âÁ¸ null ½ºÇÁ¶óÀÌÆ® ÀúÀå
-    2. bool °ª ³Ö¾îÁÖ¸é ½ºÇÁ¶óÀÌÆ® º¯°æ
+     ê±´ì„¤ì— í•´ë‹¹í•˜ëŠ” ëª¨ë“  ìŠ¤í¬ë¦½íŠ¸ì— ë“¤ì–´ê°€ì•¼í•˜ëŠ” ë‚´ìš©
+    => build ë²„íŠ¼ í´ë¦­ì‹œ í•´ë‹¹í•˜ëŠ” ë‚´ìš©
+    1. ê¸°ì¡´ null ìŠ¤í”„ë¼ì´íŠ¸ ì €ì¥
+    2. bool ê°’ ë„£ì–´ì£¼ë©´ ìŠ¤í”„ë¼ì´íŠ¸ ë³€ê²½
     === 
-    1. °¢ prefabs UI¿¡¼­ ¿ÀºêÁ§Æ®¸¦ Ã£À½
-    2. ¿ÀºêÁ§Æ® Ã£¾Æ¼­ À§Ä¡ µû¶ó°¨
+    1. ê° prefabs UIì—ì„œ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ìŒ
+    2. ì˜¤ë¸Œì íŠ¸ ì°¾ì•„ì„œ ìœ„ì¹˜ ë”°ë¼ê°
      */
     [Header("Build Prefab UI")]
     public Sprite[] BuildAvailable;
     protected BuildingCreate buildingCreate;
-    // 24 07 16 ±è¼öÁÖ °Ç¼³ ¼³Ä¡ °¡´É ¿©ºÎ bool Ãß°¡ - ¾ÆÀÌÅÛ °³¼ö È®ÀÎ
+    // 24 07 16 ê¹€ìˆ˜ì£¼ ê±´ì„¤ ì„¤ì¹˜ ê°€ëŠ¥ ì—¬ë¶€ bool ì¶”ê°€ - ì•„ì´í…œ ê°œìˆ˜ í™•ì¸
     protected Tooltip_Build tooltip_Build;
 
-    // µû¶ó´Ù´Ò ¿ÀºêÁ§Æ®
+    // ë”°ë¼ë‹¤ë‹ ì˜¤ë¸Œì íŠ¸
     public GameObject BuildImg;
     protected Image[] buildImgs;
+    // 24 07 28 ê±´ì„¤ dust ì´í™íŠ¸ ì¶”ê°€ 
+    [SerializeField] protected ParticleSystem dustPrefab;
 
     public float positions = 2;
     //public float[] sizes = new float[2];
 
-    // ¼³Ä¡µÉ ¿ÀºêÁ§Æ®
+    // ì„¤ì¹˜ë  ì˜¤ë¸Œì íŠ¸
     public GameObject buildingObj;
     public bool isBuiltStart = false;
 
     private Animator playerAnimator;
+    // Build ì• ë‹ˆë§¤ì´ì…˜ì´ ì‹¤í–‰ì¤‘ì¸ì§€ ì•Œì•„ì•¼í•¨
+    protected Animator buildAnimator;
+    protected string buildAnimationName;
+    protected bool isBuildAniComplete;
+    [SerializeField] protected float buildAnimationPlayTime; // ì‚¬ìš©ìê°€ í”Œë ˆì´í•  ì‹œê°„ì„ ì§€ì •
+    protected float playTime;
 
     protected virtual void Awake() {
         buildingCreate = FindObjectOfType<BuildingCreate>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
         playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-
+        isBuildAniComplete = false;
         buildImgs = new Image[2];
         for (int i = 0; i < BuildImg.transform.childCount; i++) {
             buildImgs[i] = BuildImg.transform.GetChild(i).GetComponent<Image>();
@@ -52,16 +60,22 @@ public class BuildPrefabUI : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0)) {
                     isBuiltStart = false;
                     BuildImg.SetActive(false);
+
+                    // dustPrefab ìœ„ì¹˜ ì„¤ì •
+                    BuildDustPrefabPosition();
                 }
             }
             else {
                 buildImgs[0].sprite = BuildAvailable[2];
             }
-
             BuildPrefabUIPosition();
             BuildPrefabUISize();
             BuildPrefabUIPosition_Vertical();
         }
+
+        // ì• ë‹ˆë©”ì´ì…˜ì˜ íƒ€ì´ë°ì„ ì•Œ ìˆ˜ ì—†ìŒ
+        if (buildingObj != null) if(buildingObj.activeSelf) 
+                if(!isBuildAniComplete) BuildDustPrefabEffectStart();
     }
 
     protected virtual void OnDisable() {
@@ -71,28 +85,79 @@ public class BuildPrefabUI : MonoBehaviour {
         }
     }
 
-    // UI À§Ä¡ Á¶Á¤
+    // DustPrefab ìœ„ì¹˜ ì¡°ì •
+    private void BuildDustPrefabPosition() {
+        // Build renderer
+        Renderer buildPrefabRe = BuildPrefabRenderer();
+        // ìœ„ì¹˜ ì¡°ì •
+        dustPrefab.transform.position = buildPrefabRe.bounds.center;
+
+        // size ì¡°ì • í•„ìš”í•¨
+        Vector3 size = buildPrefabRe.bounds.size;
+        float width = size.x;
+        float height = size.z;
+
+        var shape = dustPrefab.shape;
+        shape.scale = new Vector3(width, shape.scale.y, height);
+    }
+
+    private void BuildDustPrefabEffectStart() {
+        if (IsInCreateState()) {
+            StartCoroutine(BuildDustPrefabEffectPlayTime());
+        }
+    }
+
+    // ê±´ì¶•ë¬¼ ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘ í™•ì¸
+    private bool IsInCreateState() {
+        AnimatorStateInfo stateInfo = buildAnimator.GetCurrentAnimatorStateInfo(0);
+        return stateInfo.IsName(buildAnimationName); 
+    }
+    // ê±´ì¶•ë¬¼ ì• ë‹ˆë©”ì´ì…˜ ëë‚˜ëŠ” ì‹œì  ì—†ìŒ -> ì„ì˜ ì´ˆ ì§€ì •í•˜ì—¬ ì´í™íŠ¸ ì‹¤í–‰
+    private IEnumerator BuildDustPrefabEffectPlayTime() {
+        while (playTime <= buildAnimationPlayTime) {
+            dustPrefab.gameObject.SetActive(true);
+            dustPrefab.Play();
+            playTime += Time.deltaTime;
+            Debug.Log(playTime);
+            yield return null;
+        }
+        BuildDustPrefabEffectOff();
+    }
+    private void BuildDustPrefabEffectOff() {
+        isBuildAniComplete = true;
+        dustPrefab.gameObject.SetActive(false);
+        // ë¨¼ì§€ ì´í™íŠ¸ ì¢…ë£Œ
+        dustPrefab.Stop();
+    }
+
+
+    // Slider UI ìœ„ì¹˜ ì¡°ì •
     private void BuildPrefabUIPosition() {
         BuildImg.transform.position = buildingObj.transform.position;
     }
 
-    // ¿ø Å©±â Á¶Á¤
-    private void BuildPrefabUISize() {
-        RectTransform buildImgRe = buildImgs[1].GetComponent<RectTransform>();
-
-        // ¹Ù´Ú¸éÀÇ »çÀÌÁî È®ÀÎ
+    // ì„¤ì¹˜í•  ê±´ë¬¼ì˜ ë°”ë‹¥ë©´ ì‚¬ì´ì¦ˆ
+    private Renderer BuildPrefabRenderer() {
+        // ë°”ë‹¥ë©´ì˜ ì‚¬ì´ì¦ˆ í™•ì¸
         Renderer buildPrefabRe = buildingObj.transform.GetChild(0).GetComponent<Renderer>();
-        if(buildPrefabRe == null) {
+        if (buildPrefabRe == null) {
             Transform buildPrefabChild = buildingObj.transform.GetChild(0);
-            foreach(Transform child in buildPrefabChild) {
-                if(child.TryGetComponent(out Renderer childRe)) {
+            foreach (Transform child in buildPrefabChild) {
+                if (child.TryGetComponent(out Renderer childRe)) {
                     buildPrefabRe = childRe;
                     break;
                 }
             }
         }
 
-        if (buildPrefabRe == null) Debug.LogWarning("Rendere ¾øÀ½");
+        if (buildPrefabRe == null) Debug.LogWarning("Rendere ì—†ìŒ");
+        return buildPrefabRe;
+    }
+
+    // ì› í¬ê¸° ì¡°ì •
+    private void BuildPrefabUISize() {
+        RectTransform buildImgRe = buildImgs[1].GetComponent<RectTransform>();
+        Renderer buildPrefabRe = BuildPrefabRenderer();
 
         Vector3 size = buildPrefabRe.bounds.size;
         float width = size.x;
@@ -101,7 +166,7 @@ public class BuildPrefabUI : MonoBehaviour {
         buildImgRe.sizeDelta = new Vector2(width, height);
     }
 
-    // check ÀÌ¹ÌÁö À§Ä¡ Á¶Á¤
+    // check ì´ë¯¸ì§€ ìœ„ì¹˜ ì¡°ì •
     private void BuildPrefabUIPosition_Vertical() {
         RectTransform buildImgRe = buildImgs[0].GetComponent<RectTransform>();
         Renderer buildPrefabRe = buildingObj.transform.GetChild(0).GetComponent<Renderer>();
@@ -125,7 +190,7 @@ public class BuildPrefabUI : MonoBehaviour {
 
 
         if (buildPrefabRe == null) {
-            Debug.LogWarning("Renderer ¾øÀ½");
+            Debug.LogWarning("Renderer ì—†ìŒ");
         }
         else {
             Vector3 size = buildPrefabRe.bounds.size;
@@ -139,6 +204,7 @@ public class BuildPrefabUI : MonoBehaviour {
     public virtual void BuildAvailableMode() {
         if (!tooltip_Build.isBuildAvailable || buildingCreate.isExist ||
             playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
+
         buildingObj = buildingCreate.Building;
         StartCoroutine(FindObject());
     }
@@ -148,7 +214,7 @@ public class BuildPrefabUI : MonoBehaviour {
             buildingObj = buildingCreate.Building;
             yield return null;
         }
-
+        Debug.LogWarning(buildingCreate.Building.name);
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }

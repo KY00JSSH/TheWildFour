@@ -8,12 +8,14 @@ public class ShelterPrefabUI : BuildPrefabUI {
     protected override void Awake() {
         base.Awake();
         //shelterCreate = FindObjectOfType<ShelterCreate>();
+        buildAnimationName = "ShelterCreate";
     }
 
     protected override void Update() {
         if (buildingObj != null) {
             if (buildingObj.activeSelf) {
                 isValid = shelterCreate.isValidBuild;
+                buildAnimator = buildingObj.GetComponentInParent<Animator>();
                 base.Update();
 
             }
@@ -21,9 +23,11 @@ public class ShelterPrefabUI : BuildPrefabUI {
 
     }
 
-    // ¹öÆ°ÀÌ ´­·ÈÀ» °æ¿ì UIÇ¥½Ã
+    // ë²„íŠ¼ì´ ëˆŒë ¸ì„ ê²½ìš° UIí‘œì‹œ
     public override void BuildAvailableMode() {
         buildingCreate = shelterCreate;
+        isBuildAniComplete = false;
+        playTime = 0;
         base.BuildAvailableMode();
     }
 }

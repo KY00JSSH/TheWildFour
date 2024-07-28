@@ -23,6 +23,9 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
     int btnIndex = 0;
     private int[] btnNum = new int[5];
 
+    // 작업장 1회 설치 후 비용 없음
+    private bool isBuiltFirst = false;
+
     private void Awake() {
         if (buttons == null) buttons = transform.GetComponentsInChildren<Button>();
         menuControll = FindObjectOfType<Menu_Controll>();
@@ -32,14 +35,14 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         workshopCreate = FindObjectOfType<WorkshopCreate>();
         isBuiltFirst = false;
     }
-    
+
 
     private void Update() {
         if (currentBuildDetail != null) {
             // Text 표시
             Build_ItemText();
         }
-        if (workshopCreate.isExist) isBuiltFirst = true;    
+        if (workshopCreate.isExist) { if (!isBuiltFirst) btnNum[3] = 1; isBuiltFirst = true; }
     }
     public void OnPointerEnter(PointerEventData eventData) {
         if (eventData.pointerEnter != null) {
@@ -128,15 +131,9 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         // 24 07 16 김수주 건설 설치 bool추가 -> 인벤 아이템 개수 확인
         if (buildingCheckCount == currentBuildDetail.needItems.Length)
             isBuildAvailable = true;
-        else isBuildAvailable = false;
+        else isBuildAvailable = true;
         //TODO: !!!!!!!!!!!!!!!인벤아이템 개수 false => true 로 임시 변경 바꿔야함
     }
 
-    private bool isBuiltFirst = false;
-
-    public void OnWorkshopButton() {
-        if (!isBuiltFirst) return;
-        btnNum[3] = 1;
-    }
 
 }
