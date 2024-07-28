@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AnimalSpawner : MonoBehaviour
 {
-    public GameObject[] animalPrefabs; //µ¿¹° ÇÁ¸®ÆÕ
-    public Transform[] spawnPoints; //µ¿¹° ½ºÆù ÁöÁ¡
-    public int maxAnimalsPertype = 3; //µ¿¹°º° ÃÖ´ë ¸¶¸´¼ö
+    public GameObject[] animalPrefabs; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Transform[] spawnPoints; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int maxAnimalsPertype = 3; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private List<GameObject> animalPool = new List<GameObject>();
 
@@ -14,7 +14,7 @@ public class AnimalSpawner : MonoBehaviour
     {
         spawnPoints = GetComponentsInChildren<Transform>();
 
-        //ÃÊ±â µ¿¹° ¿ÀºêÁ§Æ® Ç® »ý¼º
+        //ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç® ï¿½ï¿½ï¿½ï¿½
         for(int i = 0; i < animalPrefabs.Length; i++)
         {
             for(int j = 0; j < maxAnimalsPertype; j++)
@@ -33,13 +33,13 @@ public class AnimalSpawner : MonoBehaviour
         StartCoroutine(Check_AnimalSpawning());
     }
     
-    private IEnumerator Check_AnimalSpawning() //ºÎÁ·ÇÑ °³Ã¼¼ö¸¦ Ãß°¡ÇØ 3¸¶¸® À¯Áö
+    private IEnumerator Check_AnimalSpawning() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         while(true)
         {
             int[] animalCounts = new int[animalPrefabs.Length];
             
-            //ÇöÀç È°¼ºÈ­µÈ µ¿¹°ÀÇ ¸¶¸´¼ö È®ÀÎ
+            //ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             foreach(GameObject animal in animalPool)
             {
                 if(animal.activeSelf)
@@ -55,7 +55,7 @@ public class AnimalSpawner : MonoBehaviour
                 }
             }
 
-            //ºÎÁ·ÇÑ µ¿¹° ½ºÆù
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             for(int i =0; i < animalCounts.Length; i++)
             {
                 if(animalCounts[i] < maxAnimalsPertype)
@@ -63,11 +63,11 @@ public class AnimalSpawner : MonoBehaviour
                     SpawnAnimals(i);
                 }
             }
-            yield return new WaitForSeconds(1f) ; //1ÃÊ¸¶´Ù È°¼ºÈ­µÈ µ¿¹° °³Ã¼¼ö È®ÀÎ
+            yield return new WaitForSeconds(1f) ; //1ï¿½Ê¸ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ È®ï¿½ï¿½
         }
     }
 
-    private void SpawnAnimals(int animalIndex) //ºñÈ°¼ºÈ­µÈ µ¿¹° ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­, ½ºÆù ÁöÁ¡¿¡¼­ ½ºÆù
+    private void SpawnAnimals(int animalIndex) //ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         foreach (GameObject animal in animalPool)
         {

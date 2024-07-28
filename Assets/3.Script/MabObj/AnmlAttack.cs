@@ -5,9 +5,9 @@ using UnityEngine;
 public class AnmlAttack : MonoBehaviour {
     public void GetAttack(float attackPoint) {
         //attackPoint 만큼 동물에게 피해 입힘
-
-        //if (gameObject.GetComponent<RockController>() != null) {
-        //    RockController rockCont = gameObject.GetComponent<RockController>();
-        //}
+        if(gameObject.GetComponent<Animal_Control>() != null) {
+            Animal_Control animalCont = gameObject.GetComponent<Animal_Control>();
+            animalCont.getDamage(attackPoint);
+        }
     }
 }
