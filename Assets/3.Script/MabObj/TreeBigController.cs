@@ -37,7 +37,7 @@ public class TreeBigController : MonoBehaviour {
             health = 0;
             enable = false;
         }
-        treeSpawner.UpdateTreeData(objectNumber, enable, health);
+       // treeSpawner.UpdateTreeData(objectNumber, enable, health);
     }
 
     private void Update() {
@@ -58,7 +58,7 @@ public class TreeBigController : MonoBehaviour {
     }
 
     private IEnumerator treeDisableCo() {
-        //³ª¹« ¾²·¯Áö°í ÀÏÁ¤½Ã°£ À¯ÁöÈÄ destroy
+        //ë‚˜ë¬´ ì“°ëŸ¬ì§€ê³  ì¼ì •ì‹œê°„ ìœ ì§€í›„ destroy
         isFalling = true;
 
         Quaternion targetRotation = Quaternion.Euler(90, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);

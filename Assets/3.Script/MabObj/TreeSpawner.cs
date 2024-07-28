@@ -46,7 +46,7 @@ public class TreeSpawner : MonoBehaviour {
     private SmallTreeDataList smallObjectList;
 
     private void Start() {
-        TextAsset bigJsonText = Resources.Load<TextAsset>(bigTreeJsonFileName);         //≈´ ≥™π´ json Data Load
+        TextAsset bigJsonText = Resources.Load<TextAsset>(bigTreeJsonFileName);         //ÌÅ∞ ÎÇòÎ¨¥ json Data Load
         if (bigJsonText != null) {
             string bigDataAsJson = bigJsonText.text;
             bigObjectList = JsonUtility.FromJson<BigTreeDataList>(bigDataAsJson);
@@ -56,7 +56,7 @@ public class TreeSpawner : MonoBehaviour {
             Debug.LogError("BIG Tree Json Not Exist");
         }
 
-        TextAsset smallJsonText = Resources.Load<TextAsset>(smallTreeJsonFileName);     //¿€¿∫ ≥™π´ json Data Load
+        TextAsset smallJsonText = Resources.Load<TextAsset>(smallTreeJsonFileName);     //ÏûëÏùÄ ÎÇòÎ¨¥ json Data Load
         if (smallJsonText != null) {
             string smallDataAsJson = smallJsonText.text;
             smallObjectList = JsonUtility.FromJson<SmallTreeDataList>(smallDataAsJson);
@@ -90,7 +90,7 @@ public class TreeSpawner : MonoBehaviour {
     }
 
     public void UpdateTreeData(int objectNumber, bool enable, float health) {
-        //TODO: ¿˙¿ÂΩ√¡°¿Ã «ˆ¿Á¥¬ µ•πÃ¡ˆ πﬁ¿ª∂ß∏∂¥Ÿ ø©º≠ √ﬂ»ƒ ¿˙¿Â≈∏¿Ãπ÷ ºˆ¡§«œ±‚
+        //TODO: Ï†ÄÏû•ÏãúÏ†êÏù¥ ÌòÑÏû¨Îäî Îç∞ÎØ∏ÏßÄ Î∞õÏùÑÎïåÎßàÎã§ Ïó¨ÏÑú Ï∂îÌõÑ Ï†ÄÏû•ÌÉÄÏù¥Î∞ç ÏàòÏ†ïÌïòÍ∏∞
 
         var tree = bigObjectList.bigTreeObjs.FirstOrDefault(t => t.objectNumber == objectNumber);
         if (tree != null) {
