@@ -14033,7 +14033,7 @@ Transform:
   m_Children:
   - {fileID: 1243664416}
   m_Father: {fileID: 591243063}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &546129951
 MonoBehaviour:
@@ -15188,8 +15188,8 @@ Transform:
   m_LocalPosition: {x: -1.064, y: 0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 546129950}
   - {fileID: 1666367608}
+  - {fileID: 546129950}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15205,8 +15205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766193f6983d02b40a190876228651c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistanceFromPlayer: 10
-  maxDistanceFromPlayer: 25
+  minDistanceFromPlayer: 40
+  maxDistanceFromPlayer: 45
 --- !u!135 &591243065
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15218,7 +15218,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 50
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &591243066
 MonoBehaviour:
@@ -40538,7 +40538,7 @@ Transform:
   - {fileID: 714083290}
   - {fileID: 1621035459}
   m_Father: {fileID: 591243063}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1676946113
 GameObject:
