@@ -110,16 +110,16 @@ public class PlayerAttack : MonoBehaviour {
             currentClip = GetCurrentClip();
 
             if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
-                // µ¿¹° Attack Ã³¸®
+                // ë™ë¬¼ Attack ì²˜ë¦¬
+                //other.gameObject.GetComponent<AnmlAttack>().GetAttack(playerAbility.GetTotalPlayerAttack());
                 EarnAttackExp();
                 Debug.Log(playerAbility.GetTotalPlayerAttack()) ;
             }
             else {
-                // ³ª¹« µ¹ Attack Ã³¸®
+                // ë‚˜ë¬´ ëŒ Attack ì²˜ë¦¬
+                other.gameObject.GetComponent<ObjAttack>().GetAttack(playerAbility.GetTotalPlayerAttack(), playerAbility.GetTotalPlayerGather());
                 EarnGatherExp();
             }
-
-
         }
     }
 

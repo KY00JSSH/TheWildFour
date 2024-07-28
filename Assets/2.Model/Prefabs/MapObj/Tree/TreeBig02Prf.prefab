@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2549328169764635183}
   - component: {fileID: -8714703348601150682}
   - component: {fileID: 8909279982478250960}
+  - component: {fileID: -707429416662818436}
   m_Layer: 11
   m_Name: TreeBig02Prf
   m_TagString: Untagged
@@ -95,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcc645557acd4e469d97f4c72840b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropTreePrf: {fileID: 4683666770049514664, guid: 4e0f63cd4a57c9f4eb672841c4bfd4ec, type: 3}
   testBroke: 0
 --- !u!65 &8909279982478250960
 BoxCollider:
@@ -109,3 +111,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.45, y: 3.5, z: 0.45}
   m_Center: {x: 0, y: 1.75, z: 0}
+--- !u!114 &-707429416662818436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371113514370284182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96ed2a2c91dbb74b98b7302d14871b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

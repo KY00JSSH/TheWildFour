@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1842767290770520288}
   - component: {fileID: 6994099715989927498}
   - component: {fileID: -6949161100153296756}
+  - component: {fileID: 2004555206181411206}
   m_Layer: 12
   m_Name: RockBigPrf
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisRockObject: {fileID: 5951417049521115269}
   brokenObject: {fileID: 5910551094970425759}
+  dropRockPrf: {fileID: 369517064854149524, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
   isBroken: 0
 --- !u!65 &-6949161100153296756
 BoxCollider:
@@ -62,6 +64,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.7, y: 2.7, z: 2.7}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2004555206181411206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358120864065102426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96ed2a2c91dbb74b98b7302d14871b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4789741159802233022
 GameObject:
   m_ObjectHideFlags: 0
