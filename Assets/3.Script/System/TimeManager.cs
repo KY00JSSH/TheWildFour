@@ -37,9 +37,9 @@ public class TimeManager : MonoBehaviour {
 
     /*
     public float GetSliderValue() {
-        // ¾ÆÄ§ 6½Ã ~ Àú³á 6½Ã : ÇÑ¹ÙÄû
-        // Àú³á 6½Ã ~ ¾ÆÄ§ 6½Ã : ÇÑ¹ÙÄû
-        /// ÇÑ ¹ÙÄû = 24½Ã°£
+        // ì•„ì¹¨ 6ì‹œ ~ ì €ë… 6ì‹œ : í•œë°”í€´
+        // ì €ë… 6ì‹œ ~ ì•„ì¹¨ 6ì‹œ : í•œë°”í€´
+        /// í•œ ë°”í€´ = 24ì‹œê°„
 
         if (WorldHour >= 6f && WorldHour <= 18f)
             return Mathf.InverseLerp(6f, 18f, WorldHour);
@@ -51,10 +51,10 @@ public class TimeManager : MonoBehaviour {
     */
 
     private void Start() {
-        //TODO: Save ±¸Çö ½Ã ¼¼ÀÌºê µÈ WorldTimeÀ¸·Î °¡Á®¿À±â
-        WorldTime = 90f;
+        //TODO: Save êµ¬í˜„ ì‹œ ì„¸ì´ë¸Œ ëœ WorldTimeìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸° (ì™„ë£Œ)
+        WorldTime = Save.Instance.saveData.WorldTime;
         WorldHour = WorldTime / (360f / 24f) % 24;
-        SurviveDay = 0;
+        SurviveDay = Save.Instance.saveData.SurviveDay;
         TotalDay = (int)((WorldTime - 90f) / 360f);
     }
     

@@ -40,17 +40,17 @@ public class PlayerAbility : MonoBehaviour {
         playerMove = FindObjectOfType<PlayerMove>();
 
         //TODO: SAVE 구현 시 JSON에서 받아오기
-        playerAttack = 2f;
-        playerAttackSpeed = 1f;
-        playerCriticalAttack = 5f;
-        playerCriticalChance = 0.1f;
-        playerColdResistance = 0f;
-        playerDefense = 2f;
-        playerGather = 2f;
-        playerSpeed = 1f;
-        playerDashSpeed = 2.5f;
-        playerDecDashGage = 8f;
-        playerInvenCount = 8;
+        playerAttack = Save.Instance.saveData.playerAttack;
+        playerAttackSpeed = Save.Instance.saveData.playerAttackSpeed;
+        playerCriticalAttack = Save.Instance.saveData.playerCriticalAttack;
+        playerCriticalChance = Save.Instance.saveData.playerCriticalChance;
+        playerColdResistance = Save.Instance.saveData.playerColdResistance;
+        playerDefense = Save.Instance.saveData.playerDefense;
+        playerGather = Save.Instance.saveData.playerGather;
+        playerSpeed = Save.Instance.saveData.playerSpeed;
+        playerDashSpeed = Save.Instance.saveData.playerDashSpeed;
+        playerDecDashGage = Save.Instance.saveData.playerDecDashGage;
+        playerInvenCount = Save.Instance.saveData.playerInvenCount;
 
         playerAddAttack = 0;
         playerAddAttackSpeed = 0;
