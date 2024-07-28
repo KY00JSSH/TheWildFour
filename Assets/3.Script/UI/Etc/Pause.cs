@@ -31,8 +31,11 @@ public class Pause : MonoBehaviour {
     private void Update() {
         if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen && !menuControll.isMenuButtonOpen) {
             if (Input.GetKeyDown(KeyCode.Escape)) {
+                Escape();
+                /*
                 isPause = !isPause;
                 TogglePause(isPause);
+                */
             }
         }
     }
