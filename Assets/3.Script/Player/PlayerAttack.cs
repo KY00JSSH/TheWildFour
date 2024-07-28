@@ -111,11 +111,13 @@ public class PlayerAttack : MonoBehaviour {
 
             if(other.gameObject.layer == LayerMask.NameToLayer("Animal")) {
                 // 동물 Attack 처리
+                //other.gameObject.GetComponent<AnmlAttack>().GetAttack(playerAbility.GetTotalPlayerAttack());
                 EarnAttackExp();
                 Debug.Log(playerAbility.GetTotalPlayerAttack());    // 전달해야 할 공격력
             }
             else {
                 // 나무 돌 Attack 처리
+                other.gameObject.GetComponent<ObjAttack>().GetAttack(playerAbility.GetTotalPlayerAttack(), playerAbility.GetTotalPlayerGather());
                 EarnGatherExp();
                 Debug.Log(playerAbility.GetTotalPlayerGather());    // 전달해야 할 채집량
             }

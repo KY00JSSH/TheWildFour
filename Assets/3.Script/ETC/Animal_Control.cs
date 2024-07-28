@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Progress;
 
 public class Animal_Control : MonoBehaviour
 {
     /*
-    ·çÆ®¸ğ¼ÇÀ» ÀÌ¿ëÇÑ ¿ÀºêÁ§Æ® ÀÌµ¿
-    ÀÚµ¿À¸·Î µ¹¾Æ´Ù´Ï´Â ½ºÅ©¸³Æ® ¶Ç´Â AI 
+    ë£¨íŠ¸ëª¨ì…˜ì„ ì´ìš©í•œ ì˜¤ë¸Œì íŠ¸ ì´ë™
+    ìë™ìœ¼ë¡œ ëŒì•„ë‹¤ë‹ˆëŠ” ìŠ¤í¬ë¦½íŠ¸ ë˜ëŠ” AI 
     */
 
     public float MAXHP;
@@ -18,32 +19,35 @@ public class Animal_Control : MonoBehaviour
 
     private Animator animator;
 
-    public float idleDuration = 3f; //Idle »óÅÂÀÇ Áö¼Ó ½Ã°£
-    public float moveDuration = 3f; //ÀÌµ¿ »óÅÂÀÇ Áö¼Ó ½Ã°£
+    [SerializeField]
+    private GameObject[] dropItems;
 
-    private bool isRunning = false; //ÇÃ·¹ÀÌ¾î°¡ °¨ÁöµÇ¾ú´ÂÁö ¿©ºÎ
-    private float idleTimer; //Idle »óÅÂÀÇ Å¸ÀÌ¸Ó
-    private float moveTimer; //ÀÌµ¿ »óÅÂÀÇ Å¸ÀÌ¸Ó
-    private float runTimer; //ÀÌµ¿ »óÅÂÀÇ Å¸ÀÌ¸Ó
+    public float idleDuration = 3f; //Idle ìƒíƒœì˜ ì§€ì† ì‹œê°„
+    public float moveDuration = 3f; //ì´ë™ ìƒíƒœì˜ ì§€ì† ì‹œê°„
+
+    private bool isRunning = false; //í”Œë ˆì´ì–´ê°€ ê°ì§€ë˜ì—ˆëŠ”ì§€ ì—¬ë¶€
+    private float idleTimer; //Idle ìƒíƒœì˜ íƒ€ì´ë¨¸
+    private float moveTimer; //ì´ë™ ìƒíƒœì˜ íƒ€ì´ë¨¸
+    private float runTimer; //ë‹¬ë¦¬ê¸° ìƒíƒœì˜ íƒ€ì´ë¨¸
     
 
-    private Transform player; //ÇÃ·¹ÀÌ¾î À§Ä¡ ÀúÀå, µ¿¹°ÀÌ ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÏ°í µµ¸ÁÄ¡°Ô ÇÏ±â À§ÇÔ
-    private Vector3 moveDirection; //µ¿¹°ÀÌ ÀÌµ¿ÇÏ´Â ¹æÇâ
+    private Transform player; //í”Œë ˆì´ì–´ ìœ„ì¹˜ ì €ì¥, ë™ë¬¼ì´ í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•˜ê³  ë„ë§ì¹˜ê²Œ í•˜ê¸° ìœ„í•¨
+    private Vector3 moveDirection; //ë™ë¬¼ì´ ì´ë™í•˜ëŠ” ë°©í–¥
 
-    public CapsuleCollider playerDetector_Capsule; //ÀÚ½Ä¿ÀºêÁ§Æ®ÀÇ ÇÃ·¹ÀÌ¾î °¨Áö¸¦ À§ÇÑ Ä¸½¶Äİ¶óÀÌ´õ
-    public BoxCollider playerDetector_Box; //ÀÚ½Ä¿ÀºêÁ§Æ®ÀÇ ÇÃ·¹ÀÌ¾î °¨Áö¸¦ À§ÇÑ Ä¸½¶Äİ¶óÀÌ´õ
+    public CapsuleCollider playerDetector_Capsule; //ìì‹ì˜¤ë¸Œì íŠ¸ì˜ í”Œë ˆì´ì–´ ê°ì§€ë¥¼ ìœ„í•œ ìº¡ìŠì½œë¼ì´ë”
+    public BoxCollider playerDetector_Box; //ìì‹ì˜¤ë¸Œì íŠ¸ì˜ í”Œë ˆì´ì–´ ê°ì§€ë¥¼ ìœ„í•œ ìº¡ìŠì½œë¼ì´ë”
 
     private void Awake()
     {
         animator = GetComponent<Animator>(); 
-        animator.applyRootMotion = true; //·çÆ® ¸ğ¼Ç Àû¿ë
+        animator.applyRootMotion = true; //ë£¨íŠ¸ ëª¨ì…˜ ì ìš©
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = false;
         //agent.updateRotation = false;
 
-        playerDetector_Capsule = GetComponentInChildren<CapsuleCollider>(); //ÀÚ½Ä¿ÀºêÁ§Æ®ÀÇ ÇÃ·¹ÀÌ¾î °¨Áö¸¦ À§ÇÑ Ä¸½¶Äİ¶óÀÌ´õ
-        playerDetector_Box = GetComponentInChildren<BoxCollider>(); //ÀÚ½Ä¿ÀºêÁ§Æ®ÀÇ ÇÃ·¹ÀÌ¾î °¨Áö¸¦ À§ÇÑ ¹Ú½ºÄİ¶óÀÌ´õ
+        playerDetector_Capsule = GetComponentInChildren<CapsuleCollider>(); //ìì‹ì˜¤ë¸Œì íŠ¸ì˜ í”Œë ˆì´ì–´ ê°ì§€ë¥¼ ìœ„í•œ ìº¡ìŠì½œë¼ì´ë”
+        playerDetector_Box = GetComponentInChildren<BoxCollider>(); //ìì‹ì˜¤ë¸Œì íŠ¸ì˜ í”Œë ˆì´ì–´ ê°ì§€ë¥¼ ìœ„í•œ ë°•ìŠ¤ì½œë¼ì´ë”
 
         navMeshSurface = FindObjectOfType<NavMeshSurface>().transform;
 
@@ -59,37 +63,60 @@ public class Animal_Control : MonoBehaviour
 
     private void Update()
     {
-        CheckDistance(); //³×ºñ¸Ş½¬ µ¿Àû º£ÀÌÅ©¸¦ À§ÇÑ °Å¸®°è»ê ¸Ş¼­µå
+        CheckDistance(); //ë„¤ë¹„ë©”ì‰¬ ë™ì  ë² ì´í¬ë¥¼ ìœ„í•œ ê±°ë¦¬ê³„ì‚° ë©”ì„œë“œ
 
         if (isRunning)
         {
-            RunFromPlayer(); //ÇÃ·¹ÀÌ¾î·ÎºÎÅÍ µµ¸Á
+            RunFromPlayer(); //í”Œë ˆì´ì–´ë¡œë¶€í„° ë„ë§
         }
         else
         {
-            Random_Idle_Or_Walk(); //Á¦ÀÚ¸® Idle  Àç»ı ¶Ç´Â ÀÌµ¿ ¸Ş¼­µå
+            Random_Idle_Or_Walk(); //ì œìë¦¬ Idle  ì¬ìƒ ë˜ëŠ” ì´ë™ ë©”ì„œë“œ
         }
     }    
 
-    void CheckDistance() //³×ºñ¸Ş½¬ µ¿Àû º£ÀÌÅ©¸¦ À§ÇÑ °Å¸®°è»ê ¸Ş¼­µå
+    void CheckDistance() //ë„¤ë¹„ë©”ì‰¬ ë™ì  ë² ì´í¬ë¥¼ ìœ„í•œ ê±°ë¦¬ê³„ì‚° ë©”ì„œë“œ
     {
-        if(Vector3.Distance(this.transform.position, navMeshSurface.position) > 10f)
+        //if(Vector3.Distance(this.transform.position, navMeshSurface.position) > 10f)
+        //{
+        //    navMeshSurface.transform.position = this.transform.position;
+        //    navMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
+        //}
+
+        float distance = Vector3.Distance(this.transform.position, navMeshSurface.position);
+        if (distance > 10f)
         {
             navMeshSurface.transform.position = this.transform.position;
-            navMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
+            NavMeshSurface navMeshSurfaceComponent = navMeshSurface.GetComponent<NavMeshSurface>();
+            //if (navMeshSurfaceComponent != null)
+            //{
+            //    navMeshSurfaceComponent.BuildNavMesh();
+            //}
+
+            if(navMeshSurfaceComponent != null)
+            {
+                try
+                {
+                    navMeshSurfaceComponent.BuildNavMesh();
+                }
+                catch(System.Exception e)
+                {
+                    Debug.LogError("ë„¤ë¹„ë©”ì‰¬ ë¹Œë“œì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤." + e.Message);
+                }
+            }
         }
     }      
     
-    private void Random_Idle_Or_Walk() //Á¦ÀÚ¸® Idle  Àç»ı ¶Ç´Â ÀÌµ¿ ¸Ş¼­µå
+    private void Random_Idle_Or_Walk() //ì œìë¦¬ Idle  ì¬ìƒ ë˜ëŠ” ì´ë™ ë©”ì„œë“œ
     {     
         if (idleTimer > 0)
         {
-            // Á¦ÀÚ¸® Idle Àç»ı
+            // ì œìë¦¬ Idle ì¬ìƒ
             idleTimer -= Time.deltaTime;
         }
         else if (moveTimer > 0)
         {
-            // ÀÌµ¿ Idle Àç»ı
+            // ì´ë™ Idle ì¬ìƒ
             animator.SetFloat("Idle_SetFloat", 7);
             if (!agent.hasPath)
             {
@@ -109,7 +136,7 @@ public class Animal_Control : MonoBehaviour
         }
     }    
 
-    private void RunFromPlayer() //ÇÃ·¹ÀÌ¾î·ÎºÎÅÍ µµ¸Á
+    private void RunFromPlayer() //í”Œë ˆì´ì–´ë¡œë¶€í„° ë„ë§
     {        
         if(runTimer > 0)
         { 
@@ -132,7 +159,7 @@ public class Animal_Control : MonoBehaviour
         }
     }
 
-    public void PlayerDetected() //ÇÃ·¹ÀÌ¾î°¡ °ËÃâµÆÀ» ¶§
+    public void PlayerDetected() //í”Œë ˆì´ì–´ê°€ ê²€ì¶œëì„ ë•Œ
     {
         isRunning = true;
         animator.SetBool("isRunning", true);
@@ -140,10 +167,35 @@ public class Animal_Control : MonoBehaviour
         runTimer = 5f;
     }
 
-    public void PlayerLost() //ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§¿¡¼­ ¹ş¾î³µÀ» ¶§
+    public void PlayerLost() //í”Œë ˆì´ì–´ê°€ ë²”ìœ„ì—ì„œ ë²—ì–´ë‚¬ì„ ë•Œ
     {
         isRunning = false;
         animator.SetBool("isRunning", false);
         agent.ResetPath();
-    }   
+    }
+
+    public void getDamage(float damage) {
+        currentHP -= damage;
+        if (currentHP <= 0) {
+            currentHP = 0;
+            animalDie();
+        }
+    }
+
+    private void animalDie() {
+        //TODO: ì£½ì—ˆì„ë•Œ í•´ì•¼í•˜ëŠ” ê²ƒ ì¶”ê°€
+        itemDrop();
+    }
+
+    private void itemDrop() {
+        int itemsToDrop = Random.Range(1, 4);
+        for (int i = 0; i < itemsToDrop; i++) {
+            GameObject itemToDrop = dropItems[Random.Range(0, dropItems.Length)];
+            Vector3 dropPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
+            GameObject newDropItem  = Instantiate(itemToDrop, dropPosition, Quaternion.identity);
+            if (newDropItem.GetComponent<FoodItem>() != null) {
+                newDropItem.GetComponent<FoodItem>().startSpoilage();
+            }
+        }
+    }
 }

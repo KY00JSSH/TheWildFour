@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnmlAttack : MonoBehaviour
-{
+public class AnmlAttack : MonoBehaviour {
     public void GetAttack(float attackPoint) {
-        //attackPoint ¸¸Å­ µ¿¹°¿¡°Ô ÇÇÇØ ÀÔÈû
-
-        if (gameObject.GetComponent<RockController>() != null) {
-            RockController rockCont = gameObject.GetComponent<RockController>();
+        //attackPoint ë§Œí¼ ë™ë¬¼ì—ê²Œ í”¼í•´ ì…í˜
+        if(gameObject.GetComponent<Animal_Control>() != null) {
+            Animal_Control animalCont = gameObject.GetComponent<Animal_Control>();
+            animalCont.getDamage(attackPoint);
         }
     }
 }
