@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,29 @@ public class SaveData {
     public float playerAddDashSpeed;
     public float playerAddDecDashGage;
     public float playerAddInvenCount;
+
+    public int shelterLevel;
+    public int shelterMoveLevel;
+    public int shelterAttackLevel;
+    public int shelterGatherLevel;
+    public int shelterMovePoint;
+    public int shelterAttackPoint;
+    public int shelterGatherPoint;
+    public float shelterMoveCurrentExp;
+    public float shelterAttackCurrentExp;
+    public float shelterGatherCurrentExp;
+    public int workshopLevel;
+
+    public Vector3 shelterPosition;
+    public Quaternion shelterRotation;
+    public Vector3 workshopPosition;
+    public Quaternion workshopRotation;
+
+    public List<Vector3> campfirePosition;
+    public List<Vector3> furnacePosition;
+    public List<Vector3> chestPosition;
 }
+
 
 [System.Serializable]
 public class SaveDataList {
@@ -77,7 +100,7 @@ public class Save : MonoBehaviour {
             Directory.CreateDirectory(Path.GetDirectoryName(playerSaveJsonFilePath));
         }
         InitSaveFile();
-}
+    }
 
     public void MakeSave() {
         SaveDataList saveDataList = Load();
@@ -108,8 +131,43 @@ public class Save : MonoBehaviour {
         saveData.TotalDay = TimeManager.Instance.GetTotalDay();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player== null)
+        if (player == null)
+            player = FindObjectOfType<PlayerManager>().ActivatePlayer();
         saveData.playerTransform = player.transform.position;
+
+        ShelterManager shelterManager = FindObjectOfType<ShelterManager>();
+        saveData.shelterLevel = shelterManager.ShelterLevel;
+        saveData.shelterMoveLevel = shelterManager.MoveLevel;
+        saveData.shelterAttackLevel = shelterManager.AttackLevel;
+        saveData.shelterGatherLevel = shelterManager.GatherLevel;
+        saveData.shelterMovePoint = shelterManager.MovePoint;
+        saveData.shelterAttackPoint = shelterManager.AttackPoint;
+        saveData.shelterGatherPoint = shelterManager.GatherPoint;
+        saveData.shelterMoveCurrentExp = shelterManager.MoveCurrentExp;
+        saveData.shelterAttackCurrentExp = shelterManager.AttackCurrentExp;
+        saveData.shelterGatherCurrentExp = shelterManager.GatherCurrentExp;
+
+        WorkshopManager workshopManager = FindObjectOfType<WorkshopManager>();
+        saveData.workshopLevel = workshopManager.WorkshopLevel;
+
+        //TODO: 여기부터 연동 되있는지 확인
+        saveData.shelterPosition = shelterManager.GetComponent<ShelterCreate>().Building.transform.position;
+        saveData.workshopPosition = workshopManager.GetComponent<WorkshopCreate>().Building.transform.position;
+        saveData.shelterRotation = shelterManager.GetComponent<ShelterCreate>().Building.transform.rotation;
+        saveData.workshopRotation = workshopManager.GetComponent<WorkshopCreate>().Building.transform.rotation;
+
+        CampfireChestCreate[] campfireChestCreates = FindObjectsOfType<CampfireChestCreate>();
+        foreach(var eachCreate in campfireChestCreates) {
+            foreach(Transform eachChild in eachCreate.transform) {
+                if (eachChild.TryGetComponent(out Campfire campfire)) 
+                    saveData.campfirePosition.Add(eachChild.position);
+                else if (eachChild.TryGetComponent(out Furnace furnace)) 
+                    saveData.furnacePosition.Add(eachChild.position);
+                else 
+                    saveData.chestPosition.Add(eachChild.position);
+            }
+        }
+
 
     }
 
@@ -143,6 +201,27 @@ public class Save : MonoBehaviour {
         saveData.playerAddDashSpeed = 0f;
         saveData.playerAddInvenCount = 0f;
         saveData.playerAddDecDashGage = 0f;
+
+        saveData.shelterLevel = 1;
+        saveData.shelterMoveLevel = 0;
+        saveData.shelterAttackLevel = 0;
+        saveData.shelterGatherLevel = 0;
+        saveData.shelterMovePoint = 0;
+        saveData.shelterAttackPoint = 0;
+        saveData.shelterGatherPoint = 0;
+        saveData.shelterMoveCurrentExp = 0;
+        saveData.shelterAttackCurrentExp = 0;
+        saveData.shelterGatherCurrentExp = 0;
+        saveData.workshopLevel = 1;
+
+        saveData.shelterPosition = Vector3.zero;
+        saveData.workshopPosition = Vector3.zero;
+        saveData.shelterRotation = Quaternion.identity;
+        saveData.workshopRotation = Quaternion.identity;
+
+        saveData.campfirePosition = null;
+        saveData.furnacePosition = null;
+        saveData.chestPosition = null;
     }
 }
 

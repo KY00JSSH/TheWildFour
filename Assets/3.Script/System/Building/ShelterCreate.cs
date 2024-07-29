@@ -10,6 +10,12 @@ public class ShelterCreate : BuildingCreate {
         shelterManager = GetComponent<ShelterManager>();
     }
 
+    private void Start() {
+        if(Save.Instance.saveData.shelterPosition != Vector3.zero) {
+
+        }    
+    }
+
     public override GameObject Building {
         get { return buildingPrefabs[shelterManager.ShelterLevel - 1]; }
     }
