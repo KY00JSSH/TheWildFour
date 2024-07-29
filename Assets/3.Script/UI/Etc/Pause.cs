@@ -30,13 +30,7 @@ public class Pause : MonoBehaviour {
 
     private void Update() {
         if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen && !menuControll.isMenuButtonOpen) {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                Escape();
-                /*
-                isPause = !isPause;
-                TogglePause(isPause);
-                */
-            }
+            if (Input.GetKeyDown(KeyCode.Escape)) Escape();
         }
     }
 
@@ -122,9 +116,7 @@ public class Pause : MonoBehaviour {
 
     // 뒤로가기 + 취소하기
     public void Escape() {
-        Debug.Log(gameObjects.Count);
         GameObject obj = gameObjects.Pop();
-        Debug.Log(obj.name);
         pauseChildSetActiveOff(obj);
 
         // 본인만 남은거아니면 상위객체 재활성화
@@ -142,7 +134,6 @@ public class Pause : MonoBehaviour {
     // 버튼 클릭 시 호출되는 메소드
     private void OnButtonClick(Button clickedButton) {
         gameObjects.Push(clickedButton.gameObject);
-        Debug.Log($"Button {clickedButton.name} added to stack. Stack size: {gameObjects.Count}");
     }
 
 
