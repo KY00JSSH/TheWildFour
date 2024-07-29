@@ -67,6 +67,7 @@ public class PlayerAbility : MonoBehaviour {
 
     private void Start() {
         cameraControl = FindObjectOfType<CameraControl>();
+        UpdateAblity();
     }
 
     private void Update() {
@@ -76,7 +77,9 @@ public class PlayerAbility : MonoBehaviour {
 
     public void UpdateAblity() {
         playerMove.isSkilled = 
-            shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : false;
+            shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : true;
+        //TODO: Release할 때 true : false로 수정
+        
         playerAddSpeed = shelterManager.GetSkill("속도").GetValue();
         playerMove.SetPlayerMoveSpeed(playerSpeed + playerAddSpeed);
         cameraControl.maxFOV =

@@ -26,8 +26,7 @@ public class PlayerMove : MonoBehaviour {
     public float DecDashGage, IncDashGage;
     private float defaultDashGage = 10f, defaultDecDashGage = 5f, defaultIncDashGage = 2f;
 
-    public bool isSkilled = true;
-    //TODO: Release 할 때 값 false로 수정
+    public bool isSkilled = false;
 
     public float GetPlayerMoveSpeed() { return playerMoveSpeed; }
     public void SetPlayerMoveSpeed(float speed) { playerMoveSpeed = speed; }

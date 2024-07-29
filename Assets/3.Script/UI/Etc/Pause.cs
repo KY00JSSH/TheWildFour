@@ -23,6 +23,7 @@ public class Pause : MonoBehaviour {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
     private void Start() {
+        TogglePause(false);
         gameObjects.Push(transform.gameObject);
         // 버튼 리스너 추가
         button.onClick.AddListener(() => OnButtonClick(button));
@@ -106,6 +107,7 @@ public class Pause : MonoBehaviour {
     public void SaveEnd() {
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
+        Save.Instance.MakeSave();
         //TODO: 저장...
     }
 
@@ -145,6 +147,9 @@ public class Pause : MonoBehaviour {
         Debug.Log($"Button {clickedButton.name} added to stack. Stack size: {gameObjects.Count}");
     }
 
+    private void OnDestroy() {
+        TogglePause(false);
+    }
 
 }
 /*

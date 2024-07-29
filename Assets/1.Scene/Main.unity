@@ -13008,7 +13008,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1972279097}
         m_TargetAssemblyTypeName: GameStart, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: PlayerSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14502,7 +14502,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1972279097}
         m_TargetAssemblyTypeName: GameStart, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: GameLoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20324,10 +20324,10 @@ MonoBehaviour:
   buttonSaveData: {fileID: 2113412945}
   buttonParent: {fileID: 1788937203}
   playerIcons:
-  - {fileID: 21300000, guid: dc32fdf6dbdb8344da34da049bc9db9e, type: 3}
+  - {fileID: 21300000, guid: 3fe9c13e42ad258418eb3a29742d6dee, type: 3}
   - {fileID: 21300000, guid: b5ccbde2831934f40a0c50597d35c9f6, type: 3}
   - {fileID: 21300000, guid: 7e8b3062ef365fb4db1f99a263c98a5a, type: 3}
-  - {fileID: 21300000, guid: 3fe9c13e42ad258418eb3a29742d6dee, type: 3}
+  - {fileID: 21300000, guid: dc32fdf6dbdb8344da34da049bc9db9e, type: 3}
   textNoFile: {fileID: 1541871914}
 --- !u!114 &1945508946
 MonoBehaviour:

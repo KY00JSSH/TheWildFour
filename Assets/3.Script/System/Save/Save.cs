@@ -101,6 +101,8 @@ public class Save : MonoBehaviour {
         saveData.playerAddDashSpeed = 0f;
         saveData.playerAddInvenCount = 0f;
         saveData.playerAddDecDashGage = 0f;
+
+
 }
 
     public void MakeSave() {
@@ -122,14 +124,6 @@ public class Save : MonoBehaviour {
             return JsonUtility.FromJson<SaveDataList>(File.ReadAllText(playerSaveJsonFilePath));
         }
         return null;
-    }
-
-    public bool doSave = false;
-    private void Update() {
-        if(doSave) {
-            doSave = false;
-            MakeSave();
-        }
     }
 }
 
