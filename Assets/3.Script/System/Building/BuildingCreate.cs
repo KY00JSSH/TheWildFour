@@ -69,6 +69,8 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     }
 
     public virtual void BuildMode() {
+        Debug.LogWarning("BuildingCreate.cs + PlayerMove.isPlayerBuilding : " + PlayerMove.isPlayerBuilding + " / " + !tooltip_Build.isBuildAvailable);
+        Debug.LogWarning("BuildingCreate.cs + tooltip_Build : " + tooltip_Build.currentBuild.name);
         if (PlayerMove.isPlayerBuilding || !tooltip_Build.isBuildAvailable) return;
 
         if (!isExist) {
