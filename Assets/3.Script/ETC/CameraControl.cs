@@ -24,6 +24,7 @@ public class CameraControl : MonoBehaviour
 
     private void Start() {
         cinemachineFreeLook.m_Lens.FieldOfView = 50f;
+        cinemachineFreeLook.m_Orbits[0].m_Height = maxZoom;
     }
     private void Update()
     {
