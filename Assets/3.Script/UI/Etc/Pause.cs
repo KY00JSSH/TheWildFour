@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Pause : MonoBehaviour {
 
@@ -107,8 +108,8 @@ public class Pause : MonoBehaviour {
     public void SaveEnd() {
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
+
         Save.Instance.MakeSave();
-        //TODO: 저장...
     }
 
     // 계속

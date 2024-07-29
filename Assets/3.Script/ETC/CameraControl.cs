@@ -7,33 +7,27 @@ public class CameraControl : MonoBehaviour
     private float rotationSpeed = 3f;
     public float zoomSpeed = 2f;
 
-    // �÷��̾� ��ų �þ߹��� Ȯ�� ������
-    // newFov = Mathf.Clamp ���ٿ� ����� ���������� Ŭ���������� �̵�
-    public float minFOV = 70f;
-    public float maxFOV = 100f;
-
     public float rotationDirection = 0f;
 
     private MiniMap_CompassRotation miniMapCompassRotation;
+
+    public float minZoom = 8f;
+    public float maxZoom = 13f;
 
     private void Awake() {
         cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
         cinemachineFreeLook.LookAt = player.transform;
-
-
-
-        GameObject.FindGameObjectWithTag("Player");
-        GameObject.FindObjectOfType<Renderer>();
-
         miniMapCompassRotation = FindObjectOfType<MiniMap_CompassRotation>();
-
-     //   transform.GetComponent<>();
     }
-    
+
+    private void Start() {
+        cinemachineFreeLook.m_Lens.FieldOfView = 50f;
+    }
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Q)) {
             rotationDirection -= 90f;
             if (rotationDirection < 0) rotationDirection += 360f;
@@ -47,17 +41,16 @@ public class CameraControl : MonoBehaviour
         cinemachineFreeLook.m_XAxis.Value = Mathf.LerpAngle(
             cinemachineFreeLook.m_XAxis.Value, rotationDirection, Time.deltaTime * rotationSpeed) ;
 
-        // ī�޶� ��
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (scrollInput != 0)
         {
-            float currentFOV = cinemachineFreeLook.m_Lens.FieldOfView;
-            float deltaFOV = scrollInput * 15f * -1; // -1 �Ȱ��ϸ� ���콺 ��ũ���� �ݴ밡 ��. �������� ���� �̷��� �մϴ�.
-            float newFOV = currentFOV + deltaFOV;
+            float currentZoom = cinemachineFreeLook.m_Orbits[0].m_Height;
+            float deltaZoom = scrollInput * 15f * -1;
+            float newZoom = currentZoom + deltaZoom;
 
-            newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);
+            newZoom = Mathf.Clamp(newZoom, minZoom, maxZoom);
 
-            cinemachineFreeLook.m_Lens.FieldOfView = newFOV;
+            cinemachineFreeLook.m_Orbits[0].m_Height = newZoom;
         }
     }
 }

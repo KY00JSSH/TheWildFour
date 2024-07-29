@@ -82,8 +82,8 @@ public class PlayerAbility : MonoBehaviour {
         
         playerAddSpeed = shelterManager.GetSkill("속도").GetValue();
         playerMove.SetPlayerMoveSpeed(playerSpeed + playerAddSpeed);
-        cameraControl.maxFOV =
-            shelterManager.GetSkill("시야 반경").nowSkillLevel == 1 ? 110f : 100f;
+        cameraControl.maxZoom =
+            shelterManager.GetSkill("시야 반경").nowSkillLevel == 1 ? 15f : 13f;
         playerAddDecDashGage =
             shelterManager.GetSkill("전력 질주 시간").GetValue();
         playerMove.DecDashGage = playerDecDashGage - playerAddDecDashGage;

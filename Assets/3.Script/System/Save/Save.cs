@@ -14,13 +14,15 @@ public enum PlayerType {
 [System.Serializable]
 public class SaveData {
     public string SaveName;
-    public DateTime saveTime;
+    public string saveTime;
     public bool isExtreme;
     public PlayerType playerType;
 
     public float WorldTime;
     public int SurviveDay;
     public float TotalDay;
+
+    public Vector3 playerTransform;
 
     public float playerAttack;
     public float playerAttackSpeed;
@@ -74,9 +76,49 @@ public class Save : MonoBehaviour {
         if (!Directory.Exists(Path.GetDirectoryName(playerSaveJsonFilePath))) {
             Directory.CreateDirectory(Path.GetDirectoryName(playerSaveJsonFilePath));
         }
+        InitSaveFile();
+}
+
+    public void MakeSave() {
+        SaveDataList saveDataList = Load();
+        if (saveDataList == null) {
+            saveDataList = new SaveDataList { Data = new List<SaveData>() };
+            File.WriteAllText(playerSaveJsonFilePath, JsonUtility.ToJson(saveDataList));
+        }
+
+        GetTargetSaveData();
+
+        saveData.saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+        saveDataList.Data.Add(saveData);
+        if (saveDataList.Data.Count > 6) saveDataList.Data.RemoveAt(0);
+
+        File.WriteAllText(playerSaveJsonFilePath, JsonUtility.ToJson(saveDataList));
+    }
+
+    public SaveDataList Load() {
+        if (File.Exists(playerSaveJsonFilePath)) {
+            return JsonUtility.FromJson<SaveDataList>(File.ReadAllText(playerSaveJsonFilePath));
+        }
+        return null;
+    }
+
+    public void GetTargetSaveData() {
+        saveData.WorldTime = TimeManager.Instance.GetWorldTime();
+        saveData.SurviveDay = TimeManager.Instance.GetSurviveDay();
+        saveData.TotalDay = TimeManager.Instance.GetTotalDay();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player== null)
+        saveData.playerTransform = player.transform.position;
+
+    }
+
+    public void InitSaveFile() {
         saveData.WorldTime = 90f;
         saveData.SurviveDay = 0;
         saveData.TotalDay = (int)((saveData.WorldTime - 90f) / 360f);
+
+        saveData.playerTransform = Vector3.zero;
 
         saveData.playerAttack = 2f;
         saveData.playerAttackSpeed = 1f;
@@ -101,29 +143,6 @@ public class Save : MonoBehaviour {
         saveData.playerAddDashSpeed = 0f;
         saveData.playerAddInvenCount = 0f;
         saveData.playerAddDecDashGage = 0f;
-
-
-}
-
-    public void MakeSave() {
-        SaveDataList saveDataList = Load();
-        if (saveDataList == null) {
-            saveDataList = new SaveDataList { Data = new List<SaveData>() };
-            File.WriteAllText(playerSaveJsonFilePath, JsonUtility.ToJson(saveDataList));
-        }
-
-        saveData.saveTime = DateTime.Now;
-        saveDataList.Data.Add(saveData);
-        if (saveDataList.Data.Count > 6) saveDataList.Data.RemoveAt(0);
-
-        File.WriteAllText(playerSaveJsonFilePath, JsonUtility.ToJson(saveDataList));
-    }
-
-    public SaveDataList Load() {
-        if (File.Exists(playerSaveJsonFilePath)) {
-            return JsonUtility.FromJson<SaveDataList>(File.ReadAllText(playerSaveJsonFilePath));
-        }
-        return null;
     }
 }
 
