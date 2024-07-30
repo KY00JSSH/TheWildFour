@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.IO;
 
 [System.Serializable]
 public class RockData
@@ -66,5 +68,33 @@ public class RockSpawner : MonoBehaviour
             RockController rock = newObj.GetComponent<RockController>();
             rock.InitializeObjData(objData);
         }
+    }
+
+    public void UpdateRockData(int objectNumber, bool enable, float health, bool isBig) {
+        if (isBig) {
+            var rock = bigRockList.rockObjs.FirstOrDefault(r => r.objectNumber == objectNumber);
+            if (rock != null) {
+                rock.enable = enable;
+                rock.health = health;
+            }
+        }
+        else {
+            var rock = midRockList.rockObjs.FirstOrDefault(r => r.objectNumber == objectNumber);
+            if (rock != null) {
+                rock.enable = enable;
+                rock.health = health;
+            }
+        }
+    }
+
+    public void SaveRockData() {
+        string bigDataAsJson = JsonUtility.ToJson(bigRockList, true);
+        string midDataAsJson = JsonUtility.ToJson(midRockList, true);
+
+        string bigPath = Path.Combine(Application.dataPath, bigRockJsonFileName);
+        string midPath = Path.Combine(Application.dataPath, midRockJsonFileName);
+
+        File.WriteAllText(bigPath, bigDataAsJson);
+        File.WriteAllText(midPath, midDataAsJson);
     }
 }

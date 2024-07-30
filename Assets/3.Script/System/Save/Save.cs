@@ -35,7 +35,7 @@ public class SaveData {
     public float playerSpeed;
     public float playerDashSpeed;
     public float playerDecDashGage;
-    public float playerInvenCount;
+    public int playerInvenCount;
 
     public float playerAddAttack;
     public float playerAddAttackSpeed;
@@ -47,7 +47,7 @@ public class SaveData {
     public float playerAddSpeed;
     public float playerAddDashSpeed;
     public float playerAddDecDashGage;
-    public float playerAddInvenCount;
+    public int playerAddInvenCount;
 
     public int shelterLevel;
     public int shelterMoveLevel;
@@ -69,6 +69,12 @@ public class SaveData {
     public List<Vector3> campfirePosition;
     public List<Vector3> furnacePosition;
     public List<Vector3> chestPosition;
+
+    public int[] skillMoveLevel = new int[5];
+    public int[] skillAttackLevel = new int[5];
+    public int[] skillGatherLevel = new int[5];
+
+    public List<GameObject> playerInventory;
 }
 
 
@@ -155,20 +161,32 @@ public class Save : MonoBehaviour {
         saveData.shelterRotation = shelterManager.GetComponent<ShelterCreate>().Building.transform.rotation;
         saveData.workshopRotation = workshopManager.GetComponent<WorkshopCreate>().Building.transform.rotation;
 
-        //TODO: 여기부터 연동 되있는지 확인
         CampfireChestCreate[] campfireChestCreates = FindObjectsOfType<CampfireChestCreate>();
         foreach(var eachCreate in campfireChestCreates) {
             foreach(Transform eachChild in eachCreate.transform) {
-                if (eachChild.TryGetComponent(out Campfire campfire)) 
+                if (eachChild.TryGetComponent(out Campfire campfire)) {
+                    if (saveData.campfirePosition == null) saveData.campfirePosition = new List<Vector3>();
                     saveData.campfirePosition.Add(eachChild.position);
-                else if (eachChild.TryGetComponent(out Furnace furnace)) 
+                }
+                else if (eachChild.TryGetComponent(out Furnace furnace)) {
+                    if (saveData.furnacePosition == null) saveData.furnacePosition = new List<Vector3>();
                     saveData.furnacePosition.Add(eachChild.position);
-                else 
+                }
+                else {
+                    if (saveData.chestPosition == null) saveData.chestPosition = new List<Vector3>();
                     saveData.chestPosition.Add(eachChild.position);
+                }
             }
         }
 
+        //TODO: 여기부터 연동 되있는지 확인
+        for(int i = 0; i< saveData.skillMoveLevel.Length;i++) {
+            saveData.skillMoveLevel[i] = shelterManager.skillMove[i].nowSkillLevel;
+            saveData.skillAttackLevel[i] = shelterManager.skillAttack[i].nowSkillLevel;
+            saveData.skillGatherLevel[i] = shelterManager.skillGather[i].nowSkillLevel;
+        }
 
+        saveData.playerInventory = FindObjectOfType<CreateManager>().invenController.Inventory;
     }
 
     public void InitSaveFile() {
@@ -189,7 +207,6 @@ public class Save : MonoBehaviour {
         saveData.playerGather = 2f;
         saveData.playerSpeed = 1f;
         saveData.playerDashSpeed = 2.5f;
-        saveData.playerDecDashGage = 8f;
         saveData.playerInvenCount = 8;
 
         saveData.playerAddAttack = 0f;
@@ -201,8 +218,7 @@ public class Save : MonoBehaviour {
         saveData.playerAddGather = 0f;
         saveData.playerAddSpeed = 0f;
         saveData.playerAddDashSpeed = 0f;
-        saveData.playerAddInvenCount = 0f;
-        saveData.playerAddDecDashGage = 0f;
+        saveData.playerAddInvenCount = 0;
 
         saveData.shelterLevel = 1;
         saveData.shelterMoveLevel = 0;
@@ -224,6 +240,11 @@ public class Save : MonoBehaviour {
         saveData.campfirePosition = null;
         saveData.furnacePosition = null;
         saveData.chestPosition = null;
+
+        saveData.playerInventory = new List<GameObject>();
+        for (int i = 0; i < saveData.playerInvenCount; i++) {
+            saveData.playerInventory.Add(null);
+        }
     }
 }
 

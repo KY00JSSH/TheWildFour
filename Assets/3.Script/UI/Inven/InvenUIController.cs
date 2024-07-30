@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InvenUIController : MonoBehaviour {
-    private InvenController invenController;    //ÀÎº¥Åä¸® ·ÎÁ÷ ÄÁÆ®·Ñ·¯
+    private InvenController invenController;    //ì¸ë²¤í† ë¦¬ ë¡œì§ ì»¨íŠ¸ë¡¤ëŸ¬
 
-    private List<GameObject> invenTotalList = new List<GameObject>();   //ÀüÃ¼ ÀÎº¥¹Ú½º ¸®½ºÆ®
+    private List<GameObject> invenTotalList = new List<GameObject>();   //ì „ì²´ ì¸ë²¤ë°•ìŠ¤ ë¦¬ìŠ¤íŠ¸
     public List<GameObject> InvenTotalList { get { return invenTotalList; } }
 
-    public GameObject InvenBoxPrefab;       //ÀÎº¥Åä¸® UI BOX Prefab
+    public GameObject InvenBoxPrefab;       //ì¸ë²¤í† ë¦¬ UI BOX Prefab
 
-    private int currInvenCount = 0;         //ÇöÀç ÀÎº¥Åä¸® È°¼ºÈ­ °³¼ö
+    private int currInvenCount = 0;         //í˜„ì¬ ì¸ë²¤í† ë¦¬ í™œì„±í™” ê°œìˆ˜
     public int CurrInvenCount { get { return currInvenCount; } }
-    private int invenMaxcount = 15;         //ÀÎº¥Åä¸® È°¼ºÈ­ ÃÖ´ë °³¼ö    
+    private int invenMaxcount = 15;         //ì¸ë²¤í† ë¦¬ í™œì„±í™” ìµœëŒ€ ê°œìˆ˜    
 
     private void Awake() {
-        //±âº» ÀÎº¥ ÃÊ±âÈ­
+        //ê¸°ë³¸ ì¸ë²¤ ì´ˆê¸°í™”
         invenController = GetComponent<InvenController>();
         initInven();
-        //½ÇÁ¦ ÀÎº¥ µ¥ÀÌÅÍ°¡ º¯ÇÒ¶§¸¶´Ù UI ¾÷µ¥ÀÌÆ® µÇµµ·Ï ¿ÉÀú¹ö ÆĞÅÏÀ¸·Î ±¸µ¶ ¼³Á¤
+        //ì‹¤ì œ ì¸ë²¤ ë°ì´í„°ê°€ ë³€í• ë•Œë§ˆë‹¤ UI ì—…ë°ì´íŠ¸ ë˜ë„ë¡ ì˜µì €ë²„ íŒ¨í„´ìœ¼ë¡œ êµ¬ë… ì„¤ì •
         invenController.InvenChanged += UpdateUI;
     }
 
@@ -26,7 +26,7 @@ public class InvenUIController : MonoBehaviour {
         invenController.InvenChanged -= UpdateUI;
     }
 
-    //ÀÎº¥Åä¸®ÀÇ µ¥ÀÌÅÍ°¡ º¯ÇÒ¶§¸¶´Ù UI ¾÷µ¥ÀÌÆ®
+    //ì¸ë²¤í† ë¦¬ì˜ ë°ì´í„°ê°€ ë³€í• ë•Œë§ˆë‹¤ UI ì—…ë°ì´íŠ¸
     private void UpdateUI(List<GameObject> inventory) {
         for (int i = 0; i < inventory.Count; i++) {
             InventoryBox box = invenTotalList[i].GetComponent<InventoryBox>();
@@ -34,9 +34,9 @@ public class InvenUIController : MonoBehaviour {
         }
     }
 
-    //ÀÎº¥Åä¸® ÃÊ±âÈ­ - ÃÖ´ë È°¼ºÈ­ °³¼ö¸¸Å­ ¹Ì¸® »ı¼º ÈÄ ÇöÀç È°¼ºÈ­ °¡´É °³¼ö¸¸ active
+    //ì¸ë²¤í† ë¦¬ ì´ˆê¸°í™” - ìµœëŒ€ í™œì„±í™” ê°œìˆ˜ë§Œí¼ ë¯¸ë¦¬ ìƒì„± í›„ í˜„ì¬ í™œì„±í™” ê°€ëŠ¥ ê°œìˆ˜ë§Œ active
     private void initInven() {
-        currInvenCount = 8; //±âº» È°¼ºÈ­ °³¼ö ¼³Á¤
+        currInvenCount = Save.Instance.saveData.playerInvenCount; //ê¸°ë³¸ í™œì„±í™” ê°œìˆ˜ ì„¤ì •
         List<GameObject> invenBoxList = new List<GameObject>();
         for (int i = 0; i < invenMaxcount; i++) {
             Vector3 invenPosition = new Vector3(transform.position.x + i * 75, transform.position.y, InvenBoxPrefab.transform.position.z);
@@ -46,10 +46,10 @@ public class InvenUIController : MonoBehaviour {
             invenBoxPrefabs.SetActive(false);
             InventoryBox invenBoxPrf = invenBoxPrefabs.GetComponent<InventoryBox>();
             if (invenBoxList != null) {
-                invenBoxPrf.setKey(i); // key ¼³Á¤
+                invenBoxPrf.setKey(i); // key ì„¤ì •
             }
             invenBoxList.Add(invenBoxPrefabs);
-            //positon ¿ŞÂÊÀ§, ¿À¸¥ÂÊÀ§, ¿À¸¥ÂÊ¾Æ·¡, ¿ŞÂÊ¾Æ·¡ ¼øÀ¸·Î ¼³Á¤
+            //positon ì™¼ìª½ìœ„, ì˜¤ë¥¸ìª½ìœ„, ì˜¤ë¥¸ìª½ì•„ë˜, ì™¼ìª½ì•„ë˜ ìˆœìœ¼ë¡œ ì„¤ì •
         }
         invenTotalList = invenBoxList;
         for (int i = 0; i < currInvenCount; i++) {
@@ -57,11 +57,11 @@ public class InvenUIController : MonoBehaviour {
         }
     }
 
-    //inven upgrade½Ã ÀÎº¥Åä¸® Ãß°¡ È°¼ºÈ­ - upgrade ÇÏ´Â ¼ø°£ ¸Å¹ø È£Ãâ ÇÊ¿ä
+    //inven upgradeì‹œ ì¸ë²¤í† ë¦¬ ì¶”ê°€ í™œì„±í™” - upgrade í•˜ëŠ” ìˆœê°„ ë§¤ë²ˆ í˜¸ì¶œ í•„ìš”
     public void InvenCountUpgrade() {
         if (currInvenCount <= invenMaxcount) {
             currInvenCount++;
-            invenController.addInvenBox();          //È°¼ºÈ­ 1°³ µÉ¶§¸¶´Ù ½ÇÁ¦ µ¥ÀÌÅÍ inventory.add(null)
+            invenController.addInvenBox();          //í™œì„±í™” 1ê°œ ë ë•Œë§ˆë‹¤ ì‹¤ì œ ë°ì´í„° inventory.add(null)
             invenController.invenFullReset();   
             invenTotalList[currInvenCount - 1].SetActive(true);
 

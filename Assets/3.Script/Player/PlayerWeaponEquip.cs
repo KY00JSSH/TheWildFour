@@ -12,7 +12,11 @@ public class PlayerWeaponEquip : MonoBehaviour {
 
     public static float CurrentEquipWeaponAttackPoint {
         get {
-            GameObject currentEquipWeapon = FindObjectOfType<PlayerWeaponEquip>().CurrentEquipWeapon;
+            GameObject currentEquipWeapon;
+            try {
+                currentEquipWeapon = FindObjectOfType<PlayerWeaponEquip>().CurrentEquipWeapon;
+            }
+            catch { return 0; }
             if (currentEquipWeapon != null) {
                 return currentEquipWeapon.GetComponent<WeaponItem>().weaponItemData.MinPowerPoint;
             }

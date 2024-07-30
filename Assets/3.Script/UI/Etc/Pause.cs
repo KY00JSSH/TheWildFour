@@ -100,11 +100,13 @@ public class Pause : MonoBehaviour {
 
     // 저장 및 종료 재확인
     public void SaveEnd() {
+        FindObjectOfType<RockSpawner>().SaveRockData();
+        FindObjectOfType<TreeSpawner>().SaveTreeData();
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
 
-        Destroy(TimeManager.Instance.gameObject);
         Save.Instance.MakeSave();
+        Destroy(TimeManager.Instance.gameObject);
     }
 
     // 계속
