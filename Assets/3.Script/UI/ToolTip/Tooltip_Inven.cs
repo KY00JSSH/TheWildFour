@@ -57,9 +57,6 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
                 _item = inventoryBox.CurrentItem.GetComponent<Item>();
                 InvenBoxItemInfo();
             }
-            else {
-                Debug.Log("인벤토리가 null임");
-            }
         }
     }
 
