@@ -8,6 +8,9 @@ public class InvenController : CommonInven {
     private PlayerStatus playerStatus;
     private PlayerItemUseControll playerItemUse;
 
+    [SerializeField]
+    public GameObject bakeIronPrf;
+
     private void Awake() {
         invenUi = FindObjectOfType<InvenUIController>();
         menuWeapon = FindObjectOfType<MenuWeapon>();
