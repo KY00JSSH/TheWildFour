@@ -72,7 +72,6 @@ public class BuildPrefabUI : MonoBehaviour {
             BuildPrefabUISize();
             BuildPrefabUIPosition_Vertical();
         }
-        
         //TODO: 애니메이션의 타이밍을 알 수 없음 -> 애니메이션 시작 끝 알아야할것같음!
         if (isValid) if (!BuildImg.activeSelf) 
                 if(!isBuildAniComplete) BuildDustPrefabEffectStart();
@@ -221,7 +220,6 @@ public class BuildPrefabUI : MonoBehaviour {
             buildingObj = buildingCreate.Building;
             yield return null;
         }
-        Debug.LogWarning(buildingCreate.Building.name);
         isBuiltStart = true;
         BuildImg.SetActive(true);
     }

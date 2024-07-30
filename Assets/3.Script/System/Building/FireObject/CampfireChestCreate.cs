@@ -13,6 +13,8 @@ public class CampfireChestCreate : BuildingCreate {
     public override void BuildMode() {
         if (Building == null) {
             newCampfireChest = Instantiate(buildingPrefabs[0], transform);
+            //TODO: !!!!!!!!240729 김수주 - 비활성화 넣어도 됩니까?
+            newCampfireChest.SetActive(false);
         }
 
         if (TryGetComponent(out Campfire campfire)) campfire.enabled = false;
