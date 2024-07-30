@@ -13,10 +13,8 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     private GameObject previousItem = null;
 
-    private void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
     private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player");
         invenController = FindObjectOfType<InvenController>();
     }
 

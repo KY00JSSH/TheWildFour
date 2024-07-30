@@ -53,6 +53,12 @@ public class ShelterManager : MonoBehaviour {
         MoveCurrentExp = Save.Instance.saveData.shelterMoveCurrentExp;
         AttackCurrentExp = Save.Instance.saveData.shelterAttackCurrentExp;
         GatherCurrentExp = Save.Instance.saveData.shelterGatherCurrentExp;
+
+        for (int i = 0; i < skillMove.Length; i++) {
+            skillMove[i].nowSkillLevel = Save.Instance.saveData.skillMoveLevel[i];
+            skillAttack[i].nowSkillLevel = Save.Instance.saveData.skillAttackLevel[i];
+            skillGather[i].nowSkillLevel = Save.Instance.saveData.skillGatherLevel[i];
+        }
     }
 
     public void AddMoveExp(float exp) {

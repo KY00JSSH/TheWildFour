@@ -17,6 +17,10 @@ public class CommonInven : MonoBehaviour {
     [SerializeField]
     public GameObject sackItem;
 
+    private void Update() {
+       return;
+    }
+
     public void updateInvenInvoke() {
         InvenChanged?.Invoke(inventory);
     }

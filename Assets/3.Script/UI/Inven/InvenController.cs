@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class InvenController : CommonInven {
@@ -17,12 +19,15 @@ public class InvenController : CommonInven {
 
     private void Start() {
         initInven();
+        Debug.Log("WOW");
     }
 
+
     private void initInven() {
-        for (int i = 0; i < invenUi.CurrInvenCount; i++) {
-            inventory.Add(null);
-        }
+        inventory = Save.Instance.saveData.playerInventory;
+        //for (int i = 0; i < invenUi.CurrInvenCount; i++) {
+        //    inventory.Add(null);
+        //}
     }
 
     //장비창과 인벤창 아이템 스위칭

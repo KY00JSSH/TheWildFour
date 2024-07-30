@@ -26130,7 +26130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &750615574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26144,14 +26144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 5144707792496740942, guid: 3132c7a918c452244b1991b9d61d165c, type: 3}
-  - {fileID: 6334625890010984769, guid: 19bbc4bbd5e749f4eb402ae10825846c, type: 3}
   - {fileID: 6218004453208192205, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
   - {fileID: 2288768476166651280, guid: 4e0f63cd4a57c9f4eb672841c4bfd4ec, type: 3}
-  - {fileID: -5608781965460578792, guid: 1e526011e805d004aae3e33f99ff4721, type: 3}
-  - {fileID: -7423218067449370834, guid: 7e5548a444e4ce542a54060321127f67, type: 3}
-  - {fileID: -7729778623438631139, guid: 7c54dfc7a9d070249b2e52919329d638, type: 3}
-  spawnCount: 300
+  spawnCount: 100
   spawnArea: {x: 5, y: 0, z: 5}
 --- !u!4 &750615575
 Transform:
@@ -36324,7 +36319,7 @@ MonoBehaviour:
   - skillName: "\uC2DC\uC57C \uBC18\uACBD"
     maxSkillLevel: 1
     nowSkillLevel: 0
-    skillValue: 20
+    skillValue: -1
   - skillName: "\uC804\uB825 \uC9C8\uC8FC \uC2DC\uAC04"
     maxSkillLevel: 6
     nowSkillLevel: 0
@@ -44951,6 +44946,69 @@ MonoBehaviour:
     campfirePosition: []
     furnacePosition: []
     chestPosition: []
+    skillMove:
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    skillAttack:
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    skillGather:
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
+    - skillName: 
+      maxSkillLevel: 0
+      nowSkillLevel: 0
+      skillValue: 0
 --- !u!4 &1292207472
 Transform:
   m_ObjectHideFlags: 0

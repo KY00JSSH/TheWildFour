@@ -103,8 +103,8 @@ public class Pause : MonoBehaviour {
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
 
-        Destroy(TimeManager.Instance.gameObject);
         Save.Instance.MakeSave();
+        Destroy(TimeManager.Instance.gameObject);
     }
 
     // 계속
