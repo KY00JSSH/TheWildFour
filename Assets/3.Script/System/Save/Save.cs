@@ -85,6 +85,7 @@ public class Save : MonoBehaviour {
         }
         else
             Destroy(gameObject);
+        InitSaveFile();
     }
 
     public SaveData saveData = new SaveData();
@@ -99,7 +100,6 @@ public class Save : MonoBehaviour {
         if (!Directory.Exists(Path.GetDirectoryName(playerSaveJsonFilePath))) {
             Directory.CreateDirectory(Path.GetDirectoryName(playerSaveJsonFilePath));
         }
-        InitSaveFile();
     }
 
     public void MakeSave() {
