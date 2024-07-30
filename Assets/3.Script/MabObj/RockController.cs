@@ -10,9 +10,9 @@ public class RockController : MonoBehaviour
     private float health;
     private int type;
 
-    [SerializeField] private GameObject thisRockObject;     //¿ø·¡ ¹ÙÀ§
-    [SerializeField]  private GameObject brokenObject;      //ºÎ¼­Áö°í ¹ÙÀ§
-    [SerializeField] private GameObject dropRockPrf;        //¶§¸®¸é µå¶øÇÒ ¹ÙÀ§ prefab
+    [SerializeField] private GameObject thisRockObject;     //ì›ë˜ ë°”ìœ„
+    [SerializeField]  private GameObject brokenObject;      //ë¶€ì„œì§€ê³  ë°”ìœ„
+    [SerializeField] private GameObject dropRockPrf;        //ë•Œë¦¬ë©´ ë“œëí•  ë°”ìœ„ prefab
     private BoxCollider coll;
     private RockSpawner rockSpawner;
 
@@ -69,7 +69,7 @@ public class RockController : MonoBehaviour
 
     public void dropRockItem(float gatherPoint) {
         InvenController invenController = GetComponent<InvenController>();
-        int checkNum = invenController.canAddThisBox(1);
+        int checkNum = invenController.canAddThisBox(2);
         if (checkNum != 99) {
             CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
             invenItem.addCurrStack((int)gatherPoint * 2);

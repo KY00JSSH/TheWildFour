@@ -76,6 +76,8 @@ public class TreeSpawner : MonoBehaviour {
             TreeBigController treeB = newObj.GetComponent<TreeBigController>();
             treeB.InitializeObjData(objData);
         }
+
+        Debug.Log(objects.Count);
     }
 
     private void SpawnSmallTrees(List<SmallTreeData> objects) {
