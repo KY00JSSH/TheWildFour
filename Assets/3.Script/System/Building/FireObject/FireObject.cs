@@ -80,16 +80,29 @@ public class FireObject : MonoBehaviour, IFireLight {
         }
     }
 
-    public void BakeItem(int index) {
+    public void BakeItem(int index, bool isFurnace) {
 
         isBake = true;
 
         InvenController inven = FindObjectOfType<InvenController>();
         GameObject bakeItem = Instantiate(inven.getIndexItem(index));
-        bakeItem.GetComponent<CountableItem>().setCurrStack(1);
-        bakeItem.GetComponent<FoodItem>().setVisible();
-        inven.useItem(index);
+        CountableItem countItem = bakeItem.GetComponent<CountableItem>();
 
+        if (isFurnace) {
+            if (bakeItem.GetComponent<FoodItem>()!=null) {
+                bakeItem.GetComponent<FoodItem>().setVisible();
+                countItem.setCurrStack(1);
+                inven.useItem(index);
+            }
+            else {
+                if(countItem.itemData.Key == 2){
+                    if(countItem.CurrStackCount >= 30) {
+                        countItem.setCurrStack(30);
+                        inven.removeItemCount(2, 30);
+                    }
+                }
+            }
+        }
         Rigidbody bakeRigidbody = bakeItem.GetComponent<Rigidbody>();
         bakeRigidbody.useGravity = false;
         Vector3 targetPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1f, gameObject.transform.position.z);
@@ -110,11 +123,20 @@ public class FireObject : MonoBehaviour, IFireLight {
         }
 
         //아이템 변경
-        if(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf != null) {
-            GameObject newBakeItem = Instantiate(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf);
-            newBakeItem.transform.position = targetPosition;
-            newBakeItem.GetComponent<Rigidbody>().useGravity = true;
-            Destroy(bakeItem);
+        if(bakeItem.GetComponent<FoodItem>() != null) {
+            if(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf != null) {
+                GameObject newBakeItem = Instantiate(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf);
+                newBakeItem.transform.position = targetPosition;
+                newBakeItem.GetComponent<Rigidbody>().useGravity = true;
+                Destroy(bakeItem);
+            }
+            else {
+                GameObject newBakeItem = Instantiate(invenCont.bakeIronPrf);
+                newBakeItem.transform.position = targetPosition;
+                newBakeItem.GetComponent<CountableItem>().setCurrStack(1);
+                newBakeItem.GetComponent<Rigidbody>().useGravity = true;
+                Destroy(bakeItem);
+            }
         }
     }
 }
