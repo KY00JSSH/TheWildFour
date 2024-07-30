@@ -96,6 +96,7 @@ public class PlayerItemPickControll : MonoBehaviour {
                     //겹쳐서 넣을수 있으면 집은 필드 아이템은 destroy
                     invenController.ItemAdd();
                     Destroy(item);
+                    player.GetComponent<Animator>().Play("PickingUp");
                 }
                 else {
                     if (invenController.canItemAdd()) {
@@ -109,6 +110,7 @@ public class PlayerItemPickControll : MonoBehaviour {
                         else {
                             item.SetActive(false);
                         }
+                        player.GetComponent<Animator>().Play("PickingUp");
                     }
                 }
             }

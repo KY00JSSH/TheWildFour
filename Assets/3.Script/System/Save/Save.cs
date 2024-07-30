@@ -150,12 +150,12 @@ public class Save : MonoBehaviour {
         WorkshopManager workshopManager = FindObjectOfType<WorkshopManager>();
         saveData.workshopLevel = workshopManager.WorkshopLevel;
 
-        //TODO: 여기부터 연동 되있는지 확인
         saveData.shelterPosition = shelterManager.GetComponent<ShelterCreate>().Building.transform.position;
         saveData.workshopPosition = workshopManager.GetComponent<WorkshopCreate>().Building.transform.position;
         saveData.shelterRotation = shelterManager.GetComponent<ShelterCreate>().Building.transform.rotation;
         saveData.workshopRotation = workshopManager.GetComponent<WorkshopCreate>().Building.transform.rotation;
 
+        //TODO: 여기부터 연동 되있는지 확인
         CampfireChestCreate[] campfireChestCreates = FindObjectsOfType<CampfireChestCreate>();
         foreach(var eachCreate in campfireChestCreates) {
             foreach(Transform eachChild in eachCreate.transform) {

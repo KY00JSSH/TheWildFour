@@ -77,7 +77,7 @@ public class Pause : MonoBehaviour {
         else {
 
             Time.timeScale = 1;
-            mainCanvas.gameObject.SetActive(true);
+            mainCanvas?.gameObject.SetActive(true);
             pauseChildSetActiveOff(transform.gameObject);
             gameObjects.Clear();
             gameObjects.Push(transform.gameObject);
@@ -109,6 +109,7 @@ public class Pause : MonoBehaviour {
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
 
+        Destroy(TimeManager.Instance.gameObject);
         Save.Instance.MakeSave();
     }
 

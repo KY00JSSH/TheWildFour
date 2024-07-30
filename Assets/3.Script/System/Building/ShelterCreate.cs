@@ -10,9 +10,16 @@ public class ShelterCreate : BuildingCreate {
         shelterManager = GetComponent<ShelterManager>();
     }
 
+    private void OnEnable() {
+        Awake();
+    }
+
     private void Start() {
         if(Save.Instance.saveData.shelterPosition != Vector3.zero) {
-
+            Building.gameObject.SetActive(true);
+            Building.transform.position = Save.Instance.saveData.shelterPosition;
+            Building.transform.rotation = Save.Instance.saveData.shelterRotation;
+            isExist = true; 
         }    
     }
 

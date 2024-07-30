@@ -10,6 +10,15 @@ public class WorkshopCreate : BuildingCreate {
         workshopManager = GetComponent<WorkshopManager>();
     }
 
+    private void Start() {
+        if (Save.Instance.saveData.workshopPosition != Vector3.zero) {
+            Building.gameObject.SetActive(true);
+            Building.transform.position = Save.Instance.saveData.workshopPosition;
+            Building.transform.rotation = Save.Instance.saveData.workshopRotation;
+            isExist = true;
+        }
+    }
+
     public override GameObject Building {
         get { return buildingPrefabs[workshopManager.WorkshopLevel - 1]; }
     }
