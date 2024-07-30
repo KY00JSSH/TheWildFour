@@ -68,17 +68,19 @@ public class RockController : MonoBehaviour
     }
 
     public void dropRockItem(float gatherPoint) {
-        InvenController invenController = GetComponent<InvenController>();
+        InvenController invenController = FindObjectOfType<InvenController>();
         int checkNum = invenController.canAddThisBox(2);
         if (checkNum != 99) {
             CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
             invenItem.addCurrStack((int)gatherPoint * 2);
+            invenController.updateInvenInvoke();
         }
         else {
             int existBox = invenController.isExistEmptyBox();
             Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
             GameObject itemObject = Instantiate(dropRockPrf, itemDropPosition, Quaternion.identity, rockSpawner.transform);
             itemObject.GetComponent<CountableItem>().setCurrStack((int)gatherPoint * 2);
+            invenController.updateInvenInvoke();
             if (existBox != 99) {
                 invenController.addIndexItem(existBox, itemObject);
                 itemObject.SetActive(false);
