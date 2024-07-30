@@ -62,11 +62,12 @@ public class PlayerAbility : MonoBehaviour {
         playerAddSpeed = 0;
         playerAddDashSpeed = 0;
         playerAddDecDashGage = 0;
-        playerAddInvenCount = 0;
+        playerAddInvenCount = playerInvenCount == 8 ? 8 : playerInvenCount;
     }
 
     private void Start() {
         cameraControl = FindObjectOfType<CameraControl>();
+        UpdateAblity();
     }
 
     private void Update() {
@@ -76,11 +77,13 @@ public class PlayerAbility : MonoBehaviour {
 
     public void UpdateAblity() {
         playerMove.isSkilled = 
-            shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : false;
+            shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : true;
+        //TODO: Release할 때 true : false로 수정
+        
         playerAddSpeed = shelterManager.GetSkill("속도").GetValue();
         playerMove.SetPlayerMoveSpeed(playerSpeed + playerAddSpeed);
-        cameraControl.maxFOV =
-            shelterManager.GetSkill("시야 반경").nowSkillLevel == 1 ? 110f : 100f;
+        cameraControl.maxZoom =
+            shelterManager.GetSkill("시야 반경").nowSkillLevel == 1 ? 15f : 13f;
         playerAddDecDashGage =
             shelterManager.GetSkill("전력 질주 시간").GetValue();
         playerMove.DecDashGage = playerDecDashGage - playerAddDecDashGage;
@@ -98,12 +101,12 @@ public class PlayerAbility : MonoBehaviour {
         playerAddCriticalAttack = shelterManager.GetSkill("치명타 공격력").GetValue();
         playerAddCriticalChance = shelterManager.GetSkill("치명타 공격 확률").GetValue();
 
-        playerAddInvenCount = shelterManager.GetSkill("강화 배낭").GetValue();
+        playerAddInvenCount = 8 + shelterManager.GetSkill("강화 배낭").GetValue();
         if(playerInvenCount != playerAddInvenCount) {
             InvenUIController invenUIController = FindObjectOfType<InvenUIController>();
-            for (int i = 0; i < playerInvenCount - playerAddInvenCount; i++)
+            for (int i = 0; i < playerAddInvenCount - playerInvenCount; i++)
                 invenUIController.InvenCountUpgrade();
-            playerInvenCount = playerAddInvenCount;
+            playerAddInvenCount = playerInvenCount;
         }
         playerAddGather = 
             shelterManager.GetSkill("도끼의 달인").GetValue() +

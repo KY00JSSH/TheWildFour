@@ -121,9 +121,6 @@ public class Menu_Controll : MonoBehaviour {
                 Debug.LogWarning("Button at index " + buttonIndex + " is not interactable.");
             }
         }
-        else {
-            Debug.LogWarning($"스크립트 혹은 인터페이스 없음");
-        }
 
     }
 
@@ -134,9 +131,6 @@ public class Menu_Controll : MonoBehaviour {
             IMenuButton buttonAction = buttons[i].GetComponent<IMenuButton>();
             if (buttonAction != null) {
                 buttonAction.I_ButtonOffClick();
-            }
-            else {
-                Debug.LogWarning($"스크립트 혹은 인터페이스 없음");
             }
         }
     }

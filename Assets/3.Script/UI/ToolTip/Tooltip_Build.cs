@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
 
     private Menu_Controll menuControll;
+    public BuildDetail currentBuild { get { return currentBuildDetail; } }
     private BuildDetail currentBuildDetail;
     private TooltipNum tooltipNum;
 

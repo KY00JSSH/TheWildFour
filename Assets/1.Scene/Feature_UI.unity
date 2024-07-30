@@ -12685,7 +12685,7 @@ GameObject:
   - component: {fileID: 375338060}
   - component: {fileID: 375338059}
   m_Layer: 0
-  m_Name: Robin
+  m_Name: Hun
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12704,7 +12704,7 @@ Transform:
   m_Children:
   - {fileID: 380463989}
   m_Father: {fileID: 1959628124}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &375338059
 CapsuleCollider:
@@ -13316,12 +13316,12 @@ Camera:
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
+  m_projectionMatrixMode: 2
   m_GateFitMode: 2
   m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
+  m_SensorSize: {x: 70, y: 51}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 27.82837
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -21947,7 +21947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 4.5, z: -1.75}
+  m_FollowOffset: {x: 0, y: 4.5, z: -3}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -29598,7 +29598,7 @@ GameObject:
   - component: {fileID: 844672133}
   - component: {fileID: 844672132}
   m_Layer: 0
-  m_Name: Anna
+  m_Name: Ju
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29617,7 +29617,7 @@ Transform:
   m_Children:
   - {fileID: 1079297287}
   m_Father: {fileID: 1959628124}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &844672132
 CapsuleCollider:
@@ -31446,7 +31446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 4.5, z: -1.75}
+  m_FollowOffset: {x: 0, y: 4.5, z: -3}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -39581,18 +39581,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1715626236}
         m_TargetAssemblyTypeName: CreateManager, Assembly-CSharp
         m_MethodName: CancelAllBuildings
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 14363923}
-        m_TargetAssemblyTypeName: Tooltip_Build, Assembly-CSharp
-        m_MethodName: OnWorkshopButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -50244,7 +50232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 4.5, z: -1.75}
+  m_FollowOffset: {x: 0, y: 4.5, z: -3}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -61535,7 +61523,7 @@ MonoBehaviour:
   m_SplineCurvature: 0.2
   m_Orbits:
   - m_Height: 4.5
-    m_Radius: 1.75
+    m_Radius: 3
   - m_Height: 2.5
     m_Radius: 3
   - m_Height: 0.4
@@ -67785,6 +67773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1959628124}
   - component: {fileID: 1959628123}
+  - component: {fileID: 1959628125}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -67950,13 +67939,25 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 300599665162339392}
+  - {fileID: 3454443360798231963}
   - {fileID: 375338058}
   - {fileID: 844672131}
-  - {fileID: 3454443360798231963}
-  - {fileID: 300599665162339392}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959628125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959628122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04cf8e180887b44f9155e9a97a6e451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959633749
 GameObject:
   m_ObjectHideFlags: 0
@@ -73668,7 +73669,7 @@ Transform:
   m_Children:
   - {fileID: 609969737}
   m_Father: {fileID: 1959628124}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &342338114723499299
 GameObject:
@@ -78816,7 +78817,7 @@ GameObject:
   - component: {fileID: 1107922209351540476}
   - component: {fileID: 1107922209351540475}
   m_Layer: 0
-  m_Name: Vivian
+  m_Name: Jin
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80127,7 +80128,7 @@ GameObject:
   - component: {fileID: 2646838139647530787}
   - component: {fileID: 2646838139647530786}
   m_Layer: 0
-  m_Name: Oliver
+  m_Name: Hyeon
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80381,7 +80382,7 @@ Transform:
   m_Children:
   - {fileID: 496295719}
   m_Father: {fileID: 1959628124}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3459566397756043249
 Transform:

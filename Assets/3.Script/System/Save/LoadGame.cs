@@ -26,7 +26,7 @@ public class LoadGame : MonoBehaviour {
                 Text[] texts = eachSaveData.GetComponentsInChildren<Text>();
                 texts[0].text = saveData.SaveName;
                 texts[1].text = saveData.isExtreme ? "어려움" : "보통";
-                texts[2].text = saveData.saveTime.ToString();
+                texts[2].text = saveData.saveTime;
                 texts[3].text = saveData.TotalDay.ToString();
                 eachSaveData.GetComponentsInChildren<Image>()[2].sprite =
                     playerIcons[(int)saveData.playerType];

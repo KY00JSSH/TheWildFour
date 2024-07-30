@@ -69,6 +69,8 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     }
 
     public virtual void BuildMode() {
+        Debug.LogWarning("BuildingCreate.cs + PlayerMove.isPlayerBuilding : " + PlayerMove.isPlayerBuilding + " / " + !tooltip_Build.isBuildAvailable);
+        Debug.LogWarning("BuildingCreate.cs + tooltip_Build : " + tooltip_Build.currentBuild.name);
         if (PlayerMove.isPlayerBuilding || !tooltip_Build.isBuildAvailable) return;
 
         if (!isExist) {
@@ -190,12 +192,12 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
         float rotationSpeed = 5f;
         float buildAreaRadius = 3f;
 
+        layerMask = 1 << LayerMask.NameToLayer("Ground");
         if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, Mathf.Infinity, layerMask)) {
             Vector3 pointTolook = raycastHit.point;
 
             float distanceToCenter = Vector3.Distance(pointTolook, playerTransform.position);
             if (distanceToCenter > buildAreaRadius) {
-                // ���� �Ÿ��� �ݰ溸�� ũ�ٸ� ���� ��迡�� �����մϴ�
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }

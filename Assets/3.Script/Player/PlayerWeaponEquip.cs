@@ -11,7 +11,13 @@ public class PlayerWeaponEquip : MonoBehaviour {
     private Quaternion rotationOffset;
 
     public static float CurrentEquipWeaponAttackPoint {
-        get { return FindObjectOfType<PlayerWeaponEquip>().CurrentEquipWeapon.GetComponent<WeaponItem>().weaponItemData.MinPowerPoint; }
+        get {
+            GameObject currentEquipWeapon = FindObjectOfType<PlayerWeaponEquip>().CurrentEquipWeapon;
+            if (currentEquipWeapon != null) {
+                return currentEquipWeapon.GetComponent<WeaponItem>().weaponItemData.MinPowerPoint;
+            }
+            return 0;
+        }
     }
     public bool isEquip { get { return CurrentEquipWeapon ? true : false; } }
 

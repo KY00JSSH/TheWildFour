@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Pause : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class Pause : MonoBehaviour {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
     private void Start() {
+        TogglePause(false);
         gameObjects.Push(transform.gameObject);
         // 버튼 리스너 추가
         button.onClick.AddListener(() => OnButtonClick(button));
@@ -30,13 +32,7 @@ public class Pause : MonoBehaviour {
 
     private void Update() {
         if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen && !menuControll.isMenuButtonOpen) {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                Escape();
-                /*
-                isPause = !isPause;
-                TogglePause(isPause);
-                */
-            }
+            if (Input.GetKeyDown(KeyCode.Escape)) Escape();
         }
     }
 
@@ -75,7 +71,7 @@ public class Pause : MonoBehaviour {
         else {
 
             Time.timeScale = 1;
-            mainCanvas.gameObject.SetActive(true);
+            mainCanvas?.gameObject.SetActive(true);
             pauseChildSetActiveOff(transform.gameObject);
             gameObjects.Clear();
             gameObjects.Push(transform.gameObject);
@@ -106,7 +102,9 @@ public class Pause : MonoBehaviour {
     public void SaveEnd() {
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
-        //TODO: 저장...
+
+        Destroy(TimeManager.Instance.gameObject);
+        Save.Instance.MakeSave();
     }
 
     // 계속
@@ -122,9 +120,7 @@ public class Pause : MonoBehaviour {
 
     // 뒤로가기 + 취소하기
     public void Escape() {
-        Debug.Log(gameObjects.Count);
         GameObject obj = gameObjects.Pop();
-        Debug.Log(obj.name);
         pauseChildSetActiveOff(obj);
 
         // 본인만 남은거아니면 상위객체 재활성화
@@ -142,9 +138,11 @@ public class Pause : MonoBehaviour {
     // 버튼 클릭 시 호출되는 메소드
     private void OnButtonClick(Button clickedButton) {
         gameObjects.Push(clickedButton.gameObject);
-        Debug.Log($"Button {clickedButton.name} added to stack. Stack size: {gameObjects.Count}");
     }
 
+    private void OnDestroy() {
+        TogglePause(false);
+    }
 
 }
 /*
