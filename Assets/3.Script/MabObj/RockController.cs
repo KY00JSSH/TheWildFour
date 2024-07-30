@@ -45,7 +45,7 @@ public class RockController : MonoBehaviour {
         if (health <= 0) {
             health = 0;
             enable = false;
-            rockSpawner.UpdateRockData(objectNumber, enable, health, type == 1 ? true : false)
+            rockSpawner.UpdateRockData(objectNumber, enable, health, type == 1 ? true : false);
             changeObjectModel();
         }
     }
