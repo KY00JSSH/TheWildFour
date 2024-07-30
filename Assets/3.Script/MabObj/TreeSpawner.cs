@@ -92,14 +92,21 @@ public class TreeSpawner : MonoBehaviour {
     }
 
     public void UpdateTreeData(int objectNumber, bool enable, float health) {
-        //TODO: 저장시점이 현재는 데미지 받을때마다 여서 추후 저장타이밍 수정하기
-
         var tree = bigObjectList.bigTreeObjs.FirstOrDefault(t => t.objectNumber == objectNumber);
         if (tree != null) {
             tree.enable = enable;
             tree.health = health;
-            string updatedJson = JsonUtility.ToJson(bigObjectList, true);
-            File.WriteAllText(Path.Combine(Application.dataPath, "Resources", bigTreeJsonFileName + ".json"), updatedJson);
         }
+    }
+
+    public void SaveTreeData() {
+        string bigTreeDataAsJson = JsonUtility.ToJson(bigObjectList, true);
+        string smallTreeDataAsJson = JsonUtility.ToJson(smallObjectList, true);
+
+        string bigTreeFilePath = Path.Combine(Application.persistentDataPath, "bigTreeData.json");
+        string smallTreeFilePath = Path.Combine(Application.persistentDataPath, "smallTreeData.json");
+
+        File.WriteAllText(bigTreeFilePath, bigTreeDataAsJson);
+        File.WriteAllText(smallTreeFilePath, smallTreeDataAsJson);
     }
 }

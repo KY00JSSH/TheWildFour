@@ -71,7 +71,7 @@ public class Pause : MonoBehaviour {
         else {
 
             Time.timeScale = 1;
-            mainCanvas?.gameObject.SetActive(true);
+            mainCanvas.gameObject.SetActive(true);
             pauseChildSetActiveOff(transform.gameObject);
             gameObjects.Clear();
             gameObjects.Push(transform.gameObject);
@@ -100,6 +100,8 @@ public class Pause : MonoBehaviour {
 
     // 저장 및 종료 재확인
     public void SaveEnd() {
+        FindObjectOfType<RockSpawner>().SaveRockData();
+        FindObjectOfType<TreeSpawner>().SaveTreeData();
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
 
@@ -124,7 +126,7 @@ public class Pause : MonoBehaviour {
         pauseChildSetActiveOff(obj);
 
         // 본인만 남은거아니면 상위객체 재활성화
-        if (gameObjects.Count != 0) {
+        if (gameObjects.Count != 1) {
             pauseSilbingSetActive(obj);
         }
         else {

@@ -13,13 +13,9 @@ public class CampfirePrefabUI : BuildPrefabUI {
     protected override void Update() {
         if (buildingObj != null) {
             if (buildingObj.activeSelf) {
-                BuildImg.SetActive(true);
                 isValid = campfireCreate.isValidBuild;
                 buildAnimator = buildingObj.GetComponent<Animator>();
                 base.Update();
-            }
-            else {
-                BuildImg.SetActive(false);
             }
         }
     }

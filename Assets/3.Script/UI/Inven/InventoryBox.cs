@@ -111,12 +111,33 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
                         Ray ray = Camera.main.ScreenPointToRay(eventData.position);
                         RaycastHit hit;
                         if (Physics.Raycast(ray, out hit)) {
-                            FireObject dropZone = hit.transform.GetComponent<FireObject>();
-                            if (dropZone != null) {
-                                if (invenControll.getIndexItem(key).GetComponent<FoodItem>() != null) {
+                            if (hit.transform.GetComponent<Furnace>() != null) {
+                                Furnace dropZone = hit.transform.GetComponent<Furnace>();
+                                if (invenControll.getIndexItem(key).GetComponent<Item>().itemData.Key == 2 &&
+                                    invenControll.getIndexItem(key).GetComponent<CountableItem>().CurrStackCount >= 30) {
+                                    if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
+                                        dropZone.BakeItem(key, true);
+                                    }
+                                }
+                                else if (invenControll.getIndexItem(key).GetComponent<FoodItem>() != null) {
                                     if (invenControll.getIndexItem(key).GetComponent<FoodItem>().foodItemData.CanBake) {
                                         if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
-                                            dropZone.BakeItem(key);
+                                            dropZone.BakeItem(key, true);
+                                        }
+                                    }
+                                }
+                            }
+                            else if (hit.transform.GetComponent<Campfire>() != null) {
+                                Campfire dropZone = hit.transform.GetComponent<Campfire>();
+                                if (invenControll.getIndexItem(key).GetComponent<Item>().itemData.Key == 2) {
+                                    if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
+                                        dropZone.BakeItem(key, false);
+                                    }
+                                }
+                                else if (invenControll.getIndexItem(key).GetComponent<FoodItem>() != null) {
+                                    if (invenControll.getIndexItem(key).GetComponent<FoodItem>().foodItemData.CanBake) {
+                                        if (dropZone != null && !dropZone.IsBake && dropZone.IsBurn) {
+                                            dropZone.BakeItem(key, false);
                                         }
                                     }
                                 }

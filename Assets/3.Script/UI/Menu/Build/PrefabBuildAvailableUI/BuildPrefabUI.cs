@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class BuildPrefabUI : MonoBehaviour {
     /*
@@ -30,6 +31,8 @@ public class BuildPrefabUI : MonoBehaviour {
 
     // 설치될 오브젝트
     public GameObject buildingObj;
+    // 버튼 바뀔때 저장될 오브젝트
+    protected GameObject buildingObjPast;
     public bool isBuiltStart = false;
 
     private Animator playerAnimator;
@@ -55,9 +58,11 @@ public class BuildPrefabUI : MonoBehaviour {
 
     protected virtual void Update() {
         if (isBuiltStart) {
+            buildingObjPast = buildingObj;
             if (isValid) {
                 buildImgs[0].sprite = BuildAvailable[1];
                 if (Input.GetMouseButtonDown(0)) {
+
                     isBuiltStart = false;
                     BuildImg.SetActive(false);
 
@@ -75,7 +80,7 @@ public class BuildPrefabUI : MonoBehaviour {
         //TODO: 애니메이션의 타이밍을 알 수 없음 -> 애니메이션 시작 끝 알아야할것같음!
         if (isValid) if (!BuildImg.activeSelf) 
                 if(!isBuildAniComplete) BuildDustPrefabEffectStart();
-        
+                
     }
 
     protected virtual void OnDisable() {
@@ -206,6 +211,7 @@ public class BuildPrefabUI : MonoBehaviour {
     }
 
     public virtual void BuildAvailableMode() {
+        if (buildingObjPast == null || buildingObjPast != buildingObj) BuildImg.SetActive(false);
         if (!tooltip_Build.isBuildAvailable || buildingCreate.isExist ||
             playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Create")) return;
 

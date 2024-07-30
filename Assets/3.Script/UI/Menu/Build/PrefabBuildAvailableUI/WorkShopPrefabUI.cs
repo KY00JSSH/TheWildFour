@@ -14,13 +14,9 @@ public class WorkShopPrefabUI : BuildPrefabUI {
     protected override void Update() {
         if(buildingObj != null) {
             if (buildingObj.activeSelf) {
-                BuildImg.SetActive(true);
                 isValid = workshopCreate.isValidBuild;
                 buildAnimator = buildingObj.GetComponentInParent<Animator>();
                 base.Update();
-            }
-            else {
-                BuildImg.SetActive(false);
             }
         }
     }
