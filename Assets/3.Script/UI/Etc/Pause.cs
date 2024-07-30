@@ -71,7 +71,7 @@ public class Pause : MonoBehaviour {
         else {
 
             Time.timeScale = 1;
-            mainCanvas?.gameObject.SetActive(true);
+            mainCanvas.gameObject.SetActive(true);
             pauseChildSetActiveOff(transform.gameObject);
             gameObjects.Clear();
             gameObjects.Push(transform.gameObject);
@@ -124,7 +124,7 @@ public class Pause : MonoBehaviour {
         pauseChildSetActiveOff(obj);
 
         // 본인만 남은거아니면 상위객체 재활성화
-        if (gameObjects.Count != 0) {
+        if (gameObjects.Count != 1) {
             pauseSilbingSetActive(obj);
         }
         else {
