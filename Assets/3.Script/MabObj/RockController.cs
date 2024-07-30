@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RockController : MonoBehaviour
-{
+public class RockController : MonoBehaviour {
     private int objectNumber;
     private Vector3 position;
     private bool enable;
@@ -11,21 +10,19 @@ public class RockController : MonoBehaviour
     private int type;
 
     [SerializeField] private GameObject thisRockObject;     //원래 바위
-    [SerializeField]  private GameObject brokenObject;      //부서지고 바위
+    [SerializeField] private GameObject brokenObject;      //부서지고 바위
     [SerializeField] private GameObject dropRockPrf;        //때리면 드랍할 바위 prefab
     private BoxCollider coll;
     private RockSpawner rockSpawner;
 
     public bool isBroken = false;
 
-    private void Start()
-    {
+    private void Start() {
         coll = GetComponent<BoxCollider>();
         brokenObject.SetActive(false);
     }
 
-    public void InitializeObjData(RockData data)
-    {
+    public void InitializeObjData(RockData data) {
         objectNumber = data.objectNumber;
         position = new Vector3(data.position.x, data.position.y, data.position.z);
         enable = data.enable;
@@ -36,30 +33,25 @@ public class RockController : MonoBehaviour
         gameObject.SetActive(enable);
     }
 
-    private void Update()
-    {
-        if (isBroken)
-        {
+    private void Update() {
+        if (isBroken) {
             getDamage(20.5f);
             isBroken = false;
         }
     }
 
-    public void getDamage(float damage)
-    {
+    public void getDamage(float damage) {
         health -= damage;
-        if (health <= 0)
-        {
+        if (health <= 0) {
             health = 0;
             enable = false;
+            rockSpawner.UpdateRockData(objectNumber, enable, health, type == 1 ? true : false)
             changeObjectModel();
         }
     }
 
-    private void changeObjectModel()
-    {
-        if (type == 1)
-        {
+    private void changeObjectModel() {
+        if (type == 1) {
             brokenObject.transform.position = new Vector3(brokenObject.transform.position.x, 0.3f, brokenObject.transform.position.z);
         }
         brokenObject.SetActive(true);

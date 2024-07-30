@@ -37,7 +37,7 @@ public class TreeBigController : MonoBehaviour {
             health = 0;
             enable = false;
         }
-       // treeSpawner.UpdateTreeData(objectNumber, enable, health);
+        treeSpawner.UpdateTreeData(objectNumber, enable, health);
     }
 
     private void Update() {
