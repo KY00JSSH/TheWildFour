@@ -176,6 +176,8 @@ public class Save : MonoBehaviour {
         saveData.SurviveDay = 0;
         saveData.TotalDay = (int)((saveData.WorldTime - 90f) / 360f);
 
+        saveData.playerType = PlayerType.Ju;
+
         saveData.playerTransform = Vector3.zero;
 
         saveData.playerAttack = 2f;
