@@ -40,8 +40,11 @@ public class RockSpawner : MonoBehaviour {
             LoadMidRockDataFromResources();
         }
         else {
-            string bigRockFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, bigRockDirectory, $"bigRockData_{Save.Instance.saveData.saveTime}.json"));
-            string midRockFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, midRockDirectory, $"midRockData_{Save.Instance.saveData.saveTime}.json"));
+            string time = Save.Instance.saveData.saveTime;
+            string formattedSaveTime = time.Replace(':', '-');
+
+            string bigRockFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, bigRockDirectory, $"bigRockData_{formattedSaveTime}.json"));
+            string midRockFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, midRockDirectory, $"midRockData_{formattedSaveTime}.json"));
 
             LoadBigRockData(bigRockFilePath);
             LoadMidRockData(midRockFilePath);
@@ -121,6 +124,9 @@ public class RockSpawner : MonoBehaviour {
     }
 
     public void SaveRockData(string saveTime) {
+
+        string formattedSaveTime = saveTime.Replace(':', '-');
+
         string bigDataAsJson = JsonUtility.ToJson(bigRockList, true);
         string midDataAsJson = JsonUtility.ToJson(midRockList, true);
 
@@ -135,8 +141,8 @@ public class RockSpawner : MonoBehaviour {
             Directory.CreateDirectory(midRockDirectoryPath);
         }
 
-        string bigRockFilePath =Path.Combine(bigRockDirectoryPath, $"bigRockData_{saveTime}.json");
-        string midRockFilePath =Path.Combine(midRockDirectoryPath, $"midRockData_{saveTime}.json");
+        string bigRockFilePath = NormalizePath(Path.Combine(bigRockDirectoryPath, $"bigRockData_{formattedSaveTime}.json"));
+        string midRockFilePath = NormalizePath(Path.Combine(midRockDirectoryPath, $"midRockData_{formattedSaveTime}.json"));
 
         File.WriteAllText(bigRockFilePath, bigDataAsJson);
         File.WriteAllText(midRockFilePath, midDataAsJson);
