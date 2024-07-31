@@ -123,6 +123,9 @@ public class Save : MonoBehaviour {
         saveDataList.Data.Add(saveData);
         if (saveDataList.Data.Count > 6) saveDataList.Data.RemoveAt(0);
 
+        FindObjectOfType<RockSpawner>().SaveRockData(saveData.saveTime);
+        FindObjectOfType<TreeSpawner>().SaveTreeData(saveData.saveTime);
+
         File.WriteAllText(playerSaveJsonFilePath, JsonUtility.ToJson(saveDataList));
     }
 
