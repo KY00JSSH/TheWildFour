@@ -86,6 +86,20 @@ public class AudioManager : MonoBehaviour
         }        
     }
 
+    public void StopSFX(Sfx sfx) // 특정 SFX 종료
+    {
+        //사용시, AudioManager.instance.StopSFX(AudioManager.Sfx.CampfireIdle); 사용
+
+        for (int i = 0; i < sfxPlayer.Length; i++)
+        {
+            if (sfxPlayer[i].isPlaying && sfxPlayer[i].clip == sfxClip[(int)sfx])
+            {
+                sfxPlayer[i].Stop();
+                break;
+            }
+        }
+    }
+
     public void PlayBGM(Bgm bgm, int channel)
     {
         //사용시, AudioManager.instance.PlayBGM(AudioManager.Bgm.ClipName); 사용
