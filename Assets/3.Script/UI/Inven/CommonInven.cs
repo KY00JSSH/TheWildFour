@@ -233,6 +233,7 @@ public class CommonInven : MonoBehaviour {
     //특정 인덱스에 아이템 추가
     public void addIndexItem(int index, GameObject newItem) {
         inventory[index] = newItem;
+        ItemManager.Register(itemObject, Location.Inventory, index);
         updateInvenInvoke();
     }
 

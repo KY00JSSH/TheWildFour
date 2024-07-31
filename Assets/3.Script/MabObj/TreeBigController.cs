@@ -58,6 +58,7 @@ public class TreeBigController : MonoBehaviour {
     }
 
     private void disableTree() {
+        dropDestroyTree();
         StartCoroutine(treeDisableCo());
     }
 
@@ -82,6 +83,17 @@ public class TreeBigController : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    private void dropDestroyTree() {
+        int randomCount = Random.Range(1, 4);
+        for (int i = 0; i < randomCount; i++) {
+            Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
+            GameObject itemObject = Instantiate(dropTreePrf, itemDropPosition, Quaternion.identity, treeSpawner.transform);
+            int randomStack = Random.Range(1, 9);
+            itemObject.GetComponent<CountableItem>().setCurrStack(randomStack);
+            ItemManager.Register(itemObject, Location.Normal);
+        }
+    }
+
     public void dropTreeItem(float gatherPoint) {
         InvenController invenController = FindObjectOfType<InvenController>();
         int checkNum = invenController.canAddThisBox(1);
@@ -102,6 +114,7 @@ public class TreeBigController : MonoBehaviour {
             }
             else {
                 itemObject.SetActive(true);
+                ItemManager.Register(itemObject, Location.Normal);
             }
         }
     }
