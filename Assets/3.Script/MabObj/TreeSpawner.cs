@@ -109,3 +109,4 @@ public class TreeSpawner : MonoBehaviour {
         File.WriteAllText(bigTreeFilePath, bigTreeDataAsJson);
         File.WriteAllText(smallTreeFilePath, smallTreeDataAsJson);
     }
+}
