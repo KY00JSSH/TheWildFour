@@ -34,13 +34,6 @@ public class RockController : MonoBehaviour {
         gameObject.SetActive(enable);
     }
 
-    private void Update() {
-        if (isBroken) {
-            getDamage(20.5f);
-            isBroken = false;
-        }
-    }
-
     public void getDamage(float damage) {
         health -= damage;
         if (health <= 0) {
@@ -57,7 +50,7 @@ public class RockController : MonoBehaviour {
 
     private void changeObjectModel() {
         if (type == 1) {
-            brokenObject.transform.position = new Vector3(brokenObject.transform.position.x, 0.3f, brokenObject.transform.position.z);
+            brokenObject.transform.position = new Vector3(brokenObject.transform.position.x, brokenObject.transform.position.y-1f, brokenObject.transform.position.z);
         }
         brokenObject.SetActive(true);
         thisRockObject.SetActive(false);

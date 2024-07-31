@@ -97,6 +97,7 @@ public class FireObject : MonoBehaviour, IFireLight {
             else {
                 if(countItem.itemData.Key == 2){
                     if(countItem.CurrStackCount >= 30) {
+                        bakeItem.SetActive(true);
                         countItem.setCurrStack(30);
                         inven.removeItemCount(2, 30);
                     }
@@ -105,7 +106,7 @@ public class FireObject : MonoBehaviour, IFireLight {
         }
         Rigidbody bakeRigidbody = bakeItem.GetComponent<Rigidbody>();
         bakeRigidbody.useGravity = false;
-        Vector3 targetPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1f, gameObject.transform.position.z);
+        Vector3 targetPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.7f, gameObject.transform.position.z);
 
         StartCoroutine(BakingCo(bakeItem, targetPosition, 3f, bakeItem));
     }
@@ -128,15 +129,13 @@ public class FireObject : MonoBehaviour, IFireLight {
                 GameObject newBakeItem = Instantiate(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf);
                 newBakeItem.transform.position = targetPosition;
                 ItemManager.Register(newBakeItem, Location.Normal);
-                newBakeItem.GetComponent<Rigidbody>().useGravity = true;
                 Destroy(bakeItem);
             }
             else {
                 GameObject newBakeItem = Instantiate(invenCont.bakeIronPrf);
                 newBakeItem.transform.position = targetPosition;
-                ItemManager.Register(newBakeItem, Location.Normal);
                 newBakeItem.GetComponent<CountableItem>().setCurrStack(1);
-                newBakeItem.GetComponent<Rigidbody>().useGravity = true;
+                ItemManager.Register(newBakeItem, Location.Normal);
                 Destroy(bakeItem);
             }
         }

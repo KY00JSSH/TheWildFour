@@ -56,12 +56,12 @@ public class InvenDrop : MonoBehaviour {
                             if (itemComponent.GetComponent<FoodItem>() != null) {
                                 itemComponent.transform.position = itemDropPosition;
                                 itemComponent.GetComponent<FoodItem>().setVisible();
-                                itemComponent.GetComponent<Rigidbody>().useGravity = true;
-                                itemComponent.GetComponent<Rigidbody>().isKinematic = false;
+                                ItemManager.Register(itemComponent, Location.Normal);
                             }
                             else {
                                 itemComponent.transform.position = itemDropPosition;
                                 itemComponent.SetActive(true);
+                                ItemManager.Register(itemComponent, Location.Normal);
                             }
                         }
                     }
@@ -93,11 +93,11 @@ public class InvenDrop : MonoBehaviour {
                 itemComponent.transform.position = itemDropPosition;
                 if (itemComponent.GetComponent<FoodItem>() != null) {
                     itemComponent.GetComponent<FoodItem>().setVisible();
-                    itemComponent.GetComponent<Rigidbody>().useGravity = true;
-                    itemComponent.GetComponent<Rigidbody>().isKinematic = false;
+                    ItemManager.Register(itemComponent, Location.Normal);
                 }
                 else {
                     itemComponent.SetActive(true);
+                    ItemManager.Register(itemComponent, Location.Normal);
                 }
 
                 invenController.removeItem(selectBoxKey);
@@ -121,10 +121,12 @@ public class InvenDrop : MonoBehaviour {
                 itemComponent.transform.position = itemDropPosition;
                 if (itemComponent.GetComponent<FoodItem>() != null) {
                     itemComponent.GetComponent<FoodItem>().setVisible();
+                    ItemManager.Register(itemComponent, Location.Normal);
 
                 }
                 else {
                     itemComponent.SetActive(true);
+                    ItemManager.Register(itemComponent, Location.Normal);
                 }
 
                 invenController.removeItem(i);
