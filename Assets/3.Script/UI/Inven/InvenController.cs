@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class InvenController : CommonInven {
@@ -7,6 +9,9 @@ public class InvenController : CommonInven {
     private MenuWeapon menuWeapon;
     private PlayerStatus playerStatus;
     private PlayerItemUseControll playerItemUse;
+
+    [SerializeField]
+    public GameObject bakeIronPrf;
 
     private void Awake() {
         invenUi = FindObjectOfType<InvenUIController>();
@@ -19,10 +24,14 @@ public class InvenController : CommonInven {
         initInven();
     }
 
+    public void InitInven(List<GameObject> initInven) {
+        inventory = initInven;
+    }
+
     private void initInven() {
-        for (int i = 0; i < invenUi.CurrInvenCount; i++) {
-            inventory.Add(null);
-        }
+        //for (int i = 0; i < invenUi.CurrInvenCount; i++) {
+        //    inventory.Add(null);
+        //}
     }
 
     //장비창과 인벤창 아이템 스위칭

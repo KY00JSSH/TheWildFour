@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Pause : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class Pause : MonoBehaviour {
         menuControll = FindObjectOfType<Menu_Controll>();
     }
     private void Start() {
+        TogglePause(false);
         gameObjects.Push(transform.gameObject);
         // 버튼 리스너 추가
         button.onClick.AddListener(() => OnButtonClick(button));
@@ -30,10 +32,7 @@ public class Pause : MonoBehaviour {
 
     private void Update() {
         if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen && !menuControll.isMenuButtonOpen) {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                isPause = !isPause;
-                TogglePause(isPause);
-            }
+            if (Input.GetKeyDown(KeyCode.Escape)) if(mainCanvas.gameObject.activeSelf) Escape();
         }
     }
 
@@ -101,9 +100,14 @@ public class Pause : MonoBehaviour {
 
     // 저장 및 종료 재확인
     public void SaveEnd() {
+        FindObjectOfType<RockSpawner>().SaveRockData();
+        FindObjectOfType<TreeSpawner>().SaveTreeData();
+
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
-        //TODO: 저장...
+
+        Save.Instance.MakeSave();
+        Destroy(TimeManager.Instance.gameObject);
     }
 
     // 계속
@@ -119,13 +123,11 @@ public class Pause : MonoBehaviour {
 
     // 뒤로가기 + 취소하기
     public void Escape() {
-        Debug.Log(gameObjects.Count);
         GameObject obj = gameObjects.Pop();
-        Debug.Log(obj.name);
         pauseChildSetActiveOff(obj);
 
         // 본인만 남은거아니면 상위객체 재활성화
-        if (gameObjects.Count != 0) {
+        if (gameObjects.Count != 1) {
             pauseSilbingSetActive(obj);
         }
         else {
@@ -139,9 +141,14 @@ public class Pause : MonoBehaviour {
     // 버튼 클릭 시 호출되는 메소드
     private void OnButtonClick(Button clickedButton) {
         gameObjects.Push(clickedButton.gameObject);
-        Debug.Log($"Button {clickedButton.name} added to stack. Stack size: {gameObjects.Count}");
     }
 
+    private void OnDestroy() {
+
+        Color color = pauseImg.color;
+        color.a = 0;
+        pauseImg.color = color;
+    }
 
 }
 /*

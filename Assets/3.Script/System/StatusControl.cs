@@ -5,23 +5,23 @@ using UnityEngine;
 
 /*
  *      [ READ ]
- *      »óÅÂ ºÎ¿©ÇÏ´Â ¿ÀºêÁ§Æ® ½ºÅ©¸³Æ®¿¡¼­ ÇÃ·¹ÀÌ¾î¿¡°Ô »óÅÂ ºÎ¿©
+ *      ìƒíƒœ ë¶€ì—¬í•˜ëŠ” ì˜¤ë¸Œì íŠ¸ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ í”Œë ˆì´ì–´ì—ê²Œ ìƒíƒœ ë¶€ì—¬
  *      StatusControl.Instance.GiveStatus(Status status, PlayerStatus player)
  *      
- *      Unity ÀÎ½ºÆåÅÍ¿¡¼­ StatusControl ½ºÅ©¸³Æ®¿¡ ÀÖ´Â
- *      °¢ StatusÀÇ Total Time, Tick Time (1ÃÊ´ç °¨¼ÒµÇ´Â °ÔÀÌÁö) ¼³Á¤ ÇÊ¿ä
+ *      Unity ì¸ìŠ¤í™í„°ì—ì„œ StatusControl ìŠ¤í¬ë¦½íŠ¸ì— ìˆëŠ”
+ *      ê° Statusì˜ Total Time, Tick Time (1ì´ˆë‹¹ ê°ì†Œë˜ëŠ” ê²Œì´ì§€) ì„¤ì • í•„ìš”
  *      
  */
 
 public enum Status {
-    Heat,           // ¿­±â
-    Full,           // Æ÷È­ (HP, Hunger È¸º¹)
-    Satiety,        // Æ÷¸¸ (ÀÌµ¿¼ÓµµÀúÇÏ)
-    Poison,         // Áßµ¶
-    Bleeding,       // ÃâÇ÷
-    Blizzard,       // ´«º¸¶ó
-    Indigestion,    // ¼ÒÈ­ºÒ·®
-    Heal            // Ä¡À¯ (Hunger È¸º¹)
+    Heat,           // ì—´ê¸°
+    Full,           // í¬í™” (HP, Hunger íšŒë³µ)
+    Satiety,        // í¬ë§Œ (ì´ë™ì†ë„ì €í•˜)
+    Poison,         // ì¤‘ë…
+    Bleeding,       // ì¶œí˜ˆ
+    Blizzard,       // ëˆˆë³´ë¼
+    Indigestion,    // ì†Œí™”ë¶ˆëŸ‰
+    Heal            // ì¹˜ìœ  (Hunger íšŒë³µ)
 }
 
 [System.Serializable]
@@ -53,11 +53,15 @@ public class StatusControl : MonoBehaviour {
         }
     }
 
+    private void Update() {
+        return;
+    }
+
     [SerializeField]
     private StatusData[] statusList =
         new StatusData[Enum.GetValues(typeof(Status)).Length];
 
-    // UI Á¦°ø¿ë return ¸Ş¼­µå
+    // UI ì œê³µìš© return ë©”ì„œë“œ
     public List<StatusData> ActivatedStatus = new List<StatusData>();
     public float GetTotalTime(Status status) {
         return statusList[(int)status].totalTime;

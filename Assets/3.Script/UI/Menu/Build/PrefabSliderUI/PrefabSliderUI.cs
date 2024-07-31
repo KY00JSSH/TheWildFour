@@ -7,32 +7,30 @@ public class PrefabSliderUI : MonoBehaviour {
     private Transform playerTransform;
 
     [Space((int)2)]
-    [Header("Slider Prefab")] // ½½¶óÀÌ´õ ÇÁ¸®Æé
+    [Header("Slider Prefab")] // ìŠ¬ë¼ì´ë” í”„ë¦¬í©
     [SerializeField] protected GameObject SliderPrefab;
 
     protected GameObject parent;
     protected Canvas canvas;
 
-    // ½½¶óÀÌ´õ º¹Á¦¿ë ¿ÀºêÁ§Æ® ÇÒ´ç
+    // ìŠ¬ë¼ì´ë” ë³µì œìš© ì˜¤ë¸Œì íŠ¸ í• ë‹¹
     protected GameObject sliderObj;
     protected Coroutine fadeCoroutine;
     protected Slider slider;
 
     protected Renderer objectRenderer;
 
-    // ½½¶óÀÌ´õ ÀüÃ¼ °ª°ú ÇöÀç °ªÀº ÇÏÀ§ ½ºÅ©¸³Æ®¿¡¼­ ÇÒ´ç ÇÊ¿äÇÔ
+    // ìŠ¬ë¼ì´ë” ì „ì²´ ê°’ê³¼ í˜„ì¬ ê°’ì€ í•˜ìœ„ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ í• ë‹¹ í•„ìš”í•¨
     protected float totalvalue;
     protected float currentvalue;
 
-    // ½½¶óÀÌ´õ º¸Á¤°ª
+    // ìŠ¬ë¼ì´ë” ë³´ì •ê°’
     protected float widthDelta;
     protected float heightDelta;
 
     protected virtual void Awake() {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         canvas = FindObjectOfType<Canvas>();
-
-        // parent ´Â °¢ÀÚ ½ºÅ©¸³Æ®¿¡¼­ Ã£¾Æ¾ßÇÔ
     }
 
 
@@ -44,12 +42,13 @@ public class PrefabSliderUI : MonoBehaviour {
         }
     }
 
-    // ½½¶óÀÌ´õ »ı¼º
+    // ìŠ¬ë¼ì´ë” ìƒì„±
     public void SliderInit() {
         if (parent != null) {
             sliderObj = Instantiate(SliderPrefab, parent.transform);
             sliderObj.name = SliderPrefab.name;
-            sliderObj.SetActive(true);
+            if (transform.gameObject.activeSelf) sliderObj.SetActive(true);
+            else sliderObj.SetActive(false);
         }
     }
 
@@ -97,17 +96,17 @@ public class PrefabSliderUI : MonoBehaviour {
             SliderAlphaInit();
             if (fadeCoroutine != null) {
                 StopCoroutine(fadeCoroutine);
-                fadeCoroutine = null; // ÄÚ·çÆ¾ ÃßÀûÀ» À§ÇØ null·Î ¼³Á¤
+                fadeCoroutine = null; // ì½”ë£¨í‹´ ì¶”ì ì„ ìœ„í•´ nullë¡œ ì„¤ì •
             }
         }
     }
 
     protected virtual IEnumerator SliderDisappear_co() {
-        Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill ÀÌ¹ÌÁö °¡Á®¿À±â
+        Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill ì´ë¯¸ì§€ ê°€ì ¸ì˜¤ê¸°
         Color newColor = fillImage.color;
 
-        while (newColor.a > 0.5f) {  // ¾ËÆÄ°ªÀÌ 0º¸´Ù Å¬ µ¿¾È ¹İº¹
-            newColor.a -= 0.01f;  // ¾ËÆÄ°ªÀ» °¨¼Ò
+        while (newColor.a > 0.5f) {  // ì•ŒíŒŒê°’ì´ 0ë³´ë‹¤ í´ ë™ì•ˆ ë°˜ë³µ
+            newColor.a -= 0.01f;  // ì•ŒíŒŒê°’ì„ ê°ì†Œ
             fillImage.color = newColor;
             yield return null;
         }
@@ -116,7 +115,7 @@ public class PrefabSliderUI : MonoBehaviour {
 
     protected virtual void SliderAlphaInit() {
         slider.gameObject.SetActive(true);
-        Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill ÀÌ¹ÌÁö °¡Á®¿À±â
+        Image fillImage = slider.fillRect.GetComponent<Image>();  // Fill ì´ë¯¸ì§€ ê°€ì ¸ì˜¤ê¸°
         Color newColor = fillImage.color;
         newColor.a = 1;
         fillImage.color = newColor;

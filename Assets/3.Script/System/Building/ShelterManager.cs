@@ -35,24 +35,30 @@ public class ShelterManager : MonoBehaviour {
         invenCont = FindObjectOfType<InvenController>();
 
         //TODO: SAVE 구현 시 JSON에서 받아오기
-        ShelterLevel = 1;
+        ShelterLevel = Save.Instance.saveData.shelterLevel;
         MaxShelterLevel = 5;
 
-        MoveLevel = 0;
-        AttackLevel = 0;
-        GatherLevel = 0;
-        
-        MovePoint = 0;
-        AttackPoint = 0;
-        GatherPoint = 0;
+        MoveLevel = Save.Instance.saveData.shelterMoveLevel;
+        AttackLevel = Save.Instance.saveData.shelterAttackLevel;
+        GatherLevel = Save.Instance.saveData.shelterGatherLevel;
+
+        MovePoint = Save.Instance.saveData.shelterMovePoint;
+        AttackPoint = Save.Instance.saveData.shelterAttackPoint;
+        GatherPoint = Save.Instance.saveData.shelterGatherPoint;
 
         MoveTotalExp = 120f;
         AttackTotalExp = 100f;
         GatherTotalExp = 300f;
 
-        MoveCurrentExp = 0;
-        AttackCurrentExp = 0;
-        GatherCurrentExp = 0;
+        MoveCurrentExp = Save.Instance.saveData.shelterMoveCurrentExp;
+        AttackCurrentExp = Save.Instance.saveData.shelterAttackCurrentExp;
+        GatherCurrentExp = Save.Instance.saveData.shelterGatherCurrentExp;
+
+        for (int i = 0; i < skillMove.Length; i++) {
+            skillMove[i].nowSkillLevel = Save.Instance.saveData.skillMoveLevel[i];
+            skillAttack[i].nowSkillLevel = Save.Instance.saveData.skillAttackLevel[i];
+            skillGather[i].nowSkillLevel = Save.Instance.saveData.skillGatherLevel[i];
+        }
     }
 
     public void AddMoveExp(float exp) {

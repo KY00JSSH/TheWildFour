@@ -13,10 +13,8 @@ public class PlayerItemPickControll : MonoBehaviour {
 
     private GameObject previousItem = null;
 
-    private void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
     private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player");
         invenController = FindObjectOfType<InvenController>();
     }
 
@@ -96,6 +94,7 @@ public class PlayerItemPickControll : MonoBehaviour {
                     //겹쳐서 넣을수 있으면 집은 필드 아이템은 destroy
                     invenController.ItemAdd();
                     Destroy(item);
+                    player.GetComponent<Animator>().Play("PickingUp");
                 }
                 else {
                     if (invenController.canItemAdd()) {
@@ -109,6 +108,7 @@ public class PlayerItemPickControll : MonoBehaviour {
                         else {
                             item.SetActive(false);
                         }
+                        player.GetComponent<Animator>().Play("PickingUp");
                     }
                 }
             }

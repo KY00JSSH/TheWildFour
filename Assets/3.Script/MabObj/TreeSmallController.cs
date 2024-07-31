@@ -35,12 +35,16 @@ public class TreeSmallController : MonoBehaviour {
                     new Vector3(transform.position.x - 0.2f, transform.position.y, transform.position.z - 0.2f)
                     , Quaternion.identity);
                 dropItem.transform.SetParent(gameObject.transform);
+                dropItem.GetComponent<Rigidbody>().useGravity = false;
+                dropItem.GetComponent<Rigidbody>().isKinematic = true;
             }
             else {
                 GameObject dropItem = Instantiate(berrieItem.DropItemPrefab,
                    new Vector3(transform.position.x + 0.2f, transform.position.y, transform.position.z + 0.2f)
                    , Quaternion.identity);
                 dropItem.transform.SetParent(gameObject.transform);
+                dropItem.GetComponent<Rigidbody>().useGravity = false; 
+                dropItem.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
     }

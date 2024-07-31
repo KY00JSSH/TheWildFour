@@ -76,11 +76,13 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
         if (PlayerMove.isPlayerBuilding || !tooltip_Build.isBuildAvailable) return;
 
         if (!isExist) {
+            bool validityExist = false;
             foreach (Collider collider in buildingColliders) {
                 collider.isTrigger = true;
-                if (!collider.TryGetComponent(out BuildingValidity validity)) {
+                if (!collider.TryGetComponent(out BuildingValidity validity) && !validityExist) {
                     collider.gameObject.AddComponent<BuildingValidity>();
                     collider.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+                    validityExist = true;
                 }
             }
             isBuild = true;
@@ -192,12 +194,12 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
         float rotationSpeed = 5f;
         float buildAreaRadius = 3f;
 
+        layerMask = 1 << LayerMask.NameToLayer("Ground");
         if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, Mathf.Infinity, layerMask)) {
             Vector3 pointTolook = raycastHit.point;
 
             float distanceToCenter = Vector3.Distance(pointTolook, playerTransform.position);
             if (distanceToCenter > buildAreaRadius) {
-                // ���� �Ÿ��� �ݰ溸�� ũ�ٸ� ���� ��迡�� �����մϴ�
                 Vector3 directionToCenter = (playerTransform.position - pointTolook).normalized;
                 pointTolook = playerTransform.position - directionToCenter * buildAreaRadius;
             }

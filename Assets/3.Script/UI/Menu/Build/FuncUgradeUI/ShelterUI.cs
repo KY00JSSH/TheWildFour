@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-// ½ºÅ³ ·¹º§¾÷ ½ºÇÁ¶óÀÌÆ® ÆÄÀÏ ºÒ·¯¿À±â
+// ìŠ¤í‚¬ ë ˆë²¨ì—… ìŠ¤í”„ë¼ì´íŠ¸ íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 [System.Serializable]
 public class SkillCountImg {
 
@@ -21,8 +21,8 @@ public class SkillCountImg {
     }
     private void LoadSprites(string path) {
         skillSprites = Resources.LoadAll<Sprite>(path);
-        if (skillSprites.Length == 0) Debug.LogError("°æ·Î ¿À·ù : " + path);
-        else Debug.Log(skillSprites.Length + " ÇöÀç ½ºÇÁ¶óÀÌÆ® °æ·Î: " + path);
+        if (skillSprites.Length == 0) Debug.LogError("ê²½ë¡œ ì˜¤ë¥˜ : " + path);
+        else Debug.Log(skillSprites.Length + " í˜„ì¬ ìŠ¤í”„ë¼ì´íŠ¸ ê²½ë¡œ: " + path);
     }
 
     private void SeparateSprites() {
@@ -34,13 +34,13 @@ public class SkillCountImg {
                 int number = lastChar - '1';
                 if (number >= 0 && number < skillCnt.Length) skillCnt[number].Add(skillSprites[i]);
             }
-            else Debug.Log($"Sprite {spriteName} ¸¶Áö¸· ±ÛÀÚ°¡ ¼ıÀÚ ¾Æ´Ô");
+            else Debug.Log($"Sprite {spriteName} ë§ˆì§€ë§‰ ê¸€ìê°€ ìˆ«ì ì•„ë‹˜");
         }
     }
 }
 
 
-//TODO: Inven => ½ºÅ©¸³Æ® º¯°æ ³¡³ª¸é ¹öÆ° ÀÌº¥Æ® Ãß°¡ ÇÊ¿äÇÔ
+//TODO: Inven => ìŠ¤í¬ë¦½íŠ¸ ë³€ê²½ ëë‚˜ë©´ ë²„íŠ¼ ì´ë²¤íŠ¸ ì¶”ê°€ í•„ìš”í•¨
 public class ShelterUI : UIInfo {
 
     private ShelterManager shelterManager;
@@ -50,9 +50,9 @@ public class ShelterUI : UIInfo {
     [SerializeField] private SkillCountImg skillCountImg;
     [Space((int)2)]
     [Header("Skill Level Alpha Change")]
-    [SerializeField] private GameObject shelterLevelText; // ½ºÅ³ À§ ·¹º§ Ç¥½Ã
-    [SerializeField] private Text shelterLevel;       // shelter ·¹º§ Ç¥½Ã
-    [SerializeField] private GameObject shelterbuttons;
+    [SerializeField] private GameObject shelterLevelText; // ìŠ¤í‚¬ ìœ„ ë ˆë²¨ í‘œì‹œ
+    [SerializeField] private Text shelterLevel;       // shelter ë ˆë²¨ í‘œì‹œ
+    [SerializeField] private GameObject shelterbuttons; // ìŠ¤í‚¬ë§Œ ëª¨ì•„ë†“ì€ object
     [Space((int)2)]
     [Header("Skill Slider")]
     [SerializeField] private Slider[] sliders;
@@ -67,7 +67,8 @@ public class ShelterUI : UIInfo {
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
         shelterLevelText = transform.GetChild(2).gameObject;
-        skillCountImg.Init(spritesPath);        
+        skillCountImg.Init(spritesPath);
+        ShelterLevelSkillListInit();
     }
     private void Start() {
         ShelterLevel_Alpha();
@@ -79,6 +80,11 @@ public class ShelterUI : UIInfo {
         _isShelterUIOpen = true;
         ShelterLevel_Alpha();
         ShelterLevel_AlphaBtns();
+
+        // ìŠ¤í‚¬ ìŠ¤í”„ë¼ì´íŠ¸ í‘œì‹œ
+        ShelterLevelSkillSpriteInit(moveSkill, shelterManager.skillMove);
+        ShelterLevelSkillSpriteInit(attackSkill, shelterManager.skillAttack);
+        ShelterLevelSkillSpriteInit(gatherSkill, shelterManager.skillGather);
     }
     protected override void OnDisable() {
         _isShelterUIOpen = false;
@@ -91,7 +97,7 @@ public class ShelterUI : UIInfo {
     }
 
 
-    // ShelterManager ·¹º§¹Ş¾Æ¿Í¼­ Text ¾ËÆÄ°ª Á¶Á¤
+    // ShelterManager ë ˆë²¨ë°›ì•„ì™€ì„œ Text ì•ŒíŒŒê°’ ì¡°ì •
     public void ShelterLevel_Alpha() {
         for (int i = 0; i < shelterLevelText.transform.childCount; i++) {
             char shelterLevelTextChar = shelterLevelText.transform.GetChild(i).name[0];
@@ -111,13 +117,14 @@ public class ShelterUI : UIInfo {
     }
 
 
-    // ShelterManager ·¹º§¹Ş¾Æ¿Í¼­ ¹öÆ° Àá±è Sprite º¯°æ
+    // ShelterManager ë ˆë²¨ë°›ì•„ì™€ì„œ ë²„íŠ¼ ì ê¹€ Sprite ë³€ê²½
     public void ShelterLevel_AlphaBtns() {
 
-        shelterLevel.text = string.Format("<size=50>{0}</size>\n<size=30>·¹º§</size>", shelterManager.ShelterLevel);
+        shelterLevel.text = string.Format("<size=50>{0}</size>\n<size=30>ë ˆë²¨</size>", shelterManager.ShelterLevel);
 
         for (int i = 0; i < shelterbuttons.transform.childCount; i++) {
             GameObject gameObject = shelterbuttons.transform.GetChild(i).gameObject;
+
             for (int j = 3; j < gameObject.transform.childCount; j++) {
 
                 GameObject buttonImg = gameObject.transform.GetChild(j).GetChild(1).gameObject;
@@ -140,27 +147,98 @@ public class ShelterUI : UIInfo {
     }
 
     /*
-     1. ÇØ´ç ¹öÆ°ÀÌ ´­¸®¸é ¹öÆ°ÀÇ ÇÏÀ§°´Ã¼ 3¹øÀÇ ÀÌ¸§ ¸¶Áö¸· ±ÛÀÚ È®ÀÎ -> ½ºÅ³Ä«¿îÆ® °¹¼ö
-     2. ÇØ´ç ±ÛÀÚÀÇ ¼ıÀÚ·Î SkillCountImgÅ¬·¡½ºÀÇ ½ºÇÁ¶óÀÌÆ® list¹è¿­ ºÒ·¯¿À±â
-     3. ÇöÀç ½ºÇÁ¶óÀÌÆ® ÀÌ¸§ÀÇ ¸¶Áö¸·°ú ¹è¿­ÀÇ °³¼ö¸¦ ºñ±³ÇÏ¿© ¸¶Áö¸· ÀÌ¹ÌÁö¶ó¸é return
-     4. ¾Æ´Ï¶ó¸é ±³Ã¼
-     
+     1. í•´ë‹¹ ë²„íŠ¼ì´ ëˆŒë¦¬ë©´ ë²„íŠ¼ì˜ í•˜ìœ„ê°ì²´ 3ë²ˆì˜ ì´ë¦„ ë§ˆì§€ë§‰ ê¸€ì í™•ì¸ -> ìŠ¤í‚¬ì¹´ìš´íŠ¸ ê°¯ìˆ˜
+     2. í•´ë‹¹ ê¸€ìì˜ ìˆ«ìë¡œ SkillCountImgí´ë˜ìŠ¤ì˜ ìŠ¤í”„ë¼ì´íŠ¸ listë°°ì—´ ë¶ˆëŸ¬ì˜¤ê¸°
+     3. í˜„ì¬ ìŠ¤í”„ë¼ì´íŠ¸ ì´ë¦„ì˜ ë§ˆì§€ë§‰ê³¼ ë°°ì—´ì˜ ê°œìˆ˜ë¥¼ ë¹„êµí•˜ì—¬ ë§ˆì§€ë§‰ ì´ë¯¸ì§€ë¼ë©´ return
+     4. ì•„ë‹ˆë¼ë©´ êµì²´     
      */
+    private List<GameObject> moveSkill = new List<GameObject>();
+    private List<GameObject> attackSkill = new List<GameObject>();
+    private List<GameObject> gatherSkill = new List<GameObject>();
+
+    public bool isShleterSkillAvailable = false;
+
+    // ë²„íŠ¼ list ì €ì¥ 
+    private void ShelterLevelSkillListInit() {
+        moveSkill.Clear();
+        attackSkill.Clear();
+        gatherSkill.Clear();
+        for (int i = 0; i < shelterbuttons.transform.childCount; i++) {
+            GameObject parent = shelterbuttons.transform.GetChild(i).gameObject;
+            for (int j = 3; j < parent.transform.childCount; j++) {
+                switch (i) {
+                    case 0:
+                        moveSkill.Add(parent.transform.GetChild(j).gameObject);
+                        break;
+                    case 1:
+                        attackSkill.Add(parent.transform.GetChild(j).gameObject);
+                        break;
+                    case 2:
+                        gatherSkill.Add(parent.transform.GetChild(j).gameObject);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+
+    // í˜„ì¬ ì‰˜í„° ë ˆë²¨ë°›ì•„ì„œ ìŠ¤í”„ë¼ì´íŠ¸ í‘œê¸°
+    private void ShelterLevelSkillSpriteInit(List<GameObject> skillList, Skill[] skill) {
+        for (int i = 0; i < skillList.Count; i++) {
+            List<Sprite> skillSprites = skillCountImg.skillCnt[skill[i].maxSkillLevel - 1];
+            int spriteIndex = skill[i].nowSkillLevel ;
+            skillList[i].transform.GetChild(2).GetComponent<Image>().sprite = skillSprites[spriteIndex];
+        }
+    }
+
+
+    private bool CheckSkillPointMaxSkillLevel(Button btn) {
+        int skillNum = 0;
+        if (btn != null) {
+            skillNum = int.Parse(btn.name[btn.name.Length - 1].ToString()) - 1;
+        }
+
+        // ë²„íŠ¼ í¬ì¸íŠ¸ê°’ì´ ì—†ìœ¼ë©´ false and ë²„íŠ¼ ìµœëŒ€ ë ˆë²¨ì´ë©´ false
+        if (btn.name.Contains("Move")) {
+            if (shelterManager.MovePoint <= 0
+                || shelterManager.skillMove[skillNum].nowSkillLevel == shelterManager.skillMove[skillNum].maxSkillLevel) return false;
+            else return true;
+        }
+        else if (btn.name.Contains("Attack")) {
+            if (shelterManager.AttackPoint <= 0
+                || shelterManager.skillAttack[skillNum].nowSkillLevel == shelterManager.skillAttack[skillNum].maxSkillLevel) return false;
+            else return true;
+        }
+        else if (btn.name.Contains("Gather")) {
+            if (shelterManager.GatherPoint <= 0
+                || shelterManager.skillGather[skillNum].nowSkillLevel == shelterManager.skillGather[skillNum].maxSkillLevel) return false;
+            else return true;
+        }
+
+        return false;
+    }
+
+
     public void HandleButtonClick(GameObject clickedButton) {
         Button btn = clickedButton.GetComponent<Button>();
 
-        // ¹öÆ° Æ÷ÀÎÆ®°ªÀÌ ¾øÀ¸¸é return
-        if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
-        else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
-        else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return; 
-
+        // ë²„íŠ¼ í¬ì¸íŠ¸ê°’ì´ ì—†ìœ¼ë©´ return
+        if (!CheckSkillPointMaxSkillLevel(btn)) {
+            isShleterSkillAvailable = false;
+            return;
+        }
+        else {
+            isShleterSkillAvailable = true;
+        }
 
         if (btn != null) {
             string nowBtnSpriteName = btn.transform.GetChild(2).GetComponent<Image>().sprite.name;
 
             char lastChar = nowBtnSpriteName[nowBtnSpriteName.Length - 1];
             if (char.IsDigit(lastChar)) {
-                int skillCntNum = lastChar - '0'; //  ½ºÇÁ¶óÀÌÆ® list¹è¿­ÀÇ ½ºÅ³ Ä«¿îÆ®°è»ê
+                int skillCntNum = lastChar - '0'; //  ìŠ¤í”„ë¼ì´íŠ¸ listë°°ì—´ì˜ ìŠ¤í‚¬ ì¹´ìš´íŠ¸ê³„ì‚°
 
                 List<Sprite> skillSprites = skillCountImg.skillCnt[skillCntNum - 1];
                 int spriteIndex = skillSprites.FindIndex(sprite => sprite.name == nowBtnSpriteName);
@@ -175,7 +253,7 @@ public class ShelterUI : UIInfo {
     }
 
 
-    // ½½¶óÀÌ´õ ¼öÄ¡ º¯°æ(update)
+    // ìŠ¬ë¼ì´ë” ìˆ˜ì¹˜ ë³€ê²½(update)
     public void SkillSliderValue() {
         for (int i = 0; i < sliders.Length; i++) {
             if (sliders[i].name.Contains("Move")) sliders[i].value = shelterManager.MoveCurrentExp / shelterManager.MoveTotalExp;
@@ -185,15 +263,15 @@ public class ShelterUI : UIInfo {
 
     }
 
-    // Æ÷ÀÎÅÍ ±ÛÀÚ º¯°æ(update)
+    // í¬ì¸í„° ê¸€ì ë³€ê²½(update)
     public void SkillPointerValue() {
         pointers[0].text = string.Format("{0} Pts", shelterManager.MovePoint);
         pointers[1].text = string.Format("{0} Pts", shelterManager.AttackPoint);
         pointers[2].text = string.Format("{0} Pts", shelterManager.GatherPoint);
     }
 
-    // Áü½Î±â -> escape 
-    // »ó¼Ó¿¡ ÀÖÀ½
+    // ì§ì‹¸ê¸° -> escape 
+    // ìƒì†ì— ìˆìŒ
 
     public override void Escape() {
         base.Escape();

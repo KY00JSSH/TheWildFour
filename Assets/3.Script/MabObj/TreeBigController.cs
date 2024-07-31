@@ -58,7 +58,7 @@ public class TreeBigController : MonoBehaviour {
     }
 
     private IEnumerator treeDisableCo() {
-        //³ª¹« ¾²·¯Áö°í ÀÏÁ¤½Ã°£ À¯ÁöÈÄ destroy
+        //ë‚˜ë¬´ ì“°ëŸ¬ì§€ê³  ì¼ì •ì‹œê°„ ìœ ì§€í›„ destroy
         isFalling = true;
 
         Quaternion targetRotation = Quaternion.Euler(90, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
@@ -78,17 +78,19 @@ public class TreeBigController : MonoBehaviour {
     }
 
     public void dropTreeItem(float gatherPoint) {
-        InvenController invenController = GetComponent<InvenController>();
+        InvenController invenController = FindObjectOfType<InvenController>();
         int checkNum = invenController.canAddThisBox(1);
         if (checkNum != 99) {
                 CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
                 invenItem.addCurrStack((int)gatherPoint * 2);
+                invenController.updateInvenInvoke();
         }
         else {
             int existBox = invenController.isExistEmptyBox();
                 Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
                 GameObject itemObject = Instantiate(dropTreePrf, itemDropPosition, Quaternion.identity, treeSpawner.transform);
                 itemObject.GetComponent<CountableItem>().setCurrStack((int)gatherPoint * 2);
+                invenController.updateInvenInvoke();
             if (existBox != 99) {
                 invenController.addIndexItem(existBox, itemObject);
                 itemObject.SetActive(false);

@@ -10,13 +10,33 @@ public class CampfireChestCreate : BuildingCreate {
         get { return newCampfireChest; }
     }
 
+    private void Start() {
+        if(buildingPrefabs[0].TryGetComponent(out Campfire campfire) &&
+            Save.Instance.saveData.campfirePosition != null) { 
+            foreach(var position in Save.Instance.saveData.campfirePosition) {
+                Instantiate(buildingPrefabs[0], position, Quaternion.identity, transform);
+            }
+        }
+        else if(buildingPrefabs[0].TryGetComponent(out Furnace furnace) &&
+            Save.Instance.saveData.furnacePosition != null) {
+            foreach (var position in Save.Instance.saveData.furnacePosition) {
+                Instantiate(buildingPrefabs[0], position, Quaternion.identity, transform);
+            }
+
+        }
+        else if (Save.Instance.saveData.chestPosition != null) {
+            foreach (var position in Save.Instance.saveData.chestPosition) {
+                Instantiate(buildingPrefabs[0], position, Quaternion.identity, transform);
+            }
+        }
+    }
+
     public override void BuildMode() {
         if (Building == null) {
             newCampfireChest = Instantiate(buildingPrefabs[0], transform);
+            newCampfireChest.SetActive(false);
         }
 
-        if (TryGetComponent(out Campfire campfire)) campfire.enabled = false;
-        if (TryGetComponent(out Furnace furnace)) furnace.enabled = false;
         foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
             each.material = BuildMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();
@@ -25,8 +45,7 @@ public class CampfireChestCreate : BuildingCreate {
     }
 
     public override void CreateBuilding() {
-        if (TryGetComponent(out Campfire campfire)) campfire.enabled = true;
-        if (TryGetComponent(out Furnace furnace)) furnace.enabled = true;
+
         foreach (Renderer each in Building.GetComponentsInChildren<MeshRenderer>())
             each.material = ExistMaterial;
         buildingColliders = Building.GetComponentsInChildren<Collider>();

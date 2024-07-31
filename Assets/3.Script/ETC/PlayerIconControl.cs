@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//¸Ş´º UI¿¡¼­ È®ÀÎÇÒ ¼ö ÀÖ´Â ¸ÊÀÇ ÇÃ·¹ÀÌ¾î ¾ÆÀÌÄÜ ÄÁÆ®·Ñ
+//ë©”ë‰´ UIì—ì„œ í™•ì¸í•  ìˆ˜ ìˆëŠ” ë§µì˜ í”Œë ˆì´ì–´ ì•„ì´ì½˜ ì»¨íŠ¸ë¡¤
 
 public class PlayerIconControl : MonoBehaviour
 {
@@ -36,7 +36,7 @@ public class PlayerIconControl : MonoBehaviour
         Vector3 playerPos = playerTransform.position;
         Vector3 relativePos = playerPos - worldMapCamera.transform.position;
 
-        //¸ÊÀÇ ÁÜÀÎ/¾Æ¿ô¿¡ µû¸¥ ÇÃ·¹ÀÌ¾î ¾ÆÀÌÄÜÀÇ À§Ä¡ÀÌµ¿ °ª Ãß°¡¸¦ À§ÇÑ ºñÀ² °è»ê
+        //ë§µì˜ ì¤Œì¸/ì•„ì›ƒì— ë”°ë¥¸ í”Œë ˆì´ì–´ ì•„ì´ì½˜ì˜ ìœ„ì¹˜ì´ë™ ê°’ ì¶”ê°€ë¥¼ ìœ„í•œ ë¹„ìœ¨ ê³„ì‚°
         float ratio = 
             Mathf.InverseLerp(zoom.maxOrthSize, zoom.minOrthSize, zoom.menuMapCamera.orthographicSize) * 
             (zoom.maxOrthSize / zoom.minOrthSize - 1) + 1;
@@ -44,8 +44,8 @@ public class PlayerIconControl : MonoBehaviour
         float normalizedX = relativePos.x / mapWidth;
         float normalizedZ = relativePos.z / mapHeight;
 
-        float iconPosX = normalizedX * mapRect.rect.width * ratio;  //¾ÆÀÌÄÜÀÇ À§Ä¡¿¡ °è»êÇÑ ºñÀ² Ãß°¡ °è»ê
-        float iconPosY = normalizedZ * mapRect.rect.height * ratio; //¾ÆÀÌÄÜÀÇ À§Ä¡¿¡ °è»êÇÑ ºñÀ² Ãß°¡ °è»ê
+        float iconPosX = normalizedX * mapRect.rect.width * ratio;  //ì•„ì´ì½˜ì˜ ìœ„ì¹˜ì— ê³„ì‚°í•œ ë¹„ìœ¨ ì¶”ê°€ ê³„ì‚°
+        float iconPosY = normalizedZ * mapRect.rect.height * ratio; //ì•„ì´ì½˜ì˜ ìœ„ì¹˜ì— ê³„ì‚°í•œ ë¹„ìœ¨ ì¶”ê°€ ê³„ì‚°
 
         playerIconRect.anchoredPosition = new Vector2(iconPosX, iconPosY);
 
@@ -54,18 +54,18 @@ public class PlayerIconControl : MonoBehaviour
 
     //private void UpdateArrowIconRotation()
     //{
-    //    //¸¶¿ì½º À§Ä¡¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
+    //    //ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¥¼ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜
     //    Vector3 mousePosition = Input.mousePosition;
     //    Vector3 worldMousePosition = 
     //        Camera.main.ScreenToWorldPoint(
     //            new Vector3(mousePosition.x, mousePosition.y, playerTransform.position.z - Camera.main.transform.position.z)
     //                                      );
     //
-    //    //ÇÃ·¹ÀÌ¾î¿Í ¸¶¿ì½º À§Ä¡ °£ÀÇ ¹æÇâ °è»ê
+    //    //í”Œë ˆì´ì–´ì™€ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ê°„ì˜ ë°©í–¥ ê³„ì‚°
     //    Vector3 direction = worldMousePosition - playerTransform.position;
-    //    direction.y = 0; //yÃà ¹«½Ã
+    //    direction.y = 0; //yì¶• ë¬´ì‹œ
     //
-    //    //¹æÇâ º¤ÅÍ¸¦ È¸Àü °¢µµ·Î º¯È¯
+    //    //ë°©í–¥ ë²¡í„°ë¥¼ íšŒì „ ê°ë„ë¡œ ë³€í™˜
     //    float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
     //
     //    arrowIcon.localRotation = Quaternion.Euler(0, 0, playerIconRect.eulerAngles.y * -1);

@@ -27,6 +27,7 @@ public class PlayerMove : MonoBehaviour {
     private float defaultDashGage = 10f, defaultDecDashGage = 5f, defaultIncDashGage = 2f;
 
     public bool isSkilled = false;
+
     public float GetPlayerMoveSpeed() { return playerMoveSpeed; }
     public void SetPlayerMoveSpeed(float speed) { playerMoveSpeed = speed; }
     public float GetTatalDashGage() { return TotalDashGage; }
@@ -59,6 +60,8 @@ public class PlayerMove : MonoBehaviour {
         // 플레이어를 껐다 켜야지만 weaponPoint가 따라가는.. 의문의 버그
         gameObject.SetActive(false);
         gameObject.SetActive(true);
+
+        playerRigid.position = Save.Instance.saveData.playerTransform;
     }
 
     public static bool isPlayerBuilding { get; private set; }
