@@ -43,7 +43,7 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
         playerAnimator = playerTransform.GetComponent<Animator>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
         invenCont = FindObjectOfType<InvenController>();
-        obstacle = GetComponentInChildren<ItemSelectControll>().gameObject.AddComponent<NavMeshObstacle>(); //240730 지훈 추가
+        //obstacle = GetComponentInChildren<ItemSelectControll>().gameObject.AddComponent<NavMeshObstacle>(); //240730 지훈 추가
     }
 
     private void Start() {

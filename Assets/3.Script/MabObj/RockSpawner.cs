@@ -135,8 +135,8 @@ public class RockSpawner : MonoBehaviour {
             Directory.CreateDirectory(midRockDirectoryPath);
         }
 
-        string bigRockFilePath = NormalizePath(Path.Combine(bigRockDirectoryPath, $"bigRockData_{saveTime}.json"));
-        string midRockFilePath = NormalizePath(Path.Combine(midRockDirectoryPath, $"midRockData_{saveTime}.json"));
+        string bigRockFilePath =Path.Combine(bigRockDirectoryPath, $"bigRockData_{saveTime}.json");
+        string midRockFilePath =Path.Combine(midRockDirectoryPath, $"midRockData_{saveTime}.json");
 
         File.WriteAllText(bigRockFilePath, bigDataAsJson);
         File.WriteAllText(midRockFilePath, midDataAsJson);
