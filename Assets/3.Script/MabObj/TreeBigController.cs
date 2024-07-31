@@ -44,13 +44,6 @@ public class TreeBigController : MonoBehaviour {
         treeSpawner.UpdateTreeData(objectNumber, enable, health);
     }
 
-    private void Update() {
-        if (testBroke) {
-            getDamage(10.2f);
-            testBroke = false;
-        }
-    }
-
     private void FixedUpdate() {
         if (!enable && !isFalling) {
             disableTree();
@@ -58,6 +51,7 @@ public class TreeBigController : MonoBehaviour {
     }
 
     private void disableTree() {
+        gameObject.GetComponent<Collider>().enabled = false;
         dropDestroyTree();
         StartCoroutine(treeDisableCo());
     }
