@@ -100,12 +100,16 @@ public class Player_UI : MonoBehaviour {
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, playerscreenPo, null, out localPoint);
 
-        if (!isInitialSetupDone || (sliderPosition.anchoredPosition.x - localPoint.x > sliderStabilization) || (sliderPosition.anchoredPosition.y - localPoint.y > sliderStabilization)) {
+        if (!isInitialSetupDone || 
+            (sliderPosition.anchoredPosition.x - localPoint.x > sliderStabilization) || 
+            (sliderPosition.anchoredPosition.y - localPoint.y > sliderStabilization)) {
 
             // 슬라이더의 위치를 조정하여 플레이어 위치에 맞춤
             sliderPosition.anchoredPosition = localPoint;
-            sliderPosition.anchoredPosition += new Vector2(0, Slider_AddY);
+            sliderPosition.anchoredPosition += new Vector2(-50, Slider_AddY);
             isInitialSetupDone = true;
+
+            sliderPosition.anchoredPosition = new Vector2(0, 100);
 
         }
 
