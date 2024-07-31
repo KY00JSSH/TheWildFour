@@ -44946,69 +44946,11 @@ MonoBehaviour:
     campfirePosition: []
     furnacePosition: []
     chestPosition: []
-    skillMove:
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    skillAttack:
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    skillGather:
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
-    - skillName: 
-      maxSkillLevel: 0
-      nowSkillLevel: 0
-      skillValue: 0
+    skillMoveLevel: 0000000000000000000000000000000000000000
+    skillAttackLevel: 0000000000000000000000000000000000000000
+    skillGatherLevel: 0000000000000000000000000000000000000000
+    ItemKey: 
+    ItemPosition: []
 --- !u!4 &1292207472
 Transform:
   m_ObjectHideFlags: 0
@@ -55004,6 +54946,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569314561}
   m_CullTransparentMesh: 1
+--- !u!1 &1570188397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570188398}
+  - component: {fileID: 1570188399}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1570188398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570188397}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1570188399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570188397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2126fb4ffa62d374caa68ac3431a34e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefabs:
+  - {fileID: 919132149155446097, guid: 9936fd9aaa7e563448632d1c3c03c1bb, type: 3}
+  - {fileID: 919132149155446097, guid: c83b859716cb938489700cd352c83b8e, type: 3}
+  - {fileID: 5032750967007727044, guid: 6c166c93ffc8fec4895b2074aef550b7, type: 3}
+  - {fileID: 5725262414926512324, guid: 7b3f92035b34c304db87cade4708a533, type: 3}
+  - {fileID: 3401622093610938345, guid: ffccb4a2af4f31f40ad0dceaf4ec9915, type: 3}
+  - {fileID: 6953195956630765354, guid: b69e7885d9cd8c349b36a741f08c2d0c, type: 3}
+  - {fileID: 4801702005983861207, guid: 3132c7a918c452244b1991b9d61d165c, type: 3}
+  - {fileID: 2415949312005088204, guid: cb898d91163abe545a91fa8e571e4022, type: 3}
+  - {fileID: 2415949312005088204, guid: 2d8fb5c978c98eb479185dfe013b804f, type: 3}
+  - {fileID: 8982709177913435256, guid: ab8acd21a153a554681fdefeefba5b31, type: 3}
+  - {fileID: 6802898112593999144, guid: 6c420395431f10b4d8b80c67448dad52, type: 3}
+  - {fileID: 7925855252656042164, guid: 3a9cbda78ed6aae4893bd0ace1ce52cf, type: 3}
+  - {fileID: 3521091520333388907, guid: 8bb317d243abc1f43a299aa5644eb8ee, type: 3}
+  - {fileID: 3096535666184557031, guid: 58ea6dc0b773f4449831f26f99b6d8bd, type: 3}
+  - {fileID: 5896424649008467377, guid: 00476264d0d6fd94fabb373b55b38520, type: 3}
+  - {fileID: 1752382247610725027, guid: 7e5548a444e4ce542a54060321127f67, type: 3}
+  - {fileID: 8621619284462442978, guid: 7c54dfc7a9d070249b2e52919329d638, type: 3}
+  - {fileID: 8032157233702520667, guid: 1e526011e805d004aae3e33f99ff4721, type: 3}
+  - {fileID: 122183901949410239, guid: 05e25e5e92dc9634c909f57405db724a, type: 3}
+  - {fileID: 369517064854149524, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
+  - {fileID: 8252287102822194141, guid: 19bbc4bbd5e749f4eb402ae10825846c, type: 3}
+  - {fileID: 4683666770049514664, guid: 4e0f63cd4a57c9f4eb672841c4bfd4ec, type: 3}
+  - {fileID: 635803601969900351, guid: 783869767cc3f6e41ba0aa42becff5da, type: 3}
+  - {fileID: 741606325189790613, guid: e4cafe9b9b8775c4d8ccab17cb5da668, type: 3}
+  - {fileID: 7369283704072196613, guid: f5dd8a2bca1386b4eb27c83f10f4a830, type: 3}
+  ItemKey: 
+  ItemPosition: []
+  InventoryItem: []
 --- !u!1 &1572811241
 GameObject:
   m_ObjectHideFlags: 0
@@ -60305,6 +60319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d40702066f68b247ba4249859bb4be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenController: {fileID: 0}
 --- !u!114 &1715626237
 MonoBehaviour:
   m_ObjectHideFlags: 0

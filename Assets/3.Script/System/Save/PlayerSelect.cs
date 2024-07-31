@@ -21,13 +21,7 @@ public class PlayerSelect : MonoBehaviour {
         Save.Instance.saveData.playerType = (PlayerType)player;
         if ((PlayerType)player == PlayerType.Ju)
             Save.Instance.saveData.playerInvenCount = 10;
-        //TODO: 강화배낭 수치 변경으로 해야함
         else
             Save.Instance.saveData.playerInvenCount = 8;
-        Save.Instance.saveData.playerInventory = new List<GameObject>();
-        for (int i = 0; i < Save.Instance.saveData.playerInvenCount; i++) {
-            Save.Instance.saveData.playerInventory.Add(null);
-        }
     }
-
 }

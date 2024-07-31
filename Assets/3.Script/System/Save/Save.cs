@@ -74,9 +74,9 @@ public class SaveData {
     public int[] skillAttackLevel = new int[5];
     public int[] skillGatherLevel = new int[5];
 
-    public List<GameObject> playerInventory;
+    public List<int> ItemKey;
+    public List<Vector3> ItemPosition;
 }
-
 
 [System.Serializable]
 public class SaveDataList {
@@ -186,7 +186,6 @@ public class Save : MonoBehaviour {
             saveData.skillGatherLevel[i] = shelterManager.skillGather[i].nowSkillLevel;
         }
 
-        saveData.playerInventory = FindObjectOfType<CreateManager>().invenController.Inventory;
     }
 
     public void InitSaveFile() {
@@ -241,10 +240,8 @@ public class Save : MonoBehaviour {
         saveData.furnacePosition = null;
         saveData.chestPosition = null;
 
-        saveData.playerInventory = new List<GameObject>();
-        for (int i = 0; i < saveData.playerInvenCount; i++) {
-            saveData.playerInventory.Add(null);
-        }
+        saveData.ItemKey = null;
+        saveData.ItemPosition = null;
     }
 }
 

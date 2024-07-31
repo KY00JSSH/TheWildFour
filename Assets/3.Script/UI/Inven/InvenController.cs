@@ -22,12 +22,13 @@ public class InvenController : CommonInven {
 
     private void Start() {
         initInven();
-        Debug.Log("WOW");
     }
 
+    public void InitInven(List<GameObject> initInven) {
+        inventory = initInven;
+    }
 
     private void initInven() {
-        inventory = Save.Instance.saveData.playerInventory;
         //for (int i = 0; i < invenUi.CurrInvenCount; i++) {
         //    inventory.Add(null);
         //}

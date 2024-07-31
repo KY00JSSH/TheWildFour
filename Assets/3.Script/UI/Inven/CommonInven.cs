@@ -82,6 +82,7 @@ public class CommonInven : MonoBehaviour {
             if (itemObject.GetComponent<CountableItem>() != null && inventory[checkNum] != null) {
                 CountableItem invenItem = inventory[checkNum].GetComponent<CountableItem>();
                 invenItem.addCurrStack(itemObject.GetComponent<CountableItem>().CurrStackCount);
+                ItemManager.Register(itemObject, Location.Inventory, checkNum);
             }
         }
         else {
@@ -90,6 +91,7 @@ public class CommonInven : MonoBehaviour {
             if (existBox != 99) {
                 //null로 비워둔 inventory에 추가
                 inventory[existBox] = itemObject;
+                ItemManager.Register(itemObject, Location.Inventory, existBox);
             }
             else {
                 isInvenFull = true;
