@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameStart : MonoBehaviour
 {
     private void Awake() {
-        AudioManager.instance.PlayBGM(AudioManager.Bgm.Title_music_LastSummer);
+        AudioManager.instance.PlayBGM(AudioManager.Bgm.Title_music_LastSummer,3);
         Debug.Log("BGM PLAY");
     }
     public void PlayerSelect() {

@@ -13,6 +13,10 @@ public class PlayerStatus : MonoBehaviour {
         isDead = true;
         player.GetComponent<Animator>().SetBool("isDead", isDead);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("triggerDie");
+        AudioManager.instance.StopBGM();
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.PlayerDeath_LostAndWintered);
+        AudioManager.instance.StopSFX(AudioManager.Sfx.NoHP_heartbeat);
+
     }
 
     public void PlayerRespawn() {
@@ -162,6 +166,7 @@ public class PlayerStatus : MonoBehaviour {
         PlayerHunger = defaultHunger;
         PlayerWarm = defaultWarm;
         statusList = new bool[Enum.GetValues(typeof(Status)).Length];
+        AudioManager.instance.PlayBGM(AudioManager.Bgm.music_IndifferentSlow, 2);
 
         isDead = false;
     }
