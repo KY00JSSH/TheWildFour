@@ -80,8 +80,11 @@ public class StatusControl : MonoBehaviour {
             else if (status == Status.Full)
                 currentStatus.SetRemainTime(currentStatus.totalTime + currentStatus.remainTime);
         }
-        else
+        else {
             StartCoroutine(Tick(currentStatus, player));
+            if(status ==Status.Heat) AudioManager.instance.PlaySFX(AudioManager.Sfx.CampfireIdle);
+
+        }
     }
 
     private IEnumerator Tick(StatusData status, PlayerStatus player) {
@@ -98,5 +101,6 @@ public class StatusControl : MonoBehaviour {
         player.ResetPlayerStatus(status.type);
         ActivatedStatus.Remove(status);
         status.isTicked = false;
+        if (status.type == Status.Heat) AudioManager.instance.StopSFX(AudioManager.Sfx.CampfireIdle);
     }
 }

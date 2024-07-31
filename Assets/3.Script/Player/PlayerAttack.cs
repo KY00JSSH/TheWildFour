@@ -91,6 +91,12 @@ public class PlayerAttack : MonoBehaviour {
         if(animatorState.IsName("Punching2") && animatorState.normalizedTime >= 0.93f) {
             isLeftFist = Random.Range(0, 2) == 0 ? true : false;
         }
+        if (animatorState.IsName("Punching1") && animatorState.normalizedTime <= 0.5f) {
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.PlayerAttack);
+        }
+        else if (animatorState.IsName("Punching2") && animatorState.normalizedTime <= 0.3f) {
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.PlayerAttack);
+        }
     }
 
     private void SetMoveSpeedOnAttack() {
