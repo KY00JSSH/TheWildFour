@@ -12,7 +12,6 @@ public class MainTtBtnHighlight : MonoBehaviour, IPointerEnterHandler, IPointerE
         highlightbtnsTexts = new List<Text>();
         foreach (Transform child in transform) {
             if (child.TryGetComponent(out Button btn)) {
-                Debug.Log("btn : " + btn.name);
                 highlightbtnsTexts.Add(child.GetComponentInChildren<Text>());
             }
         }
@@ -40,7 +39,6 @@ public class MainTtBtnHighlight : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (eventData.pointerEnter != null) {
             Text pointtext = eventData.pointerEnter.GetComponent<Text>();
             if (pointtext != null) {
-                Debug.Log(pointtext.name);
                 HighlightButton(pointtext);
             }
         }

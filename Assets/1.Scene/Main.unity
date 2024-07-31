@@ -15713,6 +15713,24 @@ MonoBehaviour:
     playerAddDashSpeed: 0
     playerAddDecDashGage: 0
     playerAddInvenCount: 0
+    shelterLevel: 0
+    shelterMoveLevel: 0
+    shelterAttackLevel: 0
+    shelterGatherLevel: 0
+    shelterMovePoint: 0
+    shelterAttackPoint: 0
+    shelterGatherPoint: 0
+    shelterMoveCurrentExp: 0
+    shelterAttackCurrentExp: 0
+    shelterGatherCurrentExp: 0
+    workshopLevel: 0
+    shelterPosition: {x: 0, y: 0, z: 0}
+    shelterRotation: {x: 0, y: 0, z: 0, w: 0}
+    workshopPosition: {x: 0, y: 0, z: 0}
+    workshopRotation: {x: 0, y: 0, z: 0, w: 0}
+    campfirePosition: []
+    furnacePosition: []
+    chestPosition: []
 --- !u!4 &1796594803
 Transform:
   m_ObjectHideFlags: 0
@@ -21139,10 +21157,10 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "<color=#FF9200><size=35> <b>Academy</b></size> </color>\nKyungilGameAcademy\r\n\n<color=#FF9200>
     <size=35><b>Production Team</b> </size> </color>\n[Meta Programming 7th, Group
-    3]\n\n<color=#FF9200> <size=35><b>Leader</b> </size> </color>\n\uC804\uD64D\uD604\n\n
-    <color=#FF9200> <size=35><b>Manager</b> </size> </color>\n\uAE40\uC218\uC9C4\n\n
-    <color=#FF9200> <size=35><b>Members</b> </size> </color>\n\uBC15\uC9C0\uD6C8\n\uAE40\uC218\uC8FC\n\n
-    <color=#FF9200> <size=35><b>Thanks for</b> </size> </color>\nProfessor - Go"
+    3]\n\n<color=#FF9200> <size=35><b>Leader</b> </size> </color>\n\uC804\uD64D\uD604\n\n<color=#FF9200>
+    <size=35><b>Manager</b> </size> </color>\n\uAE40\uC218\uC9C4\n\n<color=#FF9200>
+    <size=35><b>Members</b> </size> </color>\n\uBC15\uC9C0\uD6C8\n\uAE40\uC218\uC8FC\n\n<color=#FF9200>
+    <size=35><b>Thanks for</b> </size> </color>\nProfessor - Go"
 --- !u!222 &1982017640
 CanvasRenderer:
   m_ObjectHideFlags: 0
