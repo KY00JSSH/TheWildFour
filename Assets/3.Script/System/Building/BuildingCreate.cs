@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public interface IBuildingCreateGeneric {
     void SetEnterPosition(Vector3 position);
@@ -34,12 +35,15 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     public Vector3 LastPlayerPosition { get; private set; }
     public void SetEnterPosition(Vector3 position) { LastPlayerPosition = position; }
 
+    public NavMeshObstacle obstacle; //240730 지훈 추가
+
     protected virtual void Awake() {
         tooltipNum = FindObjectOfType<TooltipNum>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerAnimator = playerTransform.GetComponent<Animator>();
         tooltip_Build = FindObjectOfType<Tooltip_Build>();
         invenCont = FindObjectOfType<InvenController>();
+        obstacle = GetComponentInChildren<ItemSelectControll>().gameObject.AddComponent<NavMeshObstacle>(); //240730 지훈 추가
     }
 
     private void Start() {

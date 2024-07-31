@@ -15,7 +15,9 @@ public class Animal_Control : MonoBehaviour
     public float currentHP;
 
     private NavMeshAgent agent;
-    public Transform navMeshSurface;
+    //public Transform navMeshSurface;
+
+    //private Rigidbody rigidbody;
 
     private Animator animator;
 
@@ -43,15 +45,25 @@ public class Animal_Control : MonoBehaviour
         animator.applyRootMotion = true; //루트 모션 적용
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+
+        //rigidbody = GetComponent<Rigidbody>();
+
         agent.updatePosition = false;
         //agent.updateRotation = false;
 
         playerDetector_Capsule = GetComponentInChildren<CapsuleCollider>(); //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
         playerDetector_Box = GetComponentInChildren<BoxCollider>(); //자식오브젝트의 플레이어 감지를 위한 박스콜라이더
 
-        navMeshSurface = FindObjectOfType<NavMeshSurface>().transform;
+        //navMeshSurface = FindObjectOfType<NavMeshSurface>().transform;
 
         GetComponentInChildren<Animal_Detecting_Player>().parentControl = this; /**/
+
+        AnimalStats stats = GetComponent<AnimalStats>(); //AnimalStats 스크립트를 추가하여 동물마다 체력 부여
+        if (stats != null)
+        {
+            MAXHP = stats.MAXHP;
+            currentHP = MAXHP;
+        }
     }
 
     private void Start()
@@ -63,7 +75,7 @@ public class Animal_Control : MonoBehaviour
 
     private void Update()
     {
-        CheckDistance(); //네비메쉬 동적 베이크를 위한 거리계산 메서드
+        //CheckDistance(); //네비메쉬 동적 베이크를 위한 거리계산 메서드
 
         if (isRunning)
         {
@@ -73,26 +85,25 @@ public class Animal_Control : MonoBehaviour
         {
             Random_Idle_Or_Walk(); //제자리 Idle  재생 또는 이동 메서드
         }
+
+        if(agent.hasPath)/**/
+        {
+            //Vector3 direction = agent.nextPosition - transform.position;
+            //rigidbody.velocity = direction.normalized * agent.speed + new Vector3(0, rigidbody.velocity.y, 0);
+            transform.position = agent.nextPosition;
+            //animator.SetFloat("MoveSpeed", agent.velocity.magnitude);
+        }
     }    
 
+    /*
     void CheckDistance() //네비메쉬 동적 베이크를 위한 거리계산 메서드
-    {
-        //if(Vector3.Distance(this.transform.position, navMeshSurface.position) > 10f)
-        //{
-        //    navMeshSurface.transform.position = this.transform.position;
-        //    navMeshSurface.GetComponent<NavMeshSurface>().BuildNavMesh();
-        //}
-
+    {       
         float distance = Vector3.Distance(this.transform.position, navMeshSurface.position);
         if (distance > 10f)
         {
             navMeshSurface.transform.position = this.transform.position;
             NavMeshSurface navMeshSurfaceComponent = navMeshSurface.GetComponent<NavMeshSurface>();
-            //if (navMeshSurfaceComponent != null)
-            //{
-            //    navMeshSurfaceComponent.BuildNavMesh();
-            //}
-
+            
             if(navMeshSurfaceComponent != null)
             {
                 try
@@ -106,6 +117,7 @@ public class Animal_Control : MonoBehaviour
             }
         }
     }      
+    */
     
     private void Random_Idle_Or_Walk() //제자리 Idle  재생 또는 이동 메서드
     {     
@@ -172,20 +184,32 @@ public class Animal_Control : MonoBehaviour
         isRunning = false;
         animator.SetBool("isRunning", false);
         agent.ResetPath();
-    }
+    }     
 
     public void getDamage(float damage) {
         currentHP -= damage;
         if (currentHP <= 0) {
             currentHP = 0;
-            animalDie();
+            //animalDie();
+            StartCoroutine(AnimalDeath_co());
         }
     }
 
-    private void animalDie() {
-        //TODO: 죽었을때 해야하는 것 추가
+    private IEnumerator AnimalDeath_co() //동물 죽음
+    {
+        transform.Rotate(Vector3.forward, 90f);
+
         itemDrop();
+
+        yield return new WaitForSeconds(3f);
+
+        gameObject.SetActive(false);
     }
+
+    //private void animalDie() {
+    //    //TODO: 죽었을때 해야하는 것 추가
+    //    itemDrop();
+    //}
 
     private void itemDrop() {
         int itemsToDrop = Random.Range(1, 4);

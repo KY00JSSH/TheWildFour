@@ -749,9 +749,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6591898900635558742}
   - component: {fileID: 980392511205177644}
-  - component: {fileID: 5778384074982554093}
   - component: {fileID: 6697301669985043643}
   - component: {fileID: 6697301669985043640}
+  - component: {fileID: 5515999860025131573}
   - component: {fileID: 5778384074982554090}
   m_Layer: 0
   m_Name: Deer
@@ -795,22 +795,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &5778384074982554093
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5778384074982554092}
-  serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 7
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!65 &6697301669985043643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -823,7 +807,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &6697301669985043640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,10 +823,24 @@ MonoBehaviour:
   MAXHP: 0
   currentHP: 0
   navMeshSurface: {fileID: 0}
+  dropItems: []
   idleDuration: 3
   moveDuration: 5
   playerDetector_Capsule: {fileID: 6697301671402172405}
   playerDetector_Box: {fileID: 6697301671402172404}
+--- !u!114 &5515999860025131573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5778384074982554092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d250476c9973b444b60805a4e8c5eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAXHP: 30
 --- !u!195 &5778384074982554090
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -854,15 +852,15 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 300
+  m_AngularSpeed: 1500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &6225582469325054101

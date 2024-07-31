@@ -984,9 +984,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7808655224542123901}
   - component: {fileID: 4232757316881550599}
-  - component: {fileID: 7770771987322482835}
   - component: {fileID: 7770771987322482834}
   - component: {fileID: 7770771987322482833}
+  - component: {fileID: -4169149817189056197}
   - component: {fileID: 7770771987322482845}
   m_Layer: 0
   m_Name: Rabbit
@@ -1030,22 +1030,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &7770771987322482835
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7428188555696180679}
-  serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 10
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!136 &7770771987322482834
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1059,7 +1043,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &7770771987322482833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1075,10 +1059,24 @@ MonoBehaviour:
   MAXHP: 0
   currentHP: 0
   navMeshSurface: {fileID: 0}
+  dropItems: []
   idleDuration: 5
   moveDuration: 3
   playerDetector_Capsule: {fileID: 7770771987119436178}
   playerDetector_Box: {fileID: 7770771987119436179}
+--- !u!114 &-4169149817189056197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428188555696180679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d250476c9973b444b60805a4e8c5eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAXHP: 10
 --- !u!195 &7770771987322482845
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1090,7 +1088,7 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 1500
   m_StoppingDistance: 0
@@ -1098,7 +1096,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7507633638764648639
