@@ -1059,11 +1059,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MAXHP: 0
   currentHP: 0
+  navMeshSurface: {fileID: 0}
   dropItems: []
   idleDuration: 3
   moveDuration: 3
-  playerDetector_Capsule: {fileID: 0}
-  playerDetector_Box: {fileID: 0}
+  playerDetector_Capsule: {fileID: 7770771987119436178}
+  playerDetector_Box: {fileID: 7770771987119436179}
 --- !u!114 &-4169149817189056197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,7 +1097,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: -0.3
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!54 &1042426057053945344

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AnimalSpawner : MonoBehaviour
 {
@@ -97,8 +98,19 @@ public class AnimalSpawner : MonoBehaviour
             if (!animal.activeSelf && animal.name.Contains(animalPrefabs[animalIndex].name))
             {
                 Transform spawnPoint = spawnPoints[Random.Range(2, spawnPoints.Length)];
-                animal.transform.position = spawnPoint.position;
-                animal.SetActive(true);
+                //animal.transform.position = spawnPoint.position;
+                Vector3 spawnPosition = spawnPoint.position;
+
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(spawnPosition, out hit, 10f, NavMesh.AllAreas))
+                {
+                    animal.transform.position = hit.position;
+                    animal.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning("스폰 위치에서 NavMesh를 찾을 수 없습니다.");
+                }
                 break;
             }
         }

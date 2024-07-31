@@ -15,7 +15,7 @@ public class Animal_Control : MonoBehaviour
     public float currentHP;
 
     private NavMeshAgent agent;
-    //public Transform navMeshSurface;
+    public Transform navMeshSurface;
 
     //private Rigidbody rigidbody;
 
@@ -54,7 +54,7 @@ public class Animal_Control : MonoBehaviour
         playerDetector_Capsule = GetComponentInChildren<CapsuleCollider>(); //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
         playerDetector_Box = GetComponentInChildren<BoxCollider>(); //자식오브젝트의 플레이어 감지를 위한 박스콜라이더
 
-        //navMeshSurface = FindObjectOfType<NavMeshSurface>().transform;
+        navMeshSurface = FindObjectOfType<NavMeshSurface>().transform;
 
         GetComponentInChildren<Animal_Detecting_Player>().parentControl = this; /**/
 
@@ -75,7 +75,10 @@ public class Animal_Control : MonoBehaviour
 
     private void Update()
     {
-        //CheckDistance(); //네비메쉬 동적 베이크를 위한 거리계산 메서드
+        Vector3 rootPosition = transform.position;
+        agent.nextPosition = rootPosition;
+
+        CheckDistance(); //네비메쉬 동적 베이크를 위한 거리계산 메서드
 
         if (isRunning)
         {
@@ -95,7 +98,7 @@ public class Animal_Control : MonoBehaviour
         }
     }    
 
-    /*
+    
     void CheckDistance() //네비메쉬 동적 베이크를 위한 거리계산 메서드
     {       
         float distance = Vector3.Distance(this.transform.position, navMeshSurface.position);
@@ -116,8 +119,18 @@ public class Animal_Control : MonoBehaviour
                 }
             }
         }
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 10f, NavMesh.AllAreas))
+        {
+            transform.position = hit.position;
+        }
+        else
+        {
+            Debug.LogWarning("에이전트가 NavMesh에 충분히 가깝지 않습니다.");
+        }
     }      
-    */
+    
     
     private void Random_Idle_Or_Walk() //제자리 Idle  재생 또는 이동 메서드
     {     
@@ -175,7 +188,10 @@ public class Animal_Control : MonoBehaviour
     {
         isRunning = true;
         animator.SetBool("isRunning", true);
-        agent.ResetPath();
+        if (agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
         runTimer = 5f;
     }
 
@@ -183,7 +199,15 @@ public class Animal_Control : MonoBehaviour
     {
         isRunning = false;
         animator.SetBool("isRunning", false);
-        agent.ResetPath();
+
+        if (agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
+        else
+        {
+            Debug.LogWarning("NavMeshAgent가 없거나 NavMesh위에 없습니다.");
+        }
     }     
 
     public void getDamage(float damage) {
@@ -207,12 +231,7 @@ public class Animal_Control : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         gameObject.SetActive(false);
-    }
-
-    //private void animalDie() {
-    //    //TODO: 죽었을때 해야하는 것 추가
-    //    itemDrop();
-    //}
+    }       
 
     private void itemDrop() {
         int itemsToDrop = Random.Range(1, 4);
