@@ -60,8 +60,12 @@ public class TreeSpawner : MonoBehaviour {
             LoadSmallTreeDataFromResources();
         }
         else {
-            string bigTreeFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, bigTreeDirectory, $"bigTreeData_{Save.Instance.saveData.saveTime}.json"));
-            string smallTreeFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, smallTreeDirectory, $"smallTreeData_{Save.Instance.saveData.saveTime}.json"));
+
+            string time = Save.Instance.saveData.saveTime;
+            string formattedSaveTime = time.Replace(':', '-');
+
+            string bigTreeFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, bigTreeDirectory, $"bigTreeData_{formattedSaveTime}.json"));
+            string smallTreeFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, smallTreeDirectory, $"smallTreeData_{formattedSaveTime}.json"));
 
             LoadBigTreeData(bigTreeFilePath);
             LoadSmallTreeData(smallTreeFilePath);
@@ -143,6 +147,9 @@ public class TreeSpawner : MonoBehaviour {
     }
 
     public void SaveTreeData(string saveTime) {
+
+        string formattedSaveTime = saveTime.Replace(':', '-');
+
         string bigTreeDataAsJson = JsonUtility.ToJson(bigObjectList, true);
         string smallTreeDataAsJson = JsonUtility.ToJson(smallObjectList, true);
 
@@ -157,8 +164,8 @@ public class TreeSpawner : MonoBehaviour {
             Directory.CreateDirectory(smallTreeDirectoryPath);
         }
 
-        string bigTreeFilePath = NormalizePath(Path.Combine(bigTreeDirectoryPath, $"bigTreeData_{saveTime}.json"));
-        string smallTreeFilePath = NormalizePath(Path.Combine(smallTreeDirectoryPath, $"smallTreeData_{saveTime}.json"));
+        string bigTreeFilePath = NormalizePath(Path.Combine(bigTreeDirectoryPath, $"bigTreeData_{formattedSaveTime}.json"));
+        string smallTreeFilePath = NormalizePath(Path.Combine(smallTreeDirectoryPath, $"smallTreeData_{formattedSaveTime}.json"));
 
         File.WriteAllText(bigTreeFilePath, bigTreeDataAsJson);
         File.WriteAllText(smallTreeFilePath, smallTreeDataAsJson);
