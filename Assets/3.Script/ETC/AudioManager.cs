@@ -133,7 +133,6 @@ public class AudioManager : MonoBehaviour
         bgmSource.clip = bgmClip[(int)bgm];
         bgmSource.Play();
     }
-
     public void StopBGM()
     {
         foreach (AudioSource player in bgmPlayer)
@@ -145,3 +144,4 @@ public class AudioManager : MonoBehaviour
         }
     }
 }
+    

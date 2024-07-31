@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -40,30 +41,74 @@ public class SmallTreeDataList {
 
 public class TreeSpawner : MonoBehaviour {
     public GameObject[] objectPrefabs;
-    private string bigTreeJsonFileName = "MapObj/bigTreeData";
-    private string smallTreeJsonFileName = "MapObj/smallTreeData";
+    private string bigTreeDirectory = "Resources/MapObj/bigTreeData";
+    private string smallTreeDirectory = "Resources/MapObj/smallTreeData";
+
+    private string bigTreeStaticFileName = "bigTreeData.json";
+    private string smallTreeStaticFileName = "smallTreeData.json";
+
     private BigTreeDataList bigObjectList;
     private SmallTreeDataList smallObjectList;
 
     private void Start() {
-        TextAsset bigJsonText = Resources.Load<TextAsset>(bigTreeJsonFileName);         //큰 나무 json Data Load
-        if (bigJsonText != null) {
-            string bigDataAsJson = bigJsonText.text;
+        LoadTreeData();
+    }
+
+    private void LoadTreeData() {
+        if (Save.Instance.saveData.isNewGame) {
+            LoadBigTreeDataFromResources();
+            LoadSmallTreeDataFromResources();
+        }
+        else {
+            string bigTreeFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, bigTreeDirectory, $"bigTreeData_{Save.Instance.saveData.saveTime}.json"));
+            string smallTreeFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, smallTreeDirectory, $"smallTreeData_{Save.Instance.saveData.saveTime}.json"));
+
+            LoadBigTreeData(bigTreeFilePath);
+            LoadSmallTreeData(smallTreeFilePath);
+        }
+    }
+
+    private void LoadBigTreeDataFromResources() {
+        TextAsset bigDataAsset = Resources.Load<TextAsset>(Path.Combine("MapObj", "bigTreeData"));
+        if (bigDataAsset != null) {
+            bigObjectList = JsonUtility.FromJson<BigTreeDataList>(bigDataAsset.text);
+            SpawnBigTrees(bigObjectList.bigTreeObjs);
+        }
+        else {
+            Debug.LogError("Big Tree Json Not Exist in Resources");
+        }
+    }
+
+    private void LoadSmallTreeDataFromResources() {
+        TextAsset smallDataAsset = Resources.Load<TextAsset>(Path.Combine("MapObj", "smallTreeData"));
+        if (smallDataAsset != null) {
+            smallObjectList = JsonUtility.FromJson<SmallTreeDataList>(smallDataAsset.text);
+            SpawnSmallTrees(smallObjectList.smallTreeObjs);
+        }
+        else {
+            Debug.LogError("Small Tree Json Not Exist in Resources");
+        }
+    }
+
+    private void LoadBigTreeData(string filePath) {
+        if (File.Exists(filePath)) {
+            string bigDataAsJson = File.ReadAllText(filePath);
             bigObjectList = JsonUtility.FromJson<BigTreeDataList>(bigDataAsJson);
             SpawnBigTrees(bigObjectList.bigTreeObjs);
         }
         else {
-            Debug.LogError("BIG Tree Json Not Exist");
+            Debug.LogError($"Big Tree Json Not Exist: {filePath}");
         }
+    }
 
-        TextAsset smallJsonText = Resources.Load<TextAsset>(smallTreeJsonFileName);     //작은 나무 json Data Load
-        if (smallJsonText != null) {
-            string smallDataAsJson = smallJsonText.text;
+    private void LoadSmallTreeData(string filePath) {
+        if (File.Exists(filePath)) {
+            string smallDataAsJson = File.ReadAllText(filePath);
             smallObjectList = JsonUtility.FromJson<SmallTreeDataList>(smallDataAsJson);
             SpawnSmallTrees(smallObjectList.smallTreeObjs);
         }
         else {
-            Debug.LogError("SMALL Tree Json Not Exist");
+            Debug.LogError($"Small Tree Json Not Exist: {filePath}");
         }
     }
 
@@ -97,14 +142,29 @@ public class TreeSpawner : MonoBehaviour {
         }
     }
 
-    public void SaveTreeData() {
+    public void SaveTreeData(string saveTime) {
         string bigTreeDataAsJson = JsonUtility.ToJson(bigObjectList, true);
         string smallTreeDataAsJson = JsonUtility.ToJson(smallObjectList, true);
 
-        string bigTreeFilePath = Path.Combine(Application.dataPath, "Resources", $"{bigTreeJsonFileName}.json");
-        string smallTreeFilePath = Path.Combine(Application.dataPath, "Resources", $"{smallTreeJsonFileName}.json");
+        string bigTreeDirectoryPath = NormalizePath(Path.Combine(Application.persistentDataPath, bigTreeDirectory));
+        string smallTreeDirectoryPath = NormalizePath(Path.Combine(Application.persistentDataPath, smallTreeDirectory));
+
+        if (!Directory.Exists(bigTreeDirectoryPath)) {
+            Directory.CreateDirectory(bigTreeDirectoryPath);
+        }
+
+        if (!Directory.Exists(smallTreeDirectoryPath)) {
+            Directory.CreateDirectory(smallTreeDirectoryPath);
+        }
+
+        string bigTreeFilePath = NormalizePath(Path.Combine(bigTreeDirectoryPath, $"bigTreeData_{saveTime}.json"));
+        string smallTreeFilePath = NormalizePath(Path.Combine(smallTreeDirectoryPath, $"smallTreeData_{saveTime}.json"));
 
         File.WriteAllText(bigTreeFilePath, bigTreeDataAsJson);
         File.WriteAllText(smallTreeFilePath, smallTreeDataAsJson);
+    }
+
+    private string NormalizePath(string path) {
+        return path.Replace("\\", "/");
     }
 }
