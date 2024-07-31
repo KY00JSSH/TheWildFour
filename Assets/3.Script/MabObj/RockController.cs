@@ -18,6 +18,7 @@ public class RockController : MonoBehaviour {
     public bool isBroken = false;
 
     private void Start() {
+        rockSpawner = FindObjectOfType<RockSpawner>();
         coll = GetComponent<BoxCollider>();
         brokenObject.SetActive(false);
     }
@@ -46,6 +47,7 @@ public class RockController : MonoBehaviour {
             health = 0;
             enable = false;
             rockSpawner.UpdateRockData(objectNumber, enable, health, type == 1 ? true : false);
+            dropDestroyTree();
             changeObjectModel();
             AudioManager.instance.PlaySFX(AudioManager.Sfx.StoneShatterd);
         }
@@ -60,6 +62,17 @@ public class RockController : MonoBehaviour {
         brokenObject.SetActive(true);
         thisRockObject.SetActive(false);
         coll.enabled = false;
+    }
+
+    private void dropDestroyTree() {
+        int randomCount = Random.Range(1, 4);
+        for (int i = 0; i < randomCount; i++) {
+            Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
+            GameObject itemObject = Instantiate(dropRockPrf, itemDropPosition, Quaternion.identity, rockSpawner.transform);
+            int randomStack = Random.Range(1, 9);
+            itemObject.GetComponent<CountableItem>().setCurrStack(randomStack);
+            ItemManager.Register(itemObject, Location.Normal);
+        }
     }
 
     public void dropRockItem(float gatherPoint) {
@@ -82,6 +95,7 @@ public class RockController : MonoBehaviour {
             }
             else {
                 itemObject.SetActive(true);
+                ItemManager.Register(itemObject, Location.Normal);
             }
         }
     }

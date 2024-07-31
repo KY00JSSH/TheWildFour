@@ -123,7 +123,6 @@ public class AudioManager : MonoBehaviour
 
         if (channel < 0 || channel >= bgmPlayer.Length)
         {
-            Debug.LogError("BGM채널 인덱스 없음");
             return;
         }
 

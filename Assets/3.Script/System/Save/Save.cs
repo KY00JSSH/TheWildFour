@@ -90,10 +90,10 @@ public class Save : MonoBehaviour {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            InitSaveFile();
         }
         else
             Destroy(gameObject);
-        InitSaveFile();
     }
 
     public SaveData saveData = new SaveData();
