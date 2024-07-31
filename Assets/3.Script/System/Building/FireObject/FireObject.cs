@@ -127,12 +127,14 @@ public class FireObject : MonoBehaviour, IFireLight {
             if(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf != null) {
                 GameObject newBakeItem = Instantiate(bakeItem.GetComponent<FoodItem>()?.BakeItemPrf);
                 newBakeItem.transform.position = targetPosition;
+                ItemManager.Register(newBakeItem, Location.Normal);
                 newBakeItem.GetComponent<Rigidbody>().useGravity = true;
                 Destroy(bakeItem);
             }
             else {
                 GameObject newBakeItem = Instantiate(invenCont.bakeIronPrf);
                 newBakeItem.transform.position = targetPosition;
+                ItemManager.Register(newBakeItem, Location.Normal);
                 newBakeItem.GetComponent<CountableItem>().setCurrStack(1);
                 newBakeItem.GetComponent<Rigidbody>().useGravity = true;
                 Destroy(bakeItem);

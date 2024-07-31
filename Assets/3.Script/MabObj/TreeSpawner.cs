@@ -76,8 +76,6 @@ public class TreeSpawner : MonoBehaviour {
             TreeBigController treeB = newObj.GetComponent<TreeBigController>();
             treeB.InitializeObjData(objData);
         }
-
-        Debug.Log(objects.Count);
     }
 
     private void SpawnSmallTrees(List<SmallTreeData> objects) {
@@ -103,8 +101,8 @@ public class TreeSpawner : MonoBehaviour {
         string bigTreeDataAsJson = JsonUtility.ToJson(bigObjectList, true);
         string smallTreeDataAsJson = JsonUtility.ToJson(smallObjectList, true);
 
-        string bigTreeFilePath = Path.Combine(Application.dataPath, "Resources", bigTreeJsonFileName);
-        string smallTreeFilePath = Path.Combine(Application.dataPath, "Resources", smallTreeJsonFileName);
+        string bigTreeFilePath = Path.Combine(Application.dataPath, "Resources", $"{bigTreeJsonFileName}.json");
+        string smallTreeFilePath = Path.Combine(Application.dataPath, "Resources", $"{smallTreeJsonFileName}.json");
 
         File.WriteAllText(bigTreeFilePath, bigTreeDataAsJson);
         File.WriteAllText(smallTreeFilePath, smallTreeDataAsJson);

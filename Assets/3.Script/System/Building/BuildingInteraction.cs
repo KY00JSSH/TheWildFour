@@ -36,6 +36,7 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void Update() {
+        if (Pause.GameIsPause) return;
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (PlayerItemPickControll.ClosestItem == selected.gameObject)
                 Interaction(buildingType);

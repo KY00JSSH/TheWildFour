@@ -17,10 +17,6 @@ public class CommonInven : MonoBehaviour {
     [SerializeField]
     public GameObject sackItem;
 
-    private void Update() {
-       return;
-    }
-
     public void updateInvenInvoke() {
         InvenChanged?.Invoke(inventory);
     }
@@ -82,6 +78,7 @@ public class CommonInven : MonoBehaviour {
             if (itemObject.GetComponent<CountableItem>() != null && inventory[checkNum] != null) {
                 CountableItem invenItem = inventory[checkNum].GetComponent<CountableItem>();
                 invenItem.addCurrStack(itemObject.GetComponent<CountableItem>().CurrStackCount);
+                ItemManager.Register(itemObject, Location.Inventory, checkNum);
             }
         }
         else {
@@ -90,6 +87,7 @@ public class CommonInven : MonoBehaviour {
             if (existBox != 99) {
                 //null로 비워둔 inventory에 추가
                 inventory[existBox] = itemObject;
+                ItemManager.Register(itemObject, Location.Inventory, existBox);
             }
             else {
                 isInvenFull = true;
@@ -218,11 +216,14 @@ public class CommonInven : MonoBehaviour {
                 GameObject changeItem = inventory[changeIndex];
                 inventory[changeIndex] = inventory[currentIndex];
                 inventory[currentIndex] = changeItem;
+                ItemManager.Register(inventory[currentIndex].gameObject, Location.Inventory, currentIndex);
+                ItemManager.Register(inventory[changeIndex].gameObject, Location.Inventory, changeIndex);
                 updateInvenInvoke();
             }
             else {
                 inventory[changeIndex] = inventory[currentIndex];
                 inventory[currentIndex] = null;
+                ItemManager.Register(inventory[changeIndex].gameObject, Location.Inventory, changeIndex);
                 invenFullFlagReset();
                 updateInvenInvoke();
             }

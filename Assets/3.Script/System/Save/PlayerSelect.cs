@@ -5,29 +5,39 @@ using UnityEngine;
 public class PlayerSelect : MonoBehaviour {
     private bool[] playerSelect = new bool[4];
     private PlayerSelectInfo[] players;
-
+    [SerializeField] Animator[] playersAnimator;
+    private float[] playerTargetSpeed = new float[4];
+    
     private void Awake() {
         players = GetComponentsInChildren<PlayerSelectInfo>();
     }
 
+    private void Update() {
+        for(int i = 0; i < playerTargetSpeed.Length; i++) {
+            playersAnimator[i].SetFloat("MoveSpeed", 
+                Mathf.Lerp(playersAnimator[i].GetFloat("MoveSpeed"), playerTargetSpeed[i], Time.deltaTime * 1.5f));
+        }
+    }
+
     public void Select(int player) {
         for (int i = 0; i < playerSelect.Length; i++) {
-            playerSelect[i] = false;
-            players[i].TooltipHide();
+            if (i == player) {
+                playerSelect[player] = true;
+                players[player].TooltipShow();
+                playerTargetSpeed[player] = 1;
+            }
+            else {
+                playerSelect[i] = false;
+                players[i].TooltipHide();
+                playerTargetSpeed[i] = 0;
+            }
         }
-        playerSelect[player] = true;
-        players[player].TooltipShow();
         
         Save.Instance.saveData.playerType = (PlayerType)player;
         if ((PlayerType)player == PlayerType.Ju)
             Save.Instance.saveData.playerInvenCount = 10;
-        //TODO: 강화배낭 수치 변경으로 해야함
         else
             Save.Instance.saveData.playerInvenCount = 8;
-        Save.Instance.saveData.playerInventory = new List<GameObject>();
-        for (int i = 0; i < Save.Instance.saveData.playerInvenCount; i++) {
-            Save.Instance.saveData.playerInventory.Add(null);
-        }
     }
 
 }

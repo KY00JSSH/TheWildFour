@@ -81,9 +81,8 @@ public class RockSpawner : MonoBehaviour {
         string bigDataAsJson = JsonUtility.ToJson(bigRockList, true);
         string midDataAsJson = JsonUtility.ToJson(midRockList, true);
 
-        //TODO: 24 07 31 김수주 저장 경로오류 ->임시 수정 Resources 경로 추가
-        string bigPath = Path.Combine(Application.dataPath, "Resources", bigRockJsonFileName);
-        string midPath = Path.Combine(Application.dataPath, "Resources", midRockJsonFileName);
+        string bigPath = Path.Combine(Application.dataPath, "Resources", $"{bigRockJsonFileName}.json");
+        string midPath = Path.Combine(Application.dataPath, "Resources", $"{midRockJsonFileName}.json");
 
         File.WriteAllText(bigPath, bigDataAsJson);
         File.WriteAllText(midPath, midDataAsJson);

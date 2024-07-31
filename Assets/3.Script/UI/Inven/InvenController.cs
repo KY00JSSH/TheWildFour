@@ -20,17 +20,9 @@ public class InvenController : CommonInven {
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
     }
 
-    private void Start() {
-        initInven();
-        Debug.Log("WOW");
-    }
-
-
-    private void initInven() {
-        inventory = Save.Instance.saveData.playerInventory;
-        //for (int i = 0; i < invenUi.CurrInvenCount; i++) {
-        //    inventory.Add(null);
-        //}
+    public void InitInven(List<GameObject> initInven) {
+        inventory = initInven;
+        updateInvenInvoke();
     }
 
     //장비창과 인벤창 아이템 스위칭
@@ -85,7 +77,6 @@ public class InvenController : CommonInven {
     }
 
     //아이템 제작시 인벤에 들어갈 수 있는지 여부
-    //TODO: 세부 테스트 필요
     public bool createItem(GameObject item) {
         bool isCreate = false;
         if (item.GetComponent<MedicItem>() != null) {
@@ -96,7 +87,6 @@ public class InvenController : CommonInven {
                 if (isMaterials(matKeyArr[i], matCountArr[i])) {
                     if (isAddNewItem(matKeyArr[i], matCountArr[i])) {
                         isCreate = true;
-                        //추가
                     }
                     else {
                         isCreate = false;
@@ -195,6 +185,7 @@ public class InvenController : CommonInven {
             GameObject newItemObject = Instantiate(itemData.DropItemPrefab, playerStatus.gameObject.transform.position, Quaternion.identity, transform);
             itemObject = newItemObject;
             newItemObject.SetActive(false);
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.CraftingItem);
             ItemAdd();
         }
         else if (itemData is EquipItemData equipItemData) {
@@ -206,6 +197,7 @@ public class InvenController : CommonInven {
             GameObject newItemObject = Instantiate(itemData.DropItemPrefab, playerStatus.gameObject.transform.position, Quaternion.identity, transform);
             itemObject = newItemObject;
             newItemObject.SetActive(false);
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.CraftingItem);
             ItemAdd();
         }
     }
