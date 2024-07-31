@@ -39,6 +39,8 @@ public class Animal_Control : MonoBehaviour
     public CapsuleCollider playerDetector_Capsule; //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
     public BoxCollider playerDetector_Box; //자식오브젝트의 플레이어 감지를 위한 캡슐콜라이더
 
+    private GlobalNavMeshController globalNavMeshController;
+
     private void Awake()
     {
         animator = GetComponent<Animator>(); 
@@ -64,6 +66,8 @@ public class Animal_Control : MonoBehaviour
             MAXHP = stats.MAXHP;
             currentHP = MAXHP;
         }
+
+        globalNavMeshController = FindObjectOfType<GlobalNavMeshController>();
     }
 
     private void Start()
@@ -104,31 +108,33 @@ public class Animal_Control : MonoBehaviour
         float distance = Vector3.Distance(this.transform.position, navMeshSurface.position);
         if (distance > 10f)
         {
-            navMeshSurface.transform.position = this.transform.position;
-            NavMeshSurface navMeshSurfaceComponent = navMeshSurface.GetComponent<NavMeshSurface>();
-            
-            if(navMeshSurfaceComponent != null)
-            {
-                try
-                {
-                    navMeshSurfaceComponent.BuildNavMesh();
-                }
-                catch(System.Exception e)
-                {
-                    Debug.LogError("네비메쉬 빌드에 실패했습니다." + e.Message);
-                }
-            }
+            //navMeshSurface.transform.position = this.transform.position;
+            //NavMeshSurface navMeshSurfaceComponent = navMeshSurface.GetComponent<NavMeshSurface>();
+            //
+            //if(navMeshSurfaceComponent != null)
+            //{
+            //    try
+            //    {
+            //        navMeshSurfaceComponent.BuildNavMesh();
+            //    }
+            //    catch(System.Exception e)
+            //    {
+            //        Debug.LogError("네비메쉬 빌드에 실패했습니다." + e.Message);
+            //    }
+            //}
+
+            globalNavMeshController.UpdateNavMesh(transform.position);
         }
 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(transform.position, out hit, 10f, NavMesh.AllAreas))
-        {
-            transform.position = hit.position;
-        }
-        else
-        {
-            Debug.LogWarning("에이전트가 NavMesh에 충분히 가깝지 않습니다.");
-        }
+        //NavMeshHit hit;
+        //if (NavMesh.SamplePosition(transform.position, out hit, 10f, NavMesh.AllAreas))
+        //{
+        //    transform.position = hit.position;
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("에이전트가 NavMesh에 충분히 가깝지 않습니다.");
+        //}
     }      
     
     

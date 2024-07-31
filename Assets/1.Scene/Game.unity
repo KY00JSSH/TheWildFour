@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13055,13 +13055,14 @@ GameObject:
   m_Component:
   - component: {fileID: 380714751}
   - component: {fileID: 380714750}
+  - component: {fileID: 380714752}
   m_Layer: 0
   m_Name: NavMeshSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &380714750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13076,7 +13077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: -1372625422
   m_CollectObjects: 1
-  m_Size: {x: 30, y: 30, z: 30}
+  m_Size: {x: 250, y: 20, z: 250}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
@@ -13090,7 +13091,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 0a923a07e9dc39645a123490161757aa, type: 2}
 --- !u!4 &380714751
 Transform:
   m_ObjectHideFlags: 0
@@ -13105,6 +13106,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &380714752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380714749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54be9035096880d4eadda9703839a535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshSurface: {fileID: 380714750}
 --- !u!1 &384477443
 GameObject:
   m_ObjectHideFlags: 0
@@ -45180,6 +45194,9 @@ MonoBehaviour:
     SurviveDay: 0
     TotalDay: 0
     playerTransform: {x: 0, y: 0, z: 0}
+    playerHP: 0
+    playerWarm: 0
+    playerHunger: 0
     playerAttack: 0
     playerAttackSpeed: 0
     playerCriticalAttack: 0
@@ -45189,7 +45206,6 @@ MonoBehaviour:
     playerGather: 0
     playerSpeed: 0
     playerDashSpeed: 0
-    playerDecDashGage: 0
     playerInvenCount: 0
     playerAddAttack: 0
     playerAddAttackSpeed: 0
@@ -45200,7 +45216,6 @@ MonoBehaviour:
     playerAddGather: 0
     playerAddSpeed: 0
     playerAddDashSpeed: 0
-    playerAddDecDashGage: 0
     playerAddInvenCount: 0
     shelterLevel: 0
     shelterMoveLevel: 0
