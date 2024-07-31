@@ -11,6 +11,6 @@ public class GlobalNavMeshController : MonoBehaviour
     public void UpdateNavMesh(Vector3 position)
     {
         navMeshSurface.transform.position = position;
-        navMeshSurface.BuildNavMesh();
+        //navMeshSurface.BuildNavMesh();
     }
 }

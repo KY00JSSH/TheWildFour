@@ -47,7 +47,7 @@ public class PrefabSliderUI : MonoBehaviour {
         if (parent != null) {
             sliderObj = Instantiate(SliderPrefab, parent.transform);
             sliderObj.name = SliderPrefab.name;
-            if (transform.gameObject.activeSelf) sliderObj.SetActive(true);
+            if (parent.gameObject.activeSelf) sliderObj.SetActive(true);
             else sliderObj.SetActive(false);
         }
     }
