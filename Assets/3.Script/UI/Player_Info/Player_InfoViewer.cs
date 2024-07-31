@@ -36,7 +36,10 @@ public class Player_InfoViewer : MonoBehaviour {
         if (playerInfoCheck()) {
             BGImgChange.gameObject.SetActive(true);
             if (player_Infos[0].value <= 25) {
-               if(player_Infos[0].value != 0) playerInfoBGImgChange(player_Infos[0].value, Color.red);
+                if (player_Infos[0].value != 0) {
+                    playerInfoBGImgChange(player_Infos[0].value, Color.red);
+                    AudioManager.instance.PlaySFX(AudioManager.Sfx.NoHP_heartbeat);
+                }
                 else playerInfoBGImgChange(player_Infos[0].value, Color.gray);
             }
             else {

@@ -7,7 +7,7 @@ public class LoadSceneControll : MonoBehaviour {
 
     // start button
     private void Start() {
-        //AudioManager.instance.PlaySFX(AudioManager.Sfx.loadi);
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.loading);
         StartCoroutine(LoadGameSceneAsync());
     }
 

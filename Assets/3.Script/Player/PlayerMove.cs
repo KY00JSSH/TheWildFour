@@ -107,6 +107,7 @@ public class PlayerMove : MonoBehaviour {
 
             GetComponentInParent<PlayerStatus>().TakeDamage(damage);
             currentFallSpeed = 0f;
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.PlayerFall);
         }
     }
 
@@ -239,7 +240,10 @@ public class PlayerMove : MonoBehaviour {
         moveDirection = Mathf.Atan2(-InputX, InputZ) * Mathf.Rad2Deg;
         if (moveDirection < 0) moveDirection += 360;
 
-        if (InputX != 0 || InputZ != 0) isMove = true;
+        if (InputX != 0 || InputZ != 0) {
+            isMove = true;
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.StepSnow);
+        }
         else {
             isMove = false;
             speed = 0;
@@ -261,7 +265,6 @@ public class PlayerMove : MonoBehaviour {
     }
 
     private void EarnMoveExp () {
-        shelterManager.AddMoveExp(Time.deltaTime * currentSpeed * 30f);
-        //TODO: Release 할 때 수치 값 조정
+        shelterManager.AddMoveExp(Time.deltaTime * currentSpeed * 3f);
     }
 }
