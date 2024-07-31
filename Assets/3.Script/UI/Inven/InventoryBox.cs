@@ -33,7 +33,6 @@ public class InventoryBox : CommonInvenBox, IPointerClickHandler, IBeginDragHand
     }
 
     //TODO: 꾹 누르는 게이지 추가하기
-    //TODO: 제련 돌 30 -> 철광석 1개
 
     public void OnPointerClick(PointerEventData pointerEventData) {
         playerItemUse.SetSelectedBoxKey(key);

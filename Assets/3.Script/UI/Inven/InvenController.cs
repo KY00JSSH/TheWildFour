@@ -20,18 +20,9 @@ public class InvenController : CommonInven {
         playerItemUse = FindObjectOfType<PlayerItemUseControll>();
     }
 
-    private void Start() {
-        initInven();
-    }
-
     public void InitInven(List<GameObject> initInven) {
         inventory = initInven;
-    }
-
-    private void initInven() {
-        //for (int i = 0; i < invenUi.CurrInvenCount; i++) {
-        //    inventory.Add(null);
-        //}
+        updateInvenInvoke();
     }
 
     //장비창과 인벤창 아이템 스위칭
@@ -86,7 +77,6 @@ public class InvenController : CommonInven {
     }
 
     //아이템 제작시 인벤에 들어갈 수 있는지 여부
-    //TODO: 세부 테스트 필요
     public bool createItem(GameObject item) {
         bool isCreate = false;
         if (item.GetComponent<MedicItem>() != null) {
@@ -97,7 +87,6 @@ public class InvenController : CommonInven {
                 if (isMaterials(matKeyArr[i], matCountArr[i])) {
                     if (isAddNewItem(matKeyArr[i], matCountArr[i])) {
                         isCreate = true;
-                        //추가
                     }
                     else {
                         isCreate = false;
