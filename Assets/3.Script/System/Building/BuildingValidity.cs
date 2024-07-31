@@ -11,7 +11,6 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void Update() {
-        Debug.Log(buildingCreate.isValidBuild);
         if (buildingCreate.isBuild) {
             float xRotation = buildingCreate.Building.transform.rotation.eulerAngles.x;
             float zRotation = buildingCreate.Building.transform.rotation.eulerAngles.z;
@@ -24,11 +23,6 @@ public class BuildingValidity : MonoBehaviour {
                         buildingCreate.Building.transform.rotation.eulerAngles.y,
                         Mathf.Clamp(zRotation, -validAngle, validAngle));
 
-
-                Debug.Log(Mathf.Abs(xRotation));
-                Debug.Log(Mathf.Abs(zRotation));
-                Debug.Log(buildingCreate.Building.transform.rotation.eulerAngles);
-                Debug.Log(clampedRotation.eulerAngles);
                 buildingCreate.Building.transform.rotation = clampedRotation;
                 buildingCreate.isValidBuild = false;
             }

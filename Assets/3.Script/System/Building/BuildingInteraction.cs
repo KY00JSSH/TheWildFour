@@ -99,6 +99,10 @@ public class BuildingInteraction : MonoBehaviour {
 
     public void PlayerExitBuilding<T>() where T : MonoBehaviour, IBuildingCreateGeneric {
         T buildingCreate = FindObjectOfType<T>();
+        if(player == null) {
+            PlayerManager playerManager = FindObjectOfType<PlayerManager>();
+            player = playerManager.transform.GetChild((int)playerManager.playerType).gameObject;
+        }
         if (player) {
             if (!player.activeSelf) {
                 player.transform.position = buildingCreate.LastPlayerPosition;

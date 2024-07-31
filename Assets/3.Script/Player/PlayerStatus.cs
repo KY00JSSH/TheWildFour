@@ -89,7 +89,7 @@ public class PlayerStatus : MonoBehaviour {
         else if (item.Status == ItemStatus.Spoiled)
             StatusControl.Instance.GiveStatus(Status.Indigestion, this);
         else
-            StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
+            StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime * 10f);
         AudioManager.instance.PlaySFX(AudioManager.Sfx.Eat);
     }
 
