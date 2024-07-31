@@ -141,7 +141,6 @@ public class MCursor : MonoBehaviour {
         else return false;
     }
 
-    //TODO: 10~12번 검출거리 변경해야함
     // 레이어별 아이콘 변경
     private void ChangeCursorSprite() {
         switch (PlayerItemPickControll.ClosestItem.layer) {

@@ -77,18 +77,16 @@ public class BuildPrefabUI : MonoBehaviour {
             BuildPrefabUISize();
             BuildPrefabUIPosition_Vertical();
         }
-        //TODO: 애니메이션의 타이밍을 알 수 없음 -> 애니메이션 시작 끝 알아야할것같음!
+        //애니메이션의 타이밍을 알 수 없음 -> 임의로 시간 설정함
         if (isValid) if (!BuildImg.activeSelf) 
                 if(!isBuildAniComplete) BuildDustPrefabEffectStart();
     }
 
     protected virtual void OnDisable() {
-        //TODO: 거처 UI 작업장UI 열림
-        Debug.LogWarning("!!!!OnDisable!!!!!!!");
         if (BuildImg != null) {
             BuildImg.SetActive(false);
             isBuiltStart = false;
-            Debug.LogWarning("!!!!(BuildImg != null)!!!!!!!");
+            // 거처 UI 작업장UI 열림 -> dust effect 정지
             dustPrefab.Stop();
         }
     }

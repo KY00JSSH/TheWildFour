@@ -133,7 +133,6 @@ public class Tooltip_Build : MonoBehaviour, IPointerEnterHandler {
         if (buildingCheckCount == currentBuildDetail.needItems.Length)
             isBuildAvailable = true;
         else isBuildAvailable = false;
-        //TODO: !!!!!!!!!!!!!!!인벤아이템 개수 false => true 로 임시 변경 바꿔야함
     }
 
 
