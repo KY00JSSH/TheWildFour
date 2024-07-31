@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
-    private PlayerType playerType;
+    public PlayerType playerType;
     private void Awake() {
         ActivatePlayer();
     }
+
 
     public GameObject ActivatePlayer() {
         GameObject player = null;

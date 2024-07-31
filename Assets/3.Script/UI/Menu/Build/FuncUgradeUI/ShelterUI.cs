@@ -63,6 +63,8 @@ public class ShelterUI : UIInfo {
     static public bool isShelterUIOpen { get { return _isShelterUIOpen; } }
     static private bool _isShelterUIOpen = false;
 
+    private int shelterLevelPast = 0;
+
     private void Awake() {
         shelterManager = FindObjectOfType<ShelterManager>();
         shelterLevelText = transform.GetChild(2).gameObject;
@@ -93,6 +95,12 @@ public class ShelterUI : UIInfo {
         base.Update();
         SkillSliderValue();
         SkillPointerValue();
+
+        if (shelterLevelPast != shelterManager.ShelterLevel) {
+            // 스킬 레벨 버튼 잠금
+            ShelterLevel_Alpha();
+            ShelterLevel_AlphaBtns();
+        }
     }
 
 
@@ -106,10 +114,10 @@ public class ShelterUI : UIInfo {
 
                 Text text = shelterLevelText.transform.GetChild(i).GetComponent<Text>();
                 Color color = text.color;
-
+                
                 if (shelterLevelCount > shelterManager.ShelterLevel) color.a = 0.5f;
                 else color.a = 1f;
-
+                
                 text.color = color;
             }
         }
@@ -118,7 +126,7 @@ public class ShelterUI : UIInfo {
 
     // ShelterManager 레벨받아와서 버튼 잠김 Sprite 변경
     public void ShelterLevel_AlphaBtns() {
-
+        shelterLevelPast = shelterManager.ShelterLevel;
         shelterLevel.text = string.Format("<size=50>{0}</size>\n<size=30>레벨</size>", shelterManager.ShelterLevel);
 
         for (int i = 0; i < shelterbuttons.transform.childCount; i++) {

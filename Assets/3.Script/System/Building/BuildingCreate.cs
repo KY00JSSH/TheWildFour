@@ -173,7 +173,7 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
 
             Building.SetActive(false);
         }
-        if(!PlayerStatus.isDead) {
+        if(FindObjectOfType<PlayerStatus>().GetPlayerHp() != 0) {
             playerTransform.position = LastPlayerPosition;
             playerTransform.gameObject.SetActive(true);
             CameraControl cameraControl = FindObjectOfType<CameraControl>();

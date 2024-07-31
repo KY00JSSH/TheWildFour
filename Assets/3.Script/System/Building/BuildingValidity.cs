@@ -1,8 +1,9 @@
+using UnityEditorInternal;
 using UnityEngine;
 
 public class BuildingValidity : MonoBehaviour {
     private BuildingCreate buildingCreate;
-    private float validAngle = 10f;
+    private float validAngle = 15f;
     private bool isTriggered;
 
     private void Awake() {
@@ -31,6 +32,8 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void OnTriggerStay(Collider other) {
+        if (other.name == "PlayerDetecter" ||
+            (other.CompareTag("Player") && (other is SphereCollider))) return;
         if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) {
             buildingCreate.isValidBuild = false;
             isTriggered = true;
