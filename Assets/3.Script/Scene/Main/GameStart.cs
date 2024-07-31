@@ -3,9 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameStart : MonoBehaviour
 {
-    private void Awake() {
+    private void Start() {
         AudioManager.instance.PlayBGM(AudioManager.Bgm.Title_music_LastSummer,3);
-        Debug.Log("BGM PLAY");
     }
     public void PlayerSelect() {
         // 로딩 씬을 불러옴 - 로딩씬에서 비동기로 게임씬 부름
