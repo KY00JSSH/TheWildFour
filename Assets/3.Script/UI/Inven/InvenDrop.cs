@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class InvenDrop : MonoBehaviour {
@@ -29,6 +30,7 @@ public class InvenDrop : MonoBehaviour {
                             GameObject dropItem = Instantiate(itemComponent, itemDropPosition, Quaternion.identity);
                             dropItem.GetComponent<CountableItem>().setCurrStack(8);
                             dropItem.SetActive(true);
+                            ItemManager.Register(dropItem, Location.Normal);
                         }
                         else if (countItem.CurrStackCount <= 8) {
                             //인벤에 있는 돌, 나무가 8개 이하 이면 그 개수 그대로 현재 아이템 position만 변경하고 필드에 떨굼
@@ -39,6 +41,7 @@ public class InvenDrop : MonoBehaviour {
                     else {
                         if (countItem.CurrStackCount > 1) {
                             GameObject dropItem = Instantiate(itemComponent, itemDropPosition, Quaternion.identity);
+                            ItemManager.Register(dropItem, Location.Normal);
                             dropItem.GetComponent<CountableItem>().setCurrStack(1);
                             if (itemComponent.GetComponent<FoodItem>() != null) {
                                 dropItem.GetComponent<FoodItem>().setVisible();
