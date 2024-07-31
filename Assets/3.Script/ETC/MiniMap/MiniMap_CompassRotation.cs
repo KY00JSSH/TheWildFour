@@ -16,6 +16,10 @@ public class MiniMap_CompassRotation : MonoBehaviour
 
     private float rotationDirection = 0f;
 
+    private void Awake()
+    {
+        miniMapCamera = FindObjectOfType<MiniMap_FollowTarget>().GetComponentInChildren<Camera>().transform;
+    }
     private void Start()
     {
         initialRotation = Quaternion.identity;

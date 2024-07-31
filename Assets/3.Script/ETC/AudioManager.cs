@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     public float sfxVolume;
     //public int sfxChannels;
     AudioSource[] sfxPlayer;
-    int sfxChannel_Index;
+    //int sfxChannel_Index;
     public enum Sfx
     {
         morning, night4, TreeDeath, TreeFall, TreePain, StoneFall, StoneShatterd, 
@@ -78,20 +78,30 @@ public class AudioManager : MonoBehaviour
     {
         //사용시, AudioManager.instance.PlaySFX(AudioManager.Sfx.ClipName); 사용
 
-        for(int i = 0; i < sfxPlayer.Length; i++)
+        AudioClip clipToPlay = sfxClip[(int)sfx];
+
+        // 모든 오디오 소스에서 클립을 찾습니다.
+        foreach (var sfxSource in sfxPlayer)
         {
-            int loop_Index = (i + sfxChannel_Index) % sfxPlayer.Length;
+            if (sfxSource.isPlaying && sfxSource.clip == clipToPlay)
+            {
+                // 현재 클립이 재생 중이면, 재생을 멈추고 새로운 클립을 재생합니다.
+                //sfxSource.Stop();
+                return;
+            }
+        }
 
-            if (sfxPlayer[loop_Index].isPlaying)
-                continue;
-
-            sfxChannel_Index = loop_Index;
-            sfxPlayer[loop_Index].clip = sfxClip[(int)sfx];
-            sfxPlayer[loop_Index].Play();
-            break;
-        }        
+        // 클립 재생
+        foreach (var sfxSource in sfxPlayer)
+        {
+            if (!sfxSource.isPlaying)
+            {
+                sfxSource.clip = clipToPlay;
+                sfxSource.Play();
+                break;
+            }
+        }
     }
-
     public void StopSFX(Sfx sfx) // 특정 SFX 종료
     {
         //사용시, AudioManager.instance.StopSFX(AudioManager.Sfx.CampfireIdle); 사용

@@ -234,6 +234,9 @@ public class PlayerMove : MonoBehaviour {
 
     private float currentSpeed = 0f;
     private float moveDirection = 0f;
+
+    private float lastStepTime = 0f;  // 마지막 발걸음 소리 재생 시간 , 발걸음 소리 맞추기 위해 작성 지훈추가 240731
+    private float stepInterval = 0.5f;  // 발걸음 소리 재생 간격 (초) , 발걸음 소리 맞추기 위해 작성 지훈추가 240731
     private void Move(float speed) {
         InputX = Input.GetAxis("Horizontal");
         InputZ = Input.GetAxis("Vertical");
@@ -242,7 +245,12 @@ public class PlayerMove : MonoBehaviour {
 
         if (InputX != 0 || InputZ != 0) {
             isMove = true;
-            AudioManager.instance.PlaySFX(AudioManager.Sfx.StepSnow);
+
+            if(Time.time > lastStepTime + stepInterval) //발걸음 소리 맞추기 위해 작성 지훈추가 240731
+            {
+                AudioManager.instance.PlaySFX(AudioManager.Sfx.StepSnow);
+                lastStepTime = Time.time;
+            }
         }
         else {
             isMove = false;
