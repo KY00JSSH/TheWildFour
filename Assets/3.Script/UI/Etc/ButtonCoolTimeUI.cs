@@ -94,11 +94,14 @@ public class ButtonCoolTimeUI : MonoBehaviour {
     }
 
 
+    public void StartSkillCooltime_Shelter() {
+        ShelterUI shelterUI = FindObjectOfType<ShelterUI>();
+        Debug.Log("????????????? / " + shelterUI.isShleterSkillAvailable);
+        if (!shelterUI.isShleterSkillAvailable) return;
+        StartButtonInit();
+        isRatioOpposite = true;
+    }
     public void StartSleepCooltime() {
-        if (btn.name.Contains("Move") && shelterManager.MovePoint <= 0) return;
-        else if (btn.name.Contains("Attack") && shelterManager.AttackPoint <= 0) return;
-        else if (btn.name.Contains("Gather") && shelterManager.GatherPoint <= 0) return;
-
         StartButtonInit();
         isRatioOpposite = true;
     }

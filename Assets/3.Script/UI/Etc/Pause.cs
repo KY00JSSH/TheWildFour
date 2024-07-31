@@ -32,7 +32,7 @@ public class Pause : MonoBehaviour {
 
     private void Update() {
         if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen && !menuControll.isMenuButtonOpen) {
-            if (Input.GetKeyDown(KeyCode.Escape)) Escape();
+            if (Input.GetKeyDown(KeyCode.Escape)) if(mainCanvas.gameObject.activeSelf) Escape();
         }
     }
 
@@ -102,6 +102,7 @@ public class Pause : MonoBehaviour {
     public void SaveEnd() {
         FindObjectOfType<RockSpawner>().SaveRockData();
         FindObjectOfType<TreeSpawner>().SaveTreeData();
+
         // 종료 : 메인 씬으로 돌아가기
         SceneManager.LoadScene("Main");
 
@@ -143,7 +144,10 @@ public class Pause : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        TogglePause(false);
+
+        Color color = pauseImg.color;
+        color.a = 0;
+        pauseImg.color = color;
     }
 
 }
