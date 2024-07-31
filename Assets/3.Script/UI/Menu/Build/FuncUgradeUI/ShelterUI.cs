@@ -40,7 +40,6 @@ public class SkillCountImg {
 }
 
 
-//TODO: Inven => 스크립트 변경 끝나면 버튼 이벤트 추가 필요함
 public class ShelterUI : UIInfo {
 
     private ShelterManager shelterManager;

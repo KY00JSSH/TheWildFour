@@ -39,9 +39,15 @@ public class Tooltip_Inven : TooltipInfo_Inven, IPointerEnterHandler, IPointerEx
                 weapSlider.gameObject.SetActive(true);
                 InvenItemText_Weap(inventoryBox.CurrentItem.GetComponent<WeaponItem>());
             }
+            else {
+                weapSlider.gameObject.SetActive(false);
+                invenBoxSlider.gameObject.SetActive(false);
+            }
         }
         else {
             // 아이템을 사용했거나 버렸을 경우
+            weapSlider.gameObject.SetActive(false);
+            invenBoxSlider.gameObject.SetActive(false);
             invenBoxSlider.transform.Find("Background").GetComponent<Image>().color = Color.white;
             WeapItemOff();
             FoodItemOff();

@@ -51,7 +51,6 @@ public class PlayerMove : MonoBehaviour {
         isMove = false;
         isDash = false;
 
-        //TODO : JSON 구현 되면 default를 Save된 값으로 바꿀 것
         TotalDashGage = defaultDashGage;
         CurrentDashGage = TotalDashGage;
         DecDashGage = defaultDecDashGage;

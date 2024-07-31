@@ -39,7 +39,6 @@ public class PlayerAbility : MonoBehaviour {
         playerStatus = FindObjectOfType<PlayerStatus>();
         playerMove = FindObjectOfType<PlayerMove>();
 
-        //TODO: SAVE 구현 시 JSON에서 받아오기
         playerAttack = Save.Instance.saveData.playerAttack;
         playerAttackSpeed = Save.Instance.saveData.playerAttackSpeed;
         playerCriticalAttack = Save.Instance.saveData.playerCriticalAttack;
@@ -49,7 +48,7 @@ public class PlayerAbility : MonoBehaviour {
         playerGather = Save.Instance.saveData.playerGather;
         playerSpeed = Save.Instance.saveData.playerSpeed;
         playerDashSpeed = Save.Instance.saveData.playerDashSpeed;
-        playerDecDashGage = Save.Instance.saveData.playerDecDashGage;
+        playerDecDashGage = 5f;
         playerInvenCount = Save.Instance.saveData.playerInvenCount;
 
         playerAddAttack = 0;
@@ -70,15 +69,9 @@ public class PlayerAbility : MonoBehaviour {
         UpdateAblity();
     }
 
-    private void Update() {
-        //if(ShelterManager.)
-    }
-
-
     public void UpdateAblity() {
         playerMove.isSkilled = 
-            shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : true;
-        //TODO: Release할 때 true : false로 수정
+            shelterManager.GetSkill("전력 질주").nowSkillLevel == 1 ? true : false;
         
         playerAddSpeed = shelterManager.GetSkill("속도").GetValue();
         playerMove.SetPlayerMoveSpeed(playerSpeed + playerAddSpeed);
@@ -87,14 +80,13 @@ public class PlayerAbility : MonoBehaviour {
         playerAddDecDashGage =
             shelterManager.GetSkill("전력 질주 시간").GetValue();
         playerMove.DecDashGage = playerDecDashGage - playerAddDecDashGage;
-        playerStatus.PlayerMaxHp =
-            playerStatus.PlayerMaxHp + shelterManager.GetSkill("운동").GetValue();
+        playerStatus.SetPlayerMaxHp(
+            playerStatus.GetPlayerMaxHp() + shelterManager.GetSkill("운동").GetValue());
 
         playerAddAttack =
             shelterManager.GetSkill("근접 공격력").GetValue() +
             shelterManager.GetSkill("원거리 공격력").GetValue() +
             PlayerWeaponEquip.CurrentEquipWeaponAttackPoint;
-        //TODO: 플레이어 공격 구현 후 공격속도 적용
         playerAddAttackSpeed = shelterManager.GetSkill("공격 속도").GetValue();
         playerMove.GetComponent<PlayerAttack>().SetAttackSpeed(GetTotalPlayerAttackSpeed());
 

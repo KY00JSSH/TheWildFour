@@ -34,7 +34,6 @@ public class ShelterManager : MonoBehaviour {
         tooltipNum = FindObjectOfType<TooltipNum>();
         invenCont = FindObjectOfType<InvenController>();
 
-        //TODO: SAVE 구현 시 JSON에서 받아오기
         ShelterLevel = Save.Instance.saveData.shelterLevel;
         MaxShelterLevel = 5;
 

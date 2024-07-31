@@ -29,13 +29,13 @@ public class SunLight : MonoBehaviour {
         worldHour = TimeManager.Instance.GetWorldHour();
 
         if (worldHour >= 6 && worldHour < 23) {
-            float dayHours = 23f - 6f; // ≥∑ Ω√∞£¥Î¿« √— Ω√∞£
+            float dayHours = 23f - 6f; // ÎÇÆ ÏãúÍ∞ÑÎåÄÏùò Ï¥ù ÏãúÍ∞Ñ
             float currentDayHour = worldHour - 6f;
             float dayAngle = 180f * currentDayHour / dayHours;
             transform.rotation = Quaternion.Euler(dayAngle, dayAngle, 0);
         }
         else {
-            float nightHours = 24f - 23f + 6f; // π„ Ω√∞£¥Î¿« √— Ω√∞£ (4Ω√∞£ + 6Ω√∞£)
+            float nightHours = 24f - 23f + 6f; // Î∞§ ÏãúÍ∞ÑÎåÄÏùò Ï¥ù ÏãúÍ∞Ñ (4ÏãúÍ∞Ñ + 6ÏãúÍ∞Ñ)
             float currentNightHour = (worldHour >= 23) ? worldHour - 23f : worldHour + 1f;
             float nightAngle = 180f * currentNightHour / nightHours;
             transform.rotation = Quaternion.Euler(nightAngle + 180f, nightAngle + 180f, 0);
@@ -50,10 +50,6 @@ public class SunLight : MonoBehaviour {
             else
                 StartCoroutine(ChangeSkyColor(nightColor));
         }
-
-        //TODO: 6~7Ω√, 22~23Ω√ ¡÷»≤ ¡∂∏Ì
-        //TODO: 23Ω√ ~ 6Ω√ ∞À«™∏• ¡∂∏Ì, 7Ω√ ~ 22Ω√ »Ú ¡∂∏Ì
-
     }
 
     public IEnumerator ChangeSkyColor(Color targetColor) {

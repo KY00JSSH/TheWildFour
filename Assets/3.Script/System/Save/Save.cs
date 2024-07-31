@@ -26,6 +26,9 @@ public class SaveData {
     public float TotalDay;
 
     public Vector3 playerTransform;
+    public float playerHP;
+    public float playerWarm;
+    public float playerHunger;
 
     public float playerAttack;
     public float playerAttackSpeed;
@@ -36,7 +39,6 @@ public class SaveData {
     public float playerGather;
     public float playerSpeed;
     public float playerDashSpeed;
-    public float playerDecDashGage;
     public int playerInvenCount;
 
     public float playerAddAttack;
@@ -48,7 +50,6 @@ public class SaveData {
     public float playerAddGather;
     public float playerAddSpeed;
     public float playerAddDashSpeed;
-    public float playerAddDecDashGage;
     public int playerAddInvenCount;
 
     public int shelterLevel;
@@ -78,6 +79,7 @@ public class SaveData {
 
     public List<int> ItemKey;
     public List<Vector3> ItemPosition;
+    internal float playerMaxHP;
 }
 
 [System.Serializable]
@@ -148,6 +150,12 @@ public class Save : MonoBehaviour {
             player = FindObjectOfType<PlayerManager>().ActivatePlayer();
         saveData.playerTransform = player.transform.position;
 
+        PlayerStatus playerStatus = player.GetComponentInParent<PlayerStatus>();
+        saveData.playerMaxHP = playerStatus.GetPlayerMaxHp();
+        saveData.playerHP = playerStatus.GetPlayerHp();
+        saveData.playerWarm = playerStatus.GetPlayerWarm();
+        saveData.playerHunger = playerStatus.GetPlayerHunger();
+
         ShelterManager shelterManager = FindObjectOfType<ShelterManager>();
         saveData.shelterLevel = shelterManager.ShelterLevel;
         saveData.shelterMoveLevel = shelterManager.MoveLevel;
@@ -163,14 +171,20 @@ public class Save : MonoBehaviour {
         WorkshopManager workshopManager = FindObjectOfType<WorkshopManager>();
         saveData.workshopLevel = workshopManager.WorkshopLevel;
 
-        saveData.shelterPosition = shelterManager.GetComponent<ShelterCreate>().Building.transform.position;
-        saveData.workshopPosition = workshopManager.GetComponent<WorkshopCreate>().Building.transform.position;
-        saveData.shelterRotation = shelterManager.GetComponent<ShelterCreate>().Building.transform.rotation;
-        saveData.workshopRotation = workshopManager.GetComponent<WorkshopCreate>().Building.transform.rotation;
+        GameObject shelter = shelterManager.GetComponent<ShelterCreate>().Building;
+        if (shelter.activeSelf) {
+            saveData.shelterPosition = shelter.transform.position;
+            saveData.shelterRotation = shelter.transform.rotation;
+        }
+        GameObject workshop = workshopManager.GetComponent<WorkshopCreate>().Building;
+        if (shelter.activeSelf) {
+            saveData.workshopPosition = workshop.transform.position;
+            saveData.workshopRotation = workshop.transform.rotation;
+        }
 
         CampfireChestCreate[] campfireChestCreates = FindObjectsOfType<CampfireChestCreate>();
-        foreach(var eachCreate in campfireChestCreates) {
-            foreach(Transform eachChild in eachCreate.transform) {
+        foreach (var eachCreate in campfireChestCreates) {
+            foreach (Transform eachChild in eachCreate.transform) {
                 if (eachChild.TryGetComponent(out Campfire campfire)) {
                     if (saveData.campfirePosition == null) saveData.campfirePosition = new List<Vector3>();
                     saveData.campfirePosition.Add(eachChild.position);
@@ -186,8 +200,7 @@ public class Save : MonoBehaviour {
             }
         }
 
-        //TODO: 여기부터 연동 되있는지 확인
-        for(int i = 0; i< saveData.skillMoveLevel.Length;i++) {
+        for (int i = 0; i < saveData.skillMoveLevel.Length; i++) {
             saveData.skillMoveLevel[i] = shelterManager.skillMove[i].nowSkillLevel;
             saveData.skillAttackLevel[i] = shelterManager.skillAttack[i].nowSkillLevel;
             saveData.skillGatherLevel[i] = shelterManager.skillGather[i].nowSkillLevel;
@@ -199,14 +212,18 @@ public class Save : MonoBehaviour {
     }
 
     public void InitSaveFile() {
-        saveData.WorldTime = 90f;
+        saveData.WorldTime = 150f;
         saveData.SurviveDay = 0;
         saveData.TotalDay = (int)((saveData.WorldTime - 90f) / 360f);
         saveData.isNewGame = true;
 
-        saveData.playerType = PlayerType.Ju;
+        saveData.playerType = PlayerType.Hun;
 
         saveData.playerTransform = Vector3.zero;
+        saveData.playerMaxHP = 100f;
+        saveData.playerHP = 100f;
+        saveData.playerWarm = 100f;
+        saveData.playerHunger = 100f;
 
         saveData.playerAttack = 2f;
         saveData.playerAttackSpeed = 1f;

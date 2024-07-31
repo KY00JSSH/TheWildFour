@@ -16,8 +16,10 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     public void LevelUp() {
-        //TODO: Workshop upgrade item 부족하면 return
         if (WorkshopLevel == MaxWorkshopLevel) return;
+        // 24 08 01 김수주 Workshop upgrade item 부족하면 return
+        Tooltip_Workshop tooltip_Workshop = FindObjectOfType<Tooltip_Workshop>();
+        if (!tooltip_Workshop.isWSUpgradeAvailable) return;
 
         Destroy(workshop.Building.GetComponent<Rigidbody>());
         StartCoroutine(WaitForUpgrade());
@@ -37,7 +39,6 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     private void Start() {
-        //TODO: SAVE 구현 시 JSON에서 받아오기
         WorkshopLevel = Save.Instance.saveData.workshopLevel;
         MaxWorkshopLevel = 5;
     }
