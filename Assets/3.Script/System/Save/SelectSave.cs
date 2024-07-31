@@ -23,6 +23,7 @@ public class SelectSave : MonoBehaviour
     public void OnEnterNewGame(Button callButton) {
         NewGameUI.SetActive(true);
         callButton.transform.parent.gameObject.SetActive(false);
+        Save.Instance.InitSaveFile();
     }
     public void OnEnterLoadGamd(Button callButton) {
         LoadGameUI.SetActive(true); 

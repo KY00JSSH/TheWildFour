@@ -6,7 +6,8 @@ public class LoadSceneControll : MonoBehaviour {
     // Start 메서드에서 비동기 로드 시작
 
     // start button
-    void Start() {
+    private void Start() {
+        //AudioManager.instance.PlaySFX(AudioManager.Sfx.loadi);
         StartCoroutine(LoadGameSceneAsync());
     }
 

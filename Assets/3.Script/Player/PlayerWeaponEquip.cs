@@ -58,6 +58,7 @@ public class PlayerWeaponEquip : MonoBehaviour {
                         eachWeaponObject.SetActive(true);
 
                         CurrentEquipWeapon = eachWeaponObject;  // 현재 장착 무기 설정
+                        AudioManager.instance.PlaySFX(AudioManager.Sfx.WeaponEquip);
                     }
                 }
             }
