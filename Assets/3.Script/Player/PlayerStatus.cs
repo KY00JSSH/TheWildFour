@@ -27,10 +27,12 @@ public class PlayerStatus : MonoBehaviour {
     }
 
 
-    private float defaultHp = 100, defaultHunger = 100, defaultWarm = 100;
-    private float PlayerHp, PlayerHunger, PlayerWarm;
-    public float PlayerMaxHp { get; set; }
+    private float PlayerHp, PlayerHunger, PlayerWarm, PlayerMaxHp;
+    public void SetPlayerMaxHp(float hp) { PlayerMaxHp = hp; }
+    public float GetPlayerMaxHp() { return PlayerMaxHp; }
     public float GetPlayerHp() { return PlayerHp; }
+    public float GetPlayerWarm() { return PlayerWarm; }
+    public float GetPlayerHunger() { return PlayerHunger; }
 
     private float WarmDamage = 0.5f, HungerDamage = 0.2f;
     private float HealRestore = 0.3f, HungerRestore = 0.5f, WarmRestore = 1.2f;
@@ -161,10 +163,10 @@ public class PlayerStatus : MonoBehaviour {
     }
 
     private void Start() {
-        PlayerMaxHp = defaultHp;
-        PlayerHp = PlayerMaxHp;
-        PlayerHunger = defaultHunger;
-        PlayerWarm = defaultWarm;
+        PlayerMaxHp = Save.Instance.saveData.playerMaxHP;
+        PlayerHp = Save.Instance.saveData.playerHP;
+        PlayerWarm = Save.Instance.saveData.playerWarm;
+        PlayerHunger = Save.Instance.saveData.playerHunger;
         statusList = new bool[Enum.GetValues(typeof(Status)).Length];
         AudioManager.instance.PlayBGM(AudioManager.Bgm.music_IndifferentSlow, 2);
 

@@ -37,7 +37,6 @@ public class WorkshopManager : MonoBehaviour {
     }
 
     private void Start() {
-        //TODO: SAVE 구현 시 JSON에서 받아오기
         WorkshopLevel = Save.Instance.saveData.workshopLevel;
         MaxWorkshopLevel = 5;
     }

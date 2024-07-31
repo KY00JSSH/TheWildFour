@@ -51,7 +51,6 @@ public class TimeManager : MonoBehaviour {
     */
 
     private void Start() {
-        //TODO: Save 구현 시 세이브 된 WorldTime으로 가져오기 (완료)
         WorldTime = Save.Instance.saveData.WorldTime;
         WorldHour = WorldTime / (360f / 24f) % 24;
         SurviveDay = Save.Instance.saveData.SurviveDay;
