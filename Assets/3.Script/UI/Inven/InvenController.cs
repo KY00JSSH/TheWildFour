@@ -185,6 +185,7 @@ public class InvenController : CommonInven {
             GameObject newItemObject = Instantiate(itemData.DropItemPrefab, playerStatus.gameObject.transform.position, Quaternion.identity, transform);
             itemObject = newItemObject;
             newItemObject.SetActive(false);
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.CraftingItem);
             ItemAdd();
         }
         else if (itemData is EquipItemData equipItemData) {
@@ -196,6 +197,7 @@ public class InvenController : CommonInven {
             GameObject newItemObject = Instantiate(itemData.DropItemPrefab, playerStatus.gameObject.transform.position, Quaternion.identity, transform);
             itemObject = newItemObject;
             newItemObject.SetActive(false);
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.CraftingItem);
             ItemAdd();
         }
     }
