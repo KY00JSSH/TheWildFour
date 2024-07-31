@@ -38,6 +38,7 @@ public class FireObject : MonoBehaviour, IFireLight {
             invenCont.updateInvenInvoke();
             IncreaseTime(10f);
             if (currentTime > 0 && !isBurn) {
+                AudioManager.instance.PlaySFX(AudioManager.Sfx.CampfireKindle);
                 StartCoroutine(Burn());
             }
         }
@@ -46,7 +47,7 @@ public class FireObject : MonoBehaviour, IFireLight {
     private IEnumerator Burn() {
         isBurn = true;
         fireEffect?.Play();
-
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.CampfireIdle);
         while (currentTime > 0) {
             currentTime -= tickTime;
             yield return new WaitForSeconds(1f);
@@ -55,6 +56,7 @@ public class FireObject : MonoBehaviour, IFireLight {
         LightOff();
         isBurn = false;
         fireEffect?.Stop();
+        //AudioManager.instance.stopsf
     }
 
     protected void IncreaseTime(float time) {

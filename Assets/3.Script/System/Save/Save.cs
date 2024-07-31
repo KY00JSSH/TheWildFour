@@ -19,6 +19,8 @@ public class SaveData {
     public bool isExtreme;
     public PlayerType playerType;
 
+    public bool isNewGame;
+
     public float WorldTime;
     public int SurviveDay;
     public float TotalDay;
@@ -132,6 +134,8 @@ public class Save : MonoBehaviour {
     }
 
     public void GetTargetSaveData() {
+        saveData.isNewGame = false;
+
         saveData.WorldTime = TimeManager.Instance.GetWorldTime();
         saveData.SurviveDay = TimeManager.Instance.GetSurviveDay();
         saveData.TotalDay = TimeManager.Instance.GetTotalDay();
@@ -195,6 +199,7 @@ public class Save : MonoBehaviour {
         saveData.WorldTime = 90f;
         saveData.SurviveDay = 0;
         saveData.TotalDay = (int)((saveData.WorldTime - 90f) / 360f);
+        saveData.isNewGame = true;
 
         saveData.playerType = PlayerType.Ju;
 

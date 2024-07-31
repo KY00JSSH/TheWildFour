@@ -120,6 +120,8 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
 
         MenuMap_MarkerSpawner menuMap_markerSpawner = FindObjectOfType<MenuMapZoom>().menuMap.transform.GetComponent<MenuMap_MarkerSpawner>();
         menuMap_markerSpawner.SetMarker(Building.GetComponent<BuildingInteraction>().Type, Building.transform.position);
+
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.BuildingBuild);
     }
 
     private void buildItemUse() {
@@ -177,6 +179,8 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
             CameraControl cameraControl = FindObjectOfType<CameraControl>();
             cameraControl.cinemachineFreeLook.Follow = playerTransform;
             cameraControl.cinemachineFreeLook.LookAt = playerTransform;
+
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.BuildingPackup);
         }
     }
 

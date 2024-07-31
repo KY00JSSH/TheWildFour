@@ -83,6 +83,7 @@ public class PlayerStatus : MonoBehaviour {
             StatusControl.Instance.GiveStatus(Status.Indigestion, this);
         else
             StatusControl.Instance.GiveStatus(Status.Full, this, item.HealTime);
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.Eat);
     }
 
     public void EatMedicine(MedicItem item) {

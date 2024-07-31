@@ -47,7 +47,10 @@ public class RockController : MonoBehaviour {
             enable = false;
             rockSpawner.UpdateRockData(objectNumber, enable, health, type == 1 ? true : false);
             changeObjectModel();
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.StoneShatterd);
         }
+        else
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.StoneFall);
     }
 
     private void changeObjectModel() {

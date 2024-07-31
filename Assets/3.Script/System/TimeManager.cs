@@ -56,6 +56,8 @@ public class TimeManager : MonoBehaviour {
         WorldHour = WorldTime / (360f / 24f) % 24;
         SurviveDay = Save.Instance.saveData.SurviveDay;
         TotalDay = (int)((WorldTime - 90f) / 360f);
+
+        AudioManager.instance.PlayBGM(AudioManager.Bgm.music_IndifferentSlow);
     }
     
     private void Update() {
@@ -70,7 +72,10 @@ public class TimeManager : MonoBehaviour {
                 if ((int)WorldHour == 6) {
                     SurviveDay++;
                     TotalDay++;
+                    AudioManager.instance.PlaySFX(AudioManager.Sfx.morning);
                 }
+                else
+                    AudioManager.instance.PlaySFX(AudioManager.Sfx.night4);
             }
         }
         else isOrangeSky = false;

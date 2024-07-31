@@ -8,8 +8,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("#BGM")]
     public AudioClip[] bgmClip;
-    public float bgmVolume;
-    AudioSource[] bgmPlayer;    
+    public float bgmVolume = 100;
+    AudioSource[] bgmPlayer;
     public enum Bgm
     {
         music_GoFarGoWideSnowDesert, music_IndifferentSlow, Title_music_LastSummer
@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("#SFX")]
     public AudioClip[] sfxClip;
-    public float sfxVolume;
+    public float sfxVolume = 100;
     public int channels;
     AudioSource[] sfxPlayer;
     int channel_Index;
@@ -32,7 +32,13 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+
         Init();
     }
 
@@ -110,6 +116,7 @@ public class AudioManager : MonoBehaviour
             bgmPlayer[i].Play();
             break; // 새로운 BGM을 하나만 재생하므로 루프 탈출
         }
+        Debug.Log("PLAYED");
     }
 
     public void StopBGM()
