@@ -9,7 +9,7 @@ public class Pause : MonoBehaviour {
 
     private Canvas mainCanvas;
     [SerializeField] private Image pauseImg;
-    private bool isPause = false;
+    static public bool GameIsPause { get; private set; }
 
     // 뒤로가기 버튼
     private Stack<GameObject> gameObjects = new Stack<GameObject>();
@@ -25,15 +25,14 @@ public class Pause : MonoBehaviour {
     }
     private void Start() {
         TogglePause(false);
-        gameObjects.Push(transform.gameObject);
-        // 버튼 리스너 추가
-        button.onClick.AddListener(() => OnButtonClick(button));
     }
 
     private void Update() {
         if (!ShelterUI.isShelterUIOpen && !WorkShopUI.isWorkshopUIOpen && !menuControll.isMenuButtonOpen) {
-            if (Input.GetKeyDown(KeyCode.Escape)) if(mainCanvas.gameObject.activeSelf) Escape();
+            if (Input.GetKeyDown(KeyCode.Escape)) Escape();
         }
+
+        if(GameIsPause) AudioManager.instance.StopBGM();
     }
 
     // 현재 객체의 자식들을 활성화 시킴
@@ -50,7 +49,6 @@ public class Pause : MonoBehaviour {
                 if (child.TryGetComponent(out Text text)) continue;
             }            
             child.gameObject.SetActive(false);
-
         }
     }
 
@@ -65,17 +63,18 @@ public class Pause : MonoBehaviour {
     private void TogglePause(bool isPaused) {
         if (isPaused) {
             StartCoroutine(pauseImgAlphaChange());
+            GameIsPause = true;
             mainCanvas.gameObject.SetActive(false);
             pauseChildSetActive(transform.gameObject);
         }
         else {
-
             Time.timeScale = 1;
+
             mainCanvas.gameObject.SetActive(true);
             pauseChildSetActiveOff(transform.gameObject);
             gameObjects.Clear();
             gameObjects.Push(transform.gameObject);
-            isPause = false;
+            GameIsPause = false;
 
             Color color = pauseImg.color;
             color.a = 0;
@@ -95,6 +94,7 @@ public class Pause : MonoBehaviour {
 
     // 저장 및 종료 -> 취소하기 + 저장 및 종료
     public void SaveEndFirst(GameObject gameObject) {
+        gameObjects.Push(gameObject.GetComponentInParent<Button>().gameObject);
         gameObject.SetActive(true);
     }
 
@@ -112,9 +112,10 @@ public class Pause : MonoBehaviour {
 
     // 계속
     public void Continue() {
-        isPause = !isPause;
-        TogglePause(isPause);
+        GameIsPause = false;
+        TogglePause(GameIsPause);
     }
+
     public void Cancle(GameObject gameObject) {
         gameObjects.Pop();
         gameObject.SetActive(false);
@@ -125,22 +126,16 @@ public class Pause : MonoBehaviour {
     public void Escape() {
         GameObject obj = gameObjects.Pop();
         pauseChildSetActiveOff(obj);
-
         // 본인만 남은거아니면 상위객체 재활성화
-        if (gameObjects.Count != 1) {
+        if (gameObjects.Count > 1) {
             pauseSilbingSetActive(obj);
         }
         else {
             gameObjects.Push(transform.gameObject);
-            isPause = !isPause;
-            TogglePause(isPause);
+            GameIsPause = !GameIsPause;
+            TogglePause(GameIsPause);
         }
-    }
 
-
-    // 버튼 클릭 시 호출되는 메소드
-    private void OnButtonClick(Button clickedButton) {
-        gameObjects.Push(clickedButton.gameObject);
     }
 
     private void OnDestroy() {
