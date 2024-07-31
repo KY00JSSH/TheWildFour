@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class Player_UI : MonoBehaviour {
     /*
-     1. ´ë½Ã °ÔÀÌÁö
-    2. ½ºÅ³ °ÔÀÌÁö
+     1. ëŒ€ì‹œ ê²Œì´ì§€
+    2. ìŠ¤í‚¬ ê²Œì´ì§€
 
     =====
-    1. ÇöÀç °ÔÀÌÁö / ÀüÃ¼ °ÔÀÌÁö = ½½¶óÀÌ´õ °ª
-    2. ÇöÀç °ÔÀÌÁö == ÀüÃ¼ °ÔÀÌÁö -> ÃµÃµÈ÷ ¾ËÆÄ°ªÀ» ÁÙÀÓ 3ÃÊ µÚ 
-    3. ÇÃ·¹ÀÌ¾î À§Ä¡ µû¶ó °¥ °Í
+    1. í˜„ì¬ ê²Œì´ì§€ / ì „ì²´ ê²Œì´ì§€ = ìŠ¬ë¼ì´ë” ê°’
+    2. í˜„ì¬ ê²Œì´ì§€ == ì „ì²´ ê²Œì´ì§€ -> ì²œì²œíˆ ì•ŒíŒŒê°’ì„ ì¤„ì„ 3ì´ˆ ë’¤ 
+    3. í”Œë ˆì´ì–´ ìœ„ì¹˜ ë”°ë¼ ê°ˆ ê²ƒ
 
      */
     [SerializeField] private Slider playerSlider;
@@ -60,7 +60,7 @@ public class Player_UI : MonoBehaviour {
         if (playerSlider.value == 1) {
             if (fadeCoroutine != null) {
                 StopCoroutine(fadeCoroutine);
-                fadeCoroutine = null; // ÄÚ·çÆ¾ ÃßÀûÀ» À§ÇØ null·Î ¼³Á¤
+                fadeCoroutine = null; // ì½”ë£¨í‹´ ì¶”ì ì„ ìœ„í•´ nullë¡œ ì„¤ì •
             }
             else
                 fadeCoroutine = StartCoroutine(SliderDisappear_co());
@@ -68,11 +68,11 @@ public class Player_UI : MonoBehaviour {
     }
 
     private IEnumerator SliderDisappear_co() {
-        Image fillImage = playerSlider.fillRect.GetComponent<Image>();  // Fill ÀÌ¹ÌÁö °¡Á®¿À±â
+        Image fillImage = playerSlider.fillRect.GetComponent<Image>();  // Fill ì´ë¯¸ì§€ ê°€ì ¸ì˜¤ê¸°
         Color newColor = fillImage.color;
 
-        while (newColor.a > 0.5f) {  // ¾ËÆÄ°ªÀÌ 0º¸´Ù Å¬ µ¿¾È ¹İº¹
-            newColor.a -= 0.01f;  // ¾ËÆÄ°ªÀ» °¨¼Ò
+        while (newColor.a > 0.5f) {  // ì•ŒíŒŒê°’ì´ 0ë³´ë‹¤ í´ ë™ì•ˆ ë°˜ë³µ
+            newColor.a -= 0.01f;  // ì•ŒíŒŒê°’ì„ ê°ì†Œ
             fillImage.color = newColor;
             yield return null;
         }
@@ -80,7 +80,7 @@ public class Player_UI : MonoBehaviour {
     }
 
     private void SliderAlphaInit() {
-        Image fillImage = playerSlider.fillRect.GetComponent<Image>();  // Fill ÀÌ¹ÌÁö °¡Á®¿À±â
+        Image fillImage = playerSlider.fillRect.GetComponent<Image>();  // Fill ì´ë¯¸ì§€ ê°€ì ¸ì˜¤ê¸°
         Color newColor = fillImage.color;
         newColor.a = 1;
         fillImage.color = newColor;
@@ -88,21 +88,21 @@ public class Player_UI : MonoBehaviour {
 
     private void SettingSliderPosition() {
 
-        // ½½¶óÀÌ´õ À§Ä¡ 
+        // ìŠ¬ë¼ì´ë” ìœ„ì¹˜ 
         RectTransform sliderPosition = playerSlider.GetComponent<RectTransform>();
 
-        // ÇÃ·¹ÀÌ¾î À§Ä¡ 
+        // í”Œë ˆì´ì–´ ìœ„ì¹˜ 
         Vector3 playerPosition = playerTransform.position;
         Vector3 playerscreenPo = Camera.main.WorldToScreenPoint(playerPosition);
 
-        // Äµ¹ö½º RectTransform °¡Á®¿À±â
+        // ìº”ë²„ìŠ¤ RectTransform ê°€ì ¸ì˜¤ê¸°
         RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, playerscreenPo, null, out localPoint);
 
         if (!isInitialSetupDone || (sliderPosition.anchoredPosition.x - localPoint.x > sliderStabilization) || (sliderPosition.anchoredPosition.y - localPoint.y > sliderStabilization)) {
 
-            // ½½¶óÀÌ´õÀÇ À§Ä¡¸¦ Á¶Á¤ÇÏ¿© ÇÃ·¹ÀÌ¾î À§Ä¡¿¡ ¸ÂÃã
+            // ìŠ¬ë¼ì´ë”ì˜ ìœ„ì¹˜ë¥¼ ì¡°ì •í•˜ì—¬ í”Œë ˆì´ì–´ ìœ„ì¹˜ì— ë§ì¶¤
             sliderPosition.anchoredPosition = localPoint;
             sliderPosition.anchoredPosition += new Vector2(0, Slider_AddY);
             isInitialSetupDone = true;
