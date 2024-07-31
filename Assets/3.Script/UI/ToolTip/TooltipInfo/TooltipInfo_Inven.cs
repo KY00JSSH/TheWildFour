@@ -58,9 +58,6 @@ public class TooltipInfo_Inven : MonoBehaviour
         Tooltip_inven.transform.position = tooltipPos;
         textTitle.text = _item.itemData.name;
         textMain.text = _item.itemData.Description;
-        if (_item is FoodItem foodItem) {
-            if (foodItem.Status == ItemStatus.Rotten) textMain.text = "부패한 음식. 먹을 수 없습니다.";
-        }
         itemImg.sprite = _item.itemData.Icon;
     }
 

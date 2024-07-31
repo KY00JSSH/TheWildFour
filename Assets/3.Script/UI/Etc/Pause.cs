@@ -62,6 +62,7 @@ public class Pause : MonoBehaviour {
     // 일시정지 기능 bool로 활성화 조절
     private void TogglePause(bool isPaused) {
         if (isPaused) {
+            Time.timeScale = 0;
             StartCoroutine(pauseImgAlphaChange());
             GameIsPause = true;
             mainCanvas.gameObject.SetActive(false);
@@ -89,7 +90,6 @@ public class Pause : MonoBehaviour {
             pauseImg.color = color;
             yield return null;
         }
-        Time.timeScale = 0;
     }
 
     // 저장 및 종료 -> 취소하기 + 저장 및 종료

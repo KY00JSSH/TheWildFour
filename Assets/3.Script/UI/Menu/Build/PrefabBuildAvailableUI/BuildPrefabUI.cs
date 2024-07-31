@@ -80,13 +80,16 @@ public class BuildPrefabUI : MonoBehaviour {
         //TODO: 애니메이션의 타이밍을 알 수 없음 -> 애니메이션 시작 끝 알아야할것같음!
         if (isValid) if (!BuildImg.activeSelf) 
                 if(!isBuildAniComplete) BuildDustPrefabEffectStart();
-                
     }
 
     protected virtual void OnDisable() {
+        //TODO: 거처 UI 작업장UI 열림
+        Debug.LogWarning("!!!!OnDisable!!!!!!!");
         if (BuildImg != null) {
             BuildImg.SetActive(false);
             isBuiltStart = false;
+            Debug.LogWarning("!!!!(BuildImg != null)!!!!!!!");
+            dustPrefab.Stop();
         }
     }
 
