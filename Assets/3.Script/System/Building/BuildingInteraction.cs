@@ -29,7 +29,8 @@ public class BuildingInteraction : MonoBehaviour {
     }
 
     private void OnEnable() {
-        selected = GetComponentInChildren<ItemSelectControll>();
+        selected = GetComponentInChildren<ItemSelectControll>(); 
+        player = GameObject.FindGameObjectWithTag("Player");
 
         InteractionUI = interactionManager.InteractionUI;
         menuControl = interactionManager.menuControl;
