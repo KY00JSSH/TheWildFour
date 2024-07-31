@@ -1,8 +1,9 @@
+using UnityEditorInternal;
 using UnityEngine;
 
 public class BuildingValidity : MonoBehaviour {
     private BuildingCreate buildingCreate;
-    private float validAngle = 10f;
+    private float validAngle = 15f;
     private bool isTriggered;
 
     private void Awake() {
@@ -10,6 +11,7 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void Update() {
+        Debug.Log(buildingCreate.isValidBuild);
         if (buildingCreate.isBuild) {
             float xRotation = buildingCreate.Building.transform.rotation.eulerAngles.x;
             float zRotation = buildingCreate.Building.transform.rotation.eulerAngles.z;
@@ -22,6 +24,11 @@ public class BuildingValidity : MonoBehaviour {
                         buildingCreate.Building.transform.rotation.eulerAngles.y,
                         Mathf.Clamp(zRotation, -validAngle, validAngle));
 
+
+                Debug.Log(Mathf.Abs(xRotation));
+                Debug.Log(Mathf.Abs(zRotation));
+                Debug.Log(buildingCreate.Building.transform.rotation.eulerAngles);
+                Debug.Log(clampedRotation.eulerAngles);
                 buildingCreate.Building.transform.rotation = clampedRotation;
                 buildingCreate.isValidBuild = false;
             }
@@ -31,6 +38,8 @@ public class BuildingValidity : MonoBehaviour {
     }
 
     private void OnTriggerStay(Collider other) {
+        if (other.name == "PlayerDetecter" ||
+            (other.CompareTag("Player") && (other is SphereCollider))) return;
         if (other.gameObject.layer != LayerMask.NameToLayer("Ground")) {
             buildingCreate.isValidBuild = false;
             isTriggered = true;

@@ -23,6 +23,7 @@ public class PlayerStatus : MonoBehaviour {
         isDead = false;
         player.GetComponent<Animator>().SetBool("isDead", isDead);
         player.transform.position = new Vector3(0, 0, 0);
+        AudioManager.instance.StopSFX(AudioManager.Sfx.PlayerDeath_LostAndWintered);
         Start();
     }
 
