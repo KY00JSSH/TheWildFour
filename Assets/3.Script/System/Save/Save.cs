@@ -186,6 +186,9 @@ public class Save : MonoBehaviour {
             saveData.skillGatherLevel[i] = shelterManager.skillGather[i].nowSkillLevel;
         }
 
+        ItemManager itemManager = FindObjectOfType<ItemManager>();
+        saveData.ItemKey = itemManager.GetItemKey();
+        saveData.ItemPosition = itemManager.GetItemPosition();
     }
 
     public void InitSaveFile() {

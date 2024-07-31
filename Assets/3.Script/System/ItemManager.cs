@@ -12,6 +12,8 @@ public enum Location {
 // 4. 불러올 때는 key와 position 값을 가져온 뒤 key 값에 해당하는 아이템을 Instantiate
 // 5. 불러온 position 값이 인벤토리 특정 값일 경우 List에 Instantiate 한 객체를 저장하고
 // 6. 불러오기가 끝난 뒤에 저장된 Inventory 리스트를 CommonInven의 inventory에 대입.
+// 7. InventoryUI 는 Awake()나 Start() 에서 CommonInven을 조사해서 대응하는 이미지를 띄울 것
+// 8. 중첩되는 아이템 개수는 추가 구현해야함
 
 public class ItemManager : MonoBehaviour {
     [SerializeField] private GameObject[] itemPrefabs;
@@ -30,7 +32,7 @@ public class ItemManager : MonoBehaviour {
 
             for (int i = 0; i < ItemKey.Count; i++)
                 foreach (var eachItem in itemPrefabs)
-                    if (eachItem.GetComponent<Item>().Key == ItemKey[i]) {
+                    if (eachItem.GetComponent<Item>()?.Key == ItemKey[i]) {
                         GameObject item = Instantiate(eachItem, ItemPosition[i], Quaternion.identity, transform);
                         if (ItemPosition[i].x == 999 && ItemPosition[i].y == 999) {
                             int count = (int)ItemPosition[i].z;
