@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 6591898900635558742}
   - component: {fileID: 980392511205177644}
   - component: {fileID: 6697301669985043643}
-  - component: {fileID: 6697301669985043640}
+  - component: {fileID: 484466047621826595}
   - component: {fileID: 5515999860025131573}
   - component: {fileID: 5778384074982554090}
   m_Layer: 0
@@ -808,7 +808,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &6697301669985043640
+--- !u!114 &484466047621826595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -817,17 +817,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5778384074982554092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c208817377cd840876091cf2c0e3ae, type: 3}
+  m_Script: {fileID: 11500000, guid: dc562117ecd188b47891caa0556042bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MAXHP: 0
   currentHP: 0
-  navMeshSurface: {fileID: 0}
   dropItems: []
   idleDuration: 3
-  moveDuration: 5
-  playerDetector_Capsule: {fileID: 6697301671402172405}
-  playerDetector_Box: {fileID: 6697301671402172404}
+  moveDuration: 3
+  playerDetector_Capsule: {fileID: 0}
+  playerDetector_Box: {fileID: 0}
 --- !u!114 &5515999860025131573
 MonoBehaviour:
   m_ObjectHideFlags: 0
