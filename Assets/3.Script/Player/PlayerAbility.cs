@@ -96,7 +96,7 @@ public class PlayerAbility : MonoBehaviour {
             PlayerWeaponEquip.CurrentEquipWeaponAttackPoint;
         //TODO: 플레이어 공격 구현 후 공격속도 적용
         playerAddAttackSpeed = shelterManager.GetSkill("공격 속도").GetValue();
-        FindObjectOfType<PlayerAttack>().SetAttackSpeed(GetTotalPlayerAttackSpeed());
+        playerMove.GetComponent<PlayerAttack>().SetAttackSpeed(GetTotalPlayerAttackSpeed());
 
         playerAddCriticalAttack = shelterManager.GetSkill("치명타 공격력").GetValue();
         playerAddCriticalChance = shelterManager.GetSkill("치명타 공격 확률").GetValue();

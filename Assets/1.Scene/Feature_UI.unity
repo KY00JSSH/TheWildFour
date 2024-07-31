@@ -9156,23 +9156,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 258404977}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15566,7 +15554,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 449166072}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16085,7 +16073,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 456581014}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18733,7 +18721,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 543861358}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25438,7 +25426,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 733183497}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26144,14 +26132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 5144707792496740942, guid: 3132c7a918c452244b1991b9d61d165c, type: 3}
-  - {fileID: 6334625890010984769, guid: 19bbc4bbd5e749f4eb402ae10825846c, type: 3}
   - {fileID: 6218004453208192205, guid: dac1abb654d977549b04698da1a7a83b, type: 3}
   - {fileID: 2288768476166651280, guid: 4e0f63cd4a57c9f4eb672841c4bfd4ec, type: 3}
-  - {fileID: -5608781965460578792, guid: 1e526011e805d004aae3e33f99ff4721, type: 3}
-  - {fileID: -7423218067449370834, guid: 7e5548a444e4ce542a54060321127f67, type: 3}
-  - {fileID: -7729778623438631139, guid: 7c54dfc7a9d070249b2e52919329d638, type: 3}
-  spawnCount: 300
+  spawnCount: 100
   spawnArea: {x: 5, y: 0, z: 5}
 --- !u!4 &750615575
 Transform:
@@ -31005,7 +30988,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 885354746}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35585,7 +35568,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1004071113}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36324,7 +36307,7 @@ MonoBehaviour:
   - skillName: "\uC2DC\uC57C \uBC18\uACBD"
     maxSkillLevel: 1
     nowSkillLevel: 0
-    skillValue: 20
+    skillValue: -1
   - skillName: "\uC804\uB825 \uC9C8\uC8FC \uC2DC\uAC04"
     maxSkillLevel: 6
     nowSkillLevel: 0
@@ -44951,6 +44934,10 @@ MonoBehaviour:
     campfirePosition: []
     furnacePosition: []
     chestPosition: []
+    skillMoveLevel: 0000000000000000000000000000000000000000
+    skillAttackLevel: 0000000000000000000000000000000000000000
+    skillGatherLevel: 0000000000000000000000000000000000000000
+    playerInventory: []
 --- !u!4 &1292207472
 Transform:
   m_ObjectHideFlags: 0
@@ -45405,7 +45392,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1299478612}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -48021,7 +48008,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1352164987}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -56106,7 +56093,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1621784117}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57918,7 +57905,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1671967440}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -58137,7 +58124,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1672372122}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60247,6 +60234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d40702066f68b247ba4249859bb4be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenController: {fileID: 0}
 --- !u!114 &1715626237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62711,7 +62699,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1774904778}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -63511,6 +63499,7 @@ MonoBehaviour:
   - {fileID: 577476079}
   - {fileID: 721213393}
   - {fileID: 1110444524}
+  isShleterSkillAvailable: 0
 --- !u!1 &1799372062
 GameObject:
   m_ObjectHideFlags: 0
@@ -71528,7 +71517,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2063295918}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -73453,7 +73442,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2144397759}
         m_TargetAssemblyTypeName: ButtonCoolTimeUI, Assembly-CSharp
-        m_MethodName: StartSleepCooltime
+        m_MethodName: StartSkillCooltime_Shelter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

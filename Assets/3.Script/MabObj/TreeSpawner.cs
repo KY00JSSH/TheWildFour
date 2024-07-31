@@ -103,8 +103,8 @@ public class TreeSpawner : MonoBehaviour {
         string bigTreeDataAsJson = JsonUtility.ToJson(bigObjectList, true);
         string smallTreeDataAsJson = JsonUtility.ToJson(smallObjectList, true);
 
-        string bigTreeFilePath = Path.Combine(Application.persistentDataPath, "bigTreeData.json");
-        string smallTreeFilePath = Path.Combine(Application.persistentDataPath, "smallTreeData.json");
+        string bigTreeFilePath = Path.Combine(Application.dataPath, "Resources", bigTreeJsonFileName);
+        string smallTreeFilePath = Path.Combine(Application.dataPath, "Resources", smallTreeJsonFileName);
 
         File.WriteAllText(bigTreeFilePath, bigTreeDataAsJson);
         File.WriteAllText(smallTreeFilePath, smallTreeDataAsJson);

@@ -7,6 +7,7 @@ public class CreateManager : MonoBehaviour {
 
     private void Awake() {
         buildingCreates = GetComponentsInChildren<BuildingCreate>();
+        invenController = FindObjectOfType<InvenController>();
     }
 
     public void CancelAllBuildings() {
@@ -15,4 +16,7 @@ public class CreateManager : MonoBehaviour {
             each.CancelBuilding();
         }
     }
+
+    public InvenController invenController;
+
 }
