@@ -21,31 +21,73 @@ public class RockDataList {
 public class RockSpawner : MonoBehaviour {
     public GameObject[] objectPrefabs;
 
-    private string bigRockJsonFileName = "MapObj/bigRockData";
-    private string midRockJsonFileName = "MapObj/midRockData";
+    private string bigRockDirectory = "Resources/MapObj/bigRockData";
+    private string midRockDirectory = "Resources/MapObj/midRockData";
+
+    private string bigRockStaticFileName = "bigRockData.json";
+    private string midRockStaticFileName = "midRockData.json";
 
     private RockDataList bigRockList;
     private RockDataList midRockList;
 
     private void Start() {
-        TextAsset bigJsonTxt = Resources.Load<TextAsset>(bigRockJsonFileName);
-        if (bigJsonTxt != null) {
-            string bigDataAsJson = bigJsonTxt.text;
+        LoadRockData();
+    }
+
+    private void LoadRockData() {
+        if (Save.Instance.saveData.isNewGame) {
+            LoadBigRockDataFromResources();
+            LoadMidRockDataFromResources();
+        }
+        else {
+            string bigRockFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, bigRockDirectory, $"bigRockData_{Save.Instance.saveData.saveTime}.json"));
+            string midRockFilePath = NormalizePath(Path.Combine(Application.persistentDataPath, midRockDirectory, $"midRockData_{Save.Instance.saveData.saveTime}.json"));
+
+            LoadBigRockData(bigRockFilePath);
+            LoadMidRockData(midRockFilePath);
+        }
+    }
+    private void LoadBigRockDataFromResources() {
+        TextAsset bigDataAsset = Resources.Load<TextAsset>(Path.Combine("MapObj", "bigRockData"));
+        if (bigDataAsset != null) {
+            bigRockList = JsonUtility.FromJson<RockDataList>(bigDataAsset.text);
+            SpawnRocks(bigRockList.rockObjs, true);
+        }
+        else {
+            Debug.LogError("Big Rock Json Not Exist in Resources");
+        }
+    }
+
+    private void LoadMidRockDataFromResources() {
+        TextAsset midDataAsset = Resources.Load<TextAsset>(Path.Combine("MapObj", "midRockData"));
+        if (midDataAsset != null) {
+            midRockList = JsonUtility.FromJson<RockDataList>(midDataAsset.text);
+            SpawnRocks(midRockList.rockObjs, false);
+        }
+        else {
+            Debug.LogError("Mid Rock Json Not Exist in Resources");
+        }
+    }
+
+    private void LoadBigRockData(string filePath) {
+        if (File.Exists(filePath)) {
+            string bigDataAsJson = File.ReadAllText(filePath);
             bigRockList = JsonUtility.FromJson<RockDataList>(bigDataAsJson);
             SpawnRocks(bigRockList.rockObjs, true);
         }
         else {
-            Debug.LogError("Big Rock Json Not Exist");
+            Debug.LogError($"Big Rock Json Not Exist: {filePath}");
         }
+    }
 
-        TextAsset midJsonTxt = Resources.Load<TextAsset>(midRockJsonFileName);
-        if (midJsonTxt != null) {
-            string midDataAsJson = midJsonTxt.text;
+    private void LoadMidRockData(string filePath) {
+        if (File.Exists(filePath)) {
+            string midDataAsJson = File.ReadAllText(filePath);
             midRockList = JsonUtility.FromJson<RockDataList>(midDataAsJson);
             SpawnRocks(midRockList.rockObjs, false);
         }
         else {
-            Debug.LogError("Mid Rock Json Not Exist");
+            Debug.LogError($"Mid Rock Json Not Exist: {filePath}");
         }
     }
 
@@ -59,6 +101,7 @@ public class RockSpawner : MonoBehaviour {
             rock.InitializeObjData(objData);
         }
     }
+
 
     public void UpdateRockData(int objectNumber, bool enable, float health, bool isBig) {
         if (isBig) {
@@ -77,14 +120,28 @@ public class RockSpawner : MonoBehaviour {
         }
     }
 
-    public void SaveRockData() {
+    public void SaveRockData(string saveTime) {
         string bigDataAsJson = JsonUtility.ToJson(bigRockList, true);
         string midDataAsJson = JsonUtility.ToJson(midRockList, true);
 
-        string bigPath = Path.Combine(Application.dataPath, "Resources", $"{bigRockJsonFileName}.json");
-        string midPath = Path.Combine(Application.dataPath, "Resources", $"{midRockJsonFileName}.json");
+        string bigRockDirectoryPath = NormalizePath(Path.Combine(Application.persistentDataPath, bigRockDirectory));
+        string midRockDirectoryPath = NormalizePath(Path.Combine(Application.persistentDataPath, midRockDirectory));
 
-        File.WriteAllText(bigPath, bigDataAsJson);
-        File.WriteAllText(midPath, midDataAsJson);
+        if (!Directory.Exists(bigRockDirectoryPath)) {
+            Directory.CreateDirectory(bigRockDirectoryPath);
+        }
+
+        if (!Directory.Exists(midRockDirectoryPath)) {
+            Directory.CreateDirectory(midRockDirectoryPath);
+        }
+
+        string bigRockFilePath = NormalizePath(Path.Combine(bigRockDirectoryPath, $"bigRockData_{saveTime}.json"));
+        string midRockFilePath = NormalizePath(Path.Combine(midRockDirectoryPath, $"midRockData_{saveTime}.json"));
+
+        File.WriteAllText(bigRockFilePath, bigDataAsJson);
+        File.WriteAllText(midRockFilePath, midDataAsJson);
+    }
+    private string NormalizePath(string path) {
+        return path.Replace("\\", "/");
     }
 }
