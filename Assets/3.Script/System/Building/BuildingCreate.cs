@@ -179,6 +179,8 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
             CameraControl cameraControl = FindObjectOfType<CameraControl>();
             cameraControl.cinemachineFreeLook.Follow = playerTransform;
             cameraControl.cinemachineFreeLook.LookAt = playerTransform;
+
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.BuildingPackup);
         }
     }
 

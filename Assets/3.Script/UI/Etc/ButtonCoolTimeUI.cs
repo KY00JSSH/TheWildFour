@@ -110,6 +110,7 @@ public class ButtonCoolTimeUI : MonoBehaviour {
         Debug.Log(" build 확인" + tooltip_Shelter.isUpgradeAvailable);
         if (!tooltip_Shelter.isUpgradeAvailable) return;
         StartButtonInit();
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.SkillAcquire);
     }
 
     public void StartUpgradeCooltime_WS() {

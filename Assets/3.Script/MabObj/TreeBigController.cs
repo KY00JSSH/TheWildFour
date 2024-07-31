@@ -36,7 +36,11 @@ public class TreeBigController : MonoBehaviour {
         if (health <= 0) {
             health = 0;
             enable = false;
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.TreeDeath);
         }
+        else
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.TreePain);
+
         treeSpawner.UpdateTreeData(objectNumber, enable, health);
     }
 
@@ -70,6 +74,7 @@ public class TreeBigController : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
+        AudioManager.instance.PlaySFX(AudioManager.Sfx.TreeFall);
 
         transform.rotation = targetRotation;
         float waitTime = 1.0f;

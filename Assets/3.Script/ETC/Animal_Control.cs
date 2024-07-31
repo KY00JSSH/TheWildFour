@@ -193,6 +193,9 @@ public class Animal_Control : MonoBehaviour
             //animalDie();
             StartCoroutine(AnimalDeath_co());
         }
+        else {
+            //AudioManager.instance.PlaySFX(AudioManager.Sfx.rabbit);
+        }
     }
 
     private IEnumerator AnimalDeath_co() //동물 죽음
