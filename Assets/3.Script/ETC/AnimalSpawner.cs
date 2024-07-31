@@ -52,10 +52,10 @@ public class AnimalSpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Check_AnimalSpawning());
+        StartCoroutine(Check_AnimalSpawning_co());
     }
 
-    private IEnumerator Check_AnimalSpawning() //동물의 상태를 확인하고 3마리를 유지하는 코루틴
+    private IEnumerator Check_AnimalSpawning_co() //동물의 상태를 확인하고 3마리를 유지하는 코루틴
     {
         
         while (true)
