@@ -35,7 +35,7 @@ public class BuildingCreate : MonoBehaviour, IBuildingCreateGeneric {
     public Vector3 LastPlayerPosition { get; private set; }
     public void SetEnterPosition(Vector3 position) { LastPlayerPosition = position; }
 
-    public NavMeshObstacle obstacle; //240730 지훈 추가
+    //public NavMeshObstacle obstacle; //240730 지훈 추가
 
     protected virtual void Awake() {
         tooltipNum = FindObjectOfType<TooltipNum>();
