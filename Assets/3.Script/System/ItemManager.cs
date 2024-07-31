@@ -56,10 +56,13 @@ public class ItemManager : MonoBehaviour {
                 eachRigid.isKinematic = true;
             foreach (var eachCollide in item.GetComponentsInChildren<Collider>())
                 eachCollide.enabled = false;
-            //TODO: 인벤에서 아이템 버리기 할 때 리지드, 콜라이드 켜주기
-
             item.transform.position = new Vector3(999, 999, count);
-            //TODO: 인벤에서 아이템 위치 이동 발생 시 count 값 갱신해줘야 함
+        }
+        else {
+            foreach (var eachRigid in item.GetComponentsInChildren<Rigidbody>())
+                eachRigid.isKinematic = false;
+            foreach (var eachCollide in item.GetComponentsInChildren<Collider>())
+                eachCollide.enabled = true;
         }
     }
 
