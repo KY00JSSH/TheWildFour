@@ -426,6 +426,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  isShleterSkillAvailable: 0
 --- !u!114 &12572972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1393,9 +1394,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5f8caeb4870c65e47bb3aa5c741b816f, type: 3}
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
+  dustPrefab: {fileID: 0}
   positions: 0.5
   buildingObj: {fileID: 0}
   isBuiltStart: 0
+  buildAnimationPlayTime: 0
   workshopCreate: {fileID: 0}
 --- !u!114 &46973198
 MonoBehaviour:
@@ -1644,9 +1647,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5f8caeb4870c65e47bb3aa5c741b816f, type: 3}
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
+  dustPrefab: {fileID: 0}
   positions: 0.5
   buildingObj: {fileID: 0}
   isBuiltStart: 0
+  buildAnimationPlayTime: 0
   shelterCreate: {fileID: 0}
 --- !u!114 &52305532
 MonoBehaviour:
@@ -4068,10 +4073,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5f8caeb4870c65e47bb3aa5c741b816f, type: 3}
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
+  dustPrefab: {fileID: 0}
   positions: 2
   buildingObj: {fileID: 0}
   isBuiltStart: 0
+  buildAnimationPlayTime: 0
   campfireCreate: {fileID: 1496688573}
+  _buildAnimationName: 
 --- !u!114 &150311636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6739,6 +6747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d40702066f68b247ba4249859bb4be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenController: {fileID: 0}
 --- !u!114 &252318027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8929,10 +8938,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5f8caeb4870c65e47bb3aa5c741b816f, type: 3}
   - {fileID: 21300000, guid: 24d3b69164b319f4895b40b06a592fea, type: 3}
   BuildImg: {fileID: 945136492}
+  dustPrefab: {fileID: 0}
   positions: 2
   buildingObj: {fileID: 0}
   isBuiltStart: 0
+  buildAnimationPlayTime: 0
   campfireCreate: {fileID: 2064438840}
+  _buildAnimationName: 
 --- !u!114 &326430233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16073,9 +16085,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cinemachineFreeLook: {fileID: 66681599}
   zoomSpeed: 2
-  minFOV: 70
-  maxFOV: 100
   rotationDirection: 0
+  minZoom: 8
+  maxZoom: 13
 --- !u!4 &638935916
 Transform:
   m_ObjectHideFlags: 0
@@ -34756,6 +34768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemObject: {fileID: 0}
   sackItem: {fileID: 0}
+  bakeIronPrf: {fileID: 0}
 --- !u!1 &1442327217
 GameObject:
   m_ObjectHideFlags: 0
@@ -47408,6 +47421,7 @@ MonoBehaviour:
   - {fileID: 1048055280}
   - {fileID: 94336889}
   - {fileID: 60404987}
+  isShleterSkillAvailable: 0
 --- !u!224 &1951015567
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49331,17 +49345,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 803c27acca2c2f943b4378a050f84aaa, type: 3}
   - {fileID: 8300000, guid: 95e1c7ada3899ca42829834aaa677ccf, type: 3}
   bgmVolume: 0.3
+  bgmChannels: 0
   sfxClip:
+  - {fileID: 8300000, guid: b9e892df9d782c94bac94055ed5c0431, type: 3}
+  - {fileID: 8300000, guid: 984bbbace72fb1f418c376bfd61e82ee, type: 3}
   - {fileID: 8300000, guid: 617fce4aaa0ec4c4d8017789d64919a5, type: 3}
   - {fileID: 8300000, guid: 3e7f65a2971ee1b4783dbdb4cd42d147, type: 3}
   - {fileID: 8300000, guid: 09d496ea28a5b8949a9a5f5edb39b123, type: 3}
   - {fileID: 8300000, guid: 19ca31f3b5f388c48a482ebe6f0e17f3, type: 3}
   - {fileID: 8300000, guid: 4708f6d5f3d56454f8663056dc44befe, type: 3}
-  - {fileID: 8300000, guid: 202a53dcfc4ccd34d8cf86a52aed7858, type: 3}
-  - {fileID: 8300000, guid: 1ac758fc2501caf438f5f706b7a5e49b, type: 3}
   - {fileID: 8300000, guid: 2db5b7b02bc359f42a95628da134592c, type: 3}
   - {fileID: 8300000, guid: ef2579f2f17c5364685131e7ca0027a1, type: 3}
   - {fileID: 8300000, guid: e4eebb2d6bfe1074fa398009482045c4, type: 3}
+  - {fileID: 8300000, guid: 0cd667cc2f02cb24fae7e670759e4dac, type: 3}
+  - {fileID: 8300000, guid: ce37b253652546b43b7fce007ba1a7f6, type: 3}
   - {fileID: 8300000, guid: e04419979c3cd4845abdf3fcc5549255, type: 3}
   - {fileID: 8300000, guid: 540f785fc4073c54593dea2506a87335, type: 3}
   - {fileID: 8300000, guid: 37617881f6b1aac48a67844ff96bab74, type: 3}
@@ -49352,10 +49369,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5525cd652461d8d4d800b485a9e71046, type: 3}
   - {fileID: 8300000, guid: 94a15b61de78460468544eee6f3dc91c, type: 3}
   - {fileID: 8300000, guid: 34526e8323db00949a66110e1ddf4050, type: 3}
-  - {fileID: 8300000, guid: b9e892df9d782c94bac94055ed5c0431, type: 3}
-  - {fileID: 8300000, guid: 984bbbace72fb1f418c376bfd61e82ee, type: 3}
   sfxVolume: 0.5
-  channels: 16
+  sfxChannels: 0
 --- !u!1 &2055621088
 GameObject:
   m_ObjectHideFlags: 0

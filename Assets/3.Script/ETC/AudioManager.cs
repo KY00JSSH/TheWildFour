@@ -9,7 +9,8 @@ public class AudioManager : MonoBehaviour
     [Header("#BGM")]
     public AudioClip[] bgmClip;
     public float bgmVolume;
-    AudioSource[] bgmPlayer;    
+    AudioSource[] bgmPlayer;
+    //public int bgmChannels;
     public enum Bgm
     {
         music_GoFarGoWideSnowDesert, music_IndifferentSlow, Title_music_LastSummer
@@ -18,16 +19,16 @@ public class AudioManager : MonoBehaviour
     [Header("#SFX")]
     public AudioClip[] sfxClip;
     public float sfxVolume;
-    public int channels;
+    //public int sfxChannels;
     AudioSource[] sfxPlayer;
-    int channel_Index;
+    int sfxChannel_Index;
     public enum Sfx
     {
-        TreeDeath, TreeFall, TreePain, StoneFall, StoneShatterd, 
-        Eat, PlayerThrow, BuildingBuild, BuildingPackup, CraftingItem, 
+        morning, night4, TreeDeath, TreeFall, TreePain, StoneFall, StoneShatterd, 
+        Eat, BuildingBuild, BuildingPackup, CraftingItem, RabbitPain, loading,
         CampfireIdle, CampfireKindle, wind_1, SkillAcquire, WeaponEquip, 
         PlayerAttack, StepSnow, PlayerFall, PlayerDeath_LostAndWintered, 
-        NoHP_heartbeat, morning, night4
+        NoHP_heartbeat
     }
 
     private void Awake()
@@ -41,7 +42,9 @@ public class AudioManager : MonoBehaviour
         //배경음 플레이어 초기화
         GameObject bgmObject = new GameObject("BGMPlayer");
         bgmObject.transform.parent = transform;
-        bgmPlayer = new AudioSource[channels];
+        bgmPlayer = new AudioSource[bgmClip.Length];
+
+        Debug.Log("BGM Channels: " + bgmPlayer.Length);
 
         for (int index = 0; index < bgmPlayer.Length; index++)
         {
@@ -49,13 +52,13 @@ public class AudioManager : MonoBehaviour
             bgmPlayer[index].playOnAwake = false;
             bgmPlayer[index].volume = bgmVolume;
             bgmPlayer[index].loop = true;
-        }             
-        //bgmPlayer.clip = bgmClip;
+        }
+        Debug.Log("BGM Player Array Length: " + bgmPlayer.Length);
 
         //효과음 플레이어 초기화
         GameObject sfxObject = new GameObject("SFXPlayer");
         sfxObject.transform.parent = transform;
-        sfxPlayer = new AudioSource[channels];
+        sfxPlayer = new AudioSource[sfxClip.Length];
 
         for(int index = 0; index < sfxPlayer.Length; index++)
         {
@@ -63,53 +66,52 @@ public class AudioManager : MonoBehaviour
             sfxPlayer[index].playOnAwake = false;
             sfxPlayer[index].volume = sfxVolume;
         }
-
     }
 
     public void PlaySFX(Sfx sfx)
     {
-        //사용시, AudioManager.instance.PlaySFX(AudioManaer.Sfx.ClipName); 사용
+        //사용시, AudioManager.instance.PlaySFX(AudioManager.Sfx.ClipName); 사용
 
         for(int i = 0; i < sfxPlayer.Length; i++)
         {
-            int loop_Index = (i + channel_Index) % sfxPlayer.Length;
+            int loop_Index = (i + sfxChannel_Index) % sfxPlayer.Length;
 
             if (sfxPlayer[loop_Index].isPlaying)
                 continue;
 
-            channel_Index = loop_Index;
+            sfxChannel_Index = loop_Index;
             sfxPlayer[loop_Index].clip = sfxClip[(int)sfx];
             sfxPlayer[loop_Index].Play();
             break;
         }        
     }
 
-    public void PlayBGM(Bgm bgm)
+    public void PlayBGM(Bgm bgm, int channel)
     {
         //사용시, AudioManager.instance.PlayBGM(AudioManager.Bgm.ClipName); 사용
         //정지시, AudioManager.instance.StopBGM();
 
+        if (channel < 0 || channel >= bgmPlayer.Length)
+        {
+            Debug.LogError("BGM채널 인덱스 없음");
+            return;
+        }
+
+        AudioSource bgmSource = bgmPlayer[channel];
+
         // 현재 재생 중인 BGM이 같은 경우 실행하지 않음
-        foreach (AudioSource player in bgmPlayer)
+        if (bgmSource.isPlaying && bgmSource.clip == bgmClip[(int)bgm])
+            return;
+
+        // 현재 재생 중인 BGM이 있으면 중지
+        if (bgmSource.isPlaying)
         {
-            if (player.isPlaying && player.clip == bgmClip[(int)bgm])
-                return;
+            bgmSource.Stop();
         }
 
-        // 새로운 BGM 재생을 위한 채널 선택
-        for (int i = 0; i < bgmPlayer.Length; i++)
-        {
-            // 현재 재생 중인 다른 BGM 중지
-            if (bgmPlayer[i].isPlaying)
-            {
-                bgmPlayer[i].Stop();
-            }
-
-            // 해당 채널에 새로운 BGM 할당 및 재생
-            bgmPlayer[i].clip = bgmClip[(int)bgm];
-            bgmPlayer[i].Play();
-            break; // 새로운 BGM을 하나만 재생하므로 루프 탈출
-        }
+        // 새로운 BGM 재생
+        bgmSource.clip = bgmClip[(int)bgm];
+        bgmSource.Play();
     }
 
     public void StopBGM()
