@@ -55,7 +55,7 @@ public class TimeManager : MonoBehaviour {
         WorldTime = Save.Instance.saveData.WorldTime;
         WorldHour = WorldTime / (360f / 24f) % 24;
         SurviveDay = Save.Instance.saveData.SurviveDay;
-        TotalDay = (int)((WorldTime - 90f) / 360f);
+        TotalDay = (int)((WorldTime - 90f) / 360f) + 1;
     }
     
     private void Update() {

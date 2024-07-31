@@ -34,12 +34,12 @@ public class ItemManager : MonoBehaviour {
                 foreach (var eachItem in itemPrefabs)
                     if (eachItem.GetComponent<Item>()?.Key == ItemKey[i]) {
                         GameObject item = Instantiate(eachItem, ItemPosition[i], Quaternion.identity, transform);
-                        if (ItemPosition[i].x == 999 && ItemPosition[i].y == 999) {
+                        if (ItemPosition[i].x == 999) {
                             int count = (int)ItemPosition[i].z;
                             while (InventoryItem.Count <= count)
                                 InventoryItem.Add(null);
 
-                            InventoryItem[i] = item;
+                            InventoryItem[count] = item;
                         }
                         break;
                     }

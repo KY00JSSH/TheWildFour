@@ -163,10 +163,16 @@ public class Save : MonoBehaviour {
         WorkshopManager workshopManager = FindObjectOfType<WorkshopManager>();
         saveData.workshopLevel = workshopManager.WorkshopLevel;
 
-        saveData.shelterPosition = shelterManager.GetComponent<ShelterCreate>().Building.transform.position;
-        saveData.workshopPosition = workshopManager.GetComponent<WorkshopCreate>().Building.transform.position;
-        saveData.shelterRotation = shelterManager.GetComponent<ShelterCreate>().Building.transform.rotation;
-        saveData.workshopRotation = workshopManager.GetComponent<WorkshopCreate>().Building.transform.rotation;
+        GameObject shelter = shelterManager.GetComponent<ShelterCreate>().Building;
+        if (shelter.activeSelf) {
+            saveData.shelterPosition = shelter.transform.position;
+            saveData.shelterRotation = shelter.transform.rotation;
+        }
+        GameObject workshop = workshopManager.GetComponent<WorkshopCreate>().Building;
+        if (shelter.activeSelf) {
+            saveData.workshopPosition = workshop.transform.position;
+            saveData.workshopRotation = workshop.transform.rotation;
+        }
 
         CampfireChestCreate[] campfireChestCreates = FindObjectsOfType<CampfireChestCreate>();
         foreach(var eachCreate in campfireChestCreates) {
@@ -199,12 +205,12 @@ public class Save : MonoBehaviour {
     }
 
     public void InitSaveFile() {
-        saveData.WorldTime = 90f;
+        saveData.WorldTime = 150f;
         saveData.SurviveDay = 0;
         saveData.TotalDay = (int)((saveData.WorldTime - 90f) / 360f);
         saveData.isNewGame = true;
 
-        saveData.playerType = PlayerType.Ju;
+        saveData.playerType = PlayerType.Hun;
 
         saveData.playerTransform = Vector3.zero;
 
