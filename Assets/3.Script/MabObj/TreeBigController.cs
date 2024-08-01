@@ -38,10 +38,38 @@ public class TreeBigController : MonoBehaviour {
             enable = false;
             AudioManager.instance.PlaySFX(AudioManager.Sfx.TreeDeath);
         }
-        else
+        else {
             AudioManager.instance.PlaySFX(AudioManager.Sfx.TreePain);
+            StartCoroutine(ShakeTree());
+        }
 
         treeSpawner.UpdateTreeData(objectNumber, enable, health);
+    }
+
+    private IEnumerator ShakeTree() {
+        float shakeSpeed = 25f;
+        float direction = (Random.Range(0f, 1f) * 2 - 1); // Random.Range 수정
+
+        for (int i = 0; i < 3; i++) {
+            float targetRotationX = direction * Random.Range(1f, 3f);
+            float targetRotationZ = direction * Random.Range(1f, 2f);
+
+            Quaternion targetRotation = Quaternion.Euler(targetRotationX, 0, targetRotationZ);
+
+            while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f) {
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * shakeSpeed);
+                yield return null;
+            }
+
+            direction *= -1; // 반대 방향으로 흔들기 위해 방향 전환
+        }
+
+        // 원래 위치로 되돌리기
+        Quaternion originalRotation = Quaternion.Euler(0, 0, 0);
+        while (Quaternion.Angle(transform.rotation, originalRotation) > 0.1f) {
+            transform.rotation = Quaternion.Lerp(transform.rotation, originalRotation, Time.deltaTime * shakeSpeed);
+            yield return null;
+        }
     }
 
     private void FixedUpdate() {
@@ -92,16 +120,16 @@ public class TreeBigController : MonoBehaviour {
         InvenController invenController = FindObjectOfType<InvenController>();
         int checkNum = invenController.canAddThisBox(1);
         if (checkNum != 99) {
-                CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
-                invenItem.addCurrStack((int)gatherPoint * 2);
-                invenController.updateInvenInvoke();
+            CountableItem invenItem = invenController.Inventory[checkNum].GetComponent<CountableItem>();
+            invenItem.addCurrStack((int)gatherPoint * 2);
+            invenController.updateInvenInvoke();
         }
         else {
             int existBox = invenController.isExistEmptyBox();
-                Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
-                GameObject itemObject = Instantiate(dropTreePrf, itemDropPosition, Quaternion.identity, treeSpawner.transform);
-                itemObject.GetComponent<CountableItem>().setCurrStack((int)gatherPoint * 2);
-                invenController.updateInvenInvoke();
+            Vector3 itemDropPosition = new Vector3(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y, gameObject.transform.position.z - 0.1f);
+            GameObject itemObject = Instantiate(dropTreePrf, itemDropPosition, Quaternion.identity, treeSpawner.transform);
+            itemObject.GetComponent<CountableItem>().setCurrStack((int)gatherPoint * 2);
+            invenController.updateInvenInvoke();
             if (existBox != 99) {
                 invenController.addIndexItem(existBox, itemObject);
                 itemObject.SetActive(false);
