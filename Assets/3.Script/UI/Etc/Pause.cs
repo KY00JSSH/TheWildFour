@@ -104,6 +104,7 @@ public class Pause : MonoBehaviour {
         SceneManager.LoadScene("Main");
 
         Save.Instance.MakeSave();
+        Time.timeScale = 1;
 
         Destroy(TimeManager.Instance.gameObject);
     }
@@ -138,6 +139,7 @@ public class Pause : MonoBehaviour {
 
     private void OnDestroy() {
 
+        Time.timeScale = 1;
         Color color = pauseImg.color;
         color.a = 0;
         pauseImg.color = color;
