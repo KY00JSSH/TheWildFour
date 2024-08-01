@@ -32,7 +32,7 @@ public class Pause : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Escape)) Escape();
         }
 
-        if(GameIsPause) AudioManager.instance.StopBGM();
+        if (GameIsPause) AudioManager.instance.StopBGM();
     }
 
     // 현재 객체의 자식들을 활성화 시킴
@@ -45,9 +45,9 @@ public class Pause : MonoBehaviour {
     // 현재 객체의 자식들을 비활성화 시킴
     private void pauseChildSetActiveOff(GameObject gameObject) {
         foreach (Transform child in gameObject.transform) {
-            if(child == gameObject.transform.GetChild(0)) {
+            if (child == gameObject.transform.GetChild(0)) {
                 if (child.TryGetComponent(out Text text)) continue;
-            }            
+            }
             child.gameObject.SetActive(false);
         }
     }
@@ -86,7 +86,7 @@ public class Pause : MonoBehaviour {
     private IEnumerator pauseImgAlphaChange() {
         Color color = pauseImg.color;
         while (color.a <= 0.55f) {
-            color.a += Time.deltaTime;
+            color.a += Time.unscaledDeltaTime; // 변경된 부분
             pauseImg.color = color;
             yield return null;
         }
@@ -139,7 +139,6 @@ public class Pause : MonoBehaviour {
 
     private void OnDestroy() {
 
-        Time.timeScale = 1;
         Color color = pauseImg.color;
         color.a = 0;
         pauseImg.color = color;
