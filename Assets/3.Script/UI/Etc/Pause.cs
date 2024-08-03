@@ -104,7 +104,7 @@ public class Pause : MonoBehaviour {
         SceneManager.LoadScene("Main");
 
         Save.Instance.MakeSave();
-
+        Cursor.visible = true;
         Destroy(TimeManager.Instance.gameObject);
     }
 
