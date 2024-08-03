@@ -4,6 +4,8 @@ using Cinemachine;
 public class CameraControl : MonoBehaviour
 {
     public CinemachineFreeLook cinemachineFreeLook;
+    public Camera minimapCamera;
+
     private float rotationSpeed = 3f;
     public float zoomSpeed = 2f;
 
@@ -16,10 +18,10 @@ public class CameraControl : MonoBehaviour
 
     private void Awake() {
         cinemachineFreeLook = FindObjectOfType<CinemachineFreeLook>();
+        minimapCamera = GameObject.Find("MiniMap_Camera").GetComponent<Camera>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         cinemachineFreeLook.Follow = player.transform;
         cinemachineFreeLook.LookAt = player.transform;
-        miniMapCompassRotation = FindObjectOfType<MiniMap_CompassRotation>();
     }
 
     private void Start() {
@@ -32,15 +34,16 @@ public class CameraControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) {
             rotationDirection -= 90f;
             if (rotationDirection < 0) rotationDirection += 360f;
-            miniMapCompassRotation.SetRotationDirection(rotationDirection);
         }
         else if(Input.GetKeyDown(KeyCode.E)) {
             rotationDirection += 90f;
             if (rotationDirection >= 360) rotationDirection -= 360f;
-            miniMapCompassRotation.SetRotationDirection(rotationDirection);
         }
         cinemachineFreeLook.m_XAxis.Value = Mathf.LerpAngle(
             cinemachineFreeLook.m_XAxis.Value, rotationDirection, Time.deltaTime * rotationSpeed) ;
+        minimapCamera.transform.rotation = Quaternion.Euler(90,
+            Mathf.LerpAngle(cinemachineFreeLook.m_XAxis.Value, rotationDirection, Time.deltaTime * rotationSpeed), 0);
+
 
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (scrollInput != 0)

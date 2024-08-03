@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1449,7 +1449,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: -310}
+  m_AnchoredPosition: {x: -806, y: -310}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &335581724
@@ -6873,7 +6873,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: -380}
+  m_AnchoredPosition: {x: -806, y: -380}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &549947550
@@ -13892,7 +13892,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: -310}
+  m_AnchoredPosition: {x: -806, y: -310}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1264269067
@@ -15765,6 +15765,9 @@ MonoBehaviour:
     SurviveDay: 0
     TotalDay: 0
     playerTransform: {x: 0, y: 0, z: 0}
+    playerHP: 0
+    playerWarm: 0
+    playerHunger: 0
     playerAttack: 0
     playerAttackSpeed: 0
     playerCriticalAttack: 0
@@ -15774,7 +15777,6 @@ MonoBehaviour:
     playerGather: 0
     playerSpeed: 0
     playerDashSpeed: 0
-    playerDecDashGage: 0
     playerInvenCount: 0
     playerAddAttack: 0
     playerAddAttackSpeed: 0
@@ -15785,7 +15787,6 @@ MonoBehaviour:
     playerAddGather: 0
     playerAddSpeed: 0
     playerAddDashSpeed: 0
-    playerAddDecDashGage: 0
     playerAddInvenCount: 0
     shelterLevel: 0
     shelterMoveLevel: 0
@@ -21020,7 +21021,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -21125,7 +21126,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981621770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 47, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1264269068}
@@ -21681,7 +21682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -750, y: -450}
+  m_AnchoredPosition: {x: -806, y: -450}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2112133405
