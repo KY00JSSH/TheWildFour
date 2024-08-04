@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShelterInvenUI : MonoBehaviour {
-    private List<GameObject> invenTotalList = new List<GameObject>();   //ÀüÃ¼ ÀÎº¥¹Ú½º ¸®½ºÆ®
+    private List<GameObject> invenTotalList = new List<GameObject>();   //ì „ì²´ ì¸ë²¤ë°•ìŠ¤ ë¦¬ìŠ¤íŠ¸
     public List<GameObject> InvenTotalList { get { return invenTotalList; } }
 
-    private int currInvenCount = 0;         //ÇöÀç ÀÎº¥Åä¸® È°¼ºÈ­ °³¼ö
+    private int currInvenCount = 0;         //í˜„ì¬ ì¸ë²¤í† ë¦¬ í™œì„±í™” ê°œìˆ˜
     public int CurrInvenCount { get { return currInvenCount; } }
-    private int invenMaxcount = 8;         //ÀÎº¥Åä¸® È°¼ºÈ­ ÃÖ´ë °³¼ö    
+    private int invenMaxcount = 8;         //ì¸ë²¤í† ë¦¬ í™œì„±í™” ìµœëŒ€ ê°œìˆ˜    
 
     public GameObject InvenBoxPrefab;       //BOX Prefab
 
@@ -16,6 +16,7 @@ public class ShelterInvenUI : MonoBehaviour {
     private void Awake() {
         initInven();
         shelterInven = GetComponent<ShelterInvenControll>();
+        shelterInven.InvenChanged += UpdateUI;
     }
 
     private void OnDestroy() {
@@ -47,7 +48,7 @@ public class ShelterInvenUI : MonoBehaviour {
             invenBoxPrefabs.SetActive(false);
             ShelterInvenBox shelterInvenBox = invenBoxPrefabs.GetComponent<ShelterInvenBox>();
             if (invenBoxList != null) {
-                shelterInvenBox.setKey(i); // key ¼³Á¤
+                shelterInvenBox.setKey(i); // key ì„¤ì •
             }
             invenBoxList.Add(invenBoxPrefabs);
         }
