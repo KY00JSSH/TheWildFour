@@ -104,6 +104,14 @@ public class FireObject : MonoBehaviour, IFireLight {
                 }
             }
         }
+        else {
+            if (bakeItem.GetComponent<FoodItem>() != null) {
+                bakeItem.GetComponent<FoodItem>().setVisible();
+                countItem.setCurrStack(1);
+                inven.useItem(index);
+            }
+        }
+
         Rigidbody bakeRigidbody = bakeItem.GetComponent<Rigidbody>();
         bakeRigidbody.useGravity = false;
         Vector3 targetPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.7f, gameObject.transform.position.z);
