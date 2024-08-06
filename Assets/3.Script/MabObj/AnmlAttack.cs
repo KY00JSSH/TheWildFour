@@ -9,5 +9,6 @@ public class AnmlAttack : MonoBehaviour {
             Animal_Control animalCont = gameObject.GetComponent<Animal_Control>();
             animalCont.getDamage(attackPoint);
         }
+        
     }
 }

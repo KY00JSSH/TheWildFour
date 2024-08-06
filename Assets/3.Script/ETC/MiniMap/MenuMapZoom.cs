@@ -16,7 +16,7 @@ public class MenuMapZoom : MonoBehaviour
 
     private void Awake()
     {
-        menuMapCamera.orthographic = true; //Ä«¸Ş¶ó¸¦ orthographicÀ¸·Î ¼³Á¤
+        menuMapCamera.orthographic = true; //ì¹´ë©”ë¼ë¥¼ orthographicìœ¼ë¡œ ì„¤ì •
     }
 
     private void Update()

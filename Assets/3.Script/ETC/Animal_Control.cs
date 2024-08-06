@@ -173,9 +173,17 @@ public class Animal_Control : MonoBehaviour
             moveDirection = (transform.position - player.position).normalized;
             Vector3 runTo = transform.transform.position + moveDirection * 10f;
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(runTo, out hit, 10f, 1))
+            if (NavMesh.SamplePosition(runTo, out hit, 10f, NavMesh.AllAreas))
             {
                 agent.SetDestination(hit.position);
+            }
+            else
+            {
+                Vector3 fallbackPosition = transform.position + moveDirection * 5f;
+                if(NavMesh.SamplePosition(fallbackPosition, out hit, 5f, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                }
             }
             runTimer -= Time.deltaTime;
         }
@@ -225,6 +233,7 @@ public class Animal_Control : MonoBehaviour
         else {
             //AudioManager.instance.PlaySFX(AudioManager.Sfx.rabbit);
         }
+        Debug.Log(damage);
     }
 
     private IEnumerator AnimalDeath_co() //동물 죽음

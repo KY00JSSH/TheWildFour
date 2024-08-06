@@ -221,8 +221,15 @@ public class PlayerMove : MonoBehaviour {
 
     private void Dash(bool isDash) {
         this.isDash = isDash;
-        if (isDash && isMove) CurrentDashGage -= DecDashGage * Time.deltaTime;
-        else CurrentDashGage += IncDashGage * Time.deltaTime;
+        if (isDash && isMove)
+        {
+            CurrentDashGage -= DecDashGage * Time.deltaTime;
+            AudioManager.instance.PlaySFX(AudioManager.Sfx.StepSnow);
+        }
+        else
+        {
+            CurrentDashGage += IncDashGage * Time.deltaTime;
+        }
         CurrentDashGage = Mathf.Clamp(CurrentDashGage, 0, TotalDashGage);
 
         if (CurrentDashGage == 0) ResetDash();
